@@ -1,0 +1,12 @@
+C:\Users\joshu\source\repos\ObakiSite\Shared\ObakiSite.Shared\bin\Debug\net6.0\ObakiSite.Shared.deps.json
+C:\Users\joshu\source\repos\ObakiSite\Shared\ObakiSite.Shared\bin\Debug\net6.0\ObakiSite.Shared.dll
+C:\Users\joshu\source\repos\ObakiSite\Shared\ObakiSite.Shared\bin\Debug\net6.0\ObakiSite.Shared.pdb
+C:\Users\joshu\source\repos\ObakiSite\Shared\ObakiSite.Shared\obj\Debug\net6.0\ObakiSite.Shared.csproj.AssemblyReference.cache
+C:\Users\joshu\source\repos\ObakiSite\Shared\ObakiSite.Shared\obj\Debug\net6.0\ObakiSite.Shared.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\joshu\source\repos\ObakiSite\Shared\ObakiSite.Shared\obj\Debug\net6.0\ObakiSite.Shared.AssemblyInfoInputs.cache
+C:\Users\joshu\source\repos\ObakiSite\Shared\ObakiSite.Shared\obj\Debug\net6.0\ObakiSite.Shared.AssemblyInfo.cs
+C:\Users\joshu\source\repos\ObakiSite\Shared\ObakiSite.Shared\obj\Debug\net6.0\ObakiSite.Shared.csproj.CoreCompileInputs.cache
+C:\Users\joshu\source\repos\ObakiSite\Shared\ObakiSite.Shared\obj\Debug\net6.0\ObakiSite.Shared.dll
+C:\Users\joshu\source\repos\ObakiSite\Shared\ObakiSite.Shared\obj\Debug\net6.0\refint\ObakiSite.Shared.dll
+C:\Users\joshu\source\repos\ObakiSite\Shared\ObakiSite.Shared\obj\Debug\net6.0\ObakiSite.Shared.pdb
+C:\Users\joshu\source\repos\ObakiSite\Shared\ObakiSite.Shared\obj\Debug\net6.0\ref\ObakiSite.Shared.dll
