@@ -7,8 +7,6 @@ using Microsoft.Extensions.Logging;
 using System.Net.Http;
 using System.Text.Json;
 using static ObakiSite.Shared.DTO.AnimeListResponse;
-using ObakiSite.Shared.Models.Response;
-using Microsoft.Extensions.Configuration;
 using System;
 using ObakiSite.Shared.Constants;
 

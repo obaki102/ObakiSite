@@ -1,0 +1,117 @@
+﻿@page "/animelist"
+@using static ObakiSite.Shared.DTO.AnimeListResponse
+@inject IAnimeListService AnimeListService
+@if (AnimeListService.AnimeLists == null)
+{
+    <MudOverlay Visible="@true" DarkBackground="true" ZIndex="9999" AutoClose="true">
+        <MudProgressCircular Color="Color.Primary" Indeterminate="true" Size="Size.Large" />
+    </MudOverlay>
+}
+else
+{
+    <MudGrid>
+        @foreach (var anime in AnimeListService.AnimeLists.OrderBy(o => o.Node.Popularity))
+        {
+            <MudItem xs="6" sm="3">
+                <MudCard>
+                    <MudCardHeader>
+                        <CardHeaderContent>
+                            @if (@anime.Node.NumEpisodes == 0)
+                            {
+                                <MudText Typo="Typo.body2">
+                                    @FormatDate(anime.Node.StartDate)
+
+                                </MudText>
+                            }
+                            else
+                            {
+                                <MudText Typo="Typo.body2">
+                                    @FormatDate(anime.Node.StartDate) | @anime.Node.NumEpisodes eps
+
+                                </MudText>
+                            }
+                        </CardHeaderContent>
+                        <CardHeaderActions>
+                            <MudButton Variant="Variant.Text" OnClick="@(() => OpenDrawer(Anchor.Bottom, anime.Node))">
+                                <MudTooltip Text="Synopsis">
+                                    <MudIcon Icon="@Icons.Filled.Newspaper" Color="Color.Default" />
+                                </MudTooltip>
+                            </MudButton>
+                        </CardHeaderActions>
+                    </MudCardHeader>
+                    <MudCardMedia ObjectFit="ObjectFit.Fill" ObjectPosition="ObjectPosition.Center" Image="@anime.Node.MainPicture.Large" Class="rounded-lg" Height="250" Elevation="25" />
+                    <MudCardContent>
+                        <MudText Typo="Typo.h6">@anime.Node.Title (@anime.Node.AlternativeTitles.Ja)</MudText>
+                        <MudDivider />
+                        @if (anime.Node.Genres != null)
+                        {
+                            @foreach (var genre in anime.Node.Genres)
+                            {
+                                <MudChip Color="Color.Default" Size="Size.Small"> @genre.Name</MudChip>
+                            }
+                        }
+                    </MudCardContent>
+                    <MudCardActions>
+
+                    </MudCardActions>
+                </MudCard>
+            </MudItem>
+
+        }
+    </MudGrid>
+    <MudDrawer @bind-Open="@open" Anchor="@anchor" Elevation="1" Variant="@DrawerVariant.Temporary">
+        @if (node != null)
+        {
+            <MudDrawerHeader>
+                <MudStack>
+                    <MudText Typo="Typo.body2">@node.Synopsis</MudText>
+                    <MudDivider />
+                    <MudText Typo="Typo.caption"> Status:<MudChip Color="Color.Primary" Size="Size.Small"> @node.Status.Replace("_"," ")</MudChip></MudText>
+                    @if (node.Studios != null)
+                    {
+                        @foreach (var studio in node.Studios)
+                        {
+                            <MudText Typo="Typo.caption">@studio.Name</MudText>
+                        }
+                    }
+                </MudStack>
+            </MudDrawerHeader>
+        }
+    </MudDrawer>
+}
+
+@code {
+    bool open;
+    Anchor anchor;
+    private int year = DateTime.Today.Year;
+    private Node node = default;
+    protected override async Task OnInitializedAsync()
+    {
+        await AnimeListService.GetAnimeListBySeasonAndYear(new Season(year, GetCurrentSeason(DateTime.Today.Month)));
+    }
+
+    private string GetCurrentSeason(int currentMonth)
+    {
+        if (currentMonth >= 3 && currentMonth <= 5)
+            return "spring";
+
+        if (currentMonth >= 6 && currentMonth <= 8)
+            return "summer";
+
+        if (currentMonth >= 9 && currentMonth <= 11)
+            return "fall";
+
+        return "winter";
+    }
+
+    private void OpenDrawer(Anchor anchor, Node node)
+    {
+        open = true;
+        this.anchor = anchor;
+        this.node = node;
+    }
+    private string FormatDate(string date)
+    {
+        return DateTime.Parse(date).ToString("MMM dd, yyyy");
+    }
+}
