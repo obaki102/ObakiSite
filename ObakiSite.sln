@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ObakiSite.Shared", "Shared\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ObakiSite.Client", "Client\ObakiSite.Client.csproj", "{2C9B084A-90C4-449B-AB1F-A7B207B9E558}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ObakiSite.Api", "Api\ObakiSite.Api.csproj", "{5FCE322D-A510-43FC-BE4A-D448E3A14B6C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ObakiSite.Api", "Api\ObakiSite.Api.csproj", "{BF145ACE-6F7D-4293-A03D-78D0C0814745}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{2C9B084A-90C4-449B-AB1F-A7B207B9E558}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2C9B084A-90C4-449B-AB1F-A7B207B9E558}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2C9B084A-90C4-449B-AB1F-A7B207B9E558}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5FCE322D-A510-43FC-BE4A-D448E3A14B6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5FCE322D-A510-43FC-BE4A-D448E3A14B6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5FCE322D-A510-43FC-BE4A-D448E3A14B6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5FCE322D-A510-43FC-BE4A-D448E3A14B6C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF145ACE-6F7D-4293-A03D-78D0C0814745}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF145ACE-6F7D-4293-A03D-78D0C0814745}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF145ACE-6F7D-4293-A03D-78D0C0814745}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF145ACE-6F7D-4293-A03D-78D0C0814745}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
