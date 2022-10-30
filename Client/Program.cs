@@ -4,7 +4,7 @@ using ObakiSite.Client;
 using MudBlazor.Services;
 using ObakiSite.Client.Services.Animelist;
 using ObakiSite.Client.Services.AnimeList;
-using ObakiSiteClient;
+
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");

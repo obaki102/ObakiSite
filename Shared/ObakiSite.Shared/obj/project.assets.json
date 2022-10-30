@@ -13,9 +13,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\joshu\\source\\repos\\ObakiSite\\Shared\\ObakiSite.Shared\\ObakiSiteShared.csproj",
-      "projectName": "ObakiSiteShared",
-      "projectPath": "C:\\Users\\joshu\\source\\repos\\ObakiSite\\Shared\\ObakiSite.Shared\\ObakiSiteShared.csproj",
+      "projectUniqueName": "C:\\Users\\joshu\\source\\repos\\ObakiSite\\Shared\\ObakiSite.Shared\\ObakiSite.Shared.csproj",
+      "projectName": "ObakiSite.Shared",
+      "projectPath": "C:\\Users\\joshu\\source\\repos\\ObakiSite\\Shared\\ObakiSite.Shared\\ObakiSite.Shared.csproj",
       "packagesPath": "C:\\Users\\joshu\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\joshu\\source\\repos\\ObakiSite\\Shared\\ObakiSite.Shared\\obj\\",
       "projectStyle": "PackageReference",
