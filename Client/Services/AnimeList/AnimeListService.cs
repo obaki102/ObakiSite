@@ -1,9 +1,6 @@
 ﻿using ObakiSite.Client.Services.Animelist;
-using ObakiSite.Shared.Constants;
 using ObakiSite.Shared.DTO;
-using System.Text.Json;
-using System.Net.Http;
-using System.Reflection.PortableExecutable;
+
 using System.Net.Http.Json;
 
 namespace ObakiSite.Client.Services.AnimeList

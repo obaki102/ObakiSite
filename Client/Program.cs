@@ -13,7 +13,7 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 
 builder.Services.AddHttpClient<IAnimeListService, AnimeListService>(options =>
 {
-    options.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress);
+    options.BaseAddress = new Uri(builder.Configuration["API_Prefix"] ?? builder.HostEnvironment.BaseAddress);
 
 });
 
