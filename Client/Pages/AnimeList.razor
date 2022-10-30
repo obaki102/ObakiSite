@@ -1,5 +1,5 @@
 ﻿@page "/animelist"
-@using static ObakiSite.Shared.DTO.AnimeListResponse
+@using ObakiSite.Shared.DTO
 @inject IAnimeListService AnimeListService
 @if (AnimeListService.AnimeLists == null)
 {
@@ -12,50 +12,53 @@ else
     <MudGrid>
         @foreach (var anime in AnimeListService.AnimeLists.OrderBy(o => o.Node.Popularity))
         {
-            <MudItem xs="6" sm="3">
-                <MudCard>
-                    <MudCardHeader>
-                        <CardHeaderContent>
-                            @if (@anime.Node.NumEpisodes == 0)
-                            {
-                                <MudText Typo="Typo.body2">
-                                    @FormatDate(anime.Node.StartDate)
+            if (anime.Node != null)
+            {
+                <MudItem xs="6" sm="3">
+                    <MudCard>
+                        <MudCardHeader>
+                            <CardHeaderContent>
+                                @if (@anime.Node.NumEpisodes == 0 && anime.Node.NumEpisodes != null)
+                                {
+                                    <MudText Typo="Typo.body2">
+                                        @FormatDate(anime.Node.StartDate)
 
-                                </MudText>
-                            }
-                            else
-                            {
-                                <MudText Typo="Typo.body2">
-                                    @FormatDate(anime.Node.StartDate) | @anime.Node.NumEpisodes eps
+                                    </MudText>
+                                }
+                                else
+                                {
+                                    <MudText Typo="Typo.body2">
+                                        @FormatDate(anime.Node.StartDate) | @anime.Node.NumEpisodes eps
 
-                                </MudText>
-                            }
-                        </CardHeaderContent>
-                        <CardHeaderActions>
-                            <MudButton Variant="Variant.Text" OnClick="@(() => OpenDrawer(Anchor.Bottom, anime.Node))">
-                                <MudTooltip Text="Synopsis">
-                                    <MudIcon Icon="@Icons.Filled.Newspaper" Color="Color.Default" />
-                                </MudTooltip>
-                            </MudButton>
-                        </CardHeaderActions>
-                    </MudCardHeader>
-                    <MudCardMedia ObjectFit="ObjectFit.Fill" ObjectPosition="ObjectPosition.Center" Image="@anime.Node.MainPicture.Large" Class="rounded-lg" Height="250" Elevation="25" />
-                    <MudCardContent>
-                        <MudText Typo="Typo.h6">@anime.Node.Title (@anime.Node.AlternativeTitles.Ja)</MudText>
-                        <MudDivider />
-                        @if (anime.Node.Genres != null)
-                        {
-                            @foreach (var genre in anime.Node.Genres)
+                                    </MudText>
+                                }
+                            </CardHeaderContent>
+                            <CardHeaderActions>
+                                <MudButton Variant="Variant.Text" OnClick="@(() => OpenDrawer(Anchor.Bottom, anime.Node))">
+                                    <MudTooltip Text="Synopsis">
+                                        <MudIcon Icon="@Icons.Filled.Newspaper" Color="Color.Default" />
+                                    </MudTooltip>
+                                </MudButton>
+                            </CardHeaderActions>
+                        </MudCardHeader>
+                        <MudCardMedia ObjectFit="ObjectFit.Fill" ObjectPosition="ObjectPosition.Center" Image="@anime.Node.MainPicture.Large" Class="rounded-lg" Height="250" Elevation="25" />
+                        <MudCardContent>
+                            <MudText Typo="Typo.h6">@anime.Node.Title (@anime.Node.AlternativeTitles.Ja)</MudText>
+                            <MudDivider />
+                            @if (anime.Node.Genres != null)
                             {
-                                <MudChip Color="Color.Default" Size="Size.Small"> @genre.Name</MudChip>
+                                @foreach (var genre in anime.Node.Genres)
+                                {
+                                    <MudChip Color="Color.Default" Size="Size.Small"> @genre.Name</MudChip>
+                                }
                             }
-                        }
-                    </MudCardContent>
-                    <MudCardActions>
+                        </MudCardContent>
+                        <MudCardActions>
 
-                    </MudCardActions>
-                </MudCard>
-            </MudItem>
+                        </MudCardActions>
+                    </MudCard>
+                </MudItem>
+            }
 
         }
     </MudGrid>
@@ -87,11 +90,12 @@ else
     private Node node = default;
     protected override async Task OnInitializedAsync()
     {
-        await AnimeListService.GetAnimeListBySeasonAndYear(new Season(year, GetCurrentSeason(DateTime.Today.Month)));
+        var test = await AnimeListService.GetAnimeListBySeasonAndYear(new Season(year, GetCurrentSeason()));
     }
 
-    private string GetCurrentSeason(int currentMonth)
+    private string GetCurrentSeason()
     {
+        var currentMonth = DateTime.Now.Month;
         if (currentMonth >= 3 && currentMonth <= 5)
             return "spring";
 
@@ -99,7 +103,7 @@ else
             return "summer";
 
         if (currentMonth >= 9 && currentMonth <= 11)
-            return "fall";
+            return "summer";
 
         return "winter";
     }

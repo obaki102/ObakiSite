@@ -6,9 +6,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System.Net.Http;
 using System.Text.Json;
-using static ObakiSite.Shared.DTO.AnimeListResponse;
 using System;
 using ObakiSite.Shared.Constants;
+using ObakiSite.Shared.DTO;
 
 namespace ObakiApi
 {

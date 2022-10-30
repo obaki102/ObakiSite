@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using Microsoft.Extensions.DependencyInjection;
 using ObakiSite.Client;
 using MudBlazor.Services;
 using ObakiSite.Client.Services.Animelist;
@@ -12,8 +11,19 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
-builder.Services.AddHttpClient<IAnimeListService, AnimeListService>();
+builder.Services.AddHttpClient<IAnimeListService, AnimeListService>(options =>
+{
+    options.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress);
+
+});
 
 builder.Services.AddMudServices();
-
+//builder.Services.AddCors(options =>
+//{
+//    options.AddDefaultPolicy(
+//        policy =>
+//        {
+//            policy.AllowAnyOrigin();  //set the allowed origin
+//        });
+//});
 await builder.Build().RunAsync();

@@ -2,8 +2,7 @@
   "profiles": {
     "ObakiApi": {
       "commandName": "Project",
-      "commandLineArgs": "--port 7239",
-      "launchBrowser": false
+      "commandLineArgs": "--port 7071"
     }
   }
 }

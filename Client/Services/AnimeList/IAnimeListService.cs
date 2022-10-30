@@ -1,10 +1,10 @@
-﻿using static ObakiSite.Shared.DTO.AnimeListResponse;
+﻿using ObakiSite.Shared.DTO;
 
 namespace ObakiSite.Client.Services.Animelist
 {
     public interface IAnimeListService
     {
-        IEnumerable<Datum> AnimeLists { get; set; }
-        Task<IEnumerable<Datum>> GetAnimeListBySeasonAndYear(Season season);
+        IReadOnlyList<Datum> AnimeLists { get; set; }
+        Task<IReadOnlyList<Datum>> GetAnimeListBySeasonAndYear(Season season);
     }
 }

@@ -2,8 +2,7 @@
 
 namespace ObakiSite.Shared.DTO
 {
-    public class AnimeListResponse
-    {
+   
         public record AlternativeTitles(
         [property: JsonPropertyName("synonyms")] IReadOnlyList<string> Synonyms,
         [property: JsonPropertyName("en")] string En,
@@ -80,6 +79,5 @@ namespace ObakiSite.Shared.DTO
             [property: JsonPropertyName("id")] int Id,
             [property: JsonPropertyName("name")] string Name
         );
-
-    }
+    
 }
