@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "g1f12yM3m0CpYUTzTrJHym2ptCPVjy8FsaHZpYMwilFXdhcIgTQZy/KHy4dp0fqXh6lbEC1RH2DMylWkf3zE9w==",
+  "dgSpecHash": "idkvv/twNk1QZYK1VWkA4OnK1Rs0tz1fVrpqZcqJaiiducEITVEYqrAIDwWjVwLtVYvGE7n9VmaBCTZ6q5pezQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\joshu\\source\\repos\\ObakiSite\\Shared\\ObakiSite.Shared\\ObakiSite.Shared.csproj",
+  "projectFilePath": "C:\\Users\\joshu\\source\\repos\\ObakiSite\\Shared\\ObakiSite.Shared\\ObakiSiteShared.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }
