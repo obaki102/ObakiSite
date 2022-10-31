@@ -5,15 +5,13 @@
 <MudSnackbarProvider />
 
 <MudLayout>
-    <MudAppBar Elevation="0">
-        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+    <MudAppBar Elevation="1">
+        <MudIconButton Icon="@Icons.Material.Filled.Chat" Color="Color.Inherit" Edge="Edge.Start" OnClick="@OpenDrawer" />
         <MudSpacer />
+        <MudIconButton Href="anime" Icon="@Icons.Material.Filled.List"  />
     </MudAppBar>
-    <MudDrawer @bind-Open="_drawerOpen" Elevation="1">
-        <MudDrawerHeader>
-            <MudChip Color="Color.Dark">Obaki Site</MudChip>
-        </MudDrawerHeader>
-        <NavMenu />
+    <MudDrawer @bind-Open="@_drawerOpen" DisableOverlay="true" Width="500px" Height="100%" Anchor="Anchor.Start" Elevation="1" Variant="@DrawerVariant.Responsive">
+        <LiveChat />
     </MudDrawer>
     <MudMainContent>
         <MudContainer MaxWidth="MaxWidth.Large" Class="my-16 pt-16">
@@ -26,10 +24,12 @@
 
     private MudTheme _theme = new();
     private bool _isDarkMode = true;
-    bool _drawerOpen = true;
+    bool _drawerOpen =false;
+  
 
-    void DrawerToggle()
+    void OpenDrawer()
     {
         _drawerOpen = !_drawerOpen;
+      
     }
 }

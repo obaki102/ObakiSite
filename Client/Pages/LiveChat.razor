@@ -11,7 +11,7 @@
 @inject HttpClient HttpClient
 @inject IChatHubClient ChatHubClient
 
-<div id="scrollableDiv" style="height:500px;overflow: auto;">
+<div id="scrollableDiv" style="overflow: auto;">
     <div Class="d-flex flex-column flex-grow-1 gap-4" Elevation="0">
         @foreach (var message in _messages)
         {
