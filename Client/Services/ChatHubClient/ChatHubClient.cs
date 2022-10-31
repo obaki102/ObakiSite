@@ -13,6 +13,10 @@ namespace ObakiSite.Client.Services.ChatHubClient
         private readonly ChatHubClientOptions _hubClientOptions;
         private bool isConnectionStarted = false;
 
+        public string HubUrl => _hubClientOptions.HubUrl;
+
+        public string HubConenctionId => hubConnection.ConnectionId ?? string.Empty;
+
         public ChatHubClient(IOptions<ChatHubClientOptions> hubClientOptions)
         {
             _hubClientOptions = hubClientOptions.Value;
@@ -30,7 +34,6 @@ namespace ObakiSite.Client.Services.ChatHubClient
                                 })
                                      .AddMessagePackProtocol()
                                      .Build();
-
 
                 hubConnection.On<object>(HubHandler.ReceivedMessage, (receivedMessage) =>
                 {

@@ -6,6 +6,8 @@ namespace ObakiSite.Client.Services.ChatHubClient
     {
         Task ConnectAsync();
         Task DisconnectAsync();
+        string HubUrl { get; }
+        string HubConenctionId { get; }
 
         event EventHandler<ChatMessageEventArgs>? ReceivedMessageHandler;
     }

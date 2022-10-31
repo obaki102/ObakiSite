@@ -1,0 +1,119 @@
+﻿@page "/liveChat"
+@using System.Text.Json
+@using Newtonsoft.Json
+@using ObakiSite.Client.Services.ChatHubClient
+@using ObakiSite.Shared.Events
+@using ObakiSite.Shared.Models
+@inject NavigationManager NavigationManager
+@inject IConfiguration ConfigurationManager
+@inject IJSRuntime JsRuntime
+@implements IAsyncDisposable
+@inject HttpClient HttpClient
+@inject IChatHubClient ChatHubClient
+
+<div id="scrollableDiv" style="height:500px;overflow: auto;">
+    <div Class="d-flex flex-column flex-grow-1 gap-4" Elevation="0">
+        @foreach (var message in _messages)
+        {
+            @if (IsMyMessage(message.User))
+            {
+                <div class="d-flex justify-end flex-row flex-grow-1 gap-4">
+                    <MudPaper Class="pa-4 mr-16 overflow-auto mud-theme-primary">
+                        <div class="d-flex flex-row">
+                            <MudChip Variant="Variant.Text" Size="Size.Small">@message.MessageCreateDate</MudChip>
+                        </div>
+                        <MudText Typo="Typo.body1">@message.Message</MudText>
+                    </MudPaper>
+                </div>
+            }
+            else
+            {
+                <div class="d-flex justify-start flex-row flex-grow-1 gap-4">
+                    <MudAvatar Color="Color.Secondary">@message.User</MudAvatar>
+                    <MudPaper Class="pa-4 mr-16 overflow-auto">
+                        <div class="d-flex flex-row">
+                            <MudChip Size="Size.Small" Color="Color.Dark">@message.User</MudChip>
+                            <MudChip Variant="Variant.Text" Size="Size.Small">@message.MessageCreateDate</MudChip>
+                        </div>
+                        <MudText Typo="Typo.body1">@message.Message</MudText>
+                    </MudPaper>
+                </div>
+            }
+        }
+    </div>
+</div>
+<br />
+<div Class="d-flex  flex-row px-2 mx-4">
+    <MudTextField T="string" Label="Chatbox" Variant="Variant.Outlined" Class="mt-n2 mx-4" @bind-Value="_enteredMessage" @onkeyup="OnEnterKeyPress" TextUpdateSuppression="false" DisableUnderLine="true" />
+    <MudButton Variant="Variant.Filled" EndIcon="@Icons.Material.Filled.Send" Color="Color.Primary" OnClick="SendMessage">Send</MudButton>
+</div>
+
+
+@code {
+    private string myRandomName = string.Empty;
+    private List<ChatMessage> _messages = new();
+    private ChatMessage chatMessage = new();
+
+
+    private string _enteredMessage { get; set; } = string.Empty;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        
+        ChatHubClient.ReceivedMessageHandler += ReceivedChatMessage;
+        await ChatHubClient.ConnectAsync();
+        myRandomName = $"MyRandomName-{ChatHubClient.HubConenctionId}";
+
+    }
+    private void ClearText()
+    {
+        _enteredMessage = string.Empty;
+    }
+
+    private void ReceivedChatMessage(object? sender, ChatMessageEventArgs e)
+    {
+        _messages.Add(e.ChatMessage);
+        _enteredMessage = string.Empty;
+        StateHasChanged();
+
+    }
+
+    private async Task OnEnterKeyPress(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter")
+        {
+            await SendMessage();
+        }
+    }
+
+    private async Task SendMessage()
+    {
+        var chatMessage = new ChatMessage
+            {
+                User = myRandomName,
+                Message = _enteredMessage
+            };
+        await HttpClient.PostAsJsonAsync($"{ChatHubClient.HubUrl}/messages", chatMessage);
+    }
+
+    public bool IsMyMessage(string name)
+    {
+        if (name.Equals(myRandomName))
+            return true;
+
+        return false;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        //await JsRuntime.InvokeAsync<string>("ScrollToBottom", "scrollableDiv");
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        await ChatHubClient.DisconnectAsync();
+        ChatHubClient.ReceivedMessageHandler -= ReceivedChatMessage;
+        HttpClient.Dispose();
+    }
+}
