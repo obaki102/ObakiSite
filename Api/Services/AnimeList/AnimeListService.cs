@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace ObakiSite.Api.Services.AnimeList
 {
-    public class AnimeList : IAnimeList
+    public class AnimeListService : IAnimeListService
     {
         private readonly HttpClient _httpClient;
-        public AnimeList(IHttpClientFactory httpClientFactory)
+        public AnimeListService(IHttpClientFactory httpClientFactory)
         {
             _httpClient = httpClientFactory.CreateClient("AnimeList");
         }

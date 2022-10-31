@@ -10,8 +10,8 @@ namespace ObakiApi
 {
     public  class AnimeList
     {
-        private readonly IAnimeList _animeListService;
-        public AnimeList(IAnimeList animeListService)
+        private readonly IAnimeListService _animeListService;
+        public AnimeList(IAnimeListService animeListService)
         {
             _animeListService = animeListService;
         }

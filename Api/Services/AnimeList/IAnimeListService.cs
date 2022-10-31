@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ObakiSite.Api.Services.AnimeList
 {
-    public interface IAnimeList
+    public interface IAnimeListService
     {
         Task<AnimeListRoot> GetAnimeListBySeasonAndYear(int year, string season);
     }
