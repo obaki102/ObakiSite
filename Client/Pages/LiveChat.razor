@@ -1,8 +1,8 @@
 ﻿@page "/liveChat"
+@implements IAsyncDisposable
 @inject NavigationManager NavigationManager
 @inject IConfiguration ConfigurationManager
 @inject IJSRuntime JsRuntime
-@implements IAsyncDisposable
 @inject HttpClient HttpClient
 @inject IChatHubClient ChatHubClient
 @inject IBadgeUpdater BadgeUpdater
@@ -14,7 +14,7 @@
             @if (IsMyMessage(message.User))
             {
                 <div class="d-flex justify-end">
-                    <MudPaper Class="pa-2 m1-2 mb-3 overflow-auto mud-theme-primary" MaxWidth="300px" Style="word-break: break-all;">
+                    <MudPaper Class="pa-2 m1-2 mb-3 mr-4 overflow-auto mud-theme-primary" MaxWidth="300px" Style="word-break: break-all;">
                         <div class="d-flex flex-row">
                             <MudChip Variant="Variant.Text" Size="Size.Small">@message.MessageCreateDate</MudChip>
                         </div>
@@ -25,7 +25,7 @@
             else
             {
                 <div class="d-flex justify-start flex-row flex-grow-1 gap-1">
-                    <MudPaper Class="pa-2 m1-2 mb-3 overflow-auto" MaxWidth="300px" Style="@($"background:{Colors.Indigo.Darken1};word-break: break-all;")">
+                    <MudPaper Class="pa-2 m1-2 mb-3 ml-4 overflow-auto" MaxWidth="300px" Style="@($"background:{Colors.Indigo.Darken1};word-break: break-all;")">
                         <div class="d-flex flex-row">
                             <MudChip Variant="Variant.Text" Size="Size.Small">@message.MessageCreateDate</MudChip>
                         </div>
@@ -37,7 +37,7 @@
     </div>
 </div>
 
-<div Class="d-flex align-content-end flex-row px-2 mx-4">
+<div Class="d-flex align-content-end flex-row px-2 ma-4">
     <MudTextField T="string" Label="Chatbox" Variant="Variant.Outlined" Lines="2" Class="mt-n2 mx-4" @bind-Value="_enteredMessage" @onkeyup="OnEnterKeyPress" @onfocus="OnFocus" TextUpdateSuppression="false" DisableUnderLine="true" />
     <MudButton Variant="Variant.Filled" EndIcon="@Icons.Material.Filled.Send" Color="Color.Primary" OnClick="SendMessage">Send</MudButton>
 </div>
@@ -111,7 +111,7 @@
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        //await JsRuntime.InvokeAsync<string>("ScrollToBottom", "scrollableDiv");
+        await JsRuntime.InvokeAsync<string>("ScrollToBottom", "scrollableDiv");
     }
 
     public async ValueTask DisposeAsync()
