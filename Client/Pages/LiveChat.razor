@@ -38,28 +38,24 @@
 </div>
 
 <div Class="d-flex align-content-end flex-row px-2 ma-4">
-    <MudTextField T="string" Label="Chatbox" Variant="Variant.Outlined" Lines="2" Class="mt-n2 mx-4" @bind-Value="_enteredMessage" @onkeyup="OnEnterKeyPress" @onfocus="OnFocus" TextUpdateSuppression="false" DisableUnderLine="true" />
+    <MudTextField T="string" Label="Chatbox" Variant="Variant.Outlined" Lines="2" Class="mt-n2 mx-4" @bind-Value="_enteredMessage" @onkeydown="OnEnterKeyPress" @onfocus="OnFocus"  TextUpdateSuppression="false" DisableUnderLine="true"  Immediate="true"/>
     <MudButton Variant="Variant.Filled" EndIcon="@Icons.Material.Filled.Send" Color="Color.Primary" OnClick="SendMessage">Send</MudButton>
 </div>
 
 
 @code {
-    private string myRandomName = string.Empty;
     private List<ChatMessage> _messages = new();
     private ChatMessage chatMessage = new();
-
-
     private string _enteredMessage { get; set; } = string.Empty;
-
 
     protected override async Task OnInitializedAsync()
     {
 
         ChatHubClient.ReceivedMessageHandler += ReceivedChatMessage;
         await ChatHubClient.ConnectAsync();
-        myRandomName = $"MyRandomName-{ChatHubClient.HubConenctionId}";
 
     }
+
     private void ClearText()
     {
         _enteredMessage = string.Empty;
@@ -74,7 +70,6 @@
             BadgeUpdater.IncrementBadge();
         }
         StateHasChanged();
-
     }
 
     private void OnFocus()
@@ -94,16 +89,15 @@
     {
         var chatMessage = new ChatMessage
             {
-                User = myRandomName,
+                User = ChatHubClient.HubConenctionId,
                 Message = _enteredMessage
             };
-        
         await HttpClient.PostAsJsonAsync($"{ChatHubClient.HubUrl}/messages", chatMessage);
     }
 
     public bool IsMyMessage(string name)
     {
-        if (name.Equals(myRandomName))
+        if (name.Equals(ChatHubClient.HubConenctionId))
             return true;
 
         return false;

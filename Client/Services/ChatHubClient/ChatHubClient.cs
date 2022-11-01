@@ -15,7 +15,7 @@ namespace ObakiSite.Client.Services.ChatHubClient
 
         public string HubUrl => _hubClientOptions.HubUrl;
 
-        public string HubConenctionId => hubConnection.ConnectionId ?? string.Empty;
+        public string HubConenctionId => hubConnection?.ConnectionId ?? string.Empty;
 
         public ChatHubClient(IOptions<ChatHubClientOptions> hubClientOptions)
         {
