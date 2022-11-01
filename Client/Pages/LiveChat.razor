@@ -2,6 +2,7 @@
 @using System.Text.Json
 @using Newtonsoft.Json
 @using ObakiSite.Client.Services.ChatHubClient
+@using ObakiSite.Client.Services.Components.Badge
 @using ObakiSite.Shared.Events
 @using ObakiSite.Shared.Models
 @inject NavigationManager NavigationManager
@@ -10,6 +11,7 @@
 @implements IAsyncDisposable
 @inject HttpClient HttpClient
 @inject IChatHubClient ChatHubClient
+@inject IBadgeUpdater BadgeUpdater
 
 <div id="scrollableDiv" style="overflow: auto;" class="d-flex align-content-space-between flex-wrap flex-grow-1">
     <div Class="d-flex flex-column flex-grow-1 gap-1" Elevation="0">
@@ -58,7 +60,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        
+
         ChatHubClient.ReceivedMessageHandler += ReceivedChatMessage;
         await ChatHubClient.ConnectAsync();
         myRandomName = $"MyRandomName-{ChatHubClient.HubConenctionId}";
@@ -73,6 +75,10 @@
     {
         _messages.Add(e.ChatMessage);
         _enteredMessage = string.Empty;
+        if (!IsMyMessage(e.ChatMessage.User))
+        {
+            BadgeUpdater.IncrementBadge();
+        }
         StateHasChanged();
 
     }
@@ -92,6 +98,7 @@
                 User = myRandomName,
                 Message = _enteredMessage
             };
+        BadgeUpdater.ResetBadge();
         await HttpClient.PostAsJsonAsync($"{ChatHubClient.HubUrl}/messages", chatMessage);
     }
 

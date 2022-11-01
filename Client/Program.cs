@@ -6,12 +6,14 @@ using ObakiSite.Client.Services.Animelist;
 using ObakiSite.Client.Services.AnimeList;
 using ObakiSite.Client.Extensions;
 using ObakiSite.Shared.Constants;
+using ObakiSite.Client.Services.Components.Badge;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+builder.Services.AddScoped<IBadgeUpdater, BadgeUpdater>();
 
 builder.Services.AddHttpClient<IAnimeListService, AnimeListService>(options =>
 {

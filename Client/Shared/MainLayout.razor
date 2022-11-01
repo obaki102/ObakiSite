@@ -1,4 +1,6 @@
-﻿@inherits LayoutComponentBase
+﻿@using ObakiSite.Client.Services.Components.Badge
+@inherits LayoutComponentBase
+@inject IBadgeUpdater BadgeUpdater
 
 <MudThemeProvider @bind-IsDarkMode="@_isDarkMode" Theme="_theme" />
 <MudDialogProvider />
@@ -6,12 +8,24 @@
 
 <MudLayout>
     <MudAppBar Elevation="1">
-     <MudText Typo="Typo.h5">Obaki</MudText>
+        <MudText Typo="Typo.h5">Obaki</MudText>
         <MudSpacer />
-        <MudIconButton Href="anime" Icon="@Icons.Material.Filled.List"  />
-        <MudAvatar Color="Color.Primary" Variant="Variant.Outlined">
-            <MudIconButton Icon="@Icons.Material.Filled.Chat" Color="Color.Inherit" OnClick="@OpenDrawer" />
-        </MudAvatar>
+        <MudIconButton Href="anime" Icon="@Icons.Material.Filled.List" />
+        @if (_bagedeNo == 0)
+        {
+            <MudAvatar Color="Color.Primary" Variant="Variant.Outlined">
+                <MudIconButton Icon="@Icons.Material.Filled.Chat" Color="Color.Inherit" OnClick="@OpenDrawer" />
+            </MudAvatar>
+        }
+        else
+        {
+            <MudBadge Content="@_bagedeNo" Color="Color.Primary" Overlap="true" Class="mx-6 my-4">
+                <MudAvatar Color="Color.Primary" Variant="Variant.Outlined">
+                    <MudIconButton Icon="@Icons.Material.Filled.Chat" Color="Color.Inherit" OnClick="@OpenDrawer" />
+                </MudAvatar>
+            </MudBadge>
+
+        }
     </MudAppBar>
     <MudDrawer @bind-Open="@_drawerOpen" DisableOverlay="true" Width="400px" Height="100%" Anchor="Anchor.End" Elevation="1" Variant="@DrawerVariant.Responsive">
         <LiveChat />
@@ -27,12 +41,24 @@
 
     private MudTheme _theme = new();
     private bool _isDarkMode = true;
-    bool _drawerOpen =false;
-  
+    private int _bagedeNo = 0;
+    bool _drawerOpen = false;
 
-    void OpenDrawer()
+    public void OpenDrawer()
     {
         _drawerOpen = !_drawerOpen;
-      
+
+    }
+
+    protected override void OnInitialized()
+    {
+        BadgeUpdater.BadgeChangedHandler += UpdateBadge;
+
+    }
+
+    public void UpdateBadge(object? sender, int e)
+    {
+        _bagedeNo = e;
+        StateHasChanged();
     }
 }

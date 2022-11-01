@@ -1,3 +1,6 @@
+C:\Users\joshu\source\repos\ObakiSite\Api\bin\output\ObakiSite.Shared.deps.json
+C:\Users\joshu\source\repos\ObakiSite\Api\bin\output\ObakiSite.Shared.dll
+C:\Users\joshu\source\repos\ObakiSite\Api\bin\output\ObakiSite.Shared.pdb
 C:\Users\joshu\source\repos\ObakiSite\Shared\ObakiSite.Shared\bin\Debug\net6.0\ObakiSite.Shared.deps.json
 C:\Users\joshu\source\repos\ObakiSite\Shared\ObakiSite.Shared\bin\Debug\net6.0\ObakiSite.Shared.dll
 C:\Users\joshu\source\repos\ObakiSite\Shared\ObakiSite.Shared\bin\Debug\net6.0\ObakiSite.Shared.pdb
@@ -10,6 +13,3 @@ C:\Users\joshu\source\repos\ObakiSite\Shared\ObakiSite.Shared\obj\Debug\net6.0\O
 C:\Users\joshu\source\repos\ObakiSite\Shared\ObakiSite.Shared\obj\Debug\net6.0\refint\ObakiSite.Shared.dll
 C:\Users\joshu\source\repos\ObakiSite\Shared\ObakiSite.Shared\obj\Debug\net6.0\ObakiSite.Shared.pdb
 C:\Users\joshu\source\repos\ObakiSite\Shared\ObakiSite.Shared\obj\Debug\net6.0\ref\ObakiSite.Shared.dll
-C:\Users\joshu\source\repos\ObakiSite\Api\bin\output\ObakiSite.Shared.deps.json
-C:\Users\joshu\source\repos\ObakiSite\Api\bin\output\ObakiSite.Shared.dll
-C:\Users\joshu\source\repos\ObakiSite\Api\bin\output\ObakiSite.Shared.pdb
