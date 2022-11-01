@@ -6,11 +6,14 @@
 
 <MudLayout>
     <MudAppBar Elevation="1">
-        <MudIconButton Icon="@Icons.Material.Filled.Chat" Color="Color.Inherit" Edge="Edge.Start" OnClick="@OpenDrawer" />
+     <MudText Typo="Typo.h5">Obaki</MudText>
         <MudSpacer />
         <MudIconButton Href="anime" Icon="@Icons.Material.Filled.List"  />
+        <MudAvatar Color="Color.Primary" Variant="Variant.Outlined">
+            <MudIconButton Icon="@Icons.Material.Filled.Chat" Color="Color.Inherit" OnClick="@OpenDrawer" />
+        </MudAvatar>
     </MudAppBar>
-    <MudDrawer @bind-Open="@_drawerOpen" DisableOverlay="true" Width="500px" Height="100%" Anchor="Anchor.Start" Elevation="1" Variant="@DrawerVariant.Responsive">
+    <MudDrawer @bind-Open="@_drawerOpen" DisableOverlay="true" Width="400px" Height="100%" Anchor="Anchor.End" Elevation="1" Variant="@DrawerVariant.Responsive">
         <LiveChat />
     </MudDrawer>
     <MudMainContent>

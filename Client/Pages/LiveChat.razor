@@ -11,39 +11,37 @@
 @inject HttpClient HttpClient
 @inject IChatHubClient ChatHubClient
 
-<div id="scrollableDiv" style="overflow: auto;">
-    <div Class="d-flex flex-column flex-grow-1 gap-4" Elevation="0">
+<div id="scrollableDiv" style="overflow: auto;" class="d-flex align-content-space-between flex-wrap flex-grow-1">
+    <div Class="d-flex flex-column flex-grow-1 gap-1" Elevation="0">
         @foreach (var message in _messages)
         {
             @if (IsMyMessage(message.User))
             {
-                <div class="d-flex justify-end flex-row flex-grow-1 gap-4">
-                    <MudPaper Class="pa-4 mr-16 overflow-auto mud-theme-primary">
+                <div class="d-flex justify-end flex-row flex-grow-1 gap-1">
+                    <MudPaper Class="pa-2 m1-2 mb-3 overflow-auto mud-theme-primary">
                         <div class="d-flex flex-row">
                             <MudChip Variant="Variant.Text" Size="Size.Small">@message.MessageCreateDate</MudChip>
                         </div>
-                        <MudText Typo="Typo.body1">@message.Message</MudText>
+                        <MudText Typo="Typo.body2">@message.Message</MudText>
                     </MudPaper>
                 </div>
             }
             else
             {
-                <div class="d-flex justify-start flex-row flex-grow-1 gap-4">
-                    <MudAvatar Color="Color.Secondary">@message.User</MudAvatar>
-                    <MudPaper Class="pa-4 mr-16 overflow-auto">
+                <div class="d-flex justify-start flex-row flex-grow-1 gap-1">
+                    <MudPaper Class="pa-2 m1-2 mb-3 overflow-auto" Style="@($"background:{Colors.Indigo.Darken1};")">
                         <div class="d-flex flex-row">
-                            <MudChip Size="Size.Small" Color="Color.Dark">@message.User</MudChip>
                             <MudChip Variant="Variant.Text" Size="Size.Small">@message.MessageCreateDate</MudChip>
                         </div>
-                        <MudText Typo="Typo.body1">@message.Message</MudText>
+                        <MudText Typo="Typo.body2">@message.Message</MudText>
                     </MudPaper>
                 </div>
             }
         }
     </div>
 </div>
-<br />
-<div Class="d-flex  flex-row px-2 mx-4">
+
+<div Class="d-flex align-content-end flex-row px-2 mx-4">
     <MudTextField T="string" Label="Chatbox" Variant="Variant.Outlined" Class="mt-n2 mx-4" @bind-Value="_enteredMessage" @onkeyup="OnEnterKeyPress" TextUpdateSuppression="false" DisableUnderLine="true" />
     <MudButton Variant="Variant.Filled" EndIcon="@Icons.Material.Filled.Send" Color="Color.Primary" OnClick="SendMessage">Send</MudButton>
 </div>
