@@ -12,7 +12,7 @@ else
     <MudGrid>
         @foreach (var anime in AnimeListService.AnimeLists.OrderBy(o => o.Node.Popularity))
         {
-            if (anime.Node != null)
+            if (anime.Node != null && anime.Node.MainPicture != null)
             {
                 <MudItem xs="6" sm="3">
                     <MudCard>
