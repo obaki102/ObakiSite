@@ -1,31 +1,38 @@
 ﻿@using ObakiSite.Client.Services.Components.Badge
 @inherits LayoutComponentBase
 @inject IBadgeUpdater BadgeUpdater
-
 <MudThemeProvider @bind-IsDarkMode="@_isDarkMode" Theme="_theme" />
 <MudDialogProvider />
 <MudSnackbarProvider />
 
 <MudLayout>
     <MudAppBar Elevation="1">
-        <MudChip Color="Color.Dark" Href="/"><MudText Typo="Typo.button" Style="font-size: 35px;">O</MudText><MudText Typo="Typo.caption" Style="font-size: 20px;">baki</MudText></MudChip>
-        <MudSpacer />
-        <MudIconButton Href="anime" Icon="@Icons.Material.Filled.List" />
-        @if (_bagedeNo == 0)
-        {
-            <MudAvatar Color="Color.Primary" Variant="Variant.Outlined">
-                <MudIconButton Icon="@Icons.Material.Filled.Chat" Color="Color.Inherit" OnClick="@OpenDrawer" />
-            </MudAvatar>
-        }
-        else
-        {
-            <MudBadge Content="@_bagedeNo" Color="Color.Primary" Overlap="true" Class="mx-6 my-4">
-                <MudAvatar Color="Color.Primary" Variant="Variant.Outlined">
-                    <MudIconButton Icon="@Icons.Material.Filled.Chat" Color="Color.Inherit" OnClick="@OpenDrawer" />
-                </MudAvatar>
-            </MudBadge>
-
-        }
+        <MudContainer MaxWidth="MaxWidth.Large">
+            <div class="d-flex align-center my-8" Elevation="1">
+                <MudChip Color="Color.Dark" Href="/"><MudText Typo="Typo.button" Style="font-size: 35px;">O</MudText><MudText Typo="Typo.caption" Style="font-size: 20px;">baki</MudText></MudChip>
+                <MudTooltip Text="Anime List" Color="Color.Primary" Placement="Placement.Bottom">
+                    <MudIconButton Href="anime" Icon="@Icons.Filled.LibraryBooks" Color="Color.Primary" />
+                </MudTooltip>
+                <MudSpacer />
+                <MudTooltip Text="GitHub repo" Color="Color.Primary" Placement="Placement.Bottom">
+                    <MudIconButton Href="https://github.com/obaki102/ObakiSite" Icon="@Icons.Custom.Brands.GitHub" Color="Color.Primary" />
+                </MudTooltip>
+                @if (_bagedeNo == 0)
+                {
+                    <MudTooltip Text="Chat" Color="Color.Primary" Placement="Placement.Bottom">
+                        <MudIconButton Icon="@Icons.Material.Filled.Chat" Color="Color.Primary" OnClick="@OpenDrawer" />
+                    </MudTooltip>
+                }
+                else
+                {
+                    <MudTooltip Text="Chat" Color="Color.Primary" Placement="Placement.Bottom">
+                        <MudBadge Content="@_bagedeNo" Color="Color.Primary" Overlap="true" Class="mx-6 my-4">
+                            <MudIconButton Icon="@Icons.Material.Filled.Chat" Color="Color.Primary" OnClick="@OpenDrawer" />
+                        </MudBadge>
+                    </MudTooltip>
+                }
+            </div>
+        </MudContainer>
     </MudAppBar>
     <MudDrawer @bind-Open="@_drawerOpen" DisableOverlay="true" Width="400px" Height="100%" Anchor="Anchor.End" Elevation="1" Variant="@DrawerVariant.Responsive">
         <LiveChat />
