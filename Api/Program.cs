@@ -16,7 +16,6 @@ namespace ObakiSite.Api
             {
                 options.BaseAddress = new Uri("https://api.myanimelist.net/");
                 options.DefaultRequestHeaders.Add(AnimeList.XmalClientId, Environment.GetEnvironmentVariable(AnimeList.AnimelistClientId));
-
             });
             builder.Services.AddSingleton<IAnimeListService,AnimeListService>();
         }
