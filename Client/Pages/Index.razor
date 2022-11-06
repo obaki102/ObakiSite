@@ -1,5 +1,16 @@
 ﻿@page "/"
 
 <PageTitle>Index</PageTitle>
+<MudCarousel Class="mud-width-full" Style="height:200px;" ShowArrows="true" ShowBullets="true" EnableSwipeGesture="true" AutoCycle="true" TData="object">
+    <MudCarouselItem Transition="Transition.Slide" Color="@Color.Primary">
+        <div class="d-flex" style="height:100%">
+            <MudText Typo="Typo.caption" GutterBottom="true" Style="font-size: 15px;">Hello there! Welcome to my site.</MudText>
+        </div>
+    </MudCarouselItem>
+    <MudCarouselItem Transition="Transition.Slide" Color="@Color.Secondary">
+        <div class="d-flex" style="height:100%">
+            <MudText Typo="Typo.caption" GutterBottom="true" Style="font-size: 15px;">Hello there! Welcome to my site.</MudText>
+        </div>
+    </MudCarouselItem>
+</MudCarousel>
 
-<MudText Typo="Typo.caption" GutterBottom="true" Style="font-size: 15px;">Hello there! Welcome to my site.</MudText>

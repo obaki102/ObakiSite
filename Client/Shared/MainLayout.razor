@@ -35,6 +35,9 @@
         </MudContainer>
     </MudAppBar>
     <MudDrawer @bind-Open="@_drawerOpen" DisableOverlay="true" Width="400px" Height="100%" Anchor="Anchor.End" Elevation="1" Variant="@DrawerVariant.Responsive">
+        <MudTooltip Text="Back" Color="Color.Primary" Placement="Placement.Bottom">
+            <MudIconButton Icon="@Icons.Filled.ArrowBack" Color="Color.Primary" OnClick="@OpenDrawer" />
+        </MudTooltip>
         <LiveChat />
     </MudDrawer>
     <MudMainContent>

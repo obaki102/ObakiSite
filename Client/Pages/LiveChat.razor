@@ -14,7 +14,7 @@
             @if (IsMyMessage(message.User))
             {
                 <div class="d-flex justify-end">
-                    <MudPaper Class="pa-2 m1-2 mt-4 mb-4 mr-4 overflow-auto mud-theme-primary" MaxWidth="300px" Style="word-break: break-all;">
+                    <MudPaper Class="pa-2 mt-4 mb-4 mr-2 overflow-auto mud-theme-primary" MaxWidth="300px" Style="word-break: break-all;">
                         <div class="d-flex flex-row">
                             <MudChip Variant="Variant.Text" Size="Size.Small">@message.MessageCreateDate</MudChip>
                         </div>
@@ -24,8 +24,8 @@
             }
             else
             {
-                <div class="d-flex justify-start flex-row flex-grow-1 gap-1">
-                    <MudPaper Class="pa-2 m1-2 mt-4 mb-3 ml-4 overflow-auto" MaxWidth="300px" Style="@($"background:{Colors.Indigo.Darken1};word-break: break-all;")">
+                <div class="d-flex justify-start">
+                    <MudPaper Class="pa-2 mt-4 mb-4 ml-4 overflow-auto" MaxWidth="300px" Style="@($"background:{Colors.Indigo.Darken1};word-break: break-all;")">
                         <div class="d-flex flex-row">
                             <MudChip Variant="Variant.Text" Size="Size.Small">@message.MessageCreateDate</MudChip>
                         </div>
@@ -37,9 +37,15 @@
     </div>
 </div>
 
-<div Class="d-flex align-content-end flex-row px-2 ma-4">
-    <MudTextField T="string" Label="Chatbox" Variant="Variant.Outlined" Lines="2" Class="mt-n2 mx-4" @bind-Value="_enteredMessage" @onkeydown="OnEnterKeyPress" @onfocus="OnFocus"  TextUpdateSuppression="false" DisableUnderLine="true"  Immediate="true"/>
-    <MudButton Variant="Variant.Filled" EndIcon="@Icons.Material.Filled.Send" Color="Color.Primary" OnClick="SendMessage">Send</MudButton>
+<div Class="d-flex align-content-end flex-row ma-4">
+    <div class="d-flex align-center flex-row">
+        <div class="d-flex ml-1 pa-1" style="width: 320px;">
+            <MudTextField T="string"  Label="Chatbox" Variant="Variant.Outlined" Lines="2" @bind-Value="_enteredMessage" @onkeydown="OnEnterKeyPress" @onfocus="OnFocus" TextUpdateSuppression="false" DisableUnderLine="true" Immediate="true" />
+        </div>
+        <div>
+            <MudIconButton Variant="Variant.Text" Icon="@Icons.Material.Filled.Send" Color="Color.Primary" OnClick="SendMessage" />
+        </div>
+    </div>
 </div>
 
 
