@@ -47,7 +47,7 @@ else
                         <MudDivider />
                         @if (anime.Node.Genres != null)
                         {
-                            @foreach (var genre in anime.Node.Genres.Take(3))
+                            @foreach (var genre in anime.Node.Genres)
                             {
                                 <MudChip Color="Color.Default" Size="Size.Small"> @genre.Name</MudChip>
                             }
