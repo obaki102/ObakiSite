@@ -10,16 +10,17 @@ namespace ObakiSite.Application.Features.Animelist.Queries
 
     public class GetAnimeListBySeasonAndYearHandler : IRequestHandler<GetAnimeListBySeasonAndYear, ApplicationResponse<AnimeListRoot>>
     {
-        private readonly HttpClient _httpClient;
-        public GetAnimeListBySeasonAndYearHandler(IHttpClientFactory httpFactory)
+        private readonly IHttpClientFactory _httpClientFactory;
+        public GetAnimeListBySeasonAndYearHandler(IHttpClientFactory httpClientFactory)
         {
-            _httpClient = httpFactory.CreateClient(HttpNameClient.AnimeList);
+            _httpClientFactory = httpClientFactory;  
         }
         public async Task<ApplicationResponse<AnimeListRoot>> Handle(GetAnimeListBySeasonAndYear request, CancellationToken cancellationToken)
         {
+            var httpClient = _httpClientFactory.CreateClient(HttpNameClient.Default);
             var uriRequest = $"/api/animelists/{request.Season.SeasonOfTheYear}/{request.Season.Year}";
             //todo: Cache it to local storage
-            var response = await _httpClient.GetFromJsonAsync<AnimeListRoot>(uriRequest);
+            var response = await httpClient.GetFromJsonAsync<AnimeListRoot>(uriRequest);
             if (response is not null)
             {
                 return ApplicationResponse<AnimeListRoot>.Success(response);

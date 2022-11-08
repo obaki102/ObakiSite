@@ -54,6 +54,7 @@ public static class HubHandler
 
 public static class HttpNameClient
 {
+    public const string Default = "Default";
     public const string AnimeList = "Animelist";
 }
 

@@ -9,14 +9,18 @@ namespace ObakiSite.Application.Extensions
 {
     public static class AddApplicationDependencies
     {
-        public static IServiceCollection AddHttpAnimeListService(this IServiceCollection services, Action<AnimeListOptions> options)
+        public static IServiceCollection AddHttpAnimeListService(this IServiceCollection services, Uri baseUrl, string defaultHeader)
         {
             if (services == null)
             {
                 throw new ArgumentNullException(nameof(services));
             }
-            services.AddHttpClient<IAnimeListService, AnimeListService>();
-            services.Configure(options);
+            services.AddHttpClient(HttpNameClient.AnimeList, client =>
+            {
+                client.BaseAddress = baseUrl;
+                client.DefaultRequestHeaders.Add(AnimeList.XmalClientId, defaultHeader);
+            });
+            services.TryAddSingleton<IAnimeListService, AnimeListService>();
             return services;
         }
         public static IServiceCollection AddSingletonAnimeListService(this IServiceCollection services)
@@ -39,9 +43,9 @@ namespace ObakiSite.Application.Extensions
             services.AddMediatR(Assembly.GetExecutingAssembly());
 
             //HttpNamedClient
-            services.AddHttpClient(HttpNameClient.AnimeList, options =>
+            services.AddHttpClient(HttpNameClient.Default, client =>
             {
-                options.BaseAddress = baseUrl;
+                client.BaseAddress = baseUrl;
 
             });
             return services;

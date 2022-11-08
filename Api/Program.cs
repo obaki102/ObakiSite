@@ -11,13 +11,8 @@ namespace ObakiSite.Api
     {
         public override void Configure(IFunctionsHostBuilder builder)
         {
-            builder.Services.AddHttpAnimeListService(options =>
-            {
-                options.BaseAddress = new Uri("https://api.myanimelist.net/");
-                options.DefaultRequestHeader =  Environment.GetEnvironmentVariable(AnimeList.AnimelistClientId);
-            });
-            
-            
+            builder.Services.AddHttpAnimeListService(new Uri("https://api.myanimelist.net/"),
+                Environment.GetEnvironmentVariable(AnimeList.AnimelistClientId));
         }
     }
 }
