@@ -6,16 +6,13 @@ namespace ObakiSite.Application.Extensions
 {
     public static class AddApplicationDependencies
     {
-
-
-        public static IServiceCollection AddSingletonAnimeListService(this IServiceCollection services, Action<AnimeListOptions> options)
+        public static IServiceCollection AddHttpAnimeListService(this IServiceCollection services, Action<AnimeListOptions> options)
         {
             if (services == null)
             {
                 throw new ArgumentNullException(nameof(services));
             }
             services.AddHttpClient<IAnimeListService, AnimeListService>();
-            services.TryAddSingleton<IAnimeListService, AnimeListService>();
             services.Configure(options);
             return services;
         }

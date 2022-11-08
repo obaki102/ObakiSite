@@ -12,11 +12,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Shared\ObakiSite.Shared\ObakiSite.Shared.csproj" />
+    <Folder Include="Features\Animelist\Queries\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Animelist\Queries\" />
+    <ProjectReference Include="..\Shared\ObakiSite.Shared.csproj" />
   </ItemGroup>
 
 </Project>
