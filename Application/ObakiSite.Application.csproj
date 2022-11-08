@@ -8,11 +8,8 @@
 
   <ItemGroup>
 	  <PackageReference Include="MediatR" Version="11.0.0" />
+	  <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Features\Animelist\Queries\" />
   </ItemGroup>
 
   <ItemGroup>

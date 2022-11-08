@@ -1,7 +1,7 @@
 ﻿@page "/anime"
-@using ObakiSite.Shared.DTO
-@inject IAnimeListService AnimeListService
-@if (AnimeListService.AnimeLists == null)
+@using ObakiSite.Application.Features.Animelist.Queries
+@inject ISender Mediatr 
+@if (AnimeLists == null)
 {
     <MudOverlay Visible="@true" DarkBackground="true" ZIndex="9999" AutoClose="true">
         <MudProgressCircular Color="Color.Primary" Indeterminate="true" Size="Size.Large" />
@@ -11,7 +11,7 @@ else
 {
     <div class="d-flex flex-row flex-wrap gap-4">
 
-        @foreach (var anime in AnimeListService.AnimeLists.OrderBy(o => o.Node.Popularity))
+        @foreach (var anime in AnimeLists.OrderBy(o => o.Node.Popularity))
         {
             if (anime.Node != null && anime.Node.MainPicture != null)
             {
@@ -58,7 +58,6 @@ else
                     </MudCardActions>
                 </MudCard>
             }
-
         }
 
     </div>
@@ -87,10 +86,12 @@ else
     bool open;
     Anchor anchor;
     private int year = DateTime.Today.Year;
-    private Node node = default;
+    private Node? node = default;
+    private IReadOnlyList<Datum>? AnimeLists = default;
     protected override async Task OnInitializedAsync()
     {
-        var test = await AnimeListService.GetAnimeListBySeasonAndYear(new Season(year, GetCurrentSeason()));
+        var result = await Mediatr.Send(new GetAnimeListBySeasonAndYear(new Season(year, GetCurrentSeason())));
+        AnimeLists = result.Data.Data;
     }
 
     private string GetCurrentSeason()
@@ -114,6 +115,7 @@ else
         this.anchor = anchor;
         this.node = node;
     }
+
     private string FormatDate(string date)
     {
         return DateTime.Parse(date).ToString("MMM dd, yyyy");

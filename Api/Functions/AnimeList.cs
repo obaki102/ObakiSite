@@ -30,7 +30,6 @@ namespace ObakiSite.Api.Functions
                 return new OkObjectResult(response.Data);
             }
             return new BadRequestResult();
-
         }
     }
 }

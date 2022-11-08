@@ -1,6 +1,8 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using MediatR;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using ObakiSite.Application.Features.Animelist.Services;
+using System.Reflection;
 
 namespace ObakiSite.Application.Extensions
 {
@@ -23,6 +25,17 @@ namespace ObakiSite.Application.Extensions
                 throw new ArgumentNullException(nameof(services));
             }
             services.TryAddSingleton<IAnimeListService, AnimeListService>();
+            return services;
+        }
+
+        public static IServiceCollection AddAppDependencies(this IServiceCollection services)
+        {
+            if (services == null)
+            {
+                throw new ArgumentNullException(nameof(services));
+            }
+            //3rd Party
+            services.AddMediatR(Assembly.GetExecutingAssembly());
             return services;
         }
     }
