@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using ObakiSite.Shared.Constants;
 using ObakiSite.Shared.DTO;
 using ObakiSite.Shared.Models.Response;
 using System.Net.Http.Json;
@@ -10,9 +11,9 @@ namespace ObakiSite.Application.Features.Animelist.Queries
     public class GetAnimeListBySeasonAndYearHandler : IRequestHandler<GetAnimeListBySeasonAndYear, ApplicationResponse<AnimeListRoot>>
     {
         private readonly HttpClient _httpClient;
-        public GetAnimeListBySeasonAndYearHandler(HttpClient httpClient)
+        public GetAnimeListBySeasonAndYearHandler(IHttpClientFactory httpFactory)
         {
-            _httpClient = httpClient;
+            _httpClient = httpFactory.CreateClient(HttpNameClient.AnimeList);
         }
         public async Task<ApplicationResponse<AnimeListRoot>> Handle(GetAnimeListBySeasonAndYear request, CancellationToken cancellationToken)
         {

@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using ObakiSite.Application.Features.Animelist.Services;
+using ObakiSite.Shared.Constants;
 using System.Reflection;
 
 namespace ObakiSite.Application.Extensions
@@ -28,7 +29,7 @@ namespace ObakiSite.Application.Extensions
             return services;
         }
 
-        public static IServiceCollection AddAppDependencies(this IServiceCollection services)
+        public static IServiceCollection AddAppDependencies(this IServiceCollection services, Uri baseUrl)
         {
             if (services == null)
             {
@@ -36,6 +37,13 @@ namespace ObakiSite.Application.Extensions
             }
             //3rd Party
             services.AddMediatR(Assembly.GetExecutingAssembly());
+
+            //HttpNamedClient
+            services.AddHttpClient(HttpNameClient.AnimeList, options =>
+            {
+                options.BaseAddress = baseUrl;
+
+            });
             return services;
         }
     }

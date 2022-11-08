@@ -7,10 +7,13 @@ using ObakiSite.Client.Services.Components.Badge;
 using ObakiSite.Application.Extensions;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
+var baseUrl = new Uri(builder.Configuration["API_Prefix"] ?? builder.HostEnvironment.BaseAddress);
+
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
-builder.Services.AddAppDependencies();
-builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.Configuration["API_Prefix"] ?? builder.HostEnvironment.BaseAddress)});
+
+builder.Services.AddAppDependencies(baseUrl);
+builder.Services.AddScoped(sp => new HttpClient { BaseAddress = baseUrl});
 
 builder.Services.AddScoped<IBadgeUpdater, BadgeUpdater>();
 builder.Services.AddScopedChatHubClient(options =>
