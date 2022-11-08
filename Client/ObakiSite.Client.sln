@@ -6,7 +6,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ObakiSite.Client", "ObakiSi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ObakiSite.Api", "..\Api\ObakiSite.Api.csproj", "{71A8290A-3797-4AAC-A7B3-F7BEA9B538F0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ObakiSite.Shared", "..\Shared\ObakiSite.Shared\ObakiSite.Shared.csproj", "{4CD5D362-2080-42F5-930B-2CB8EAAD0BBC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ObakiSite.Shared", "..\Shared\ObakiSite.Shared.csproj", "{4CD5D362-2080-42F5-930B-2CB8EAAD0BBC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

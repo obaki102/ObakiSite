@@ -19,7 +19,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\Shared\ObakiSite.Shared\ObakiSite.Shared.csproj" />
+	  <ProjectReference Include="..\Shared\ObakiSite.Shared.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
