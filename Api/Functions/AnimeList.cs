@@ -4,11 +4,11 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using ObakiSite.Api.Services.AnimeList;
+using ObakiSite.Application.Features.Animelist.Services;
 
-namespace ObakiApi
+namespace ObakiSite.Api.Functions
 {
-    public  class AnimeList
+    public class AnimeList
     {
         private readonly IAnimeListService _animeListService;
         public AnimeList(IAnimeListService animeListService)
@@ -16,18 +16,17 @@ namespace ObakiApi
             _animeListService = animeListService;
         }
         [FunctionName("GetAnimeListBySeasonAndYear")]
-        public  async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Function, "get", Route = "animelists/{season?}/{year:int?}")] HttpRequest req, 
+        public async Task<IActionResult> Run(
+            [HttpTrigger(AuthorizationLevel.Function, "get", Route = "animelists/{season?}/{year:int?}")] HttpRequest req,
             string season,
             int year,
             ILogger log)
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
 
-            var response = await _animeListService.GetAnimeListBySeasonAndYear(year,season);
+            var response = await _animeListService.GetAnimeListBySeasonAndYear(year, season);
             if (response is not null)
             {
-             
                 return new OkObjectResult(response);
             }
             return new BadRequestResult();

@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
+﻿using System.Text.Json.Serialization;
 
-namespace ObakiSite.Api.DTO
+namespace ObakiSite.Application.Features.Animelist.DTO
 {
     public record AlternativeTitles(
-   [property: JsonPropertyName("synonyms")] IReadOnlyList<string> Synonyms,
-   [property: JsonPropertyName("en")] string En,
-   [property: JsonPropertyName("ja")] string Ja
-);
+    [property: JsonPropertyName("synonyms")] IReadOnlyList<string> Synonyms,
+    [property: JsonPropertyName("en")] string En,
+    [property: JsonPropertyName("ja")] string Ja
+ );
 
     public record Broadcast(
         [property: JsonPropertyName("day_of_the_week")] string DayOfTheWeek,

@@ -1,6 +1,5 @@
 ﻿using Microsoft.Azure.Functions.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection;
-using ObakiSite.Api.Services.AnimeList;
+using ObakiSite.Application.Extensions;
 using ObakiSite.Shared.Constants;
 using System;
 
@@ -12,12 +11,13 @@ namespace ObakiSite.Api
     {
         public override void Configure(IFunctionsHostBuilder builder)
         {
-            builder.Services.AddHttpClient("AnimeList", options =>
+            builder.Services.AddSingletonAnimeListService(options =>
             {
                 options.BaseAddress = new Uri("https://api.myanimelist.net/");
-                options.DefaultRequestHeaders.Add(AnimeList.XmalClientId, Environment.GetEnvironmentVariable(AnimeList.AnimelistClientId));
+                options.DefaultRequestHeader =  Environment.GetEnvironmentVariable(AnimeList.AnimelistClientId);
             });
-            builder.Services.AddSingleton<IAnimeListService,AnimeListService>();
+            
+            
         }
     }
 }

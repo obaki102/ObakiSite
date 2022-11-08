@@ -12,13 +12,17 @@ namespace ObakiSite.Client.Services.ChatHubClient
         private HubConnection? hubConnection;
         private readonly ChatHubClientOptions _hubClientOptions;
         private bool isConnectionStarted = false;
-
         public string HubUrl => _hubClientOptions.HubUrl;
 
         public string HubConenctionId => hubConnection?.ConnectionId ?? string.Empty;
 
         public ChatHubClient(IOptions<ChatHubClientOptions> hubClientOptions)
         {
+            if (hubClientOptions == null)
+            {
+                throw new ArgumentNullException(nameof(hubClientOptions));
+            }
+
             _hubClientOptions = hubClientOptions.Value;
         }
 

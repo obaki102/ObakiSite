@@ -1,17 +1,25 @@
-﻿using ObakiSite.Api.DTO;
-using System.Net.Http;
-using System.Text;
+﻿using Microsoft.Extensions.Options;
 using System.Text.Json;
-using System.Threading.Tasks;
+using ObakiSite.Application.Features.Animelist.DTO;
+using ObakiSite.Shared.Constants;
 
-namespace ObakiSite.Api.Services.AnimeList
+namespace ObakiSite.Application.Features.Animelist.Services
 {
     public class AnimeListService : IAnimeListService
     {
         private readonly HttpClient _httpClient;
-        public AnimeListService(IHttpClientFactory httpClientFactory)
+        private readonly AnimeListOptions _animeListOptions;
+        public AnimeListService(HttpClient httpClient,IOptions<AnimeListOptions> animeListOptions)
         {
-            _httpClient = httpClientFactory.CreateClient("AnimeList");
+            if (animeListOptions == null)
+            {
+                throw new ArgumentNullException(nameof(AnimeListOptions));
+            }
+            _httpClient = httpClient;
+            _animeListOptions = animeListOptions.Value;
+            _httpClient.BaseAddress = _animeListOptions.BaseAddress;
+            _httpClient.DefaultRequestHeaders.Add(AnimeList.XmalClientId, _animeListOptions.DefaultRequestHeader);
+
         }
         public async Task<AnimeListRoot> GetAnimeListBySeasonAndYear(int year, string season)
         {

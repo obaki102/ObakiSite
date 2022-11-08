@@ -5,7 +5,7 @@ using ObakiSite.Shared.Constants;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Extensions.SignalRService;
 
-namespace ObakiSite.Api
+namespace ObakiSite.Api.Functions
 {
     public static class SignalR
     {

@@ -24,7 +24,6 @@ builder.Services.AddHttpClient<IAnimeListService, AnimeListService>(options =>
 builder.Services.AddScopedChatHubClient(options =>
 {
     options.HubUrl = builder.Configuration["API_Prefix"] is null ? $"{builder.HostEnvironment.BaseAddress}api" : $"{builder.Configuration["API_Prefix"]}/api";
-    Console.WriteLine($"value : {builder.Configuration.GetSection(SignalR.AzureFunctionHubUrl).Value}");
 });
 
 builder.Services.AddMudServices();

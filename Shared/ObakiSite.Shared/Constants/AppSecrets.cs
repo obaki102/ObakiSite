@@ -1,6 +1,6 @@
 ﻿namespace ObakiSite.Shared.Constants;
 
-public class AppSecrets
+public static class AppSecrets
 {
 
     public const string GoogleClientId = "googleClientId";
