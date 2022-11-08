@@ -17,8 +17,8 @@ builder.Services.AddScoped<IBadgeUpdater, BadgeUpdater>();
 
 builder.Services.AddHttpClient<IAnimeListService, AnimeListService>(options =>
 {
-     options.BaseAddress = new Uri(builder.Configuration["API_Prefix"] ?? builder.HostEnvironment.BaseAddress);
-    
+    options.BaseAddress = new Uri(builder.Configuration["API_Prefix"] ?? builder.HostEnvironment.BaseAddress);
+
 });
 
 builder.Services.AddScopedChatHubClient(options =>

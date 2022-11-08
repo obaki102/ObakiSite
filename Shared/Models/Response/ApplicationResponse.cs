@@ -9,7 +9,7 @@ namespace ObakiSite.Shared.Models.Response
     public class ApplicationResponse : IApplicationResponse
     {
         public List<string> Messages { get; set; } = new List<string>();
-        public bool IsSuccess { get; set; }
+        public bool IsSuccess { get; set; } = true;
 
         /// <summary>
         /// Returns a succesful synchronous response but with no messages 

@@ -25,9 +25,9 @@ namespace ObakiSite.Api.Functions
             log.LogInformation("C# HTTP trigger function processed a request.");
 
             var response = await _animeListService.GetAnimeListBySeasonAndYear(year, season);
-            if (response is not null)
+            if (response.IsSuccess)
             {
-                return new OkObjectResult(response);
+                return new OkObjectResult(response.Data);
             }
             return new BadRequestResult();
 

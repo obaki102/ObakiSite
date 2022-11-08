@@ -16,6 +16,5 @@ namespace ObakiSite.Shared.Models.Response
     public interface IApplicationResponse<out T> : IApplicationResponse
     {
         T? Data { get; }
-
     }
 }
