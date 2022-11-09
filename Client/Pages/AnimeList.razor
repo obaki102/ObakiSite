@@ -1,11 +1,35 @@
 ﻿@page "/anime"
 @using ObakiSite.Application.Features.Animelist.Queries
-@inject ISender Mediatr 
+@inject ISender Mediatr
 @if (AnimeLists == null)
 {
-    <MudOverlay Visible="@true" DarkBackground="true" ZIndex="9999" AutoClose="true">
-        <MudProgressCircular Color="Color.Primary" Indeterminate="true" Size="Size.Large" />
-    </MudOverlay>
+    <div class="d-flex flex-row flex-wrap gap-4">
+        @for (int i = 0; i < 100; i++)
+        {
+            <MudCard Style="width:250px;height:550px;">
+                <MudCardHeader>
+                    <CardHeaderContent>
+                        <div class="d-flex justify-space-between">
+                            <MudSkeleton Width="50%" Animation="Animation.Wave" />
+                            <MudSkeleton Width="10%" Animation="Animation.Wave" />
+                        </div>
+                    </CardHeaderContent>
+                    <CardHeaderActions>
+                        <MudSkeleton Width="10%" Animation="Animation.Wave" />
+                    </CardHeaderActions>
+                </MudCardHeader>
+                <MudSkeleton SkeletonType="SkeletonType.Rectangle" Height="250px" Animation="Animation.Wave" />
+                <MudCardContent>
+                    <MudSkeleton Width="100%" Animation="Animation.Wave" />
+                    <MudSkeleton Width="100%" Animation="Animation.Wave" />
+                    <MudDivider />
+                    <MudSkeleton Width="20%" Animation="Animation.Wave" />
+                    <MudSkeleton Width="20%" Animation="Animation.Wave" />
+                </MudCardContent>
+            </MudCard>
+        }
+
+    </div>
 }
 else
 {
@@ -41,7 +65,7 @@ else
                             </MudButton>
                         </CardHeaderActions>
                     </MudCardHeader>
-                    <MudCardMedia ObjectFit="ObjectFit.Fill" ObjectPosition="ObjectPosition.Center" Image="@anime.Node.MainPicture.Large" Class="rounded-lg" Height="250" Elevation="2" />
+                    <MudCardMedia ObjectFit="ObjectFit.Fill" ObjectPosition="ObjectPosition.Center" Image="@anime.Node.MainPicture.Large" Class="rounded-lg" Height="250" />
                     <MudCardContent>
                         <MudText Typo="Typo.h6">@anime.Node.Title (@anime.Node.AlternativeTitles.Ja)</MudText>
                         <MudDivider />
@@ -53,32 +77,31 @@ else
                             }
                         }
                     </MudCardContent>
-                    <MudCardActions>
-
-                    </MudCardActions>
                 </MudCard>
             }
         }
 
     </div>
     <MudDrawer @bind-Open="@open" Anchor="@anchor" Elevation="1" Variant="@DrawerVariant.Temporary">
-        @if (node != null)
-        {
-            <MudDrawerHeader>
-                <MudStack>
-                    <MudText Typo="Typo.body2">@node.Synopsis</MudText>
-                    <MudDivider />
-                    <MudText Typo="Typo.caption"> Status:<MudChip Color="Color.Primary" Size="Size.Small"> @node.Status.Replace("_"," ")</MudChip></MudText>
-                    @if (node.Studios != null)
-                    {
-                        @foreach (var studio in node.Studios)
+        <MudContainer MaxWidth="MaxWidth.Large" Class="my-4">
+            @if (node != null)
+            {
+                <MudDrawerHeader>
+                    <MudStack>
+                        <MudText Typo="Typo.body2">@node.Synopsis</MudText>
+                        <MudDivider />
+                        <MudText Typo="Typo.caption"> Status:<MudChip Color="Color.Primary" Size="Size.Small"> @node.Status.Replace("_"," ")</MudChip></MudText>
+                        @if (node.Studios != null)
                         {
-                            <MudText Typo="Typo.caption">@studio.Name</MudText>
+                            @foreach (var studio in node.Studios)
+                            {
+                                <MudText Typo="Typo.caption">@studio.Name</MudText>
+                            }
                         }
-                    }
-                </MudStack>
-            </MudDrawerHeader>
-        }
+                    </MudStack>
+                </MudDrawerHeader>
+            }
+        </MudContainer>
     </MudDrawer>
 }
 

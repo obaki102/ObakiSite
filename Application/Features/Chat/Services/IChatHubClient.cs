@@ -1,6 +1,6 @@
 ﻿using ObakiSite.Shared.Events;
 
-namespace ObakiSite.Client.Services.ChatHubClient
+namespace ObakiSite.Application.Features.Chat.Services
 {
     public interface IChatHubClient
     {

@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using ObakiSite.Client;
 using MudBlazor.Services;
-using ObakiSite.Client.Extensions;
 using ObakiSite.Client.Services.Components.Badge;
 using ObakiSite.Application.Extensions;
 

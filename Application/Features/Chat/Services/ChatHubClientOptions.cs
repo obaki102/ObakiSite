@@ -1,4 +1,4 @@
-﻿namespace ObakiSite.Client.Services.ChatHubClient
+﻿namespace ObakiSite.Application.Features.Chat.Services
 {
     public class ChatHubClientOptions
     {

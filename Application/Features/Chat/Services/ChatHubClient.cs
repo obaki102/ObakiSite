@@ -4,8 +4,9 @@ using ObakiSite.Shared.Events;
 using ObakiSite.Shared.Constants;
 using ObakiSite.Shared.Models;
 using Newtonsoft.Json;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace ObakiSite.Client.Services.ChatHubClient
+namespace ObakiSite.Application.Features.Chat.Services
 {
     public class ChatHubClient : IChatHubClient, IAsyncDisposable
     {
@@ -32,12 +33,8 @@ namespace ObakiSite.Client.Services.ChatHubClient
             {
                 hubConnection = new HubConnectionBuilder()
                                .WithUrl(_hubClientOptions.HubUrl)
-                                .ConfigureLogging(logging =>
-                                {
-                                    logging.ClearProviders();
-                                })
-                                     .AddMessagePackProtocol()
-                                     .Build();
+                                .AddMessagePackProtocol()
+                                .Build();
 
                 hubConnection.On<object>(HubHandler.ReceivedMessage, (receivedMessage) =>
                 {
