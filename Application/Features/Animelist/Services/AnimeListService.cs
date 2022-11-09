@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Options;
-using System.Text.Json;
+﻿using System.Text.Json;
 using ObakiSite.Application.Features.Animelist.DTO;
 using ObakiSite.Shared.Constants;
 using ObakiSite.Shared.Models.Response;
@@ -21,11 +20,17 @@ namespace ObakiSite.Application.Features.Animelist.Services
             if (response.IsSuccessStatusCode)
             {
                 var result = await response.Content.ReadAsStreamAsync();
-                if(result is null)
+                if (result is null)
                 {
                     return ApplicationResponse<AnimeListRoot>.Fail("Response is empty.");
                 }
+
                 var data = await JsonSerializer.DeserializeAsync<AnimeListRoot>(result);
+                if (data is null)
+                {
+                    return ApplicationResponse<AnimeListRoot>.Fail("Data is empty.");
+                }
+
                 return ApplicationResponse<AnimeListRoot>.Success(data);
             }
             return ApplicationResponse<AnimeListRoot>.Fail(response.StatusCode.ToString());
