@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Blazored.LocalStorage;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using ObakiSite.Application.Features.Animelist.Services;
@@ -53,6 +54,7 @@ namespace ObakiSite.Application.Extensions
             }
             //3rd Party
             services.AddMediatR(Assembly.GetExecutingAssembly());
+            services.AddBlazoredLocalStorage();
 
             //HttpNamedClient
             services.AddHttpClient(HttpNameClient.Default, client =>

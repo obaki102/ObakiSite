@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Blazored.LocalStorage;
+using MediatR;
 using ObakiSite.Shared.Constants;
 using ObakiSite.Shared.DTO;
 using ObakiSite.Shared.Models.Response;
@@ -11,21 +12,40 @@ namespace ObakiSite.Application.Features.Animelist.Queries
     public class GetAnimeListBySeasonAndYearHandler : IRequestHandler<GetAnimeListBySeasonAndYear, ApplicationResponse<AnimeListRoot>>
     {
         private readonly IHttpClientFactory _httpClientFactory;
-        public GetAnimeListBySeasonAndYearHandler(IHttpClientFactory httpClientFactory)
+        private readonly ILocalStorageService _localStorageService;
+        public GetAnimeListBySeasonAndYearHandler(IHttpClientFactory httpClientFactory, ILocalStorageService localStorageService)
         {
-            _httpClientFactory = httpClientFactory;  
+            _httpClientFactory = httpClientFactory;
+            _localStorageService = localStorageService;
         }
         public async Task<ApplicationResponse<AnimeListRoot>> Handle(GetAnimeListBySeasonAndYear request, CancellationToken cancellationToken)
         {
             var httpClient = _httpClientFactory.CreateClient(HttpNameClient.Default);
             var uriRequest = $"/api/animelists/{request.Season.SeasonOfTheYear}/{request.Season.Year}";
-            //todo: Cache it to local storage
-            var response = await httpClient.GetFromJsonAsync<AnimeListRoot>(uriRequest);
-            if (response is not null)
+            //todo create a reusable cache service
+            var cacheData = await _localStorageService.GetItemAsync<AnimeListRoot>(AnimeList.CacheDataKey);
+            var data = cacheData;
+            var cacheDataCreateDate = await _localStorageService.GetItemAsync<DateTime?>(AnimeList.CacheDataCreateDateKey);
+            double totalHrsSinceCacheCreated = 0;
+            if (cacheDataCreateDate is not null)
             {
-                return ApplicationResponse<AnimeListRoot>.Success(response);
+                totalHrsSinceCacheCreated = DateTime.UtcNow.Subtract((DateTime)cacheDataCreateDate).TotalHours;
             }
-            return ApplicationResponse<AnimeListRoot>.Fail("No response returned.");
+
+            if (cacheData is null || totalHrsSinceCacheCreated > 6)
+            {
+                var response = await httpClient.GetFromJsonAsync<AnimeListRoot>(uriRequest);
+                data = response;
+                await _localStorageService.SetItemAsync(AnimeList.CacheDataKey, response);
+                await _localStorageService.SetItemAsync(AnimeList.CacheDataCreateDateKey, DateTime.UtcNow);
+            }
+
+            if (data is null)
+            {
+                return ApplicationResponse<AnimeListRoot>.Fail("No response returned.");
+            }
+
+            return ApplicationResponse<AnimeListRoot>.Success(data);
 
         }
     }

@@ -18,6 +18,8 @@ public static class AnimeList
 {
     public const string XmalClientId = "X-MAL-CLIENT-ID";
     public const string AnimelistClientId = "ClientId";
+    public const string CacheDataKey = "CacheData";
+    public const string CacheDataCreateDateKey = "CacheDataCreateDate";
 }
 
 public static class SignalR
@@ -36,7 +38,6 @@ public static class HttpPost
 public static class HttpGet
 {
     public const string ConnectionString = "azureSignalRConnectionString";
-
 }
 
 public static class HubConstants
@@ -50,8 +51,6 @@ public static class HubHandler
     public const string UserOnline = "UserOnline";
     public const string UserOffline = "UserOffline";
 }
-
-
 public static class HttpNameClient
 {
     public const string Default = "Default";
