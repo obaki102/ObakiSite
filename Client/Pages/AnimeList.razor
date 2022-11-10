@@ -3,7 +3,7 @@
 @inject ISender Mediatr
 @if (AnimeLists == null)
 {
-    <div class="d-flex flex-row flex-wrap gap-4">
+    <div class="d-flex justify-center flex-row flex-wrap gap-4">
         @for (int i = 0; i < 100; i++)
         {
             <MudCard Style="width:250px;height:550px;">
@@ -18,7 +18,7 @@
                         <MudSkeleton Width="10%" Animation="Animation.Wave" />
                     </CardHeaderActions>
                 </MudCardHeader>
-                <MudSkeleton SkeletonType="SkeletonType.Rectangle" Height="250px" Animation="Animation.Wave" />
+                <MudSkeleton SkeletonType="SkeletonType.Rectangle" Class="pa-1 rounded-lg" Height="250px" Animation="Animation.Wave" />
                 <MudCardContent>
                     <MudSkeleton Width="100%" Animation="Animation.Wave" />
                     <MudSkeleton Width="100%" Animation="Animation.Wave" />
@@ -33,7 +33,7 @@
 }
 else
 {
-    <div class="d-flex flex-row flex-wrap gap-4">
+    <div class="d-flex justify-center flex-row flex-wrap gap-4">
 
         @foreach (var anime in AnimeLists.OrderBy(o => o.Node.Popularity))
         {
@@ -65,7 +65,7 @@ else
                             </MudButton>
                         </CardHeaderActions>
                     </MudCardHeader>
-                    <MudCardMedia ObjectFit="ObjectFit.Fill" ObjectPosition="ObjectPosition.Center" Image="@anime.Node.MainPicture.Large" Class="rounded-lg" Height="250" />
+                    <MudCardMedia ObjectFit="ObjectFit.Fill"  Image="@anime.Node.MainPicture.Large" Class="pa-1 rounded-lg" Height="250" />
                     <MudCardContent>
                         <MudText Typo="Typo.h6">@anime.Node.Title (@anime.Node.AlternativeTitles.Ja)</MudText>
                         <MudDivider />
