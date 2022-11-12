@@ -27,9 +27,9 @@ namespace ObakiSite.Application.Features.Animelist.Queries
         {
             var httpClient = _httpClientFactory.CreateClient(HttpNameClient.Default);
             var uriRequest = $"/api/animelists/{request.Season.SeasonOfTheYear}/{request.Season.Year}";
-            //todo create a reusable cache service
             return await _retryPolicy.ExecuteAsync(async () =>
             {
+                //todo create a reusable cache service
                 var cacheData = await _localStorageService.GetItemAsync<AnimeListRoot>(AnimeList.CacheDataKey);
                 var data = cacheData;
                 var cacheDataCreateDate = await _localStorageService.GetItemAsync<DateTime?>(AnimeList.CacheDataCreateDateKey);
