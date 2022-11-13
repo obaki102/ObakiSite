@@ -1,9 +1,7 @@
 ﻿
 using Blazored.LocalStorage;
-using MediatR;
 using ObakiSite.Shared.Constants;
 using ObakiSite.Shared.Models.Response;
-using System.Net.Http;
 
 namespace ObakiSite.Application.Features.LocalStorageCache.Services
 {
@@ -28,14 +26,19 @@ namespace ObakiSite.Application.Features.LocalStorageCache.Services
 
             if(IsDataNeedsRefresh(cacheData, cacheDataCreateDate))
                 await RefreshData();
+            else
+                Data = cacheData;
 
-            return ApplicationResponse<T>.Success(Data);
+            if(Data is not  null)
+                return ApplicationResponse<T>.Success(Data);
+
+            return ApplicationResponse<T>.Fail("No data found.");
         }
 
-        public bool IsCacheEmpty()
+        public async Task<bool> IsCacheEmpty()
         {
-            var cacheData = GetCacheDataAsync();
-            var cacheDataCreateDate = GetCacheDataCreateDateAsync();
+            var cacheData = await GetCacheDataAsync();
+            var cacheDataCreateDate = await GetCacheDataCreateDateAsync();
 
             if (cacheData is null || cacheDataCreateDate is null)
             {
