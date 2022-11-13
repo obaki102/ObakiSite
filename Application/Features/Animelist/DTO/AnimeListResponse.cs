@@ -52,7 +52,6 @@ namespace ObakiSite.Application.Features.Animelist.DTO
         [property: JsonPropertyName("rating")] string Rating,
         [property: JsonPropertyName("studios")] IReadOnlyList<Studio> Studios,
         [property: JsonPropertyName("end_date")] string EndDate
-        //[property: JsonPropertyName("rank")] int? Rank
     );
 
     public record Paging(
