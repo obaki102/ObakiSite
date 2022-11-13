@@ -16,6 +16,7 @@ namespace ObakiSite.Application.Features.LocalStorageCache.Services
         public LocalStorageCacheOptions? Options { get; set; }
         private async Task<T> GetCacheDataAsync() => await _localStorageService.GetItemAsync<T>(Options?.DataKey);
         private async Task<DateTime?> GetCacheDataCreateDateAsync() => await _localStorageService.GetItemAsync<DateTime?>(Options?.CreationDateKey);
+        private bool perfromRefreshData { get; set; } = false;
         public async Task<ApplicationResponse<T>> GetCacheData()
         {
             if (Options is null)
@@ -23,17 +24,12 @@ namespace ObakiSite.Application.Features.LocalStorageCache.Services
                 throw new ArgumentNullException($"{nameof(Options)} is null.");
             }
 
-            var cacheData = await GetCacheDataAsync();
-            var cacheDataCreateDate = await GetCacheDataCreateDateAsync();
-
-            if (IsDataNeedsRefresh(cacheData, cacheDataCreateDate))
+            if(perfromRefreshData)
             {
                 await RefreshData();
             }
-            else
-            {
-                Data = cacheData;
-            }
+                
+            Data = await GetCacheDataAsync();
 
             if (Data is not null)
             {
@@ -43,29 +39,21 @@ namespace ObakiSite.Application.Features.LocalStorageCache.Services
             return ApplicationResponse<T>.Fail("No data found.");
         }
 
-        public async Task<bool> IsCacheEmpty()
+        //todo: Check how can data refresh  happen inside LocalStorageCache
+        public async Task<bool> IsDataNeedsRefresh()
         {
             var cacheData = await GetCacheDataAsync();
             var cacheDataCreateDate = await GetCacheDataCreateDateAsync();
-
-            if (cacheData is null || cacheDataCreateDate is null)
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-        private bool IsDataNeedsRefresh(in T? cacheData, in DateTime? cacheDataCreateDate)
-        {
             double totalHrsSinceCacheCreated = 0;
-            if (cacheDataCreateDate.HasValue)
+
+            if (cacheDataCreateDate is not null)
             {
                 totalHrsSinceCacheCreated = DateTime.UtcNow.Subtract((DateTime)cacheDataCreateDate).TotalHours;
             }
 
-            if (cacheData is null || totalHrsSinceCacheCreated > Options?.NumberOfHrsToRefreshCache)
+            if (cacheData is null || cacheDataCreateDate is null || totalHrsSinceCacheCreated > Options?.NumberOfHrsToRefreshCache)
             {
+                perfromRefreshData = true;
                 return true;
             }
 

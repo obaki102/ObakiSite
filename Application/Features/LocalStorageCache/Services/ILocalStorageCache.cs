@@ -12,6 +12,6 @@ namespace ObakiSite.Application.Features.LocalStorageCache.Services
         Task<ApplicationResponse<T>> GetCacheData();
         T? Data { get; set; }
         LocalStorageCacheOptions? Options { get; set; }
-        Task<bool> IsCacheEmpty();
+        Task<bool> IsDataNeedsRefresh();
     }
 }

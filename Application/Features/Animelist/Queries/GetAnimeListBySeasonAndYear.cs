@@ -36,7 +36,7 @@ namespace ObakiSite.Application.Features.Animelist.Queries
             var uriRequest = $"/api/animelists/{request.Season.SeasonOfTheYear}/{request.Season.Year}";
             return await _retryPolicy.ExecuteAsync(async () =>
             {
-                if (await _localStorageCache.IsCacheEmpty())
+                if (await _localStorageCache.IsDataNeedsRefresh())
                 {
                     _localStorageCache.Data = await httpClient.GetFromJsonAsync<AnimeListRoot>(uriRequest);
                 }
