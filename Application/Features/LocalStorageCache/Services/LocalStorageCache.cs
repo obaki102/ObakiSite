@@ -19,18 +19,26 @@ namespace ObakiSite.Application.Features.LocalStorageCache.Services
         public async Task<ApplicationResponse<T>> GetCacheData()
         {
             if (Options is null)
+            {
                 throw new ArgumentNullException($"{nameof(Options)} is null.");
+            }
 
             var cacheData = await GetCacheDataAsync();
             var cacheDataCreateDate = await GetCacheDataCreateDateAsync();
 
-            if(IsDataNeedsRefresh(cacheData, cacheDataCreateDate))
+            if (IsDataNeedsRefresh(cacheData, cacheDataCreateDate))
+            {
                 await RefreshData();
+            }
             else
+            {
                 Data = cacheData;
+            }
 
-            if(Data is not  null)
+            if (Data is not null)
+            {
                 return ApplicationResponse<T>.Success(Data);
+            }
 
             return ApplicationResponse<T>.Fail("No data found.");
         }
@@ -44,6 +52,7 @@ namespace ObakiSite.Application.Features.LocalStorageCache.Services
             {
                 return true;
             }
+
             return false;
         }
 
@@ -59,19 +68,22 @@ namespace ObakiSite.Application.Features.LocalStorageCache.Services
             {
                 return true;
             }
+
             return false;
         }
 
         private async Task ClearCache()
         {
             if (Options is null)
+            {
                 throw new ArgumentNullException($"{nameof(Options)} is null.");
+            }
 
             await _localStorageService.RemoveItemAsync(Options.DataKey);
             await _localStorageService.RemoveItemAsync(Options.CreationDateKey);
         }
 
-        private  async Task RefreshData()
+        private async Task RefreshData()
         {
             await _localStorageService.SetItemAsync(AnimeList.CacheDataKey, Data);
             await _localStorageService.SetItemAsync(AnimeList.CacheDataCreateDateKey, DateTime.UtcNow);

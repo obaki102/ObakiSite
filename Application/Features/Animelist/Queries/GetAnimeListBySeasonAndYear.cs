@@ -40,6 +40,7 @@ namespace ObakiSite.Application.Features.Animelist.Queries
                 {
                     _localStorageCache.Data = await httpClient.GetFromJsonAsync<AnimeListRoot>(uriRequest);
                 }
+
                 return await _localStorageCache.GetCacheData();
             });
 
