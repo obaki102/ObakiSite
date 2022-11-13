@@ -1,5 +1,5 @@
-﻿using Blazored.LocalStorage;
-using MediatR;
+﻿using MediatR;
+using ObakiSite.Application.Features.LocalStorageCache.Services;
 using ObakiSite.Shared.Constants;
 using ObakiSite.Shared.DTO;
 using ObakiSite.Shared.Models.Response;
@@ -14,14 +14,21 @@ namespace ObakiSite.Application.Features.Animelist.Queries
     public class GetAnimeListBySeasonAndYearHandler : IRequestHandler<GetAnimeListBySeasonAndYear, ApplicationResponse<AnimeListRoot>>
     {
         private readonly IHttpClientFactory _httpClientFactory;
-        private readonly ILocalStorageService _localStorageService;
+        private readonly ILocalStorageCache<AnimeListRoot> _localStorageCache;
         private readonly AsyncRetryPolicy<ApplicationResponse<AnimeListRoot>> _retryPolicy;
-        public GetAnimeListBySeasonAndYearHandler(IHttpClientFactory httpClientFactory, ILocalStorageService localStorageService)
+        public GetAnimeListBySeasonAndYearHandler(IHttpClientFactory httpClientFactory, ILocalStorageCache<AnimeListRoot> localStorageCache)
         {
             _httpClientFactory = httpClientFactory;
-            _localStorageService = localStorageService;
+            _localStorageCache = localStorageCache;
             _retryPolicy = Policy<ApplicationResponse<AnimeListRoot>>.Handle<HttpRequestException>()
                             .WaitAndRetryAsync(3, times => TimeSpan.FromMilliseconds(times * 100));
+
+            _localStorageCache.Options = new LocalStorageCacheOptions
+            {
+                CreationDateKey = AnimeList.CacheDataCreateDateKey,
+                DataKey = AnimeList.CacheDataKey,
+                NumberOfHrsToRefreshCache = 6
+            };
         }
         public async Task<ApplicationResponse<AnimeListRoot>> Handle(GetAnimeListBySeasonAndYear request, CancellationToken cancellationToken)
         {
@@ -29,30 +36,11 @@ namespace ObakiSite.Application.Features.Animelist.Queries
             var uriRequest = $"/api/animelists/{request.Season.SeasonOfTheYear}/{request.Season.Year}";
             return await _retryPolicy.ExecuteAsync(async () =>
             {
-                //todo create a reusable cache service
-                var cacheData = await _localStorageService.GetItemAsync<AnimeListRoot>(AnimeList.CacheDataKey);
-                var data = cacheData;
-                var cacheDataCreateDate = await _localStorageService.GetItemAsync<DateTime?>(AnimeList.CacheDataCreateDateKey);
-                double totalHrsSinceCacheCreated = 0;
-                if (cacheDataCreateDate is not null)
+                if (_localStorageCache.IsCacheEmpty())
                 {
-                    totalHrsSinceCacheCreated = DateTime.UtcNow.Subtract((DateTime)cacheDataCreateDate).TotalHours;
+                    _localStorageCache.Data = await httpClient.GetFromJsonAsync<AnimeListRoot>(uriRequest);
                 }
-
-                if (cacheData is null || totalHrsSinceCacheCreated > 6)
-                {
-                    var response = await httpClient.GetFromJsonAsync<AnimeListRoot>(uriRequest);
-                    data = response;
-                    await _localStorageService.SetItemAsync(AnimeList.CacheDataKey, response);
-                    await _localStorageService.SetItemAsync(AnimeList.CacheDataCreateDateKey, DateTime.UtcNow);
-                }
-
-                if (data is null)
-                {
-                    return ApplicationResponse<AnimeListRoot>.Fail("No response returned.");
-                }
-
-                return ApplicationResponse<AnimeListRoot>.Success(data);
+                return await _localStorageCache.GetCacheData();
             });
 
         }
