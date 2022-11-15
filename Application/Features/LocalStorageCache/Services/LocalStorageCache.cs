@@ -14,8 +14,6 @@ namespace ObakiSite.Application.Features.LocalStorageCache.Services
         }
         public T? Data { get; set; }
         public LocalStorageCacheOptions? Options { get; set; }
-        private async Task<T> GetCacheDataAsync() => await _localStorageService.GetItemAsync<T>(Options?.DataKey);
-        private async Task<DateTime?> GetCacheDataCreateDateAsync() => await _localStorageService.GetItemAsync<DateTime?>(Options?.CreationDateKey);
         private bool perfromRefreshData { get; set; } = false;
         public async Task<ApplicationResponse<T>> GetCacheData()
         {
@@ -29,7 +27,7 @@ namespace ObakiSite.Application.Features.LocalStorageCache.Services
                 await RefreshData();
             }
                 
-            Data = await GetCacheDataAsync();
+            Data = await _localStorageService.GetItemAsync<T>(Options?.DataKey);
 
             if (Data is not null)
             {
@@ -42,8 +40,8 @@ namespace ObakiSite.Application.Features.LocalStorageCache.Services
         //todo: Check how can data refresh  happen inside LocalStorageCache
         public async Task<bool> IsDataNeedsRefresh()
         {
-            var cacheData = await GetCacheDataAsync();
-            var cacheDataCreateDate = await GetCacheDataCreateDateAsync();
+            var cacheData =  await _localStorageService.GetItemAsync<T>(Options?.DataKey);
+            var cacheDataCreateDate = await _localStorageService.GetItemAsync<DateTime?>(Options?.CreationDateKey);
             double totalHrsSinceCacheCreated = 0;
 
             if (cacheDataCreateDate is not null)
