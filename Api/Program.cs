@@ -1,18 +1,28 @@
-﻿using Microsoft.Azure.Functions.Extensions.DependencyInjection;
+﻿using System;
+using System.Threading.Tasks;
+using Microsoft.Azure.Functions.Worker;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using ObakiSite.Application.Extensions;
 using ObakiSite.Shared.Constants;
-using System;
-
-[assembly: FunctionsStartup(typeof(ObakiSite.Api.Program))]
-
 namespace ObakiSite.Api
 {
-    public class Program : FunctionsStartup
+    public class Program
     {
-        public override void Configure(IFunctionsHostBuilder builder)
+        static async Task Main(string[] args)
         {
-            builder.Services.AddHttpAnimeListService(new Uri("https://api.myanimelist.net/"),
+            var host = new HostBuilder()
+
+                 .ConfigureFunctionsWorkerDefaults()
+                .ConfigureServices(s =>
+                {
+                    s.AddHttpAnimeListService(new Uri("https://api.myanimelist.net/"),
                 Environment.GetEnvironmentVariable(AnimeList.AnimelistClientId));
+                })
+
+                .Build();
+            await host.RunAsync();
         }
     }
 }
+

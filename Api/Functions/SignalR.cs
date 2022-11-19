@@ -1,33 +1,37 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Microsoft.Azure.WebJobs.Extensions.Http;
-using Microsoft.Azure.WebJobs;
 using ObakiSite.Shared.Constants;
 using System.Threading.Tasks;
-using Microsoft.Azure.WebJobs.Extensions.SignalRService;
+using Microsoft.Azure.Functions.Worker;
+using Microsoft.Azure.Functions.Worker.Http;
+using System.IO;
+using System.Net;
 
 namespace ObakiSite.Api.Functions
 {
     public static class SignalR
     {
-        [FunctionName("negotiate")]
-        public static SignalRConnectionInfo GetSignalRInfo(
-        [HttpTrigger(AuthorizationLevel.Function, "post")] HttpRequest req,
-        [SignalRConnectionInfo(HubName = "chat")] SignalRConnectionInfo connectionInfo)
+        [Function("negotiate")]
+        public static async Task<HttpResponseData> GetSignalRInfo(
+        [HttpTrigger(AuthorizationLevel.Function, "post")] HttpRequestData req,
+            [SignalRConnectionInfoInput(HubName = "chat")] string connectionInfo)
         {
-            return connectionInfo;
+            HttpResponseData response = req.CreateResponse(HttpStatusCode.OK);
+            response.Headers.Add("Content-Type", "application/json");
+            await response.WriteStringAsync(connectionInfo);
+            return response;
         }
 
-        [FunctionName("messages")]
-        public static Task SendMessage(
-         [HttpTrigger(AuthorizationLevel.Function, "post")] object chatMessage,
-         [SignalR(HubName = "chat")] IAsyncCollector<SignalRMessage> signalRMessages)
+        [Function("messages")]
+        [SignalROutput(HubName = "chat", ConnectionStringSetting = "AzureSignalRConnectionString")]
+        public static SignalRMessageAction SendMessage(
+         [HttpTrigger(AuthorizationLevel.Function, "post")] 
+         HttpRequestData req)
         {
-            return signalRMessages.AddAsync(
-                new SignalRMessage
-                {
-                    Target = HubHandler.ReceivedMessage,
-                    Arguments = new[] { chatMessage }
-                });
+            using var bodyReader = new StreamReader(req.Body);
+            return new SignalRMessageAction(HubHandler.ReceivedMessage)
+            {
+                Arguments = new[] { bodyReader.ReadToEnd() },
+            };
         }
     }
 }

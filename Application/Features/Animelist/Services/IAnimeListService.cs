@@ -6,5 +6,6 @@ namespace ObakiSite.Application.Features.Animelist.Services
     public interface IAnimeListService
     {
         Task<ApplicationResponse<AnimeListRoot>> GetAnimeListBySeasonAndYear(int year, string season);
+
     }
 }

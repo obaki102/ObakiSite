@@ -42,7 +42,7 @@ else
                 <MudCard Style="width:250px;">
                     <MudCardHeader>
                         <CardHeaderContent>
-                            @if (@anime.Node.NumEpisodes == 0 && anime.Node.NumEpisodes != null)
+                            @if (@anime.Node.NumEpisodes == 0 && anime.Node.NumEpisodes != 0)
                             {
                                 <MudText Typo="Typo.body2">
                                     @FormatDate(anime.Node.StartDate)

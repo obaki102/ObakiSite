@@ -1,35 +1,41 @@
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Extensions.Http;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using ObakiSite.Application.Features.Animelist.Services;
+using Microsoft.Azure.Functions.Worker;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Azure.Functions.Worker.Http;
+using System.Net;
 
 namespace ObakiSite.Api.Functions
 {
     public class AnimeList
     {
         private readonly IAnimeListService _animeListService;
-        public AnimeList(IAnimeListService animeListService)
+        private readonly ILogger<AnimeList> _logger;
+        public AnimeList(IAnimeListService animeListService, ILogger<AnimeList> logger)
         {
             _animeListService = animeListService;
+            _logger = logger;
         }
-        [FunctionName("GetAnimeListBySeasonAndYear")]
-        public async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Function, "get", Route = "animelists/{season?}/{year:int?}")] HttpRequest req,
+        [Function("GetAnimeListBySeasonAndYear")]
+        public async Task<HttpResponseData> Run(
+            [HttpTrigger(AuthorizationLevel.Function, "get", Route = "animelists/{season?}/{year:int?}")] HttpRequestData req,
             string season,
-            int year,
-            ILogger log)
+            int year)
         {
-            log.LogInformation("C# HTTP trigger function processed a request.");
+            _logger.LogInformation("C# HTTP trigger function processed a request.");
 
-            var response = await _animeListService.GetAnimeListBySeasonAndYear(year, season);
-            if (response.IsSuccess)
+            var result = await _animeListService.GetAnimeListBySeasonAndYear(year, season);
+            var response = req.CreateResponse(HttpStatusCode.OK);
+            if (result.IsSuccess)
             {
-                return new OkObjectResult(response.Data);
+                await response.WriteAsJsonAsync(result.Data);
+                return response;
             }
-            return new BadRequestResult();
+
+            return req.CreateResponse(HttpStatusCode.BadRequest);
+
         }
+
     }
 }

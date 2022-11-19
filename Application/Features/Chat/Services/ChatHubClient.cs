@@ -36,10 +36,9 @@ namespace ObakiSite.Application.Features.Chat.Services
                                 .AddMessagePackProtocol()
                                 .Build();
 
-                hubConnection.On<object>(HubHandler.ReceivedMessage, (receivedMessage) =>
+                hubConnection.On<string>(HubHandler.ReceivedMessage, (receivedMessage) =>
                 {
-                    var json = JsonConvert.SerializeObject(receivedMessage);
-                    var chatMessage = JsonConvert.DeserializeObject<ChatMessage>(json);
+                    var chatMessage = JsonConvert.DeserializeObject<ChatMessage>(receivedMessage);
                     ReceivedMessageHandler?.Invoke(this, new ChatMessageEventArgs { ChatMessage = chatMessage ?? new() });
                 });
 

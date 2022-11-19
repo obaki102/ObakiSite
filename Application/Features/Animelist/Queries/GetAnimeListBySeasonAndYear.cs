@@ -33,7 +33,7 @@ namespace ObakiSite.Application.Features.Animelist.Queries
         public async Task<ApplicationResponse<AnimeListRoot>> Handle(GetAnimeListBySeasonAndYear request, CancellationToken cancellationToken)
         {
             var httpClient = _httpClientFactory.CreateClient(HttpNameClient.Default);
-            var uriRequest = $"/api/animelists/{request.Season.SeasonOfTheYear}/{request.Season.Year}";
+            var uriRequest = $"/api/animelists/{request.Season.SeasonName}/{request.Season.Year}";
             return await _retryPolicy.ExecuteAsync(async () =>
             {
                 if (await _localStorageCache.IsDataNeedsRefresh())
