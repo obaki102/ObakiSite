@@ -1,0 +1,86 @@
+﻿@layout EmptyLayout
+@page "/mycv"
+<PageTitle>My CV</PageTitle>
+<div class="d-flex justify-center flex-grow-1 gap-4" Elevation="0">
+    <MudStack>
+        <div class="d-flex m1-n16">
+            <MudCard>
+                <MudCardHeader>
+                    <CardHeaderAvatar>
+                        <MudAvatar Style="height:70px; width:70px; " Image="/img/myprofile.jpg"></MudAvatar>
+                    </CardHeaderAvatar>
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.body1">Joshua J L. Piluden</MudText>
+                        <MudText Typo="Typo.body2">Application Developer</MudText>
+                    </CardHeaderContent>
+                </MudCardHeader>
+                <MudText Class="ml-4"  Typo="Typo.body2">I am a passionate dotnet developer who enjoys being challenged. I am keen on working on projects that require me to work outside my knowledge set as I  enjoy creating new tools and applications.</MudText>
+                <MudCardContent>
+                        <MudText Typo="Typo.subtitle2">Skills</MudText>
+                        <MudChip Color="Color.Primary">C#</MudChip>
+                        <MudChip Color="Color.Primary">Blazor</MudChip>
+                        <MudChip Color="Color.Primary">Azure</MudChip>
+                        <MudChip Color="Color.Primary">Power Platform</MudChip>
+                        <MudChip Color="Color.Primary">Others</MudChip>
+                </MudCardContent>
+            </MudCard>
+
+
+        </div>
+        <MudPaper class="align-self-start pa-4 ">
+            <MudTimeline TimelineOrientation="TimelineOrientation.Vertical" TimelinePosition="TimelinePosition.Start">
+                <MudTimelineItem Color="Color.Info" Size="Size.Small">
+                    <ItemOpposite>
+                        <MudText Color="Color.Info" Typo="Typo.h5">April 2016 - Present</MudText>
+                    </ItemOpposite>
+                    <ItemContent>
+                        <MudText Color="Color.Info" Typo="Typo.h6" GutterBottom="true">IBM</MudText>
+                        <MudPaper Width="100%" Class="mud-theme-dark">
+                            <MudList Dense="true">
+                                <MudListItem Text="Place holder" Icon="@Icons.Filled.Bookmark" IconColor="Color.Info" />
+                            </MudList>
+                            </MudPaper>
+                    </ItemContent>
+                </MudTimelineItem>
+                <MudTimelineItem Color="Color.Success" Size="Size.Small">
+                    <ItemOpposite>
+                        <MudText Color="Color.Success" Typo="Typo.h5">April 2012 - March 2016</MudText>
+                    </ItemOpposite>
+                    <ItemContent>
+                        <MudText Color="Color.Success" Typo="Typo.h6" GutterBottom="true">
+                            Accenture
+                        </MudText>
+                        <MudPaper Width="100%" Class="mud-theme-dark">
+                            <MudList Dense="true">
+                                <MudListItem Text="Place holder" Icon="@Icons.Filled.Bookmark" IconColor="Color.Success" />
+                            </MudList>
+                        </MudPaper>
+                    </ItemContent>
+                </MudTimelineItem>
+                <MudTimelineItem Color="Color.Secondary" Size="Size.Small">
+                    <ItemOpposite>
+                        <MudText Color="Color.Secondary" Typo="Typo.h5">May 2011 - March 2012</MudText>
+                    </ItemOpposite>
+                    <ItemContent>
+                        <MudText Color="Color.Secondary" Typo="Typo.h6" GutterBottom="true">
+                            Texas Instruments
+                        </MudText>
+                        <MudPaper Width="100%" Class="mud-theme-dark">
+                            <MudList Dense="true">
+                                <MudListItem Text="Maintained HR applications for TI Baguio and Clark." Icon="@Icons.Filled.Bookmark" IconColor="Color.Secondary" />
+                                <MudListItem Text="Automated weekly generation of OT reports. " Icon="@Icons.Filled.Bookmark" IconColor="Color.Secondary" />
+                                @*  <MudListItem Text="Created a windows form application that increased the resolution time of level 3 ticket requests." Icon="@Icons.Filled.Bookmark" IconColor="Color.Secondary" />*@
+                                <MudListItem Text="Created bash scripts for wafer data archiving." Icon="@Icons.Filled.Bookmark" IconColor="Color.Secondary" />
+                                <MudListItem Text="Provided support for level 3 ticket requests." Icon="@Icons.Filled.Bookmark" IconColor="Color.Secondary" />
+                            </MudList>
+                        </MudPaper>
+                    </ItemContent>
+                </MudTimelineItem>
+            </MudTimeline>
+        </MudPaper>
+    </MudStack>
+</div>
+
+@code {
+
+}

@@ -1,0 +1,25 @@
+﻿@inherits LayoutComponentBase
+@inject IBadgeUpdater BadgeUpdater
+<MudThemeProvider @bind-IsDarkMode="@_isDarkMode" Theme="_theme" />
+<MudDialogProvider />
+<MudSnackbarProvider />
+<MudLayout>
+    <MudMainContent>
+        <MudContainer MaxWidth="MaxWidth.Large" Class="my-4 pt-4">
+            <ErrorBoundary>
+                <ChildContent>  @Body </ChildContent>
+                <ErrorContent Context="Exception">
+                    <MudChip Color="Color.Secondary">@Exception.GetType()</MudChip>
+                    <MudChip Color="Color.Secondary">@Exception.Message</MudChip>
+                    <p class="errorUI">Nothing to see here right now. Sorry!</p>
+                </ErrorContent>
+            </ErrorBoundary>
+        </MudContainer>
+    </MudMainContent>
+</MudLayout>
+
+@code {
+    private MudTheme _theme = new();
+    private bool _isDarkMode = true;
+    bool _drawerOpen = false;
+}
