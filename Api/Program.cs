@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using ObakiSite.Application.Extensions;
@@ -13,10 +12,10 @@ namespace ObakiSite.Api
         {
             var host = new HostBuilder()
 
-                 .ConfigureFunctionsWorkerDefaults()
-                .ConfigureServices(s =>
+                .ConfigureFunctionsWorkerDefaults()
+                .ConfigureServices(services =>
                 {
-                    s.AddHttpAnimeListService(new Uri("https://api.myanimelist.net/"),
+                    services.AddHttpAnimeListService(new Uri("https://api.myanimelist.net/"),
                 Environment.GetEnvironmentVariable(AnimeList.AnimelistClientId));
                 })
 

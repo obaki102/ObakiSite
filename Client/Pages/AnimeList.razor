@@ -1,6 +1,8 @@
 ﻿@page "/anime"
 @using ObakiSite.Application.Features.Animelist.Queries
 @inject ISender Mediatr
+<PageTitle>Animelist</PageTitle>
+
 @if (AnimeLists == null)
 {
     <div class="d-flex justify-center flex-row flex-wrap gap-4">
