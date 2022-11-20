@@ -4,8 +4,7 @@
 <MudDialogProvider />
 <MudSnackbarProvider />
 <MudLayout>
-    <MudMainContent>
-        <MudContainer MaxWidth="MaxWidth.Large" Class="my-4 pt-4">
+        <MudContainer MaxWidth="MaxWidth.Medium" Class="mt-16">
             <ErrorBoundary>
                 <ChildContent>  @Body </ChildContent>
                 <ErrorContent Context="Exception">
@@ -15,7 +14,6 @@
                 </ErrorContent>
             </ErrorBoundary>
         </MudContainer>
-    </MudMainContent>
 </MudLayout>
 
 @code {
