@@ -4,18 +4,20 @@
 <MudDialogProvider />
 <MudSnackbarProvider />
 <MudLayout>
-        <MudContainer MaxWidth="MaxWidth.Medium" Class="mt-16">
-            <ErrorBoundary>
-                <ChildContent>  @Body </ChildContent>
-                <ErrorContent Context="Exception">
-                    <MudChip Color="Color.Secondary">@Exception.GetType()</MudChip>
-                    <MudChip Color="Color.Secondary">@Exception.Message</MudChip>
-                    <p class="errorUI">Nothing to see here right now. Sorry!</p>
-                </ErrorContent>
-            </ErrorBoundary>
-        </MudContainer>
+    <MudContainer MaxWidth="MaxWidth.Medium" Class="mt-4">
+        <ErrorBoundary>
+            <ChildContent>  @Body </ChildContent>
+            <ErrorContent Context="Exception">
+                <MudChip Color="Color.Secondary">@Exception.GetType()</MudChip>
+                <MudChip Color="Color.Secondary">@Exception.Message</MudChip>
+                <p class="errorUI">Nothing to see here right now. Sorry!</p>
+            </ErrorContent>
+        </ErrorBoundary>
+    </MudContainer>
+    <MudScrollToTop>
+        <MudFab Color="Color.Tertiary" Icon="@Icons.Filled.ArrowCircleUp" />
+    </MudScrollToTop>
 </MudLayout>
-
 @code {
     private MudTheme _theme = new();
     private bool _isDarkMode = true;
