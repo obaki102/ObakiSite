@@ -11,7 +11,6 @@ namespace ObakiSite.Api
         static async Task Main(string[] args)
         {
             var host = new HostBuilder()
-
                 .ConfigureFunctionsWorkerDefaults()
                 .ConfigureServices(services =>
                 {

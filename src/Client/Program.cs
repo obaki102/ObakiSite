@@ -4,6 +4,7 @@ using ObakiSite.Client;
 using MudBlazor.Services;
 using ObakiSite.Client.Services.Components.Badge;
 using ObakiSite.Application.Extensions;
+using System;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 var baseUrl = new Uri(builder.Configuration["API_Prefix"] ?? builder.HostEnvironment.BaseAddress);
@@ -19,6 +20,15 @@ builder.Services.AddScopedChatHubClient(options =>
 {
     options.HubUrl = builder.Configuration["API_Prefix"] is null ? $"{builder.HostEnvironment.BaseAddress}api" : $"{builder.Configuration["API_Prefix"]}/api";
 });
+
+if (builder.HostEnvironment.Environment == "Development")
+{
+    builder.Logging.SetMinimumLevel(LogLevel.Debug);
+}
+else
+{
+    builder.Logging.SetMinimumLevel(LogLevel.None);
+}
 
 builder.Services.AddMudServices();
 await builder.Build().RunAsync();
