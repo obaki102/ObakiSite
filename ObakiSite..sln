@@ -2,13 +2,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31717.71
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ObakiSite.Client", "Client\ObakiSite.Client.csproj", "{E6DB1D36-AE36-41B7-9D0C-34F84503258B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ObakiSite.Client", "src\Client\ObakiSite.Client.csproj", "{E6DB1D36-AE36-41B7-9D0C-34F84503258B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ObakiSite.Api", "Api\ObakiSite.Api.csproj", "{71A8290A-3797-4AAC-A7B3-F7BEA9B538F0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ObakiSite.Api", "src\Api\ObakiSite.Api.csproj", "{71A8290A-3797-4AAC-A7B3-F7BEA9B538F0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ObakiSite.Shared", "Shared\ObakiSite.Shared.csproj", "{4CD5D362-2080-42F5-930B-2CB8EAAD0BBC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ObakiSite.Shared", "src\Shared\ObakiSite.Shared.csproj", "{4CD5D362-2080-42F5-930B-2CB8EAAD0BBC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ObakiSite.Application", "Application\ObakiSite.Application.csproj", "{4AD54B49-25B2-4E44-A861-F994422AD74A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ObakiSite.Application", "src\Application\ObakiSite.Application.csproj", "{4AD54B49-25B2-4E44-A861-F994422AD74A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ObakiSite.Tests", "test\ObakiSite.Tests\ObakiSite.Tests.csproj", "{DA5AE286-68F8-4E35-9EB0-06637CF9DCC3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,6 +34,10 @@ Global
 		{4AD54B49-25B2-4E44-A861-F994422AD74A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4AD54B49-25B2-4E44-A861-F994422AD74A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4AD54B49-25B2-4E44-A861-F994422AD74A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA5AE286-68F8-4E35-9EB0-06637CF9DCC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA5AE286-68F8-4E35-9EB0-06637CF9DCC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA5AE286-68F8-4E35-9EB0-06637CF9DCC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA5AE286-68F8-4E35-9EB0-06637CF9DCC3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
