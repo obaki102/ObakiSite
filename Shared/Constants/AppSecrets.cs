@@ -53,7 +53,8 @@ public static class HubHandler
 }
 public static class HttpNameClient
 {
-    public const string Default = "Default";
-    public const string AnimeList = "Animelist";
+    public const string Default = "DefaultHttpClient";
+    public const string AnimeList = "AnimelistHttpClient";
+    public const string ChatHub = "ChatHubHttpClient";
 }
 

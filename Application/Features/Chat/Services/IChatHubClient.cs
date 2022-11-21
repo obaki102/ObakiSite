@@ -1,4 +1,5 @@
 ﻿using ObakiSite.Shared.Events;
+using ObakiSite.Shared.Models;
 
 namespace ObakiSite.Application.Features.Chat.Services
 {
@@ -6,8 +7,8 @@ namespace ObakiSite.Application.Features.Chat.Services
     {
         Task ConnectAsync();
         Task DisconnectAsync();
-        string HubUrl { get; }
         string HubConenctionId { get; }
+        Task SendMessage(ChatMessage chatMessage);
 
         event EventHandler<ChatMessageEventArgs>? ReceivedMessageHandler;
     }

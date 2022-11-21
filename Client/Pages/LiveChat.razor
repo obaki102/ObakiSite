@@ -3,7 +3,6 @@
 @inject NavigationManager NavigationManager
 @inject IConfiguration ConfigurationManager
 @inject IJSRuntime JsRuntime
-@inject HttpClient HttpClient
 @inject IChatHubClient ChatHubClient
 @inject IBadgeUpdater BadgeUpdater
 
@@ -98,7 +97,8 @@
                 User = ChatHubClient.HubConenctionId,
                 Message = _enteredMessage
             };
-        await HttpClient.PostAsJsonAsync($"{ChatHubClient.HubUrl}/messages", chatMessage);
+
+        await ChatHubClient.SendMessage(chatMessage);
     }
 
     public bool IsMyMessage(string name)
@@ -118,6 +118,5 @@
     {
         await ChatHubClient.DisconnectAsync();
         ChatHubClient.ReceivedMessageHandler -= ReceivedChatMessage;
-        HttpClient.Dispose();
     }
 }
