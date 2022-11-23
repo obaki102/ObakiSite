@@ -1,7 +1,9 @@
 ﻿@layout EmptyLayout
 @page "/mycv"
+@inject IWebAssemblyHostEnvironment WebAssemblyHostEnvironment
+@inject IJSRuntime JsRuntime
 <PageTitle>My CV</PageTitle>
-<MudPaper Class="d-flex flex-column justify-center flex-grow-1 gap-4 mb-4"  Elevation="1">
+<MudPaper Class="d-flex flex-column justify-center flex-grow-1 gap-4 mb-4" Elevation="1">
     <div class="d-flex mx-8">
         <MudCard Elevation="0">
             <MudCardHeader>
@@ -210,14 +212,30 @@
         <MudText Typo="Typo.subtitle2" Class="ml-8 mb-2">Contacts</MudText>
         <MudCard Outlined="true" Elevation="25" Class="ml-8">
             <MudCardContent>
-                <MudIconButton Href="https://github.com/obaki102" Icon="@Icons.Custom.Brands.GitHub" Color="Color.Primary" />
-                <MudIconButton Href="mailto:joshuajpiluden@gmail.com" Icon="@Icons.Custom.Brands.Google" Color="Color.Primary" />
-                <MudIconButton Href="https://www.linkedin.com/in/joshua-j-piluden-b06798110" Icon="@Icons.Custom.Brands.LinkedIn" Color="Color.Primary" />
+                <MudTooltip Text="GitHub" Color="Color.Primary" Placement="Placement.Bottom">
+                    <MudIconButton Href="https://github.com/obaki102" Icon="@Icons.Custom.Brands.GitHub" Color="Color.Primary" />
+                </MudTooltip>
+                <MudTooltip Text="My email address" Color="Color.Primary" Placement="Placement.Bottom">
+                    <MudIconButton Href="mailto:joshuajpiluden@gmail.com" Icon="@Icons.Custom.Brands.Google" Color="Color.Primary" />
+                </MudTooltip>
+                <MudTooltip Text="Linkedin" Color="Color.Primary" Placement="Placement.Bottom">
+                    <MudIconButton Href="https://www.linkedin.com/in/joshua-j-piluden-b06798110" Icon="@Icons.Custom.Brands.LinkedIn" Color="Color.Primary" />
+                </MudTooltip>
+                <MudTooltip Text="Please download my cv here." Color="Color.Primary" Placement="Placement.Bottom">
+                    <MudIconButton OnClick="@DownloadFileFromURL" Icon="@Icons.Filled.Download" Color="Color.Primary" />
+                </MudTooltip>
             </MudCardContent>
         </MudCard>
     </div>
 </MudPaper>
 
 @code {
-    //todo: Make the page dynamic by storing  the data in  a data store.
+
+
+    private async Task DownloadFileFromURL()
+    {
+
+        var fileURL = $"{WebAssemblyHostEnvironment.BaseAddress}/files/JoshuaJPiludenCV.pdf";
+        await JsRuntime.InvokeVoidAsync("DownloadPdfFile", "JoshuaJPiludenCV.pdf", fileURL);
+    }
 }

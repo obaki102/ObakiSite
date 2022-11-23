@@ -58,3 +58,9 @@ public static class HttpNameClient
     public const string ChatHub = "ChatHubHttpClient";
 }
 
+public static class FilesUrl
+{
+
+    public const string MyCsvPdfFile = "/files/JoshuaJPiludenCV.pdf";
+}
+
