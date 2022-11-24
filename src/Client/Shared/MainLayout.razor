@@ -1,6 +1,5 @@
 ﻿@using ObakiSite.Client.Services.Components.Badge
 @inherits LayoutComponentBase
-@inject IBadgeUpdater BadgeUpdater
 <MudThemeProvider @bind-IsDarkMode="@_isDarkMode" Theme="_theme" />
 <MudDialogProvider />
 <MudSnackbarProvider />
@@ -20,34 +19,11 @@
                 <MudTooltip Text="GitHub repo" Color="Color.Primary" Placement="Placement.Bottom">
                     <MudIconButton Href="https://github.com/obaki102/ObakiSite" Icon="@Icons.Custom.Brands.GitHub" Color="Color.Primary" />
                 </MudTooltip>
-                @if (_bagedeNo == 0)
-                {
-                    <MudTooltip Text="Chat" Color="Color.Primary" Placement="Placement.Bottom">
-                        <MudIconButton Icon="@Icons.Material.Filled.Chat" Color="Color.Primary" OnClick="@OpenDrawer" />
-                    </MudTooltip>
-                }
-                else
-                {
-                    <PageTitle>
-                       New Message: @_bagedeNo
-                    </PageTitle>
-                    <MudTooltip Text="Chat" Color="Color.Primary" Placement="Placement.Bottom">
-                        <MudBadge Content="@_bagedeNo" Color="Color.Primary" Overlap="true" Class="mx-6 my-4">
-                            <MudIconButton Icon="@Icons.Material.Filled.Chat" Color="Color.Primary" OnClick="@OpenDrawer" />
-                        </MudBadge>
-                    </MudTooltip>
-                }
             </div>
         </MudContainer>
     </MudAppBar>
-    <MudDrawer @bind-Open="@_drawerOpen" DisableOverlay="true" Width="400px" Height="100%" Anchor="Anchor.End" Elevation="1" Variant="@DrawerVariant.Responsive">
-        <MudTooltip Text="Back" Color="Color.Primary" Placement="Placement.Bottom">
-            <MudIconButton Icon="@Icons.Filled.ArrowBack" Color="Color.Primary" OnClick="@OpenDrawer" />
-        </MudTooltip>
-        <LiveChat />
-    </MudDrawer>
     <MudMainContent>
-        <MudContainer MaxWidth="MaxWidth.Large" Class="my-16 pt-4">
+        <MudContainer MaxWidth="MaxWidth.Large" Class="my-4">
             <ErrorBoundary>
                 <ChildContent>  @Body </ChildContent>
                 <ErrorContent Context="Exception">
@@ -61,7 +37,6 @@
 </MudLayout>
 
 @code {
-
     private MudTheme _theme = new();
     private bool _isDarkMode = true;
     private int _bagedeNo = 0;
@@ -70,11 +45,6 @@
     public void OpenDrawer()
     {
         _drawerOpen = !_drawerOpen;
-    }
-
-    protected override void OnInitialized()
-    {
-        BadgeUpdater.BadgeChangedHandler += UpdateBadge;
     }
 
     public void UpdateBadge(object? sender, int badgeNo)

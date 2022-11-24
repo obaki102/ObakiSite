@@ -1,15 +1,32 @@
 ﻿@page "/"
 <PageTitle>Home</PageTitle>
-<MudCarousel Class="mud-width-full" Style="height:200px;" ShowArrows="true" ShowBullets="true" EnableSwipeGesture="true" AutoCycle="true" TData="object">
-    <MudCarouselItem Transition="Transition.Slide" Color="@Color.Primary">
-        <div class="d-flex" style="height:100%">
-            <MudText Typo="Typo.caption" GutterBottom="true" Style="font-size: 15px;">Hello there! Welcome to my site.</MudText>
-        </div>
-    </MudCarouselItem>
-    <MudCarouselItem Transition="Transition.Slide" Color="@Color.Secondary">
-        <div class="d-flex" style="height:100%">
-            <MudText Typo="Typo.caption" GutterBottom="true" Style="font-size: 15px;">Hello there! Welcome to my site.</MudText>
-        </div>
-    </MudCarouselItem>
-</MudCarousel>
+<div class="d-flex flex-column flex-grow-1 gap-4" Elevation="0">
+    <MudCarousel Class="mud-width-full" Style="height:200px;" ShowArrows="true" ShowBullets="true" EnableSwipeGesture="true" AutoCycle="true" TData="object">
+        <MudCarouselItem Transition="Transition.Slide" Color="@Color.Primary">
+            <div class="d-flex" style="height:100%">
+                <MudText Class="mx-auto my-auto" Typo="Typo.caption" GutterBottom="true" Style="font-size: 15px;">Hello there! Welcome to my site.</MudText>
+            </div>
+        </MudCarouselItem>
+        <MudCarouselItem Transition="Transition.Slide" Color="@Color.Secondary">
+            <div class="d-flex" style="height:100%">
+                <MudText Class="mx-auto my-auto" Typo="Typo.caption" GutterBottom="true" Style="font-size: 15px;">Hello there! Welcome to my site.</MudText>
+            </div>
+        </MudCarouselItem>
+    </MudCarousel>
 
+    <MudCard Outlined="true" Elevation="25">
+        <MudCardContent>
+            <MudText Typo="Typo.h6">
+                Demo
+            </MudText>
+            <MudList Dense="true">
+                <MudListItem>
+                    <MudText Typo="Typo.body2">
+                        <MudIconButton Icon="@Icons.Material.Filled.Chat" Color="Color.Primary" Href="/livechat" />
+                         Chat App
+                    </MudText>
+                </MudListItem>
+            </MudList>
+        </MudCardContent>
+    </MudCard>
+</div>

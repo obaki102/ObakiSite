@@ -10,7 +10,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ObakiSite.Shared", "src\Sha
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ObakiSite.Application", "src\Application\ObakiSite.Application.csproj", "{4AD54B49-25B2-4E44-A861-F994422AD74A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ObakiSite.Tests", "test\ObakiSite.Tests\ObakiSite.Tests.csproj", "{DA5AE286-68F8-4E35-9EB0-06637CF9DCC3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ObakiSite.Tests", "test\ObakiSite.Tests\ObakiSite.Tests.csproj", "{DA5AE286-68F8-4E35-9EB0-06637CF9DCC3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
