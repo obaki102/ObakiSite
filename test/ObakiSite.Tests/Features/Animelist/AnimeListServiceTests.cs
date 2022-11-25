@@ -32,7 +32,7 @@ namespace ObakiSite.Tests.Features.Animelist
 
         [Fact]
         [Trait("AnimeListHttpServiceTests", "GetAnimeListBySeasonAndYear")]
-        public async Task GetAnimeListBySeasonAndYear_502_ShouldReturnFalse()
+        public async Task GetAnimeListBySeasonAndYear_HttpStatusCode502_ShouldReturnFalse()
         {
             //Arrange
             var mockHttp = new MockHttpMessageHandler();
@@ -54,7 +54,7 @@ namespace ObakiSite.Tests.Features.Animelist
 
         [Fact]
         [Trait("AnimeListHttpServiceTests", "GetAnimeListBySeasonAndYear")]
-        public async Task GetAnimeListBySeasonAndYear_504_ShouldReturnFalse()
+        public async Task GetAnimeListBySeasonAndYear_HttpStatusCode504_ShouldReturnFalse()
         {
             //Arrange
             var mockHttp = new MockHttpMessageHandler();

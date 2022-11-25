@@ -3,8 +3,6 @@ using ObakiSite.Application.Features.LocalStorageCache.Services;
 using ObakiSite.Shared.Constants;
 using ObakiSite.Shared.DTO;
 using ObakiSite.Shared.Models.Response;
-using Polly;
-using Polly.Retry;
 using System.Net.Http.Json;
 
 namespace ObakiSite.Application.Features.Animelist.Queries
@@ -15,14 +13,10 @@ namespace ObakiSite.Application.Features.Animelist.Queries
     {
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly ILocalStorageCache<AnimeListRoot> _localStorageCache;
-        private readonly AsyncRetryPolicy<ApplicationResponse<AnimeListRoot>> _retryPolicy;
         public GetAnimeListBySeasonAndYearHandler(IHttpClientFactory httpClientFactory, ILocalStorageCache<AnimeListRoot> localStorageCache)
         {
             _httpClientFactory = httpClientFactory;
             _localStorageCache = localStorageCache;
-            _retryPolicy = Policy<ApplicationResponse<AnimeListRoot>>.Handle<HttpRequestException>()
-                            .WaitAndRetryAsync(3, times => TimeSpan.FromMilliseconds(times * 100));
-
             _localStorageCache.Options = new LocalStorageCacheOptions
             {
                 CreationDateKey = AnimeList.CacheDataCreateDateKey,
@@ -34,16 +28,12 @@ namespace ObakiSite.Application.Features.Animelist.Queries
         {
             var httpClient = _httpClientFactory.CreateClient(HttpNameClient.Default);
             var uriRequest = $"/api/animelists/{request.Season.SeasonName}/{request.Season.Year}";
-            return await _retryPolicy.ExecuteAsync(async () =>
+            if (await _localStorageCache.IsDataNeedsRefresh())
             {
-                if (await _localStorageCache.IsDataNeedsRefresh())
-                {
-                    _localStorageCache.Data = await httpClient.GetFromJsonAsync<AnimeListRoot>(uriRequest);
-                }
+                _localStorageCache.Data = await httpClient.GetFromJsonAsync<AnimeListRoot>(uriRequest);
+            }
 
-                return await _localStorageCache.GetCacheData();
-            });
-
+            return await _localStorageCache.GetCacheData();
         }
     }
 }

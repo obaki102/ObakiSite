@@ -2,6 +2,8 @@
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using ObakiSite.Application.Features.Animelist.Services;
 using ObakiSite.Shared.Constants;
+using Polly;
+using Polly.Contrib.WaitAndRetry;
 
 namespace ObakiSite.Application.Extensions
 {
@@ -13,11 +15,15 @@ namespace ObakiSite.Application.Extensions
             {
                 throw new ArgumentNullException(nameof(services));
             }
-            services.AddHttpClient(HttpNameClient.AnimeList, client =>
-            {
-                client.BaseAddress = baseUrl;
-                client.DefaultRequestHeaders.Add(AnimeList.XmalClientId, defaultHeader);
-            });
+            services.AddHttpClient(HttpNameClient.AnimeList,
+                client =>
+                {
+                    client.BaseAddress = baseUrl;
+                    client.DefaultRequestHeaders.Add(AnimeList.XmalClientId, defaultHeader);
+                })
+                .AddTransientHttpErrorPolicy(policyBuilder =>
+                    policyBuilder.WaitAndRetryAsync(Backoff.DecorrelatedJitterBackoffV2(TimeSpan.FromSeconds(1),3)));
+
             services.TryAddSingleton<IAnimeListService, AnimeListService>();
             return services;
         }
