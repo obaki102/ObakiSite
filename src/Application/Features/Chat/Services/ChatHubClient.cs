@@ -6,8 +6,6 @@ using ObakiSite.Shared.Models;
 using Newtonsoft.Json;
 using Microsoft.Extensions.DependencyInjection;
 using System.Net.Http.Json;
-using Polly.Retry;
-using Polly;
 
 namespace ObakiSite.Application.Features.Chat.Services
 {
@@ -15,7 +13,6 @@ namespace ObakiSite.Application.Features.Chat.Services
     {
         private readonly ChatHubClientOptions _hubClientOptions;
         private readonly HttpClient _httpClient;
-        private readonly AsyncRetryPolicy _retryPolicy;
         private HubConnection? hubConnection;
         private bool isConnectionStarted = false;
         private string HubUrl => _hubClientOptions.HubUrl;
@@ -28,9 +25,8 @@ namespace ObakiSite.Application.Features.Chat.Services
                 throw new ArgumentNullException(nameof(hubClientOptions));
             }
             _hubClientOptions = hubClientOptions.Value;
-            _httpClient = httpClientFactory.CreateClient(HttpNameClient.ChatHub);
-            _retryPolicy = Policy.Handle<HttpRequestException>()
-                            .WaitAndRetryAsync(3, times => TimeSpan.FromMilliseconds(times * 100));
+            _httpClient = httpClientFactory.CreateClient(HttpNameClient.Default);
+
         }
 
         public async Task ConnectAsync()
@@ -74,10 +70,7 @@ namespace ObakiSite.Application.Features.Chat.Services
 
         public async Task SendMessage(ChatMessage chatMessage)
         {
-            await _retryPolicy.ExecuteAsync(async () =>
-           {
-               await _httpClient.PostAsJsonAsync($"{HubUrl}/messages", chatMessage);
-           });
+            await _httpClient.PostAsJsonAsync($"{HubUrl}/messages", chatMessage);
         }
     }
 }

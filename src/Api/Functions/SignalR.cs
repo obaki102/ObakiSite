@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using ObakiSite.Shared.Constants;
+﻿using ObakiSite.Shared.Constants;
 using System.Threading.Tasks;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;

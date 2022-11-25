@@ -6,13 +6,14 @@ namespace ObakiSite.Application.Extensions
 {
     public static class ChatHubDependencies
     {
-        public static IServiceCollection AddScopedChatHubClient(this IServiceCollection services, Action<ChatHubClientOptions> options)
+        public static IServiceCollection AddChatHubClient(this IServiceCollection services, Action<ChatHubClientOptions> options)
         {
             if (services == null)
             {
                 throw new ArgumentNullException(nameof(services));
             }
-            services.TryAddScoped<IChatHubClient, ChatHubClient>();
+            //In blazor wasm scoped lifetime behaves the same way as singleton.  
+            services.TryAddSingleton<IChatHubClient, ChatHubClient>();
             services.Configure(options);
             return services;
         }
