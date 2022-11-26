@@ -4,6 +4,7 @@ using ObakiSite.Client;
 using MudBlazor.Services;
 using ObakiSite.Client.Services.Components.Badge;
 using ObakiSite.Application.Extensions;
+using MudBlazor;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 var baseUrl = new Uri(builder.Configuration["API_Prefix"] ?? builder.HostEnvironment.BaseAddress);
@@ -26,5 +27,8 @@ else
     builder.Logging.SetMinimumLevel(LogLevel.None);
 }
 
-builder.Services.AddMudServices();
+builder.Services.AddMudServices(config =>
+{
+    config.SnackbarConfiguration.PositionClass = Defaults.Classes.Position.BottomCenter;
+});
 await builder.Build().RunAsync();

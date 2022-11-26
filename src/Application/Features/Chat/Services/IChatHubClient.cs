@@ -9,7 +9,8 @@ namespace ObakiSite.Application.Features.Chat.Services
         Task DisconnectAsync();
         string HubConenctionId { get; }
         Task SendMessage(ChatMessage chatMessage);
-
         event EventHandler<ChatMessageEventArgs>? ReceivedMessageHandler;
+        event EventHandler<bool>? ConnectingEvent;
+        event EventHandler<bool>? ConnectedEvent;
     }
 }
