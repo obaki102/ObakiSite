@@ -41,7 +41,7 @@
 <div Class="d-flex align-content-end flex-row ma-4">
     <div class="d-flex align-center flex-row">
         <div class="d-flex ml-1 pa-1" style="width: 320px;">
-            <MudTextField T="string"  Label="Chatbox" Variant="Variant.Outlined" Lines="2" @bind-Value="_enteredMessage" @onkeydown="OnEnterKeyPress" @onfocus="OnFocus" TextUpdateSuppression="false" DisableUnderLine="true" Immediate="true" />
+            <MudTextField T="string" Label="Chatbox" Variant="Variant.Outlined" Lines="2" @bind-Value="_enteredMessage" @onkeydown="OnEnterKeyPress" @onfocus="OnFocus" TextUpdateSuppression="false" DisableUnderLine="true" Immediate="true" />
         </div>
         <div>
             <MudIconButton Variant="Variant.Text" Icon="@Icons.Material.Filled.Send" Color="Color.Primary" OnClick="SendMessage" />
@@ -58,9 +58,11 @@
     protected override async Task OnInitializedAsync()
     {
 
-        ChatHubClient.ReceivedMessageHandler += ReceivedChatMessage;
-        ChatHubClient.ConnectingEvent += Connecting;
-        ChatHubClient.ConnectedEvent += Connected;
+        ChatHubClient.OnReceivedMessage += ReceivedChatMessage;
+        ChatHubClient.OnConnecting += ConnectingToServer;
+        ChatHubClient.OnConnected += ConnectedToServer;
+        ChatHubClient.OnClosed += ConnectionClosed;
+        ChatHubClient.OnConnectionError += ConnectionError;
         await ChatHubClient.ConnectAsync();
 
     }
@@ -70,6 +72,7 @@
         _enteredMessage = string.Empty;
     }
 
+    //Events
     private void ReceivedChatMessage(object? sender, ChatMessageEventArgs e)
     {
         _messages.Add(e.ChatMessage);
@@ -81,24 +84,43 @@
         StateHasChanged();
     }
 
-    public void Connecting(object? sender, bool e)
+    public void ConnectingToServer(object? sender, bool isSuccess)
     {
-        if (e)
+        if (isSuccess)
         {
             Snackbar.Add("Connecting to server...", Severity.Info);
         }
     }
 
-    public void Connected(object? sender, bool e)
+    public void ConnectedToServer(object? sender, bool isSuccess)
     {
-        if (e)
+        if (isSuccess)
         {
             Snackbar.Add("Connection successfully established.", Severity.Success);
         }
         else
         {
-            Snackbar.Add("Sorry something went wrong, conenction was not established.", Severity.Error);
+            Snackbar.Add("Sorry something went wrong, connection was not established.", Severity.Error);
         }
+    }
+
+    public void ConnectionClosed(object? sender, ClosedConnectionEventArgs connection)
+    {
+        if (connection.IsSuccess)
+        {
+            Snackbar.Add(connection.Message, Severity.Success);
+        }
+        else
+        {
+            Snackbar.Add(connection.Message, Severity.Error);
+        }
+    }
+
+    public void ConnectionError(object? sender, string Error)
+    {
+
+        Snackbar.Add($"Connection error - {Error}.", Severity.Error);
+
     }
 
     private void OnFocus()
@@ -141,8 +163,10 @@
     public async ValueTask DisposeAsync()
     {
         await ChatHubClient.DisconnectAsync();
-        ChatHubClient.ReceivedMessageHandler -= ReceivedChatMessage;
-        ChatHubClient.ConnectingEvent -= Connecting;
-        ChatHubClient.ConnectedEvent -= Connected;
+        ChatHubClient.OnReceivedMessage -= ReceivedChatMessage;
+        ChatHubClient.OnConnecting -= ConnectingToServer;
+        ChatHubClient.OnConnected -= ConnectedToServer;
+        ChatHubClient.OnClosed -= ConnectionClosed;
+        ChatHubClient.OnConnectionError -= ConnectionError;
     }
 }

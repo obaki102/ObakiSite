@@ -6,7 +6,6 @@ using ObakiSite.Shared.Models;
 using Newtonsoft.Json;
 using Microsoft.Extensions.DependencyInjection;
 using System.Net.Http.Json;
-using System;
 
 namespace ObakiSite.Application.Features.Chat.Services
 {
@@ -34,52 +33,58 @@ namespace ObakiSite.Application.Features.Chat.Services
         {
             if (!isConnectionStarted)
             {
-                ConnectingEvent?.Invoke(this, true);
-                hubConnection = new HubConnectionBuilder()
-                               .WithUrl(_hubClientOptions.HubUrl)
-                                .AddMessagePackProtocol()
-                                .WithAutomaticReconnect()
-                                .Build();
-                HubConnectionState state = hubConnection.State;
-                bool isConnected = state.Equals(HubConnectionState.Connected);
-                //hubConnection.Closed += (exception) =>
-                //{
-                //   return Task.Run(() =>
-                //    {
-                //        //todo: Create  closed event. 
-                    //if (exception == null)
-                    //{
-                    //    Console.WriteLine("Connection closed without error.");
-                    //}
-                    //else
-                    //{
-                    //    Console.WriteLine($"Connection closed due to an error: {exception}");
-                    //}
-                //    });
-                //};
-                //hubConnection.Reconnecting += (exception) =>
-                //{
-                //    return Task.Run(() =>
-                //    {
-                //        //todo: Create  reconnecting event. 
-                //    });
-                //};
-                //hubConnection.Reconnected += (connectionId) =>
-                //{
-                //    return Task.Run(() =>
-                //    {
-                //        //todo: Create  reconencted event. 
-                //    });
-                //};
-                hubConnection.On<string>(HubHandler.ReceivedMessage, (receivedMessage) =>
+                try
                 {
-                    var chatMessage = JsonConvert.DeserializeObject<ChatMessage>(receivedMessage);
-                    ReceivedMessageHandler?.Invoke(this, new ChatMessageEventArgs { ChatMessage = chatMessage ?? new() });
-                });
+                    OnConnecting?.Invoke(this, true);
+                    hubConnection = new HubConnectionBuilder()
+                                   .WithUrl(_hubClientOptions.HubUrl)
+                                    .AddMessagePackProtocol()
+                                    .WithAutomaticReconnect()
+                                    .Build();
+                    HubConnectionState state = hubConnection.State;
+                    bool isConnected = state.Equals(HubConnectionState.Connected);
+                    hubConnection.Closed += (exception) =>
+                    {
+                        return Task.Run(() =>
+                         {
+                             if (exception == null)
+                             {
+                                 OnClosed?.Invoke(this, new ClosedConnectionEventArgs(true, "Connection closed sucessfully."));
+                             }
+                             else
+                             {
+                                 OnClosed?.Invoke(this, new ClosedConnectionEventArgs(true, $"Connection closed due to an error: {exception}"));
+                             }
+                         });
+                    };
+                    //hubConnection.Reconnecting += (exception) =>
+                    //{
+                    //    return Task.Run(() =>
+                    //    {
+                    //        //todo: Create  reconnecting event. 
+                    //    });
+                    //};
+                    //hubConnection.Reconnected += (connectionId) =>
+                    //{
+                    //    return Task.Run(() =>
+                    //    {
+                    //        //todo: Create  reconencted event. 
+                    //    });
+                    //};
+                    hubConnection.On<string>(HubHandler.ReceivedMessage, (receivedMessage) =>
+                    {
+                        var chatMessage = JsonConvert.DeserializeObject<ChatMessage>(receivedMessage);
+                        OnReceivedMessage?.Invoke(this, new ChatMessageEventArgs { ChatMessage = chatMessage ?? new() });
+                    });
 
-                await hubConnection.StartAsync();
-                ConnectedEvent?.Invoke(this, hubConnection.State.Equals(HubConnectionState.Connected) ? true : false);
-                isConnectionStarted = true;
+                    await hubConnection.StartAsync();
+                    OnConnected?.Invoke(this, hubConnection.State.Equals(HubConnectionState.Connected) ? true : false);
+                    isConnectionStarted = true;
+                }
+                catch (HttpRequestException ex)
+                {
+                    OnConnectionError?.Invoke(this, ex.Message);
+                }
             }
         }
 
@@ -95,9 +100,11 @@ namespace ObakiSite.Application.Features.Chat.Services
             }
         }
 
-        public event EventHandler<ChatMessageEventArgs>? ReceivedMessageHandler;
-        public event EventHandler<bool>? ConnectingEvent;
-        public event EventHandler<bool>? ConnectedEvent;
+        public event EventHandler<ChatMessageEventArgs>? OnReceivedMessage;
+        public event EventHandler<bool>? OnConnecting;
+        public event EventHandler<bool>? OnConnected;
+        public event EventHandler<ClosedConnectionEventArgs>? OnClosed;
+        public event EventHandler<string>? OnConnectionError;
 
         public async ValueTask DisposeAsync()
         {
