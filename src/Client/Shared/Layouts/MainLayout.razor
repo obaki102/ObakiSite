@@ -39,7 +39,6 @@
 @code {
     private MudTheme _theme = Theme.Default();
     private bool _isDarkMode = true;
-    private int _bagedeNo = 0;
     bool _drawerOpen = false;
 
     public void OpenDrawer()
@@ -47,9 +46,4 @@
         _drawerOpen = !_drawerOpen;
     }
 
-    public void UpdateBadge(object? sender, int badgeNo)
-    {
-        _bagedeNo = badgeNo;
-        StateHasChanged();
-    }
 }

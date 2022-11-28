@@ -6,7 +6,41 @@ namespace ObakiSite.Client.Shared.Themes
     {
         public static MudTheme Default()
         {
-            return new MudTheme();  
+            var defaultTheme = new MudTheme();
+            var defaultDarkPallete = defaultTheme.PaletteDark;
+            var defaultLightPallete = defaultTheme.Palette;
+            //Dark 
+            defaultDarkPallete.Dark = "#0d1117";
+            defaultDarkPallete.AppbarBackground = "#161b22";
+            defaultDarkPallete.DarkContrastText = "#ecf2f8";
+            defaultDarkPallete.Background = "#0d1117";
+            defaultDarkPallete.DrawerBackground = "#161b22";
+            defaultDarkPallete.Surface = "#161b22";
+            //Light
+            defaultLightPallete.Primary = "#77bdfb";
+            return defaultTheme;  
+        }
+       
+        public static MudTheme CvTheme()
+        {
+            var defaultTheme = new MudTheme();
+            var defaultDarkPallete = defaultTheme.PaletteDark;
+            var defaultLightPallete = defaultTheme.Palette;
+            //Dark 
+            defaultDarkPallete.Dark = "#161b22";
+            defaultDarkPallete.AppbarBackground = "#161b22";
+            defaultDarkPallete.DarkContrastText = "#ecf2f8";
+            defaultDarkPallete.Background = "#0d1117";
+            defaultDarkPallete.DrawerBackground = "#161b22";
+            defaultDarkPallete.Surface = "#21262d";
+            // defaultDarkPallete.TextPrimary = "#89929b";
+            
+            //Light
+            defaultLightPallete.Dark = "#ffffffff";
+            defaultLightPallete.DarkContrastText = "#424242ff";
+            defaultLightPallete.Background = "#ecf2f8";
+
+            return defaultTheme;
         }
         public static MudTheme Dark()
         {

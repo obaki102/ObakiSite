@@ -3,6 +3,7 @@
 @inject IWebAssemblyHostEnvironment WebAssemblyHostEnvironment
 @inject IJSRuntime JsRuntime
 <PageTitle>My CV</PageTitle>
+<MudThemeProvider @bind-IsDarkMode="@_isDarkMode" Theme="_theme" />
 <MudPaper Class="d-flex flex-column justify-center flex-grow-1 gap-4 mb-4" Elevation="5">
     <div class="d-flex mx-8">
         <MudCard Elevation="0">
@@ -14,6 +15,11 @@
                     <MudText Typo="Typo.body1">Joshua J L. Piluden</MudText>
                     <MudText Typo="Typo.body2">Application Developer</MudText>
                 </CardHeaderContent>
+                <CardHeaderActions>
+                    <MudTooltip Text="Toggle Light/Dark Mode" Color="Color.Primary" Placement="Placement.Left">
+                        <MudToggleIconButton @bind-Toggled="@_isDarkMode" Icon="@Icons.Material.Filled.LightMode" ToggledIcon="@Icons.Material.Filled.DarkMode"></MudToggleIconButton>
+                    </MudTooltip>
+                </CardHeaderActions>
             </MudCardHeader>
             <MudText Class="ml-4" Typo="Typo.body2">I am a developer who enjoys learning new things. I love creating tools and application even if this require me to work outside my comfort and knowledge set. </MudText>
             <MudCardContent>
@@ -233,12 +239,13 @@
 </MudPaper>
 
 @code {
-
+    private MudTheme _theme = Theme.CvTheme();
+    private bool _isDarkMode = true;
 
     private async Task DownloadFileFromURL()
     {
-
         var fileURL = $"{WebAssemblyHostEnvironment.BaseAddress}/files/JoshuaJPiludenCV.pdf";
         await JsRuntime.InvokeVoidAsync("DownloadPdfFile", "JoshuaJPiludenCV.pdf", fileURL);
     }
 }
+

@@ -1,7 +1,4 @@
 ﻿@inherits LayoutComponentBase
-<MudThemeProvider @bind-IsDarkMode="@_isDarkMode" Theme="_theme" />
-<MudDialogProvider />
-<MudSnackbarProvider />
 <MudLayout>
     <MudContainer MaxWidth="MaxWidth.Medium" Class="mt-4">
         <ErrorBoundary>
@@ -18,7 +15,5 @@
     </MudScrollToTop>
 </MudLayout>
 @code {
-    private MudTheme _theme = Theme.Default();
-    private bool _isDarkMode = true;
-    bool _drawerOpen = false;
+  
 }
