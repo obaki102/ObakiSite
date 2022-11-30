@@ -1,4 +1,5 @@
 ﻿@using ObakiSite.Client.Services.Components.Badge
+@implements IDisposable
 @inherits LayoutComponentBase
 @inject IBadgeUpdater BadgeUpdater
 <MudThemeProvider @bind-IsDarkMode="@_isDarkMode" Theme="_theme" />
@@ -99,5 +100,9 @@
     {
         _bagedeNo = badgeNo;
         StateHasChanged();
+    }
+    public void Dispose()
+    {
+        BadgeUpdater.BadgeChangedHandler -= UpdateBadge;
     }
 }
