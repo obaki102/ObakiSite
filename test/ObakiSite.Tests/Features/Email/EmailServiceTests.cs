@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Moq;
-using ObakiSite.Application.Features.Email.Commands;
 using ObakiSite.Application.Features.Email.Services;
 using ObakiSite.Shared.Constants;
 using ObakiSite.Shared.Models;
@@ -24,7 +23,7 @@ namespace ObakiSite.Tests.Features.Email
         public void  SendMessage_ValidEmailMessage_ShouldReturnTrue()
         {
             //Arrange
-            var message = new SendEmail
+            var message = new EmailMessage
             {
                 RecipientEmail = "joshuajpiluden@gmail.com",
                 RecipientName = "May",
@@ -32,7 +31,7 @@ namespace ObakiSite.Tests.Features.Email
             };
 
             var mockEmailClient = new Mock<IEmailService>();
-            mockEmailClient.Setup(x => x.SendEmail(It.IsAny<SendEmail>()).Result).Returns(ApplicationResponse.Success());
+            mockEmailClient.Setup(x => x.SendEmail(It.IsAny<EmailMessage>()).Result).Returns(ApplicationResponse.Success());
 
             //Act
             var result = mockEmailClient.Object.SendEmail(message);
@@ -46,7 +45,7 @@ namespace ObakiSite.Tests.Features.Email
         public void SendMessage_InValidEmailMessage_ShouldReturnFalse()
         {
             //Arrange
-            var message = new SendEmail
+            var message = new EmailMessage
             {
                 RecipientEmail = "joshuajpiluden@gmail.com",
                 RecipientName = "May",
@@ -54,7 +53,7 @@ namespace ObakiSite.Tests.Features.Email
             };
 
             var mockEmailClient = new Mock<IEmailService>();
-            mockEmailClient.Setup(x => x.SendEmail(It.IsAny<SendEmail>()).Result).Returns(ApplicationResponse.Fail());
+            mockEmailClient.Setup(x => x.SendEmail(It.IsAny<EmailMessage>()).Result).Returns(ApplicationResponse.Fail());
 
             //Act
             var result = mockEmailClient.Object.SendEmail(message);
@@ -68,7 +67,7 @@ namespace ObakiSite.Tests.Features.Email
         public void SendMessage_NoRecipient_ShouldReturnFalse()
         {
             //Arrange
-            var message = new SendEmail();
+            var message = new EmailMessage();
             var options = new EmailServiceOptions
             {
                 AppPassword = _configuration[EmailConstants.AppPassword]
@@ -88,7 +87,7 @@ namespace ObakiSite.Tests.Features.Email
         public void SendMessage_InValidCredentials_ShouldReturnFalse()
         {
             //Arrange
-            var message = new SendEmail();
+            var message = new EmailMessage();
             var options = new EmailServiceOptions
             {
                 AppPassword = "InvalidCredemtial"
@@ -107,7 +106,7 @@ namespace ObakiSite.Tests.Features.Email
         public void SendMessage_ValidCredentials_ShouldReturnTrue()
         {
             //Arrange
-            var message = new SendEmail
+            var message = new EmailMessage
             {
                 RecipientEmail = "joshuajpiluden@gmail.com",
                 RecipientName = "May",

@@ -1,7 +1,5 @@
 ﻿using FluentValidation;
 using ObakiSite.Application.Features.Email.Commands;
-using ObakiSite.Shared.Models;
-
 
 namespace ObakiSite.Application.Features.Email.Validators
 {
@@ -9,7 +7,7 @@ namespace ObakiSite.Application.Features.Email.Validators
     {
         public EmailMessageValidator()
         {
-            RuleFor(x => x.RecipientEmail)
+            RuleFor(x => x.EmailMessage.RecipientEmail)
              .NotEmpty().WithMessage("Your recipient email cannot be empty.")
              .EmailAddress().WithMessage("A valid email is required.")
              .Length(2, 100);

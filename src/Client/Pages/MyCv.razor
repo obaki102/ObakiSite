@@ -236,7 +236,7 @@
                     <MudIconButton OnClick="@DownloadFileFromURL" Icon="@Icons.Filled.Download" Color="Color.Primary" />
                 </MudTooltip>
 
-             @*   <MudTooltip Text="Send Email." Color="Color.Primary" Placement="Placement.Bottom">
+               @* <MudTooltip Text="Send Email." Color="Color.Primary" Placement="Placement.Bottom">
                     <MudIconButton OnClick="@SendEmail" Icon="@Icons.Filled.Download" Color="Color.Primary" />
                 </MudTooltip>*@
             </MudCardContent>
@@ -257,7 +257,7 @@
 
     private async Task SendEmail()
     {
-        var emailMessage = new SendEmail();
+        var emailMessage = new SendEmail(new EmailMessage());
        var result =  await Mediatr.Send(emailMessage);
         
         

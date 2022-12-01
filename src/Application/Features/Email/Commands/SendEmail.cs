@@ -6,46 +6,37 @@ using System.Text.Json;
 
 namespace ObakiSite.Application.Features.Email.Commands
 {
-    public class SendEmail : IRequest<ApplicationResponse>
-    {
-        public string SenderName { get; set; } = "Joshua J L. Piluden";
-        public string SenderEmail { get; set; } = "joshuajpiluden@gmail.com";
-        public string RecipientName { get; set; } = string.Empty;
-        public string RecipientEmail { get; set; } = string.Empty;
-        public string Subject { get; set; } = string.Empty;
-        public string AttachmentFilePath { get; set; } = string.Empty;
-        public string Message { get; set; } = string.Empty;
-    }
+    public record SendEmail(EmailMessage EmailMessage) : IRequest<ApplicationResponse>;
 
-public class SendEmailHandler : IRequestHandler<SendEmail, ApplicationResponse>
-{
-    private readonly IHttpClientFactory _httpClientFactory;
-    public SendEmailHandler(IHttpClientFactory httpClientFactory)
+    public class SendEmailHandler : IRequestHandler<SendEmail, ApplicationResponse>
     {
-        _httpClientFactory = httpClientFactory;
-    }
-    public async Task<ApplicationResponse> Handle(SendEmail request, CancellationToken cancellationToken)
-    {
-        var httpClient = _httpClientFactory.CreateClient(HttpNameClient.Default);
-        var serializedEmailMessage = JsonSerializer.Serialize(request);
-        var uriRequest = $"/api/sendEmail/{serializedEmailMessage}";
-        var response = await httpClient.GetAsync(uriRequest);
-
-        if (response.IsSuccessStatusCode)
+        private readonly IHttpClientFactory _httpClientFactory;
+        public SendEmailHandler(IHttpClientFactory httpClientFactory)
         {
-            var content = await response.Content.ReadAsStreamAsync();
-            var result = await JsonSerializer.DeserializeAsync<ApplicationResponse>(content);
+            _httpClientFactory = httpClientFactory;
+        }
+        public async Task<ApplicationResponse> Handle(SendEmail request, CancellationToken cancellationToken)
+        {
+            var httpClient = _httpClientFactory.CreateClient(HttpNameClient.Default);
+            var serializedEmailMessage = JsonSerializer.Serialize(request);
+            var uriRequest = $"/api/sendEmail/{serializedEmailMessage}";
+            var response = await httpClient.GetAsync(uriRequest);
 
-            if (result is null || !result.IsSuccess)
+            if (response.IsSuccessStatusCode)
             {
-                return ApplicationResponse.Fail();
+                var content = await response.Content.ReadAsStreamAsync();
+                var result = await JsonSerializer.DeserializeAsync<ApplicationResponse>(content);
+
+                if (result is null || !result.IsSuccess)
+                {
+                    return ApplicationResponse.Fail();
+                }
+
+                return result;
             }
 
-            return result;
+            return ApplicationResponse.Fail();
         }
-
-        return ApplicationResponse.Fail();
     }
-}
 
 }

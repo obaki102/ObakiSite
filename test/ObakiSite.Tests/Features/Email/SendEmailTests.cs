@@ -2,7 +2,7 @@
 using ObakiSite.Application.Features.Email.Commands;
 using System.Net;
 using MediatR;
-
+using ObakiSite.Shared.Models;
 
 namespace ObakiSite.Tests.Features.Email
 {
@@ -23,12 +23,12 @@ namespace ObakiSite.Tests.Features.Email
             httpFactory.Setup(x => x.CreateClient(It.IsAny<string>())).Returns(httpClient);
 
             var handler = new SendEmailHandler(httpFactory.Object);
-            var dummyEmailMessage = new SendEmail
+            var dummyEmailMessage = new SendEmail(new EmailMessage
             {
                 RecipientEmail = "joshuajpiluden@gmail.com",
                 RecipientName = "Joshua",
                 Message = "test"
-            };
+            });
 
             //Act
             var result = await handler.Handle(dummyEmailMessage, default);
@@ -52,12 +52,12 @@ namespace ObakiSite.Tests.Features.Email
             httpFactory.Setup(x => x.CreateClient(It.IsAny<string>())).Returns(httpClient);
 
             var handler = new SendEmailHandler(httpFactory.Object);
-            var dummyEmailMessage = new SendEmail
+            var dummyEmailMessage = new SendEmail(new EmailMessage
             {
                 RecipientEmail = "joshuajpiluden@gmail.com",
                 RecipientName = "Joshua",
                 Message = "test"
-            };
+            });
 
             //Act
             var result = await handler.Handle(dummyEmailMessage, default);
@@ -81,12 +81,12 @@ namespace ObakiSite.Tests.Features.Email
             httpFactory.Setup(x => x.CreateClient(It.IsAny<string>())).Returns(httpClient);
 
             var handler = new SendEmailHandler(httpFactory.Object);
-            var dummyEmailMessage = new SendEmail
+            var dummyEmailMessage = new SendEmail(new EmailMessage
             {
                 RecipientEmail = "joshuajpiluden@gmail.com",
                 RecipientName = "Joshua",
                 Message = "test"
-            };
+            });
 
             //Act
             var result = await handler.Handle(dummyEmailMessage, default);

@@ -11,6 +11,6 @@ namespace ObakiSite.Application.Features.Email.Services
 {
     public interface IEmailService
     {
-        public Task<ApplicationResponse> SendEmail(SendEmail emailMessage);
+        public Task<ApplicationResponse> SendEmail(EmailMessage emailMessage);
     }
 }
