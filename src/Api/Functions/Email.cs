@@ -1,11 +1,14 @@
 ﻿using System.Threading.Tasks;
+using System.Net;
 using Microsoft.Extensions.Logging;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Azure.Functions.Worker.Http;
-using System.Net;
-using ObakiSite.Shared.Models;
 using ObakiSite.Application.Features.Email.Services;
+using System.Text.Json;
+using System;
+using ObakiSite.Shared.Models.Response;
+using ObakiSite.Application.Features.Email.Commands;
 
 namespace ObakiSite.Api.Functions
 {
@@ -20,21 +23,37 @@ namespace ObakiSite.Api.Functions
         }
         [Function("SendEmail")]
         public async Task<HttpResponseData> Run(
-            [HttpTrigger(AuthorizationLevel.Function, "post", Route = "sendEmail/{emailMessage?")] HttpRequestData req,
-            EmailMessage emailMessage,
-            int year)
+            [HttpTrigger(AuthorizationLevel.Function, "post", Route = "sendEmail")] HttpRequestData req)
         {
             _logger.LogInformation("C# HTTP trigger function processed a request.");
-
-            var result = _emailService.SendEmail(emailMessage).Result;
             var response = req.CreateResponse(HttpStatusCode.OK);
-            if (result.IsSuccess)
+            var request = req.Body;
+
+            if (request.Length == 0)
             {
-                await response.WriteAsJsonAsync(result);
+                await response.WriteAsJsonAsync(ApplicationResponse.Fail("No data posted."));
                 return response;
             }
 
-            return req.CreateResponse(HttpStatusCode.BadRequest);
+            try
+            {
+                var deserializedEmailMessage = await JsonSerializer.DeserializeAsync<SendEmail>(request);
+                var result = _emailService.SendEmail(deserializedEmailMessage).Result;
+
+                if (result.IsSuccess)
+                {
+                    await response.WriteAsJsonAsync(result);
+                    return response;
+                }
+
+                await response.WriteAsJsonAsync(ApplicationResponse.Fail("Email not sent."));
+                return response;
+            }
+            catch (Exception ex)
+            {
+                await response.WriteAsJsonAsync(ApplicationResponse.Fail(ex.Message));
+                return response;
+            }
 
         }
 

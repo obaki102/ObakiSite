@@ -52,7 +52,7 @@ namespace ObakiSite.Application.Behaviours.Validation
                     //Create the Application Response object
                     var responseObject = (TResponse)Activator.CreateInstance(typeof(TResponse));
                     //Pass the list of errors as a parameter
-                    object[] parameters = new object[] { errorLists };
+                    object[] parameters = new object[] { errorLists.Select(e=> e.ErrorMessage).Distinct().ToList() };
                     return (TResponse)failMethodInApplicationResponse.Invoke(responseObject, parameters);
                 }
 

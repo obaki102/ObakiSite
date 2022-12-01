@@ -1,5 +1,7 @@
-﻿using MediatR;
+﻿using FluentValidation;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using ObakiSite.Application.Behaviours.Validation;
 using ObakiSite.Shared.Constants;
 using Polly;
 using Polly.Contrib.WaitAndRetry;
@@ -16,8 +18,9 @@ namespace ObakiSite.Application.Extensions
                 throw new ArgumentNullException(nameof(services));
             }
             //3rd Party
+            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             services.AddMediatR(Assembly.GetExecutingAssembly());
-
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
             //HttpNamedClient
             services.AddHttpClient(HttpNameClient.Default, client =>
             {

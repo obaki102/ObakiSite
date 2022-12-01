@@ -1,8 +1,7 @@
 ﻿using Moq;
 using ObakiSite.Application.Features.Email.Commands;
-using ObakiSite.Shared.Models;
-
 using System.Net;
+using MediatR;
 
 
 namespace ObakiSite.Tests.Features.Email
@@ -11,11 +10,12 @@ namespace ObakiSite.Tests.Features.Email
     {
         [Fact]
         [Trait("SendEmailTests", "SendEmail")]
-        public async Task SendEmail_Http200_ShouldReturnTrue()
+        public async Task SendEmail_ValidRequest_ShouldReturnTrue()
         {
+            string testData = File.ReadAllText(@$"{Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName}\TestData\sendEmail_Success.json");
             var mockHttp = new MockHttpMessageHandler();
-            mockHttp.When("http://localhost:7080/api/sendEmail")
-                   .Respond(HttpStatusCode.OK);
+            mockHttp.When("http://localhost:7080/api/sendEmail/*")
+                   .Respond("application/json", testData);
             var httpClient = mockHttp.ToHttpClient();
             httpClient.BaseAddress = new Uri("http://localhost:7080");
 
@@ -23,17 +23,12 @@ namespace ObakiSite.Tests.Features.Email
             httpFactory.Setup(x => x.CreateClient(It.IsAny<string>())).Returns(httpClient);
 
             var handler = new SendEmailHandler(httpFactory.Object);
-
             var dummyEmailMessage = new SendEmail
-            (
-               new EmailMessage
-               {
-                   RecipientEmail = "joshuajpiluden@gmail.com",
-                   RecipientName = "May",
-                   Message = "test"
-
-               }
-            );
+            {
+                RecipientEmail = "joshuajpiluden@gmail.com",
+                RecipientName = "Joshua",
+                Message = "test"
+            };
 
             //Act
             var result = await handler.Handle(dummyEmailMessage, default);
@@ -42,5 +37,65 @@ namespace ObakiSite.Tests.Features.Email
             Assert.True(result.IsSuccess);
 
         }
+
+        [Fact]
+        [Trait("SendEmailTests", "SendEmail")]
+        public async Task SendEmail_Http400_ShouldReturnFalse()
+        {
+            var mockHttp = new MockHttpMessageHandler();
+            mockHttp.When("http://localhost:7080/api/sendEmail/*")
+                   .Respond(HttpStatusCode.BadRequest);
+            var httpClient = mockHttp.ToHttpClient();
+            httpClient.BaseAddress = new Uri("http://localhost:7080");
+
+            var httpFactory = new Mock<IHttpClientFactory>();
+            httpFactory.Setup(x => x.CreateClient(It.IsAny<string>())).Returns(httpClient);
+
+            var handler = new SendEmailHandler(httpFactory.Object);
+            var dummyEmailMessage = new SendEmail
+            {
+                RecipientEmail = "joshuajpiluden@gmail.com",
+                RecipientName = "Joshua",
+                Message = "test"
+            };
+
+            //Act
+            var result = await handler.Handle(dummyEmailMessage, default);
+
+            //Assert
+            Assert.False(result.IsSuccess);
+
+        }
+
+        [Fact]
+        [Trait("SendEmailTests", "SendEmail")]
+        public async Task SendEmail_Http502_ShouldReturnFalse()
+        {
+            var mockHttp = new MockHttpMessageHandler();
+            mockHttp.When("http://localhost:7080/api/sendEmail/*")
+                   .Respond(HttpStatusCode.BadGateway);
+            var httpClient = mockHttp.ToHttpClient();
+            httpClient.BaseAddress = new Uri("http://localhost:7080");
+
+            var httpFactory = new Mock<IHttpClientFactory>();
+            httpFactory.Setup(x => x.CreateClient(It.IsAny<string>())).Returns(httpClient);
+
+            var handler = new SendEmailHandler(httpFactory.Object);
+            var dummyEmailMessage = new SendEmail
+            {
+                RecipientEmail = "joshuajpiluden@gmail.com",
+                RecipientName = "Joshua",
+                Message = "test"
+            };
+
+            //Act
+            var result = await handler.Handle(dummyEmailMessage, default);
+
+            //Assert
+            Assert.False(result.IsSuccess);
+
+        }
+
+
     }
 }

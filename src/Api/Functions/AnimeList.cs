@@ -5,6 +5,7 @@ using Microsoft.Azure.Functions.Worker;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Azure.Functions.Worker.Http;
 using System.Net;
+using ObakiSite.Shared.Models.Response;
 
 namespace ObakiSite.Api.Functions
 {
@@ -24,16 +25,17 @@ namespace ObakiSite.Api.Functions
             int year)
         {
             _logger.LogInformation("C# HTTP trigger function processed a request.");
-
-            var result = await _animeListService.GetAnimeListBySeasonAndYear(year, season);
             var response = req.CreateResponse(HttpStatusCode.OK);
+            var result = await _animeListService.GetAnimeListBySeasonAndYear(year, season);
+
             if (result.IsSuccess)
             {
                 await response.WriteAsJsonAsync(result.Data);
                 return response;
             }
 
-            return req.CreateResponse(HttpStatusCode.BadRequest);
+            await response.WriteAsJsonAsync(ApplicationResponse.Fail("Unable to fetch data."));
+            return response;
 
         }
 

@@ -3,7 +3,7 @@ using ObakiSite.Application.Features.LocalStorageCache.Services;
 using ObakiSite.Shared.Constants;
 using ObakiSite.Shared.DTO;
 using ObakiSite.Shared.Models.Response;
-using System.Net.Http.Json;
+using System.Text.Json;
 
 namespace ObakiSite.Application.Features.Animelist.Queries
 {
@@ -30,9 +30,21 @@ namespace ObakiSite.Application.Features.Animelist.Queries
             var uriRequest = $"/api/animelists/{request.Season.SeasonName}/{request.Season.Year}";
             if (await _localStorageCache.IsDataNeedsRefresh())
             {
-                _localStorageCache.Data = await httpClient.GetFromJsonAsync<AnimeListRoot>(uriRequest);
-            }
+                 var response = await httpClient.GetAsync(uriRequest);
 
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStreamAsync();
+                    var result  = await JsonSerializer.DeserializeAsync<AnimeListRoot>(content);
+
+                    if (result is null)
+                    {
+                        return ApplicationResponse<AnimeListRoot>.Fail("No data.");
+                    }
+                    _localStorageCache.Data = result;
+
+                }
+            }
             return await _localStorageCache.GetCacheData();
         }
     }

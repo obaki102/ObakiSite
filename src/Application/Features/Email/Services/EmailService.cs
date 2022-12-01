@@ -6,6 +6,7 @@ using MailKit.Net.Smtp;
 using ObakiSite.Shared.Constants;
 using ObakiSite.Shared.Models.Response;
 using Microsoft.Extensions.Options;
+using ObakiSite.Application.Features.Email.Commands;
 
 namespace ObakiSite.Application.Features.Email.Services
 {
@@ -20,7 +21,7 @@ namespace ObakiSite.Application.Features.Email.Services
         {
             _emailServiceOptions = emailServiceOptions;
         }
-        public Task<ApplicationResponse> SendEmail(EmailMessage emailMessage)
+        public Task<ApplicationResponse> SendEmail(SendEmail emailMessage)
         {
             var message = new MimeMessage();
             message.From.Add(new MailboxAddress(emailMessage.SenderName, emailMessage.SenderEmail));

@@ -1,4 +1,5 @@
-﻿using ObakiSite.Shared.Models;
+﻿using ObakiSite.Application.Features.Email.Commands;
+using ObakiSite.Shared.Models;
 using ObakiSite.Shared.Models.Response;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,6 @@ namespace ObakiSite.Application.Features.Email.Services
 {
     public interface IEmailService
     {
-        public Task<ApplicationResponse> SendEmail(EmailMessage emailMessage);
+        public Task<ApplicationResponse> SendEmail(SendEmail emailMessage);
     }
 }
