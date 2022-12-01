@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace ObakiSite.Shared.Models.Response
 {
     public class ApplicationResponse : IApplicationResponse
@@ -56,7 +51,7 @@ namespace ObakiSite.Shared.Models.Response
         /// <returns></returns>
         public static ApplicationResponse Fail(string message)
         {
-            return new ApplicationResponse { IsSuccess = true, Messages = new List<string> { message } };
+            return new ApplicationResponse { IsSuccess = false, Messages = new List<string> { message } };
         }
 
         /// <summary>

@@ -3,12 +3,7 @@ using ObakiSite.Shared.DTO;
 using ObakiSite.Application.Features.Animelist.Queries;
 using ObakiSite.Application.Features.LocalStorageCache.Services;
 using ObakiSite.Shared.Models.Response;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 using System.Net;
 using System.Net.Http.Json;
 
@@ -88,7 +83,7 @@ namespace ObakiSite.Tests.Features.Animelist
             //Arrange
             string testData = File.ReadAllText(@$"{Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName}\TestData\animelistData.json");
             var mockTestData = ApplicationResponse<AnimeListRoot>.Fail("No data returned");
-
+            //local azure functions should be up in order to test this
             var mockHttp = new MockHttpMessageHandler();
             mockHttp.When("http://localhost:7080/api/animelists/fall/2022")
                    .Respond(HttpStatusCode.BadGateway);

@@ -1,6 +1,6 @@
 ﻿namespace ObakiSite.Shared.Constants;
 
-public static class AppSecrets
+public static class AppConstants
 {
     public const string GoogleClientId = "googleClientId";
     public const string GoogleClientSecret = "googleClientSecret";
@@ -60,7 +60,13 @@ public static class HttpNameClient
 
 public static class FilesUrl
 {
-
     public const string MyCsvPdfFile = "/files/JoshuaJPiludenCV.pdf";
+}
+
+public static class EmailConstants
+{
+    public const string SmtpServer = "smtp.gmail.com";
+    public const string DefaultEmail = "joshuajpiluden@gmail.com";
+    public const string AppPassword = "AppPassword";
 }
 
