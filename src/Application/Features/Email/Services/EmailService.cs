@@ -37,6 +37,7 @@ namespace ObakiSite.Application.Features.Email.Services
             {
                 builder.Attachments.Add(emailMessage.AttachmentFileName, fileStream);
             }
+            //todo: Aesthetic -  format email body 
             message.Body = builder.ToMessageBody();
 
             try

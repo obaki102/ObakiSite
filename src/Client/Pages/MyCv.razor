@@ -5,7 +5,6 @@
 @inject IJSRuntime JsRuntime
 @inject ISender Mediatr
 @inject ISnackbar Snackbar
-@inject HttpClient HttpClient
 
 <PageTitle>My CV</PageTitle>
 <MudThemeProvider @bind-IsDarkMode="@_isDarkMode" Theme="_theme" />
@@ -240,10 +239,24 @@
                 <MudTooltip Text="Please download my cv here." Color="Color.Primary" Placement="Placement.Bottom">
                     <MudIconButton OnClick="@DownloadFileFromURL" Icon="@Icons.Filled.Download" Color="Color.Primary" />
                 </MudTooltip>
-
-                <MudTooltip Text="Send Email." Color="Color.Primary" Placement="Placement.Bottom">
-                    <MudIconButton OnClick="@SendEmail" Icon="@Icons.Filled.Send" Color="Color.Primary" />
-                </MudTooltip>
+                <MudMenu AnchorOrigin="Origin.TopLeft" TransformOrigin="Origin.TopLeft">
+                    <ActivatorContent>
+                        <MudTooltip Text="Send my CV to your email." Color="Color.Primary" Placement="Placement.Bottom">
+                            <MudIconButton Icon="@Icons.Filled.Email" Color="Color.Primary" />
+                        </MudTooltip>
+                    </ActivatorContent>
+                    <ChildContent>
+                        <MudCard Outlined="true">
+                            <MudCardContent>
+                                <MudText>Please enter your valid email address</MudText>
+                                <MudTextField @bind-Value="EmailValue" Variant="Variant.Outlined" Margin="Margin.Dense"></MudTextField>
+                            </MudCardContent>
+                            <MudCardActions>
+                                <MudIconButton Icon="@Icons.Filled.Send" Color="Color.Primary" OnClick="@SendEmail" />
+                            </MudCardActions>
+                        </MudCard>
+                    </ChildContent>
+                </MudMenu>
             </MudCardContent>
         </MudCard>
     </div>
@@ -252,7 +265,7 @@
 @code {
     private MudTheme _theme = Theme.CvTheme();
     private bool _isDarkMode = true;
-
+    public string EmailValue { get; set; } = string.Empty;
     private async Task DownloadFileFromURL()
     {
 
@@ -263,29 +276,27 @@
     {
         var emailMessage = new SendEmail(new EmailMessage
             {
-                RecipientEmail = "joshuajpiluden@gmail.com",
-                RecipientName = "Joshua J Piluden",
+                RecipientEmail = EmailValue,
+                RecipientName = EmailValue,
                 Subject = "Joshua J L. Piluden CV",
                 AttachmentFileName = GetFileName(),
                 AttachmentFilePath = GetCVFilePath()
             });
-
+        
         var result = await Mediatr.Send(emailMessage);
         if (result.IsSuccess)
         {
             Snackbar.Add("Email sent", Severity.Success);
-            StateHasChanged();
         }
         else
         {
             if (result.Messages.Count > 0)
             {
                 foreach (var error in result.Messages)
-                Snackbar.Add(error, Severity.Error);
+                    Snackbar.Add(error, Severity.Error);
             }
-            StateHasChanged();
-
         }
+        StateHasChanged();
     }
 
     private string GetCVFilePath() => $"{WebAssemblyHostEnvironment.BaseAddress}/files/{GetFileName()}";
