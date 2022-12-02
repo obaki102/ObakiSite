@@ -67,12 +67,17 @@ namespace ObakiSite.Tests.Features.Email
         public void SendMessage_NoRecipient_ShouldReturnFalse()
         {
             //Arrange
+            var mockHttp = new MockHttpMessageHandler();
+            var mockHttpClient = mockHttp.ToHttpClient();
+            var httpFactory = new Mock<IHttpClientFactory>();
+            httpFactory.Setup(x => x.CreateClient(It.IsAny<string>())).Returns(mockHttpClient);
+
             var message = new EmailMessage();
             var options = new EmailServiceOptions
             {
                 AppPassword = _configuration[EmailConstants.AppPassword]
             };
-            var emailClient = new EmailService(options);
+            var emailClient = new EmailService(options, httpFactory.Object);
 
             //Act
             var result = emailClient.SendEmail(message);
@@ -87,12 +92,17 @@ namespace ObakiSite.Tests.Features.Email
         public void SendMessage_InValidCredentials_ShouldReturnFalse()
         {
             //Arrange
+            var mockHttp = new MockHttpMessageHandler();
+            var mockHttpClient = mockHttp.ToHttpClient();
+            var httpFactory = new Mock<IHttpClientFactory>();
+            httpFactory.Setup(x => x.CreateClient(It.IsAny<string>())).Returns(mockHttpClient);
+
             var message = new EmailMessage();
             var options = new EmailServiceOptions
             {
                 AppPassword = "InvalidCredemtial"
             };
-            var emailClient = new EmailService(options);
+            var emailClient = new EmailService(options, httpFactory.Object);
 
             //Act
             var result = emailClient.SendEmail(message);
@@ -106,6 +116,11 @@ namespace ObakiSite.Tests.Features.Email
         public void SendMessage_ValidCredentials_ShouldReturnTrue()
         {
             //Arrange
+            var mockHttp = new MockHttpMessageHandler();
+            var mockHttpClient = mockHttp.ToHttpClient();
+            var httpFactory = new Mock<IHttpClientFactory>();
+            httpFactory.Setup(x => x.CreateClient(It.IsAny<string>())).Returns(mockHttpClient);
+
             var message = new EmailMessage
             {
                 RecipientEmail = "joshuajpiluden@gmail.com",
@@ -116,7 +131,7 @@ namespace ObakiSite.Tests.Features.Email
             {
                 AppPassword = _configuration[EmailConstants.AppPassword]
             };
-            var emailClient = new EmailService(options);
+            var emailClient = new EmailService(options, httpFactory.Object);
 
             //Act
             var result = emailClient.SendEmail(message);

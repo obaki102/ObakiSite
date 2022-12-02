@@ -38,7 +38,7 @@ namespace ObakiSite.Api.Functions
             try
             {
                 var deserializedEmailMessage = await JsonSerializer.DeserializeAsync<EmailMessage>(request);
-                var result = _emailService.SendEmail(deserializedEmailMessage).Result;
+                var result = await _emailService.SendEmail(deserializedEmailMessage);
 
                 if (result.IsSuccess)
                 {

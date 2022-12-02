@@ -11,6 +11,7 @@ var baseUrl = new Uri(builder.Configuration["API_Prefix"] ?? builder.HostEnviron
 
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
+builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 builder.Services.AddAppDependencies(baseUrl);
 builder.Services.AddScoped<IBadgeUpdater, BadgeUpdater>();
 builder.Services.AddChatHubClient(options =>
@@ -29,6 +30,6 @@ else
 
 builder.Services.AddMudServices(config =>
 {
-    config.SnackbarConfiguration.PositionClass = Defaults.Classes.Position.BottomCenter;
+    config.SnackbarConfiguration.PositionClass = Defaults.Classes.Position.BottomStart;
 });
 await builder.Build().RunAsync();

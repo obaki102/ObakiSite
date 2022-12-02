@@ -2,6 +2,7 @@
 using ObakiSite.Shared.Constants;
 using ObakiSite.Shared.Models;
 using ObakiSite.Shared.Models.Response;
+using System.Text;
 using System.Text.Json;
 
 namespace ObakiSite.Application.Features.Email.Commands
@@ -18,9 +19,9 @@ namespace ObakiSite.Application.Features.Email.Commands
         public async Task<ApplicationResponse> Handle(SendEmail request, CancellationToken cancellationToken)
         {
             var httpClient = _httpClientFactory.CreateClient(HttpNameClient.Default);
-            var serializedEmailMessage = JsonSerializer.Serialize(request);
-            var uriRequest = $"/api/sendEmail/{serializedEmailMessage}";
-            var response = await httpClient.GetAsync(uriRequest);
+            var serializedEmailMessage = JsonSerializer.Serialize(request.EmailMessage);
+            var uriRequest = "/api/sendEmail";
+            var response = await httpClient.PostAsync(uriRequest, new StringContent(serializedEmailMessage, Encoding.UTF8, "application/json"));
 
             if (response.IsSuccessStatusCode)
             {
@@ -35,7 +36,7 @@ namespace ObakiSite.Application.Features.Email.Commands
                 return result;
             }
 
-            return ApplicationResponse.Fail();
+            return ApplicationResponse.Fail(response.StatusCode.ToString());
         }
     }
 

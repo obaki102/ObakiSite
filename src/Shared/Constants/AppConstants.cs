@@ -56,6 +56,7 @@ public static class HttpNameClient
     public const string Default = "DefaultHttpClient";
     public const string AnimeList = "AnimelistHttpClient";
     public const string ChatHub = "ChatHubHttpClient";
+    public const string Email = "EmailHttpClient";
 }
 
 public static class FilesUrl

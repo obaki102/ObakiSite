@@ -4,8 +4,13 @@
 @inject IWebAssemblyHostEnvironment WebAssemblyHostEnvironment
 @inject IJSRuntime JsRuntime
 @inject ISender Mediatr
+@inject ISnackbar Snackbar
+@inject HttpClient HttpClient
+
 <PageTitle>My CV</PageTitle>
 <MudThemeProvider @bind-IsDarkMode="@_isDarkMode" Theme="_theme" />
+<MudDialogProvider />
+<MudSnackbarProvider />
 <MudPaper Class="d-flex flex-column justify-center flex-grow-1 gap-4 mb-4" Elevation="5">
     <div class="d-flex mx-8">
         <MudCard Elevation="0">
@@ -236,9 +241,9 @@
                     <MudIconButton OnClick="@DownloadFileFromURL" Icon="@Icons.Filled.Download" Color="Color.Primary" />
                 </MudTooltip>
 
-               @* <MudTooltip Text="Send Email." Color="Color.Primary" Placement="Placement.Bottom">
-                    <MudIconButton OnClick="@SendEmail" Icon="@Icons.Filled.Download" Color="Color.Primary" />
-                </MudTooltip>*@
+                <MudTooltip Text="Send Email." Color="Color.Primary" Placement="Placement.Bottom">
+                    <MudIconButton OnClick="@SendEmail" Icon="@Icons.Filled.Send" Color="Color.Primary" />
+                </MudTooltip>
             </MudCardContent>
         </MudCard>
     </div>
@@ -250,17 +255,42 @@
 
     private async Task DownloadFileFromURL()
     {
-        var fileName = _isDarkMode ? "JoshuaJPiludenCV_dark.pdf" : "JoshuaJPiludenCV_light.pdf";
-        var fileURL = $"{WebAssemblyHostEnvironment.BaseAddress}/files/{fileName}";
-        await JsRuntime.InvokeVoidAsync("DownloadPdfFile", "JoshuaJPiludenCV.pdf", fileURL);
+
+        await JsRuntime.InvokeVoidAsync("DownloadPdfFile", "JoshuaJPiludenCV.pdf", GetCVFilePath());
     }
 
     private async Task SendEmail()
     {
-        var emailMessage = new SendEmail(new EmailMessage());
-       var result =  await Mediatr.Send(emailMessage);
-        
-        
+        var emailMessage = new SendEmail(new EmailMessage
+            {
+                RecipientEmail = "joshuajpiluden@gmail.com",
+                RecipientName = "Joshua J Piluden",
+                Subject = "Joshua J L. Piluden CV",
+                AttachmentFileName = GetFileName(),
+                AttachmentFilePath = GetCVFilePath()
+            });
+
+        var result = await Mediatr.Send(emailMessage);
+        if (result.IsSuccess)
+        {
+            Snackbar.Add("Email sent", Severity.Success);
+            StateHasChanged();
+        }
+        else
+        {
+            if (result.Messages.Count > 0)
+            {
+                foreach (var error in result.Messages)
+                Snackbar.Add(error, Severity.Error);
+            }
+            StateHasChanged();
+
+        }
     }
+
+    private string GetCVFilePath() => $"{WebAssemblyHostEnvironment.BaseAddress}/files/{GetFileName()}";
+
+    private string GetFileName() => _isDarkMode ? "JoshuaJPiludenCV_dark.pdf" : "JoshuaJPiludenCV_light.pdf";
+
 }
 

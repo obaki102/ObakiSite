@@ -1,5 +1,4 @@
 ﻿using MailKit.Security;
-using MimeKit.Text;
 using MimeKit;
 using ObakiSite.Shared.Models;
 using MailKit.Net.Smtp;
@@ -12,43 +11,62 @@ namespace ObakiSite.Application.Features.Email.Services
     public class EmailService : IEmailService
     {
         private readonly EmailServiceOptions _emailServiceOptions;
-        public EmailService(IOptions<EmailServiceOptions> emailServiceOptions)
+        private readonly IHttpClientFactory _httpClientFactory;
+        public EmailService(IOptions<EmailServiceOptions> emailServiceOptions, IHttpClientFactory httpClientFactory)
         {
             _emailServiceOptions = emailServiceOptions.Value;
+            _httpClientFactory = httpClientFactory;
         }
-        public EmailService(EmailServiceOptions emailServiceOptions)
+
+        public EmailService(EmailServiceOptions emailServiceOptions, IHttpClientFactory httpClientFactory)
         {
             _emailServiceOptions = emailServiceOptions;
+            _httpClientFactory = httpClientFactory;
         }
-        public Task<ApplicationResponse> SendEmail(EmailMessage emailMessage)
+        public async Task<ApplicationResponse> SendEmail(EmailMessage emailMessage)
         {
             var message = new MimeMessage();
             message.From.Add(new MailboxAddress(emailMessage.SenderName, emailMessage.SenderEmail));
             message.To.Add(new MailboxAddress(emailMessage.RecipientName, emailMessage.RecipientEmail));
             message.Subject = emailMessage.Subject;
 
-            message.Body = new TextPart(TextFormat.Html)
+            var builder = new BodyBuilder();
+            builder.TextBody = emailMessage.Message;
+            var fileStream = await GetFile(emailMessage.AttachmentFilePath);
+            if (fileStream.Length > 0)
             {
-                Text = emailMessage.Message
-            };
+                builder.Attachments.Add(emailMessage.AttachmentFileName, fileStream);
+            }
+            message.Body = builder.ToMessageBody();
 
             try
             {
                 using (var emailClient = new SmtpClient())
                 {
-                    emailClient.Connect(EmailConstants.SmtpServer, 587, SecureSocketOptions.Auto);
+                    await emailClient.ConnectAsync(EmailConstants.SmtpServer, 587, SecureSocketOptions.Auto);
                     emailClient.AuthenticationMechanisms.Remove("XOAUTH2");
-                    emailClient.Authenticate(EmailConstants.DefaultEmail, _emailServiceOptions.AppPassword);
-                    emailClient.Send(message);
-                    emailClient.Disconnect(true);
+                    await emailClient.AuthenticateAsync(EmailConstants.DefaultEmail, _emailServiceOptions.AppPassword);
+                    await emailClient.SendAsync(message);
+                    await emailClient.DisconnectAsync(true);
                 }
 
-                return Task.FromResult(ApplicationResponse.Success());
+                return ApplicationResponse.Success();
             }
             catch (Exception ex)
             {
-                return Task.FromResult(ApplicationResponse.Fail(ex.Message));
+                return ApplicationResponse.Fail(ex.Message);
             }
+        }
+        private async Task<Stream> GetFile(string filePath)
+        {
+            var httpClient = _httpClientFactory.CreateClient(HttpNameClient.Email);
+            var result =  await httpClient.GetAsync(filePath);
+            if (result.IsSuccessStatusCode)
+            {
+                var content = await result.Content.ReadAsStreamAsync();
+                return content;
+            }
+            return Stream.Null;
         }
     }
 }

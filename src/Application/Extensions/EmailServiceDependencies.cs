@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using ObakiSite.Application.Features.Email.Services;
+using ObakiSite.Shared.Constants;
 
 namespace ObakiSite.Application.Extensions
 {
@@ -13,6 +14,7 @@ namespace ObakiSite.Application.Extensions
                 throw new ArgumentNullException(nameof(services));
             }
             //In blazor wasm scoped lifetime behaves the same way as singleton.  
+            services.AddHttpClient(HttpNameClient.Email);
             services.TryAddSingleton<IEmailService, EmailService>();
             services.Configure(options);
             return services;
