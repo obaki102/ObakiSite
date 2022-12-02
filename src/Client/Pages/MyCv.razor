@@ -246,13 +246,21 @@
                         </MudTooltip>
                     </ActivatorContent>
                     <ChildContent>
-                        <MudCard Outlined="true">
+                        <MudCard Elevation="0">
                             <MudCardContent>
                                 <MudText>Please enter your valid email address</MudText>
                                 <MudTextField @bind-Value="EmailValue" Variant="Variant.Outlined" Margin="Margin.Dense"></MudTextField>
                             </MudCardContent>
                             <MudCardActions>
-                                <MudIconButton Icon="@Icons.Filled.Send" Color="Color.Primary" OnClick="@SendEmail" />
+                                @if (!isSending)
+                                {
+                                    <MudIconButton Icon="@Icons.Filled.Send" Color="Color.Primary" OnClick="@SendEmail" />
+                                }
+                                else
+                                {
+                                    <MudProgressCircular Color="Color.Primary" Size="Size.Small" Indeterminate="true" />
+                                }
+
                             </MudCardActions>
                         </MudCard>
                     </ChildContent>
@@ -265,6 +273,7 @@
 @code {
     private MudTheme _theme = Theme.CvTheme();
     private bool _isDarkMode = true;
+    private bool isSending = false;
     public string EmailValue { get; set; } = string.Empty;
     private async Task DownloadFileFromURL()
     {
@@ -274,6 +283,7 @@
 
     private async Task SendEmail()
     {
+        isSending = true;
         var emailMessage = new SendEmail(new EmailMessage
             {
                 RecipientEmail = EmailValue,
@@ -282,7 +292,7 @@
                 AttachmentFileName = GetFileName(),
                 AttachmentFilePath = GetCVFilePath()
             });
-        
+
         var result = await Mediatr.Send(emailMessage);
         if (result.IsSuccess)
         {
@@ -296,6 +306,8 @@
                     Snackbar.Add(error, Severity.Error);
             }
         }
+        isSending = false;
+        EmailValue = string.Empty;
         StateHasChanged();
     }
 
