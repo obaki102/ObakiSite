@@ -5,6 +5,7 @@ using MailKit.Net.Smtp;
 using ObakiSite.Shared.Constants;
 using ObakiSite.Shared.Models.Response;
 using Microsoft.Extensions.Options;
+using System.Drawing;
 
 namespace ObakiSite.Application.Features.Email.Services
 {
@@ -37,7 +38,14 @@ namespace ObakiSite.Application.Features.Email.Services
             {
                 builder.Attachments.Add(emailMessage.AttachmentFileName, fileStream);
             }
-            //todo: Aesthetic -  format email body 
+            string htmlBody = """"
+                                <p> Hello,<br><br>
+                                Thank you so much for taking interest in my profile, please don’t hesitate to contact me if I you need additional information.<br>
+                                Have a pleasent day.<br><br>
+                                Regards,<br>
+                                Josh</p>
+                                """";
+            builder.HtmlBody = htmlBody;
             message.Body = builder.ToMessageBody();
 
             try

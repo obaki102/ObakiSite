@@ -2,6 +2,8 @@
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using ObakiSite.Application.Features.Email.Services;
 using ObakiSite.Shared.Constants;
+using Polly.Contrib.WaitAndRetry;
+using Polly;
 
 namespace ObakiSite.Application.Extensions
 {
@@ -13,8 +15,12 @@ namespace ObakiSite.Application.Extensions
             {
                 throw new ArgumentNullException(nameof(services));
             }
-            //In blazor wasm scoped lifetime behaves the same way as singleton.  
-            services.AddHttpClient(HttpNameClient.Email);
+            
+            services.AddHttpClient(HttpNameClient.Email).AddTransientHttpErrorPolicy(policyBuilder =>
+             policyBuilder.WaitAndRetryAsync(Backoff.DecorrelatedJitterBackoffV2(TimeSpan.FromSeconds(1), 3), (exception, timeSpan, retryCount, context) =>
+             {
+                 // todo: log exception and retries.
+             })); 
             services.TryAddSingleton<IEmailService, EmailService>();
             services.Configure(options);
             return services;

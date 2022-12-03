@@ -18,6 +18,7 @@ namespace ObakiSite.Application.Features.Email.Commands
         }
         public async Task<ApplicationResponse> Handle(SendEmail request, CancellationToken cancellationToken)
         {
+            //todo: Implement Web workers once .net 8 comes out.
             var httpClient = _httpClientFactory.CreateClient(HttpNameClient.Default);
             var serializedEmailMessage = JsonSerializer.Serialize(request.EmailMessage);
             var uriRequest = "/api/sendEmail";

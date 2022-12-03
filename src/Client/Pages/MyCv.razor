@@ -230,7 +230,7 @@
                 <MudTooltip Text="GitHub" Color="Color.Primary" Placement="Placement.Bottom">
                     <MudIconButton Href="https://github.com/obaki102" Icon="@Icons.Custom.Brands.GitHub" Color="Color.Primary" />
                 </MudTooltip>
-                <MudTooltip Text="My email address" Color="Color.Primary" Placement="Placement.Bottom">
+                <MudTooltip Text="Email Address" Color="Color.Primary" Placement="Placement.Bottom">
                     <MudIconButton Href="mailto:joshuajpiluden@gmail.com" Icon="@Icons.Custom.Brands.Google" Color="Color.Primary" />
                 </MudTooltip>
                 <MudTooltip Text="Linkedin" Color="Color.Primary" Placement="Placement.Bottom">
@@ -246,23 +246,23 @@
                         </MudTooltip>
                     </ActivatorContent>
                     <ChildContent>
-                        <MudCard Elevation="0">
-                            <MudCardContent>
-                                <MudText>Please enter your valid email address</MudText>
-                                <MudTextField @bind-Value="EmailValue" Variant="Variant.Outlined" Margin="Margin.Dense"></MudTextField>
-                            </MudCardContent>
-                            <MudCardActions>
+                        <div class="mx-4">
+                            <div class="my-2">
+                                <MudText Typo="Typo.subtitle2">Please enter your  email address</MudText>
+                                <MudTextField Style="width:250px" @bind-Value="EmailValue" Variant="Variant.Outlined" Margin="Margin.Dense"></MudTextField>
+                            </div>
+                            <MudDivider />
+                            <div class="my-4">
                                 @if (!isSending)
                                 {
-                                    <MudIconButton Icon="@Icons.Filled.Send" Color="Color.Primary" OnClick="@SendEmail" />
+                                    <MudIconButton Icon="@Icons.Filled.Send" Color="Color.Primary" OnClick="@SendEmail" Size="Size.Small" />
                                 }
                                 else
                                 {
                                     <MudProgressCircular Color="Color.Primary" Size="Size.Small" Indeterminate="true" />
                                 }
-
-                            </MudCardActions>
-                        </MudCard>
+                            </div>
+                        </div>
                     </ChildContent>
                 </MudMenu>
             </MudCardContent>
