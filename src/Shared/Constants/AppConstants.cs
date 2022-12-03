@@ -71,3 +71,8 @@ public static class EmailConstants
     public const string AppPassword = "AppPassword";
 }
 
+public static class AppSecretKeys
+{
+    public const string SpeechSubKey = "SpeechServiceSubscriptionKey";
+}
+

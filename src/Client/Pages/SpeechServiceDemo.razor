@@ -1,0 +1,70 @@
+﻿@page "/speechtotextdemo"
+@using Microsoft.CognitiveServices.Speech;
+@using Microsoft.CognitiveServices.Speech.Audio;
+@using Microsoft.CognitiveServices.Speech.Translation;
+@using ObakiSite.Application.Features.Keys.Queries;
+@inject ISender Mediatr
+<h3>SpeechServiceDemo</h3>
+<hr />
+<p>
+    <input type="text" class="form-control" @bind-value="InputValue" />
+</p>
+
+<button class="btn btn-primary" @onclick="Click_ReadMyVoice">Read My Voice</button>
+
+@code {
+    static string? InputValue { get; set; }
+
+    async Task Click_ReadMyVoice()
+    {
+        try
+        {
+            Console.WriteLine("Started..");
+            // var key = await Mediatr.Send(new GetKey());
+            //   var speechConfig = SpeechConfig.FromEndpoint(new Uri("https://southeastasia.api.cognitive.microsoft.com/sts/v1.0/issuetoken"));//FromSubscription("3e9b94e3a62642408c496882dfcbe461", "southeastasia");
+
+            var speechConfig = SpeechConfig.FromSubscription("accaf30ff94649f79cc2fae546236281", "southeastasia");
+            //Find your key and resource region under the 'Keys and Endpoint' tab in your Speech resource in Azure Portal
+            //Remember to delete the brackets <> when pasting your key and region!
+            await RecognizeFromMic(speechConfig);
+        }catch(Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
+
+    async static Task RecognizeFromMic(SpeechConfig speechConfig)
+    {
+        using var audioConfig = AudioConfig.FromDefaultMicrophoneInput();
+        using var recognizer = new SpeechRecognizer(speechConfig, audioConfig);
+
+        //Asks user for mic input and prints transcription result on screen
+        Console.WriteLine("Speak into your microphone.");
+        var result = await recognizer.RecognizeOnceAsync();
+        Console.WriteLine($"RECOGNIZED: Text={result.Text}");
+    }
+
+
+    static void OutputSpeechRecognitionResult(SpeechRecognitionResult speechRecognitionResult)
+    {
+        switch (speechRecognitionResult.Reason)
+        {
+            case ResultReason.RecognizedSpeech:
+                InputValue = speechRecognitionResult.Text;
+                break;
+            case ResultReason.NoMatch:
+                InputValue = "NOMATCH: Speech could not be recognized";
+                break;
+            case ResultReason.Canceled:
+                var cancellation = CancellationDetails.FromResult(speechRecognitionResult);
+                InputValue = "CANCELED: Reason=" + cancellation.Reason;
+                if (cancellation.Reason == CancellationReason.Error)
+                {
+                    Console.WriteLine($"CANCELED: ErrorCode={cancellation.ErrorCode}");
+                    Console.WriteLine($"CANCELED: ErrorDetails={cancellation.ErrorDetails}");
+                    Console.WriteLine($"CANCELED: Double check the speech resource key and region.");
+                }
+                break;
+        }
+    }
+}
