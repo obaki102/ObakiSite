@@ -1,5 +1,5 @@
-﻿using ObakiSite.Shared.Events;
-using ObakiSite.Shared.Models;
+﻿using ObakiSite.Shared.DTO;
+using ObakiSite.Shared.Events;
 
 namespace ObakiSite.Application.Features.Chat.Services
 {

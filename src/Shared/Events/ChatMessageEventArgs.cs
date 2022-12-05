@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ObakiSite.Shared.Models;
+using ObakiSite.Shared.DTO;
 
 namespace ObakiSite.Shared.Events
 {

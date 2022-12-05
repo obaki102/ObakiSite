@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 using MediatR;
-using ObakiSite.Shared.Models.Response;
+using ObakiSite.Shared.DTO.Response;
 
 namespace ObakiSite.Application.Behaviours.Validation
 {

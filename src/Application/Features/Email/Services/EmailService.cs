@@ -1,11 +1,10 @@
 ﻿using MailKit.Security;
 using MimeKit;
-using ObakiSite.Shared.Models;
 using MailKit.Net.Smtp;
 using ObakiSite.Shared.Constants;
-using ObakiSite.Shared.Models.Response;
+using ObakiSite.Shared.DTO.Response;
 using Microsoft.Extensions.Options;
-using System.Drawing;
+using ObakiSite.Shared.DTO;
 
 namespace ObakiSite.Application.Features.Email.Services
 {

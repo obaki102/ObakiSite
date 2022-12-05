@@ -2,10 +2,10 @@
 using Microsoft.Extensions.Options;
 using ObakiSite.Shared.Events;
 using ObakiSite.Shared.Constants;
-using ObakiSite.Shared.Models;
 using Newtonsoft.Json;
 using Microsoft.Extensions.DependencyInjection;
 using System.Net.Http.Json;
+using ObakiSite.Shared.DTO;
 
 namespace ObakiSite.Application.Features.Chat.Services
 {

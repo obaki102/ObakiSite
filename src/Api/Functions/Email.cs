@@ -7,8 +7,8 @@ using Microsoft.Azure.Functions.Worker.Http;
 using ObakiSite.Application.Features.Email.Services;
 using System.Text.Json;
 using System;
-using ObakiSite.Shared.Models.Response;
-using ObakiSite.Shared.Models;
+using ObakiSite.Shared.DTO.Response;
+using ObakiSite.Shared.DTO;
 
 namespace ObakiSite.Api.Functions
 {

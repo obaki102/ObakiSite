@@ -2,8 +2,8 @@
 using Moq;
 using ObakiSite.Application.Features.Email.Services;
 using ObakiSite.Shared.Constants;
-using ObakiSite.Shared.Models;
-using ObakiSite.Shared.Models.Response;
+using ObakiSite.Shared.DTO;
+using ObakiSite.Shared.DTO.Response;
 
 namespace ObakiSite.Tests.Features.Email
 {
@@ -94,6 +94,7 @@ namespace ObakiSite.Tests.Features.Email
             //Arrange
             var mockHttp = new MockHttpMessageHandler();
             var mockHttpClient = mockHttp.ToHttpClient();
+
             var httpFactory = new Mock<IHttpClientFactory>();
             httpFactory.Setup(x => x.CreateClient(It.IsAny<string>())).Returns(mockHttpClient);
 

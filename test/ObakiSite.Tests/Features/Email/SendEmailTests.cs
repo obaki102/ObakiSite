@@ -1,8 +1,7 @@
 ﻿using Moq;
 using ObakiSite.Application.Features.Email.Commands;
 using System.Net;
-using MediatR;
-using ObakiSite.Shared.Models;
+using ObakiSite.Shared.DTO;
 
 namespace ObakiSite.Tests.Features.Email
 {
@@ -14,7 +13,7 @@ namespace ObakiSite.Tests.Features.Email
         {
             string testData = File.ReadAllText(@$"{Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName}\TestData\sendEmail_Success.json");
             var mockHttp = new MockHttpMessageHandler();
-            mockHttp.When("http://localhost:7080/api/sendEmail/*")
+            mockHttp.When("http://localhost:7080/api/*")
                    .Respond("application/json", testData);
             var httpClient = mockHttp.ToHttpClient();
             httpClient.BaseAddress = new Uri("http://localhost:7080");

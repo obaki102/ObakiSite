@@ -1,4 +1,4 @@
-﻿namespace ObakiSite.Shared.Models
+﻿namespace ObakiSite.Shared.DTO
 {
     public class EmailMessage
     {

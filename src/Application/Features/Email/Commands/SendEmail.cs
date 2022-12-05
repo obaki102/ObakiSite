@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using ObakiSite.Shared.Constants;
-using ObakiSite.Shared.Models;
-using ObakiSite.Shared.Models.Response;
+using ObakiSite.Shared.DTO;
+using ObakiSite.Shared.DTO.Response;
 using System.Text;
 using System.Text.Json;
 

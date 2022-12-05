@@ -2,7 +2,7 @@
 using ObakiSite.Shared.DTO;
 using ObakiSite.Application.Features.Animelist.Queries;
 using ObakiSite.Application.Features.LocalStorageCache.Services;
-using ObakiSite.Shared.Models.Response;
+using ObakiSite.Shared.DTO.Response;
 using System.Text.Json;
 using System.Net;
 

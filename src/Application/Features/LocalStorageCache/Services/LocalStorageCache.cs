@@ -1,7 +1,7 @@
 ﻿
 using Blazored.LocalStorage;
 using ObakiSite.Shared.Constants;
-using ObakiSite.Shared.Models.Response;
+using ObakiSite.Shared.DTO.Response;
 
 namespace ObakiSite.Application.Features.LocalStorageCache.Services
 {

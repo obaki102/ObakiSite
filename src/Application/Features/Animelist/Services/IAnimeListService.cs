@@ -1,5 +1,5 @@
 ﻿using ObakiSite.Application.Features.Animelist.DTO;
-using ObakiSite.Shared.Models.Response;
+using ObakiSite.Shared.DTO.Response;
 
 namespace ObakiSite.Application.Features.Animelist.Services
 {

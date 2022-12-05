@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ObakiSite.Shared.Models.Response
+namespace ObakiSite.Shared.DTO.Response
 {
     public interface IApplicationResponse
     {
