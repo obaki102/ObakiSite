@@ -70,4 +70,10 @@ public static class EmailConstants
     public const string DefaultEmail = "joshuajpiluden@gmail.com";
     public const string AppPassword = "AppPassword";
 }
+public static class CosmosDB
+{
+    public const string EndPoint = "CosmosEndPoint";
+    public const string AccessKey = "CosmosAccessKey";
+    public const string Db = "obakidb";
+}
 

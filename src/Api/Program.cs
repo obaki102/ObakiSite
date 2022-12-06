@@ -20,6 +20,8 @@ namespace ObakiSite.Api
                     {
                         options.AppPassword = Environment.GetEnvironmentVariable(EmailConstants.AppPassword);
                     });
+
+                    services.AddPostService(Environment.GetEnvironmentVariable(CosmosDB.EndPoint), Environment.GetEnvironmentVariable(CosmosDB.AccessKey));
                 })
 
                 .Build();

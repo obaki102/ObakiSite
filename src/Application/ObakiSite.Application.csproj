@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Features\Email\Queries\**" />
+    <EmbeddedResource Remove="Features\Email\Queries\**" />
+    <None Remove="Features\Email\Queries\**" />
+  </ItemGroup>
+
+  <ItemGroup>
 	  <PackageReference Include="Blazored.LocalStorage" Version="4.3.0" />
 	  <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.4.0" />
 	  <PackageReference Include="MailKit" Version="3.4.3" />
@@ -14,6 +20,7 @@
 	  <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
 	  <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="7.0.0" />
 	  <PackageReference Include="Microsoft.AspNetCore.SignalR.Protocols.MessagePack" Version="7.0.0" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore.Cosmos" Version="7.0.0" />
 	  <PackageReference Include="Microsoft.Extensions.Http.Polly" Version="7.0.0" />
 	  <PackageReference Include="MimeKit" Version="3.4.3" />
 	  <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
@@ -23,10 +30,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Shared\ObakiSite.Shared.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Features\Email\Queries\" />
   </ItemGroup>
 
 </Project>
