@@ -29,7 +29,7 @@ namespace ObakiSite.Api.Functions
             response.Headers.Add("Content-Type", "text/plain; charset=utf-8");
             var post = new Post
             {  
-                    Id = new Guid().ToString(),
+                    Id = DateTime.Now.ToString(),
                      Title = "TEST POST",
                      HtmlBody ="BODY"
 

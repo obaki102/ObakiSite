@@ -23,7 +23,7 @@ namespace ObakiSite.Application.Features.Posts.Services
         public async Task<ApplicationResponse> CreatePost(Post post)
         {
             using var context = _factory.CreateDbContext();
-            context.Add(post);
+            context.Posts.Add(post);
             var result = await context.SaveChangesAsync();
 
             if (result > 0)

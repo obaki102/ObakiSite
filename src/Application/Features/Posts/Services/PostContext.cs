@@ -16,8 +16,8 @@ namespace ObakiSite.Application.Features.Posts.Services
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Post>()
-                .ToContainer(nameof(Post))
-                .HasKey(d => d.Id);
+                .ToContainer("Posts")
+                .HasPartitionKey(p => p.Id);
         }
     }
 }

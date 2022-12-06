@@ -74,6 +74,6 @@ public static class CosmosDB
 {
     public const string EndPoint = "CosmosEndPoint";
     public const string AccessKey = "CosmosAccessKey";
-    public const string Db = "obakidb";
+    public const string Database= "obakidb";
 }
 

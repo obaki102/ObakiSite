@@ -2,6 +2,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using ObakiSite.Application.Features.Posts.Services;
+using ObakiSite.Shared.Constants;
+
 namespace ObakiSite.Application.Extensions
 {
     public static class PostDependencies
@@ -18,7 +20,7 @@ namespace ObakiSite.Application.Extensions
                    opts.UseCosmos(
                        endPoint,
                        accessKey,
-                       nameof(PostContext));
+                       CosmosDB.Database);
                });
             services.TryAddScoped<IPostService, PostService>();
             return services;
