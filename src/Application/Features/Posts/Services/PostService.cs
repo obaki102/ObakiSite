@@ -24,10 +24,10 @@ namespace ObakiSite.Application.Features.Posts.Services
             return ApplicationResponse.Fail();
         }
 
-        public async Task<ApplicationResponse> DeletePost(Post post)
+        public async Task<ApplicationResponse> DeletePost(string  id)
         {
             using var context = _factory.CreateDbContext();
-            var postToDelete = await context.Posts.Where(i => i.Id == post.Id).FirstOrDefaultAsync();
+            var postToDelete = await context.Posts.Where(i => i.Id == id).FirstOrDefaultAsync();
 
             if (postToDelete == null)
             {
@@ -56,7 +56,7 @@ namespace ObakiSite.Application.Features.Posts.Services
                 return ApplicationResponse.Fail("Post does not exist.");
             }
 
-            postToUpdate = post;
+            context.Posts.Update(post);
 
             var result = await context.SaveChangesAsync();
 

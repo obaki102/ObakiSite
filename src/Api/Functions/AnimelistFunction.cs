@@ -9,22 +9,22 @@ using ObakiSite.Shared.DTO.Response;
 
 namespace ObakiSite.Api.Functions
 {
-    public class AnimeList
+    public class AnimelistFunction
     {
         private readonly IAnimeListService _animeListService;
-        private readonly ILogger<AnimeList> _logger;
-        public AnimeList(IAnimeListService animeListService, ILogger<AnimeList> logger)
+        private readonly ILogger<AnimelistFunction> _logger;
+        public AnimelistFunction(IAnimeListService animeListService, ILogger<AnimelistFunction> logger)
         {
             _animeListService = animeListService;
             _logger = logger;
         }
         [Function("GetAnimeListBySeasonAndYear")]
-        public async Task<HttpResponseData> Run(
+        public async Task<HttpResponseData> GetAnimeListBySeasonAndYear(
             [HttpTrigger(AuthorizationLevel.Function, "get", Route = "animelists/{season?}/{year:int?}")] HttpRequestData req,
             string season,
             int year)
         {
-            _logger.LogInformation("C# HTTP trigger function processed a request.");
+            _logger.LogInformation("AnimelistFunction processed a request.");
             var response = req.CreateResponse(HttpStatusCode.OK);
             var result = await _animeListService.GetAnimeListBySeasonAndYear(year, season);
 

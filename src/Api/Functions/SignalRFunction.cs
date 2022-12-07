@@ -7,7 +7,7 @@ using System.Net;
 
 namespace ObakiSite.Api.Functions
 {
-    public static class SignalR
+    public static class SignalRFunction
     {
         [Function("negotiate")]
         public static async Task<HttpResponseData> GetSignalRInfo(

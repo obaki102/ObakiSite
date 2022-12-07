@@ -12,20 +12,20 @@ using ObakiSite.Shared.DTO;
 
 namespace ObakiSite.Api.Functions
 {
-    public class Email
+    public class EmailFunction
     {
         private readonly IEmailService _emailService;
-        private readonly ILogger<Email> _logger;
-        public Email(IEmailService emailService, ILogger<Email> logger)
+        private readonly ILogger<EmailFunction> _logger;
+        public EmailFunction(IEmailService emailService, ILogger<EmailFunction> logger)
         {
             _emailService = emailService;
             _logger = logger;
         }
         [Function("SendEmail")]
-        public async Task<HttpResponseData> Run(
+        public async Task<HttpResponseData> SendEmail(
             [HttpTrigger(AuthorizationLevel.Function, "post", Route = "sendEmail")] HttpRequestData req)
         {
-            _logger.LogInformation("C# HTTP trigger function processed a request.");
+            _logger.LogInformation("EmailFunction function processed a request.");
             var response = req.CreateResponse(HttpStatusCode.OK);
             var request = req.Body;
 
