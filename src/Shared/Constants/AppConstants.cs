@@ -18,6 +18,7 @@ public static class AnimeList
 {
     public const string XmalClientId = "X-MAL-CLIENT-ID";
     public const string AnimelistClientId = "ClientId";
+    public const string BaseUrl = "https://api.myanimelist.net/";
     public const string CacheDataKey = "CacheData";
     public const string CacheDataCreateDateKey = "CacheDataCreateDate";
 }
@@ -76,4 +77,6 @@ public static class CosmosDB
     public const string AccessKey = "CosmosAccessKey";
     public const string Database= "obakidb";
 }
+
+
 

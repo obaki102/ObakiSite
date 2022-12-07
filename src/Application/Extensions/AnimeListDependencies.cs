@@ -9,7 +9,7 @@ namespace ObakiSite.Application.Extensions
 {
     public static class AnimeListDependencies
     {
-        public static IServiceCollection AddHttpAnimeListService(this IServiceCollection services, Uri baseUrl, string defaultHeader)
+        public static IServiceCollection AddHttpAnimeListService(this IServiceCollection services, string defaultHeader)
         {
             if (services == null)
             {
@@ -18,7 +18,7 @@ namespace ObakiSite.Application.Extensions
             services.AddHttpClient(HttpNameClient.AnimeList,
                 client =>
                 {
-                    client.BaseAddress = baseUrl;
+                    client.BaseAddress = new Uri(AnimeList.BaseUrl);
                     client.DefaultRequestHeaders.Add(AnimeList.XmalClientId, defaultHeader);
                 })
                 .AddTransientHttpErrorPolicy(policyBuilder =>

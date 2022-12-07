@@ -1,14 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
 using ObakiSite.Application.Domain.Entities;
 using ObakiSite.Shared.DTO.Response;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace ObakiSite.Application.Features.Posts.Services
 {
     public class PostService : IPostService
@@ -17,7 +9,7 @@ namespace ObakiSite.Application.Features.Posts.Services
 
         public PostService(IDbContextFactory<PostContext> factory)
         {
-            _factory= factory;
+            _factory = factory;
         }
 
         public async Task<ApplicationResponse> CreatePost(Post post)
@@ -28,6 +20,50 @@ namespace ObakiSite.Application.Features.Posts.Services
 
             if (result > 0)
                 return ApplicationResponse.Success();
+
+            return ApplicationResponse.Fail();
+        }
+
+        public async Task<ApplicationResponse> DeletePost(Post post)
+        {
+            using var context = _factory.CreateDbContext();
+            var postToDelete = await context.Posts.Where(i => i.Id == post.Id).FirstOrDefaultAsync();
+
+            if (postToDelete == null)
+            {
+                return ApplicationResponse.Fail("Post does not exist.");
+            }
+
+            context.Posts.Remove(postToDelete);
+
+            var result = await context.SaveChangesAsync();
+
+            if (result > 0)
+            {
+                return ApplicationResponse.Success();
+            }
+
+            return ApplicationResponse.Fail();
+        }
+
+        public async Task<ApplicationResponse> UpdatePost(Post post)
+        {
+            using var context = _factory.CreateDbContext();
+            var postToUpdate = await context.Posts.Where(i => i.Id == post.Id).FirstOrDefaultAsync();
+
+            if (postToUpdate == null)
+            {
+                return ApplicationResponse.Fail("Post does not exist.");
+            }
+
+            postToUpdate = post;
+
+            var result = await context.SaveChangesAsync();
+
+            if (result > 0)
+            {
+                return ApplicationResponse.Success();
+            }
 
             return ApplicationResponse.Fail();
         }

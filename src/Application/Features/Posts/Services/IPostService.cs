@@ -6,5 +6,7 @@ namespace ObakiSite.Application.Features.Posts.Services
     public interface IPostService
     {
         Task<ApplicationResponse> CreatePost(Post post);
+        Task<ApplicationResponse> UpdatePost(Post post);
+        Task<ApplicationResponse> DeletePost(Post post);
     }
 }

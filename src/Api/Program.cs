@@ -13,8 +13,7 @@ namespace ObakiSite.Api
                 .ConfigureFunctionsWorkerDefaults()
                 .ConfigureServices(services =>
                 {
-                    services.AddHttpAnimeListService(new Uri("https://api.myanimelist.net/"),
-                Environment.GetEnvironmentVariable(AnimeList.AnimelistClientId));
+                    services.AddHttpAnimeListService(Environment.GetEnvironmentVariable(AnimeList.AnimelistClientId));
 
                     services.AddEmailService(options =>
                     {
