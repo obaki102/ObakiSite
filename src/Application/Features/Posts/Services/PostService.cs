@@ -16,7 +16,7 @@ namespace ObakiSite.Application.Features.Posts.Services
         {
             using var context = _factory.CreateDbContext();
             context.Posts.Add(post);
-            var result = await context.SaveChangesAsync();
+            var result = await context.SaveChangesAsync().ConfigureAwait(false);
 
             if (result > 0)
                 return ApplicationResponse.Success();
@@ -27,7 +27,7 @@ namespace ObakiSite.Application.Features.Posts.Services
         public async Task<ApplicationResponse> DeletePost(string  id)
         {
             using var context = _factory.CreateDbContext();
-            var postToDelete = await context.Posts.Where(i => i.Id == id).FirstOrDefaultAsync();
+            var postToDelete = await context.Posts.Where(i => i.Id == id).FirstOrDefaultAsync().ConfigureAwait(false);
 
             if (postToDelete == null)
             {
@@ -36,7 +36,7 @@ namespace ObakiSite.Application.Features.Posts.Services
 
             context.Posts.Remove(postToDelete);
 
-            var result = await context.SaveChangesAsync();
+            var result = await context.SaveChangesAsync().ConfigureAwait(false);
 
             if (result > 0)
             {
@@ -49,7 +49,7 @@ namespace ObakiSite.Application.Features.Posts.Services
         public async Task<ApplicationResponse> UpdatePost(Post post)
         {
             using var context = _factory.CreateDbContext();
-            var postToUpdate = await context.Posts.Where(i => i.Id == post.Id).FirstOrDefaultAsync();
+            var postToUpdate = await context.Posts.Where(i => i.Id == post.Id).FirstOrDefaultAsync().ConfigureAwait(false);
 
             if (postToUpdate == null)
             {
@@ -58,7 +58,7 @@ namespace ObakiSite.Application.Features.Posts.Services
 
             context.Posts.Update(post);
 
-            var result = await context.SaveChangesAsync();
+            var result = await context.SaveChangesAsync().ConfigureAwait(false);
 
             if (result > 0)
             {

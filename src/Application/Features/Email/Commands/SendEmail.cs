@@ -22,12 +22,12 @@ namespace ObakiSite.Application.Features.Email.Commands
             var httpClient = _httpClientFactory.CreateClient(HttpNameClient.Default);
             var serializedEmailMessage = JsonSerializer.Serialize(request.EmailMessage);
             var uriRequest = "/api/sendEmail";
-            var response = await httpClient.PostAsync(uriRequest, new StringContent(serializedEmailMessage, Encoding.UTF8, "application/json"));
+            var response = await httpClient.PostAsync(uriRequest, new StringContent(serializedEmailMessage, Encoding.UTF8, "application/json")).ConfigureAwait(false);
 
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStreamAsync();
-                var result = await JsonSerializer.DeserializeAsync<ApplicationResponse>(content);
+                var result = await JsonSerializer.DeserializeAsync<ApplicationResponse>(content).ConfigureAwait(false);
 
                 if (result is null || !result.IsSuccess)
                 {

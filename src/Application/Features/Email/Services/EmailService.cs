@@ -51,11 +51,11 @@ namespace ObakiSite.Application.Features.Email.Services
             {
                 using (var emailClient = new SmtpClient())
                 {
-                    await emailClient.ConnectAsync(EmailConstants.SmtpServer, 587, SecureSocketOptions.Auto);
+                    await emailClient.ConnectAsync(EmailConstants.SmtpServer, 587, SecureSocketOptions.Auto).ConfigureAwait(false);
                     emailClient.AuthenticationMechanisms.Remove("XOAUTH2");
-                    await emailClient.AuthenticateAsync(EmailConstants.DefaultEmail, _emailServiceOptions.AppPassword);
-                    await emailClient.SendAsync(message);
-                    await emailClient.DisconnectAsync(true);
+                    await emailClient.AuthenticateAsync(EmailConstants.DefaultEmail, _emailServiceOptions.AppPassword).ConfigureAwait(false);
+                    await emailClient.SendAsync(message).ConfigureAwait(false);
+                    await emailClient.DisconnectAsync(true).ConfigureAwait(false);
                 }
 
                 return ApplicationResponse.Success();
@@ -68,10 +68,10 @@ namespace ObakiSite.Application.Features.Email.Services
         private async Task<Stream> GetFile(string filePath)
         {
             var httpClient = _httpClientFactory.CreateClient(HttpNameClient.Email);
-            var result =  await httpClient.GetAsync(filePath);
+            var result =  await httpClient.GetAsync(filePath).ConfigureAwait(false);
             if (result.IsSuccessStatusCode)
             {
-                var content = await result.Content.ReadAsStreamAsync();
+                var content = await result.Content.ReadAsStreamAsync().ConfigureAwait(false) ;
                 return content;
             }
             return Stream.Null;

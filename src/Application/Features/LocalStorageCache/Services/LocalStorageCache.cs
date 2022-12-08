@@ -27,7 +27,7 @@ namespace ObakiSite.Application.Features.LocalStorageCache.Services
                 await RefreshData();
             }
                 
-            Data = await _localStorageService.GetItemAsync<T>(Options?.DataKey);
+            Data = await _localStorageService.GetItemAsync<T>(Options?.DataKey).ConfigureAwait(false);
 
             if (Data is not null)
             {
@@ -40,8 +40,8 @@ namespace ObakiSite.Application.Features.LocalStorageCache.Services
         //todo: Check how can data refresh  happen inside LocalStorageCache
         public async Task<bool> IsDataNeedsRefresh()
         {
-            var cacheData =  await _localStorageService.GetItemAsync<T>(Options?.DataKey);
-            var cacheDataCreateDate = await _localStorageService.GetItemAsync<DateTime?>(Options?.CreationDateKey);
+            var cacheData =  await _localStorageService.GetItemAsync<T>(Options?.DataKey).ConfigureAwait(false);
+            var cacheDataCreateDate = await _localStorageService.GetItemAsync<DateTime?>(Options?.CreationDateKey).ConfigureAwait(false);
             double totalHrsSinceCacheCreated = 0;
 
             if (cacheDataCreateDate is not null)
@@ -65,14 +65,14 @@ namespace ObakiSite.Application.Features.LocalStorageCache.Services
                 throw new ArgumentNullException($"{nameof(Options)} is null.");
             }
 
-            await _localStorageService.RemoveItemAsync(Options.DataKey);
-            await _localStorageService.RemoveItemAsync(Options.CreationDateKey);
+            await _localStorageService.RemoveItemAsync(Options.DataKey).ConfigureAwait(false);
+            await _localStorageService.RemoveItemAsync(Options.CreationDateKey).ConfigureAwait(false);
         }
 
         private async Task RefreshData()
         {
-            await _localStorageService.SetItemAsync(AnimeList.CacheDataKey, Data);
-            await _localStorageService.SetItemAsync(AnimeList.CacheDataCreateDateKey, DateTime.UtcNow);
+            await _localStorageService.SetItemAsync(AnimeList.CacheDataKey, Data).ConfigureAwait(false);
+            await _localStorageService.SetItemAsync(AnimeList.CacheDataCreateDateKey, DateTime.UtcNow).ConfigureAwait(false);
         }
 
 

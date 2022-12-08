@@ -28,14 +28,16 @@ namespace ObakiSite.Application.Features.Animelist.Queries
         {
             var httpClient = _httpClientFactory.CreateClient(HttpNameClient.Default);
             var uriRequest = $"/api/animelists/{request.Season.SeasonName}/{request.Season.Year}";
-            if (await _localStorageCache.IsDataNeedsRefresh())
+            var isRefreshNeeded = await _localStorageCache.IsDataNeedsRefresh().ConfigureAwait(false);
+
+            if (isRefreshNeeded)
             {
-                 var response = await httpClient.GetAsync(uriRequest);
+                 var response = await httpClient.GetAsync(uriRequest).ConfigureAwait(false);
 
                 if (response.IsSuccessStatusCode)
                 {
                     var content = await response.Content.ReadAsStreamAsync();
-                    var result  = await JsonSerializer.DeserializeAsync<AnimeListRoot>(content);
+                    var result  = await JsonSerializer.DeserializeAsync<AnimeListRoot>(content).ConfigureAwait(false);
 
                     if (result is null)
                     {
@@ -45,6 +47,7 @@ namespace ObakiSite.Application.Features.Animelist.Queries
 
                 }
             }
+
             return await _localStorageCache.GetCacheData();
         }
     }

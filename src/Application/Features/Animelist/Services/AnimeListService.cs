@@ -15,7 +15,7 @@ namespace ObakiSite.Application.Features.Animelist.Services
         public async Task<ApplicationResponse<AnimeListRoot>> GetAnimeListBySeasonAndYear(int year, string season)
         {
             var uriRequest = $"v2/anime/season/{year}/{season}?limit=100&fields=id,title,main_picture,alternative_titles,start_date,end_date,synopsis,mean,popularity,num_list_users,num_scoring_users,nsfw,created_at,updated_at,media_type,status,genres,my_list_status,num_episodes,start_season,broadcast,source,average_episode_duration,rating,pictures,background,related_anime,related_manga,recommendations,studios,statistics";
-            var response = await _httpClient.GetAsync(uriRequest);
+            var response = await _httpClient.GetAsync(uriRequest).ConfigureAwait(false);
             if (response.IsSuccessStatusCode)
             {
                 var result = await response.Content.ReadAsStreamAsync();
