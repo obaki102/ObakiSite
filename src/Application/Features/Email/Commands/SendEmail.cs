@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using ObakiSite.Application.Extensions;
 using ObakiSite.Shared.Constants;
 using ObakiSite.Shared.DTO;
 using ObakiSite.Shared.DTO.Response;
@@ -20,9 +21,8 @@ namespace ObakiSite.Application.Features.Email.Commands
         {
             //todo: Implement Web workers once .net 8 comes out.
             var httpClient = _httpClientFactory.CreateClient(HttpNameClient.Default);
-            var serializedEmailMessage = JsonSerializer.Serialize(request.EmailMessage);
-            var uriRequest = "/api/sendEmail";
-            var response = await httpClient.PostAsync(uriRequest, new StringContent(serializedEmailMessage, Encoding.UTF8, "application/json")).ConfigureAwait(false);
+            var serializedEmailMessage = JsonSerializer.Serialize(request.EmailMessage).ToJsonStringContent();
+            var response = await httpClient.PostAsync(EmailConstants.Endpoint, serializedEmailMessage).ConfigureAwait(false);
 
             if (response.IsSuccessStatusCode)
             {

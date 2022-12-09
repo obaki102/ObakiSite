@@ -305,6 +305,7 @@
                 foreach (var error in result.Messages)
                     Snackbar.Add(error, Severity.Error);
             }
+            Snackbar.Add("Sorry, unable to send email.", Severity.Error);
         }
         isSending = false;
         EmailValue = string.Empty;

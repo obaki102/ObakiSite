@@ -21,6 +21,8 @@ public static class AnimeList
     public const string BaseUrl = "https://api.myanimelist.net/";
     public const string CacheDataKey = "CacheData";
     public const string CacheDataCreateDateKey = "CacheDataCreateDate";
+    public const string Endpoint = "/api/animelists/";
+    
 }
 
 public static class SignalR
@@ -70,12 +72,21 @@ public static class EmailConstants
     public const string SmtpServer = "smtp.gmail.com";
     public const string DefaultEmail = "joshuajpiluden@gmail.com";
     public const string AppPassword = "AppPassword";
+    public const string Endpoint = "/api/sendEmail";
 }
 public static class CosmosDB
 {
     public const string EndPoint = "CosmosEndPoint";
     public const string AccessKey = "CosmosAccessKey";
     public const string Database= "obakidb";
+}
+public static class PostConstants
+{
+    public static class CreatePost
+    {
+        public const string EndPoint = "/api/createPost";
+        
+    }
 }
 
 

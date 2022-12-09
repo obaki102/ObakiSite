@@ -2,17 +2,12 @@
 {
     public class Post
     {
-        private DateTime _postCreationDate;
-
-        public Post()
-        {
-            _postCreationDate = DateTime.Now;
-        }
-        public string Id { get; set; } = string.Empty;
-        public required string Title { get; set; } = string.Empty;
-        public string Description { get; set; } = string.Empty;
-        public required string HtmlBody { get; set; } = string.Empty;
-        public string Author { get; set; } = string.Empty;
-        public DateTime PostCreationDate { get => _postCreationDate; }
+        public required string Id { get; set; } 
+        public required string Title { get; set; }
+        public required string Description { get; set; } 
+        public required string HtmlBody { get; set; }
+        public string Author { get; set; } = "Anonymous";
+        public DateTime CreationDate { get; set; }
+        public List<Tag>? Tags { get; set; }
     }
 }

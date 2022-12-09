@@ -113,7 +113,7 @@ namespace ObakiSite.Application.Features.Chat.Services
 
         public async Task SendMessage(ChatMessage chatMessage)
         {
-            await _httpClient.PostAsJsonAsync($"{HubUrl}/messages", chatMessage);
+             await _httpClient.PostAsJsonAsync($"{HubUrl}/messages", chatMessage);
         }
     }
 }
