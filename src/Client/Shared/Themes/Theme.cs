@@ -11,6 +11,7 @@ namespace ObakiSite.Client.Shared.Themes
             var defaultLightPallete = defaultTheme.Palette;
             //Dark 
             defaultDarkPallete.Dark = "#0d1117";
+           // defaultDarkPallete.Primary = "#0466c8";
             defaultDarkPallete.AppbarBackground = "#161b22";
             defaultDarkPallete.DarkContrastText = "#ecf2f8";
             defaultDarkPallete.Background = "#0d1117";
@@ -28,6 +29,7 @@ namespace ObakiSite.Client.Shared.Themes
             var defaultLightPallete = defaultTheme.Palette;
             //Dark 
             defaultDarkPallete.Dark = "#161b22";
+          //  defaultDarkPallete.Primary = "#0466c8";
             defaultDarkPallete.AppbarBackground = "#161b22";
             defaultDarkPallete.DarkContrastText = "#ecf2f8";
             defaultDarkPallete.Background = "#0d1117";

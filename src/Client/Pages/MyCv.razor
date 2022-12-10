@@ -7,269 +7,275 @@
 @inject ISnackbar Snackbar
 
 <PageTitle>My CV</PageTitle>
-<MudThemeProvider @bind-IsDarkMode="@_isDarkMode" Theme="_theme" />
-<MudDialogProvider />
-<MudSnackbarProvider />
-<MudPaper Class="d-flex flex-column justify-center flex-grow-1 gap-4 mb-4" Elevation="5">
-    <div class="d-flex mx-8">
-        <MudCard Elevation="0">
-            <MudCardHeader>
-                <CardHeaderAvatar>
-                    <MudAvatar Style="height:70px; width:70px; " Image="/img/myprofile.jpg"></MudAvatar>
-                </CardHeaderAvatar>
-                <CardHeaderContent>
-                    <MudText Typo="Typo.body1">Joshua J L. Piluden</MudText>
-                    <MudText Typo="Typo.body2">Application Developer</MudText>
-                </CardHeaderContent>
-                <CardHeaderActions>
-                    <MudTooltip Text="Toggle Light/Dark Mode" Color="Color.Primary" Placement="Placement.Left">
-                        <MudToggleIconButton @bind-Toggled="@_isDarkMode" Icon="@Icons.Material.Filled.LightMode" ToggledIcon="@Icons.Material.Filled.DarkMode"></MudToggleIconButton>
-                    </MudTooltip>
-                </CardHeaderActions>
-            </MudCardHeader>
-            <MudText Class="ml-4" Typo="Typo.body2">I am a developer who enjoys learning new things. I love creating tools and application even if this require me to work outside my comfort and knowledge set. </MudText>
-            <MudCardContent>
-                <MudText Typo="Typo.subtitle2">Skills</MudText>
-                <MudTooltip Class="mud-theme-dark">
-                    <ChildContent>
-                        <MudChip Color="Color.Primary">C#</MudChip>
-                    </ChildContent>
-                    <TooltipContent>
-                        <MudCard Elevation="0" Class="mud-theme-dark" Style="width:250px">
-                            <MudCardHeader>
-                                <CardHeaderAvatar>
-                                    <MudChip Color="Color.Primary">C#</MudChip>
-                                </CardHeaderAvatar>
-                                <CardHeaderContent>
-                                    <MudText Typo="Typo.body1">Skill level</MudText>
-                                    <MudRating SelectedValue="3" />
-                                </CardHeaderContent>
-                            </MudCardHeader>
-                            <MudCardContent>
-                                <MudText Align="Align.Justify" Typo="Typo.body2">C# is my main language since college. Although I have grown comfortable using it , I have so much to learn.</MudText>
-                            </MudCardContent>
-                        </MudCard>
-                    </TooltipContent>
-                </MudTooltip>
-                <MudTooltip Class="mud-theme-dark">
-                    <ChildContent>
-                        <MudChip Color="Color.Primary">Blazor</MudChip>
-                    </ChildContent>
-                    <TooltipContent>
-                        <MudCard Elevation="0" Class="mud-theme-dark" Style="width:250px">
-                            <MudCardHeader>
-                                <CardHeaderAvatar>
-                                    <MudChip Color="Color.Primary">Blazor</MudChip>
-                                </CardHeaderAvatar>
-                                <CardHeaderContent>
-                                    <MudText Typo="Typo.body1">Skill level</MudText>
-                                    <MudRating SelectedValue="2" />
-                                </CardHeaderContent>
-                            </MudCardHeader>
-                            <MudCardContent>
-                                <MudText Align="Align.Justify" Typo="Typo.body2">I picked up Blazor this year and I'm having a blast learning every nook and cranny. Compared to other SPA framework you can solely build application using primarily C#. </MudText>
-                            </MudCardContent>
-                        </MudCard>
-                    </TooltipContent>
-                </MudTooltip>
-                <MudTooltip Class="mud-theme-dark">
-                    <ChildContent>
-                        <MudChip Color="Color.Primary">Azure</MudChip>
-                    </ChildContent>
-                    <TooltipContent>
-                        <MudCard Elevation="0" Class="mud-theme-dark" Style="width:250px">
-                            <MudCardHeader>
-                                <CardHeaderAvatar>
-                                    <MudChip Color="Color.Primary">Azure</MudChip>
-                                </CardHeaderAvatar>
-                                <CardHeaderContent>
-                                    <MudText Typo="Typo.body1">Skill level</MudText>
-                                    <MudRating SelectedValue="2" />
-                                </CardHeaderContent>
-                            </MudCardHeader>
-                            <MudCardContent>
-                                <MudText Align="Align.Justify" Typo="Typo.body2">Ever since I passed AZ-900 last year, I was introduced into the world of cloud computing. A testament of this is I was able to establish this site with zero cost.This site takes full advantage of Azure serverless services. </MudText>
-                            </MudCardContent>
-                        </MudCard>
-                    </TooltipContent>
-                </MudTooltip>
-                <MudTooltip Class="mud-theme-dark">
-                    <ChildContent>
-                        <MudChip Color="Color.Primary">Power Platform</MudChip>
-                    </ChildContent>
-                    <TooltipContent>
-                        <MudCard Elevation="0" Class="mud-theme-dark" Style="width:320px">
-                            <MudCardHeader>
-                                <CardHeaderAvatar>
-                                    <MudChip Size="Size.Small" Color="Color.Primary">Power Platform</MudChip>
-                                </CardHeaderAvatar>
-                                <CardHeaderContent>
-                                    <MudText Typo="Typo.body1">Skill level</MudText>
-                                    <MudRating SelectedValue="3" />
-                                </CardHeaderContent>
-                            </MudCardHeader>
-                            <MudCardContent>
-                                <MudText Align="Align.Justify" Typo="Typo.body2">This is currently the tech stack I use with my current company. I was able to create various automations using Power BI - for our reports and dashboards, Power Apps - for our UI based tools and finally Power Automate for integrating to external services such as MS Teams, Sharepoint  and Service Now. </MudText>
-                            </MudCardContent>
-                            <MudCardActions>
-                                <MudChip Size="Size.Small" Color="Color.Primary">Power BI</MudChip>
-                                <MudChip Size="Size.Small" Color="Color.Primary">Power Automate</MudChip>
-                                <MudChip Size="Size.Small" Color="Color.Primary">Power Apps</MudChip>
-                            </MudCardActions>
-                        </MudCard>
-                    </TooltipContent>
-                </MudTooltip>
-                <MudTooltip Class="mud-theme-dark">
-                    <ChildContent>
-                        <MudChip Color="Color.Primary">Others</MudChip>
-                    </ChildContent>
-                    <TooltipContent>
-                        <MudCard Elevation="0" Class="mud-theme-dark" Style="width:300px">
-                            <MudCardHeader>
-                                <CardHeaderAvatar>
-                                    <MudText Typo="Typo.subtitle2" Align="Align.Left">Skills I picked up throughout my career.</MudText>
-                                </CardHeaderAvatar>
-                                <CardHeaderContent>
-                                </CardHeaderContent>
-                            </MudCardHeader>
-                            <MudCardContent>
-                                <MudChip Size="Size.Small" Color="Color.Primary">Business Intelligence (SQL, SSIS, SSRS)</MudChip>
-                                <MudChip Size="Size.Small" Color="Color.Primary">Azure Functions</MudChip>
-                                <MudChip Size="Size.Small" Color="Color.Primary">SharePoint</MudChip>
-                                <MudChip Size="Size.Small" Color="Color.Primary">Windows Forms</MudChip>
-                                <MudChip Size="Size.Small" Color="Color.Primary">ASP Classic</MudChip>
-                                <MudChip Size="Size.Small" Color="Color.Primary">docker</MudChip>
-                                <MudChip Size="Size.Small" Color="Color.Primary">Cold Fusion</MudChip>
-                                <MudChip Size="Size.Small" Color="Color.Primary">PERL</MudChip>
-                                <MudChip Size="Size.Small" Color="Color.Primary">Oracle SOA</MudChip>
-                                <MudChip Size="Size.Small" Color="Color.Primary">Salesforce</MudChip>
-                            </MudCardContent>
-                        </MudCard>
-                    </TooltipContent>
-                </MudTooltip>
-            </MudCardContent>
-        </MudCard>
+<div class="d-flex flex-row">
+    <div style="height:100px" class="ml-4 mt-3">
+        <MudIconButton Icon="@Icons.Material.Filled.Home" Variant="Variant.Outlined" Color="Color.Primary" Size="Size.Large" Href="/" />
     </div>
-    <div class="d-flex flex-column mr-8">
-        <MudText Typo="Typo.subtitle2" Class="ml-8 mb-2">Work Experience</MudText>
-        <MudTimeline TimelineOrientation="TimelineOrientation.Vertical" TimelinePosition="TimelinePosition.Start">
-            <MudTimelineItem Color="Color.Info" Size="Size.Small">
-                <MudCard Outlined="true" Elevation="25">
+    <MudContainer MaxWidth="MaxWidth.Medium" Class="mt-4">
+        <MudThemeProvider @bind-IsDarkMode="@_isDarkMode" Theme="_theme" />
+        <MudDialogProvider />
+        <MudSnackbarProvider />
+        <MudPaper Class="d-flex flex-column justify-center flex-grow-1 gap-4 mb-4" Elevation="5">
+            <div class="d-flex mx-8">
+                <MudCard Elevation="0">
+                    <MudCardHeader>
+                        <CardHeaderAvatar>
+                            <MudAvatar Style="height:70px; width:70px; " Image="/img/myprofile.jpg"></MudAvatar>
+                        </CardHeaderAvatar>
+                        <CardHeaderContent>
+                            <MudText Typo="Typo.body1">Joshua J L. Piluden</MudText>
+                            <MudText Typo="Typo.body2">Application Developer</MudText>
+                        </CardHeaderContent>
+                        <CardHeaderActions>
+                            <MudTooltip Text="Toggle Light/Dark Mode" Color="Color.Primary" Placement="Placement.Left">
+                                <MudToggleIconButton @bind-Toggled="@_isDarkMode" Icon="@Icons.Material.Filled.LightMode" ToggledIcon="@Icons.Material.Filled.DarkMode"></MudToggleIconButton>
+                            </MudTooltip>
+                        </CardHeaderActions>
+                    </MudCardHeader>
+                    <MudText Class="ml-4" Typo="Typo.body2">I am a developer who enjoys learning new things. I love creating tools and application even if this require me to work outside my comfort and knowledge set. </MudText>
                     <MudCardContent>
-                        <MudText Color="Color.Info" Typo="Typo.body2">
-                            IBM (April 2016 - Present)
-                        </MudText>
-                        <MudList Dense="true">
-                            <MudListItem Text="I lead the automation initiative in my current project. One notable tool that I introduced using Power Automate is I was able to replicate the current Blueprism Bot that our project utilize to retrieve data from Service Now.Once implemented this tool  will reduce the client’s current bot annual cost from $40,000 to $1,560." Icon="@Icons.Filled.Bookmark" IconColor="Color.Info" />
-                            <MudListItem Text="Worked as a developer and support maintaining legacy .NET applications. Apart from .NET I have been tapped to provide enhancements to technologies outside my tech stack such as Cold Fusion, Oracle SOA,PHP and PERL." Icon="@Icons.Filled.Bookmark" IconColor="Color.Info" />
-                            <MudDivider />
-                            <MudListItem Text="My responsibilities as a Hypercare Analyst" InitiallyExpanded="true">
-                                <NestedList>
-                                    <MudListItem Text="Follow up and closure of P2Sx incidents as there will be a high flow during Country deployment and Incident Stabilization is one of the Exit Criteria for Hypercare." Icon="@Icons.Filled.Bookmark" IconColor="Color.Info" />
-                                    <MudListItem Text="Communicate effectively between Hypercare shifts for a smooth Hypercare Governance and Exit." Icon="@Icons.Filled.Bookmark" IconColor="Color.Info" />
-                                    <MudListItem Text="Effective coordination between multiple support/vendor groups for proactive/early response to incidents/issues." Icon="@Icons.Filled.Bookmark" IconColor="Color.Info" />
-                                    <MudListItem Text="Documentation of Incident Analysis and Trigger Cause to ensure identical or similar incidents are prevented in the future releases." Icon="@Icons.Filled.Bookmark" IconColor="Color.Info" />
-                                    <MudListItem Text="Capture, review and finalize all the relevant Lessons Learnt for better planning and minimizing the risk of future releases." Icon="@Icons.Filled.Bookmark" IconColor="Color.Info" />
-                                </NestedList>
-                            </MudListItem>
-                        </MudList>
-                    </MudCardContent>
-                </MudCard>
-            </MudTimelineItem>
-            <MudTimelineItem Color="Color.Success" Size="Size.Small">
-                <MudCard Outlined="true" Elevation="25">
-                    <MudCardContent>
-                        <MudText Color="Color.Success" Typo="Typo.body2">
-                            Accenture (April 2012 - March 2016)
-                        </MudText>
-                        <MudList Dense="true">
-                            <MudListItem Text="Maintained and enhanced client's HR applications." Icon="@Icons.Filled.Bookmark" IconColor="Color.Success" />
-                            <MudListItem Text="Developed a new approach for exporting large amount of data into Excel that greatly reduced download time from 2 hours to 2 mins." Icon="@Icons.Filled.Bookmark" IconColor="Color.Success" />
-                            <MudListItem Text="Streamlined batch jobs monitoring through automation." Icon="@Icons.Filled.Bookmark" IconColor="Color.Success" />
-                            <MudListItem Text="Converted MS Access tools into Web based applications." Icon="@Icons.Filled.Bookmark" IconColor="Color.Success" />
-                            <MudListItem Text="Developed utility tools for colleagues that eliminated 70% of their manual effort." Icon="@Icons.Filled.Bookmark" IconColor="Color.Success" />
-                            <MudListItem Text="Maintained project sharepoint site." Icon="@Icons.Filled.Bookmark" IconColor="Color.Success" />
-                            <MudListItem Text="Streamlined project internal workflows which resulted in a daily average savings of 1 hour." Icon="@Icons.Filled.Bookmark" IconColor="Color.Success" />
-                        </MudList>
-                    </MudCardContent>
-                </MudCard>
-            </MudTimelineItem>
-            <MudTimelineItem Color="Color.Secondary" Size="Size.Small">
-                <MudCard Outlined="true" Elevation="25">
-                    <MudCardContent>
-                        <MudText Color="Color.Secondary" Typo="Typo.body2">
-                            Texas Instruments (May 2011 - March 2012)
-                        </MudText>
-                        <MudList Dense="true">
-                            <MudListItem Text="Maintained HR applications for TI Philippines" Icon="@Icons.Filled.Bookmark" IconColor="Color.Secondary" />
-                            <MudListItem Text="Automated weekly generation of OT reports. " Icon="@Icons.Filled.Bookmark" IconColor="Color.Secondary" />
-                            <MudListItem Text="Created a windows form tools that help increased the resolution time of level 3 ticket requests." Icon="@Icons.Filled.Bookmark" IconColor="Color.Secondary" />
-                            <MudListItem Text="Created bash scripts for wafer data archiving." Icon="@Icons.Filled.Bookmark" IconColor="Color.Secondary" />
-                            <MudListItem Text="Provided support for level 3 ticket requests." Icon="@Icons.Filled.Bookmark" IconColor="Color.Secondary" />
-                        </MudList>
-                    </MudCardContent>
-                </MudCard>
-            </MudTimelineItem>
-        </MudTimeline>
-    </div>
-    <div class="d-flex flex-column mr-8">
-        <MudText Typo="Typo.subtitle2" Class="ml-8 mb-2">Personal Projects</MudText>
-        <MudCard Outlined="true" Elevation="25" Class="ml-8">
-            <MudCardContent>
-                <MudStack>
-                    <MudLink Href="https://www.joshuajpiluden.site" Typo="Typo.body2">Personal Site</MudLink>
-                    <MudLink Href="https://github.com/obaki102/MyDemoProjects" Typo="Typo.body2">Discord BOT Integration</MudLink>
-                </MudStack>
-            </MudCardContent>
-        </MudCard>
-    </div>
-    <div class="d-flex flex-column mr-8 mb-4">
-        <MudText Typo="Typo.subtitle2" Class="ml-8 mb-2">Contacts</MudText>
-        <MudCard Outlined="true" Elevation="25" Class="ml-8">
-            <MudCardContent>
-                <MudTooltip Text="GitHub" Color="Color.Primary" Placement="Placement.Bottom">
-                    <MudIconButton Href="https://github.com/obaki102" Icon="@Icons.Custom.Brands.GitHub" Color="Color.Primary" />
-                </MudTooltip>
-                <MudTooltip Text="Email Address" Color="Color.Primary" Placement="Placement.Bottom">
-                    <MudIconButton Href="mailto:joshuajpiluden@gmail.com" Icon="@Icons.Custom.Brands.Google" Color="Color.Primary" />
-                </MudTooltip>
-                <MudTooltip Text="Linkedin" Color="Color.Primary" Placement="Placement.Bottom">
-                    <MudIconButton Href="https://www.linkedin.com/in/joshua-j-piluden-b06798110" Icon="@Icons.Custom.Brands.LinkedIn" Color="Color.Primary" />
-                </MudTooltip>
-                <MudTooltip Text="Please download my cv here." Color="Color.Primary" Placement="Placement.Bottom">
-                    <MudIconButton OnClick="@DownloadFileFromURL" Icon="@Icons.Filled.Download" Color="Color.Primary" />
-                </MudTooltip>
-                <MudMenu AnchorOrigin="Origin.TopLeft" TransformOrigin="Origin.TopLeft">
-                    <ActivatorContent>
-                        <MudTooltip Text="Send my CV to your email." Color="Color.Primary" Placement="Placement.Bottom">
-                            <MudIconButton Icon="@Icons.Filled.Email" Color="Color.Primary" />
+                        <MudText Typo="Typo.subtitle2">Skills</MudText>
+                        <MudTooltip Class="mud-theme-dark">
+                            <ChildContent>
+                                <MudChip Color="Color.Primary">C#</MudChip>
+                            </ChildContent>
+                            <TooltipContent>
+                                <MudCard Elevation="0" Class="mud-theme-dark" Style="width:250px">
+                                    <MudCardHeader>
+                                        <CardHeaderAvatar>
+                                            <MudChip Color="Color.Primary">C#</MudChip>
+                                        </CardHeaderAvatar>
+                                        <CardHeaderContent>
+                                            <MudText Typo="Typo.body1">Skill level</MudText>
+                                            <MudRating SelectedValue="3" />
+                                        </CardHeaderContent>
+                                    </MudCardHeader>
+                                    <MudCardContent>
+                                        <MudText Align="Align.Justify" Typo="Typo.body2">C# is my main language since college. Although I have grown comfortable using it , I have so much to learn.</MudText>
+                                    </MudCardContent>
+                                </MudCard>
+                            </TooltipContent>
                         </MudTooltip>
-                    </ActivatorContent>
-                    <ChildContent>
-                        <div class="mx-4">
-                            <div class="my-2">
-                                <MudText Typo="Typo.subtitle2">Please enter your  email address</MudText>
-                                <MudTextField Style="width:250px" @bind-Value="EmailValue" Variant="Variant.Outlined" Margin="Margin.Dense"></MudTextField>
-                            </div>
-                            <MudDivider />
-                            <div class="my-4">
-                                @if (!isSending)
-                                {
-                                    <MudIconButton Icon="@Icons.Filled.Send" Color="Color.Primary" OnClick="@SendEmail" Size="Size.Small" />
-                                }
-                                else
-                                {
-                                    <MudProgressCircular Color="Color.Primary" Size="Size.Small" Indeterminate="true" />
-                                }
-                            </div>
-                        </div>
-                    </ChildContent>
-                </MudMenu>
-            </MudCardContent>
-        </MudCard>
-    </div>
-</MudPaper>
-
+                        <MudTooltip Class="mud-theme-dark">
+                            <ChildContent>
+                                <MudChip Color="Color.Primary">Blazor</MudChip>
+                            </ChildContent>
+                            <TooltipContent>
+                                <MudCard Elevation="0" Class="mud-theme-dark" Style="width:250px">
+                                    <MudCardHeader>
+                                        <CardHeaderAvatar>
+                                            <MudChip Color="Color.Primary">Blazor</MudChip>
+                                        </CardHeaderAvatar>
+                                        <CardHeaderContent>
+                                            <MudText Typo="Typo.body1">Skill level</MudText>
+                                            <MudRating SelectedValue="2" />
+                                        </CardHeaderContent>
+                                    </MudCardHeader>
+                                    <MudCardContent>
+                                        <MudText Align="Align.Justify" Typo="Typo.body2">I picked up Blazor this year and I'm having a blast learning every nook and cranny. Compared to other SPA framework you can solely build application using primarily C#. </MudText>
+                                    </MudCardContent>
+                                </MudCard>
+                            </TooltipContent>
+                        </MudTooltip>
+                        <MudTooltip Class="mud-theme-dark">
+                            <ChildContent>
+                                <MudChip Color="Color.Primary">Azure</MudChip>
+                            </ChildContent>
+                            <TooltipContent>
+                                <MudCard Elevation="0" Class="mud-theme-dark" Style="width:250px">
+                                    <MudCardHeader>
+                                        <CardHeaderAvatar>
+                                            <MudChip Color="Color.Primary">Azure</MudChip>
+                                        </CardHeaderAvatar>
+                                        <CardHeaderContent>
+                                            <MudText Typo="Typo.body1">Skill level</MudText>
+                                            <MudRating SelectedValue="2" />
+                                        </CardHeaderContent>
+                                    </MudCardHeader>
+                                    <MudCardContent>
+                                        <MudText Align="Align.Justify" Typo="Typo.body2">Ever since I passed AZ-900 last year, I was introduced into the world of cloud computing. A testament of this is I was able to establish this site with zero cost.This site takes full advantage of Azure serverless services. </MudText>
+                                    </MudCardContent>
+                                </MudCard>
+                            </TooltipContent>
+                        </MudTooltip>
+                        <MudTooltip Class="mud-theme-dark">
+                            <ChildContent>
+                                <MudChip Color="Color.Primary">Power Platform</MudChip>
+                            </ChildContent>
+                            <TooltipContent>
+                                <MudCard Elevation="0" Class="mud-theme-dark" Style="width:320px">
+                                    <MudCardHeader>
+                                        <CardHeaderAvatar>
+                                            <MudChip Size="Size.Small" Color="Color.Primary">Power Platform</MudChip>
+                                        </CardHeaderAvatar>
+                                        <CardHeaderContent>
+                                            <MudText Typo="Typo.body1">Skill level</MudText>
+                                            <MudRating SelectedValue="3" />
+                                        </CardHeaderContent>
+                                    </MudCardHeader>
+                                    <MudCardContent>
+                                        <MudText Align="Align.Justify" Typo="Typo.body2">This is currently the tech stack I use with my current company. I was able to create various automations using Power BI - for our reports and dashboards, Power Apps - for our UI based tools and finally Power Automate for integrating to external services such as MS Teams, Sharepoint  and Service Now. </MudText>
+                                    </MudCardContent>
+                                    <MudCardActions>
+                                        <MudChip Size="Size.Small" Color="Color.Primary">Power BI</MudChip>
+                                        <MudChip Size="Size.Small" Color="Color.Primary">Power Automate</MudChip>
+                                        <MudChip Size="Size.Small" Color="Color.Primary">Power Apps</MudChip>
+                                    </MudCardActions>
+                                </MudCard>
+                            </TooltipContent>
+                        </MudTooltip>
+                        <MudTooltip Class="mud-theme-dark">
+                            <ChildContent>
+                                <MudChip Color="Color.Primary">Others</MudChip>
+                            </ChildContent>
+                            <TooltipContent>
+                                <MudCard Elevation="0" Class="mud-theme-dark" Style="width:300px">
+                                    <MudCardHeader>
+                                        <CardHeaderAvatar>
+                                            <MudText Typo="Typo.subtitle2" Align="Align.Left">Skills I picked up throughout my career.</MudText>
+                                        </CardHeaderAvatar>
+                                        <CardHeaderContent>
+                                        </CardHeaderContent>
+                                    </MudCardHeader>
+                                    <MudCardContent>
+                                        <MudChip Size="Size.Small" Color="Color.Primary">Business Intelligence (SQL, SSIS, SSRS)</MudChip>
+                                        <MudChip Size="Size.Small" Color="Color.Primary">Azure Functions</MudChip>
+                                        <MudChip Size="Size.Small" Color="Color.Primary">SharePoint</MudChip>
+                                        <MudChip Size="Size.Small" Color="Color.Primary">Windows Forms</MudChip>
+                                        <MudChip Size="Size.Small" Color="Color.Primary">ASP Classic</MudChip>
+                                        <MudChip Size="Size.Small" Color="Color.Primary">docker</MudChip>
+                                        <MudChip Size="Size.Small" Color="Color.Primary">Cold Fusion</MudChip>
+                                        <MudChip Size="Size.Small" Color="Color.Primary">PERL</MudChip>
+                                        <MudChip Size="Size.Small" Color="Color.Primary">Oracle SOA</MudChip>
+                                        <MudChip Size="Size.Small" Color="Color.Primary">Salesforce</MudChip>
+                                    </MudCardContent>
+                                </MudCard>
+                            </TooltipContent>
+                        </MudTooltip>
+                    </MudCardContent>
+                </MudCard>
+            </div>
+            <div class="d-flex flex-column mr-8">
+                <MudText Typo="Typo.subtitle2" Class="ml-8 mb-2">Work Experience</MudText>
+                <MudTimeline TimelineOrientation="TimelineOrientation.Vertical" TimelinePosition="TimelinePosition.Start">
+                    <MudTimelineItem Color="Color.Info" Size="Size.Small">
+                        <MudCard Outlined="true" Elevation="25">
+                            <MudCardContent>
+                                <MudText Color="Color.Info" Typo="Typo.body2">
+                                    IBM (April 2016 - Present)
+                                </MudText>
+                                <MudList Dense="true">
+                                    <MudListItem Text="I lead the automation initiative in my current project. One notable tool that I introduced using Power Automate is I was able to replicate the current Blueprism Bot that our project utilize to retrieve data from Service Now.Once implemented this tool  will reduce the client’s current bot annual cost from $40,000 to $1,560." Icon="@Icons.Filled.Bookmark" IconColor="Color.Info" />
+                                    <MudListItem Text="Worked as a developer and support maintaining legacy .NET applications. Apart from .NET I have been tapped to provide enhancements to technologies outside my tech stack such as Cold Fusion, Oracle SOA,PHP and PERL." Icon="@Icons.Filled.Bookmark" IconColor="Color.Info" />
+                                    <MudDivider />
+                                    <MudListItem Text="My responsibilities as a Hypercare Analyst" InitiallyExpanded="true">
+                                        <NestedList>
+                                            <MudListItem Text="Follow up and closure of P2Sx incidents as there will be a high flow during Country deployment and Incident Stabilization is one of the Exit Criteria for Hypercare." Icon="@Icons.Filled.Bookmark" IconColor="Color.Info" />
+                                            <MudListItem Text="Communicate effectively between Hypercare shifts for a smooth Hypercare Governance and Exit." Icon="@Icons.Filled.Bookmark" IconColor="Color.Info" />
+                                            <MudListItem Text="Effective coordination between multiple support/vendor groups for proactive/early response to incidents/issues." Icon="@Icons.Filled.Bookmark" IconColor="Color.Info" />
+                                            <MudListItem Text="Documentation of Incident Analysis and Trigger Cause to ensure identical or similar incidents are prevented in the future releases." Icon="@Icons.Filled.Bookmark" IconColor="Color.Info" />
+                                            <MudListItem Text="Capture, review and finalize all the relevant Lessons Learnt for better planning and minimizing the risk of future releases." Icon="@Icons.Filled.Bookmark" IconColor="Color.Info" />
+                                        </NestedList>
+                                    </MudListItem>
+                                </MudList>
+                            </MudCardContent>
+                        </MudCard>
+                    </MudTimelineItem>
+                    <MudTimelineItem Color="Color.Success" Size="Size.Small">
+                        <MudCard Outlined="true" Elevation="25">
+                            <MudCardContent>
+                                <MudText Color="Color.Success" Typo="Typo.body2">
+                                    Accenture (April 2012 - March 2016)
+                                </MudText>
+                                <MudList Dense="true">
+                                    <MudListItem Text="Maintained and enhanced client's HR applications." Icon="@Icons.Filled.Bookmark" IconColor="Color.Success" />
+                                    <MudListItem Text="Developed a new approach for exporting large amount of data into Excel that greatly reduced download time from 2 hours to 2 mins." Icon="@Icons.Filled.Bookmark" IconColor="Color.Success" />
+                                    <MudListItem Text="Streamlined batch jobs monitoring through automation." Icon="@Icons.Filled.Bookmark" IconColor="Color.Success" />
+                                    <MudListItem Text="Converted MS Access tools into Web based applications." Icon="@Icons.Filled.Bookmark" IconColor="Color.Success" />
+                                    <MudListItem Text="Developed utility tools for colleagues that eliminated 70% of their manual effort." Icon="@Icons.Filled.Bookmark" IconColor="Color.Success" />
+                                    <MudListItem Text="Maintained project sharepoint site." Icon="@Icons.Filled.Bookmark" IconColor="Color.Success" />
+                                    <MudListItem Text="Streamlined project internal workflows which resulted in a daily average savings of 1 hour." Icon="@Icons.Filled.Bookmark" IconColor="Color.Success" />
+                                </MudList>
+                            </MudCardContent>
+                        </MudCard>
+                    </MudTimelineItem>
+                    <MudTimelineItem Color="Color.Secondary" Size="Size.Small">
+                        <MudCard Outlined="true" Elevation="25">
+                            <MudCardContent>
+                                <MudText Color="Color.Secondary" Typo="Typo.body2">
+                                    Texas Instruments (May 2011 - March 2012)
+                                </MudText>
+                                <MudList Dense="true">
+                                    <MudListItem Text="Maintained HR applications for TI Philippines" Icon="@Icons.Filled.Bookmark" IconColor="Color.Secondary" />
+                                    <MudListItem Text="Automated weekly generation of OT reports. " Icon="@Icons.Filled.Bookmark" IconColor="Color.Secondary" />
+                                    <MudListItem Text="Created a windows form tools that help increased the resolution time of level 3 ticket requests." Icon="@Icons.Filled.Bookmark" IconColor="Color.Secondary" />
+                                    <MudListItem Text="Created bash scripts for wafer data archiving." Icon="@Icons.Filled.Bookmark" IconColor="Color.Secondary" />
+                                    <MudListItem Text="Provided support for level 3 ticket requests." Icon="@Icons.Filled.Bookmark" IconColor="Color.Secondary" />
+                                </MudList>
+                            </MudCardContent>
+                        </MudCard>
+                    </MudTimelineItem>
+                </MudTimeline>
+            </div>
+            <div class="d-flex flex-column mr-8">
+                <MudText Typo="Typo.subtitle2" Class="ml-8 mb-2">Personal Projects</MudText>
+                <MudCard Outlined="true" Elevation="25" Class="ml-8">
+                    <MudCardContent>
+                        <MudStack>
+                            <MudLink Href="https://www.joshuajpiluden.site" Typo="Typo.body2">Personal Site</MudLink>
+                            <MudLink Href="https://github.com/obaki102/MyDemoProjects" Typo="Typo.body2">Discord BOT Integration</MudLink>
+                        </MudStack>
+                    </MudCardContent>
+                </MudCard>
+            </div>
+            <div class="d-flex flex-column mr-8 mb-4">
+                <MudText Typo="Typo.subtitle2" Class="ml-8 mb-2">Contacts</MudText>
+                <MudCard Outlined="true" Elevation="25" Class="ml-8">
+                    <MudCardContent>
+                        <MudTooltip Text="GitHub" Color="Color.Primary" Placement="Placement.Bottom">
+                            <MudIconButton Href="https://github.com/obaki102" Icon="@Icons.Custom.Brands.GitHub" Color="Color.Primary" />
+                        </MudTooltip>
+                        <MudTooltip Text="Email Address" Color="Color.Primary" Placement="Placement.Bottom">
+                            <MudIconButton Href="mailto:joshuajpiluden@gmail.com" Icon="@Icons.Custom.Brands.Google" Color="Color.Primary" />
+                        </MudTooltip>
+                        <MudTooltip Text="Linkedin" Color="Color.Primary" Placement="Placement.Bottom">
+                            <MudIconButton Href="https://www.linkedin.com/in/joshua-j-piluden-b06798110" Icon="@Icons.Custom.Brands.LinkedIn" Color="Color.Primary" />
+                        </MudTooltip>
+                        <MudTooltip Text="Please download my cv here." Color="Color.Primary" Placement="Placement.Bottom">
+                            <MudIconButton OnClick="@DownloadFileFromURL" Icon="@Icons.Filled.Download" Color="Color.Primary" />
+                        </MudTooltip>
+                        <MudMenu AnchorOrigin="Origin.TopLeft" TransformOrigin="Origin.TopLeft">
+                            <ActivatorContent>
+                                <MudTooltip Text="Send my CV to your email." Color="Color.Primary" Placement="Placement.Bottom">
+                                    <MudIconButton Icon="@Icons.Filled.Email" Color="Color.Primary" />
+                                </MudTooltip>
+                            </ActivatorContent>
+                            <ChildContent>
+                                <div class="mx-4">
+                                    <div class="my-2">
+                                        <MudText Typo="Typo.subtitle2">Please enter your  email address</MudText>
+                                        <MudTextField Style="width:250px" @bind-Value="EmailValue" Variant="Variant.Outlined" Margin="Margin.Dense"></MudTextField>
+                                    </div>
+                                    <MudDivider />
+                                    <div class="my-4">
+                                        @if (!isSending)
+                                        {
+                                            <MudIconButton Icon="@Icons.Filled.Send" Color="Color.Primary" OnClick="@SendEmail" Size="Size.Small" />
+                                        }
+                                        else
+                                        {
+                                            <MudProgressCircular Color="Color.Primary" Size="Size.Small" Indeterminate="true" />
+                                        }
+                                    </div>
+                                </div>
+                            </ChildContent>
+                        </MudMenu>
+                    </MudCardContent>
+                </MudCard>
+            </div>
+        </MudPaper>
+    </MudContainer>
+</div>
 @code {
     private MudTheme _theme = Theme.CvTheme();
     private bool _isDarkMode = true;

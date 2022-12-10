@@ -1,20 +1,13 @@
 ﻿@inherits LayoutComponentBase
 <MudLayout>
-    <div class="d-flex flex-row">
-        <div style="height:100px" class="ml-4 mt-3">
-            <MudIconButton Icon="@Icons.Material.Filled.Home" Variant="Variant.Outlined" Color="Color.Primary" Size="Size.Large" Href="/" />
-        </div>
-        <MudContainer MaxWidth="MaxWidth.Medium" Class="mt-4">
-            <ErrorBoundary>
-                <ChildContent>  @Body </ChildContent>
-                <ErrorContent Context="Exception">
-                    <MudChip Color="Color.Secondary">@Exception.GetType()</MudChip>
-                    <MudChip Color="Color.Secondary">@Exception.Message</MudChip>
-                    <p class="errorUI">Nothing to see here right now. Sorry!</p>
-                </ErrorContent>
-            </ErrorBoundary>
-        </MudContainer>
-    </div>
+     <ErrorBoundary>
+            <ChildContent>  @Body </ChildContent>
+            <ErrorContent Context="Exception">
+                <MudChip Color="Color.Secondary">@Exception.GetType()</MudChip>
+                <MudChip Color="Color.Secondary">@Exception.Message</MudChip>
+                <p class="errorUI">Nothing to see here right now. Sorry!</p>
+            </ErrorContent>
+        </ErrorBoundary>
     <MudScrollToTop>
         <MudFab Color="Color.Tertiary" Icon="@Icons.Filled.ArrowCircleUp" />
     </MudScrollToTop>

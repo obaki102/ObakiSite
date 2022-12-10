@@ -106,10 +106,8 @@ namespace ObakiSite.Application.Features.Chat.Services
         public event EventHandler<ClosedConnectionEventArgs>? OnClosed;
         public event EventHandler<string>? OnConnectionError;
 
-        public async ValueTask DisposeAsync()
-        {
-            await DisconnectAsync();
-        }
+        public async ValueTask DisposeAsync() => await DisconnectAsync();
+
 
         public async Task SendMessage(ChatMessage chatMessage)
         {

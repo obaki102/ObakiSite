@@ -20,6 +20,7 @@ namespace ObakiSite.Application.Extensions
             //3rd Party
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             services.AddMediatR(Assembly.GetExecutingAssembly());
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
             //HttpNamedClient
             services.AddHttpClient(HttpNameClient.Default, client =>

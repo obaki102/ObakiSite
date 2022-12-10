@@ -5,7 +5,6 @@ using ObakiSite.Application.Extensions;
 using ObakiSite.Shared.Constants;
 using ObakiSite.Shared.DTO;
 using ObakiSite.Shared.DTO.Response;
-using System.Text;
 using System.Text.Json;
 
 namespace ObakiSite.Application.Features.Posts.Commands
