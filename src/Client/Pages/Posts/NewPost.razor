@@ -20,59 +20,64 @@
                 </MudContainer>
             </MudAppBar>
         </div>
-        <MudPaper Class="mt-16">
-            <MudCard>
-                <MudCardContent>
-                    <MudTextField T="string" @bind-value="title" Immediate="true" Label="Title" Variant="Variant.Text" />
-                </MudCardContent>
-                <div class="ma-4">
-                    <BlazoredTextEditor @ref=RichTextEditor Placeholder="write a post...">
-                        <ToolbarContent>
-                            <div class="ql-bubble">
-                                <select class="ql-header">
-                                    <option selected=""></option>
-                                    @for (int i = 1; i < 7; i++)
-                                    {
-                                        <option value="@i"></option>
-                                    }
+        <MudPaper Class="mt-16" Elevation="2">
+            <MudTextField T="string" Class="ma-4" @bind-value="title" Immediate="true" Label="Title" Variant="Variant.Text" />
+            <div class="ma-4">
+                <BlazoredTextEditor @ref=RichTextEditor Placeholder="write a post...">
+                    <ToolbarContent>
+                        <div class="ql-bubble">
+                            <select class="ql-header">
+                                <option selected=""></option>
+                                @for (int i = 1; i < 7; i++)
+                                {
+                                    <option value="@i"></option>
+                                }
 
-                                </select>
-                                <span class="ql-formats">
-                                    <button class="ql-font"></button>
-                                </span>
-                                <span class="ql-formats">
-                                    <button class="ql-bold"></button>
-                                    <button class="ql-italic"></button>
-                                    <button class="ql-underline"></button>
-                                    <button class="ql-strike"></button>
-                                </span>
-                                <span class="ql-formats">
-                                    <select class="ql-color"></select>
-                                    <select class="ql-background"></select>
-                                </span>
-                                <span class="ql-formats">
-                                    <button class="ql-list" value="ordered"></button>
-                                    <button class="ql-list" value="bullet"></button>
-                                    <button class="ql-indent" value="-1"></button>
-                                    <button class="ql-indent" value="+1"></button>
-                                </span>
-                                <span class="ql-formats">
-                                    <button class="ql-link"></button>
-                                </span>
-                                <span class="ql-formats">
-                                    <button class="ql-video"></button>
-                                </span>
-                                @*  <span class="ql-formats">
-                                <button class="ql-image"></button>
-                                </span>*@
-                            </div>
-                        </ToolbarContent>
-                    </BlazoredTextEditor>
-                </div>
-            </MudCard>
+                            </select>
+                            <span class="ql-formats">
+                                <button class="ql-font"></button>
+                            </span>
+                            <span class="ql-formats">
+                                <button class="ql-bold"></button>
+                                <button class="ql-italic"></button>
+                                <button class="ql-underline"></button>
+                                <button class="ql-strike"></button>
+                            </span>
+                            <span class="ql-formats">
+                                <select class="ql-color"></select>
+                                <select class="ql-background"></select>
+                            </span>
+                            <span class="ql-formats">
+                                <button class="ql-list" value="ordered"></button>
+                                <button class="ql-list" value="bullet"></button>
+                                <button class="ql-indent" value="-1"></button>
+                                <button class="ql-indent" value="+1"></button>
+                            </span>
+                            <span class="ql-formats">
+                                <button class="ql-link"></button>
+                            </span>
+                            <span class="ql-formats">
+                                <button class="ql-video"></button>
+                            </span>
+                            @*  <span class="ql-formats">
+                            <button class="ql-image"></button>
+                            </span>*@
+                        </div>
+                    </ToolbarContent>
+                </BlazoredTextEditor>
+            </div>
+
         </MudPaper>
-        <div class="my-4">  <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@PublishPost">Publish</MudButton></div>
-
+        <div class="my-4">
+            @if (!isPosting)
+            {
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" Size="Size.Medium" OnClick="@PublishPost">Publish</MudButton>
+            }
+            else
+            {
+                <MudProgressCircular Color="Color.Primary" Size="Size.Medium" Indeterminate="true" />
+            }
+        </div>
         <MudCard Outlined="true" Elevation="25" Class="mt-4">
             <MudText Class="ma-4 mud-secondary-text" Typo="Typo.caption" GutterBottom="true" Style="font-size: 20px;">This feature is still in development</MudText>
             <MudCardContent>
@@ -81,7 +86,6 @@
                 </MudText>
             </MudCardContent>
         </MudCard>
-
     </div>
 </MudContainer>
 
@@ -90,6 +94,7 @@
     //todo: Global theme defaults accross all layouts.
     private MudTheme _theme = Theme.CvTheme();
     private bool _isDarkMode = true;
+    private bool isPosting = false;
     private BlazoredTextEditor? RichTextEditor;
     private MarkupString body;
     private string title = string.Empty;
@@ -102,6 +107,7 @@
 
     private async Task PublishPost()
     {
+        isPosting = true;
         var textContent = RichTextEditor != null ? await RichTextEditor.GetHTML() : string.Empty;
         var post = new PostDTO
             {
@@ -128,7 +134,8 @@
             }
             Snackbar.Add("Sorry, unable to create the post.", Severity.Error);
         }
+        isPosting = false;
         StateHasChanged();
-        NavManager.NavigateTo("/post/view");
+        //NavManager.NavigateTo("/post/view");
     }
 }

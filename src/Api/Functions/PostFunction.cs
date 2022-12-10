@@ -36,7 +36,6 @@ namespace ObakiSite.Api.Functions
             }
             try
             {
-
                 var post = await JsonSerializer.DeserializeAsync<Post>(request);
                 var result = await _postService.CreatePost(post);
                 if (result.IsSuccess)
