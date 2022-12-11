@@ -17,7 +17,6 @@ namespace ObakiSite.Application.Features.Chat.Services
         private bool isConnectionStarted = false;
         private string HubUrl => _hubClientOptions.HubUrl;
         public string HubConenctionId => hubConnection?.ConnectionId ?? string.Empty;
-
         public ChatHubClient(IOptions<ChatHubClientOptions> hubClientOptions, IHttpClientFactory httpClientFactory)
         {
             if (hubClientOptions == null)
@@ -76,7 +75,6 @@ namespace ObakiSite.Application.Features.Chat.Services
                         var chatMessage = JsonConvert.DeserializeObject<ChatMessage>(receivedMessage);
                         OnReceivedMessage?.Invoke(this, new ChatMessageEventArgs { ChatMessage = chatMessage ?? new() });
                     });
-
                     await hubConnection.StartAsync();
                     OnConnected?.Invoke(this, hubConnection.State.Equals(HubConnectionState.Connected) ? true : false);
                     isConnectionStarted = true;
@@ -87,7 +85,6 @@ namespace ObakiSite.Application.Features.Chat.Services
                 }
             }
         }
-
 
         public async Task DisconnectAsync()
         {
@@ -105,9 +102,7 @@ namespace ObakiSite.Application.Features.Chat.Services
         public event EventHandler<bool>? OnConnected;
         public event EventHandler<ClosedConnectionEventArgs>? OnClosed;
         public event EventHandler<string>? OnConnectionError;
-
         public async ValueTask DisposeAsync() => await DisconnectAsync();
-
 
         public async Task SendMessage(ChatMessage chatMessage)
         {

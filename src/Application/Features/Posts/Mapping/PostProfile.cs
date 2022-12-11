@@ -8,7 +8,7 @@ namespace ObakiSite.Application.Features.Posts.Mapping
     {
         public PostProfile()
         {
-            CreateMap<PostDTO, Post>();
+            CreateMap<PostDTO, Post>().ReverseMap();
             CreateMap<TagDTO, Tag>();
         }
     }

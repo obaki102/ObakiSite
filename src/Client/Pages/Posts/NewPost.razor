@@ -54,7 +54,7 @@
                                 <button class="ql-indent" value="+1"></button>
                             </span>
                             <span class="ql-formats">
-                                <button class="ql-link"></button>
+                                <button class="ql-code-block"></button>
                             </span>
                             <span class="ql-formats">
                                 <button class="ql-video"></button>
@@ -92,7 +92,7 @@
 @code
 {
     //todo: Global theme defaults accross all layouts.
-    private MudTheme _theme = Theme.CvTheme();
+    private MudTheme _theme = Theme.Default();
     private bool _isDarkMode = true;
     private bool isPosting = false;
     private BlazoredTextEditor? RichTextEditor;
@@ -136,6 +136,8 @@
         }
         isPosting = false;
         StateHasChanged();
-        //NavManager.NavigateTo("/post/view");
+        if (result.IsSuccess) {
+            NavManager.NavigateTo($"/post/view/{post.Id}");
+        }
     }
 }

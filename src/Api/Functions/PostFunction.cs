@@ -77,7 +77,7 @@ namespace ObakiSite.Api.Functions
                     return response;
                 }
 
-                await response.WriteAsJsonAsync(ApplicationResponse.Fail($"Post with id {post.Id} - update failed."));
+                await response.WriteAsJsonAsync(ApplicationResponse.Fail($"Post with id {post.Id} - update  operation failed."));
                 return response;
             }
             catch (Exception ex)
@@ -107,7 +107,37 @@ namespace ObakiSite.Api.Functions
                     return response;
                 }
 
-                await response.WriteAsJsonAsync(ApplicationResponse.Fail($"Post with id {id} - update failed."));
+                await response.WriteAsJsonAsync(ApplicationResponse.Fail($"Post with id {id} -  delete operation failed."));
+                return response;
+            }
+            catch (Exception ex)
+            {
+                await response.WriteAsJsonAsync(ApplicationResponse.Fail(ex.Message));
+                return response;
+            }
+        }
+
+        [Function("GetPostById")]
+        public async Task<HttpResponseData> GetPostById([HttpTrigger(AuthorizationLevel.Function, "get", Route = "getPost/{id?}")] HttpRequestData req, string id)
+        {
+            _logger.LogInformation("PostFunction trigger function processed a request.");
+
+            var response = req.CreateResponse(HttpStatusCode.OK);
+            if (string.IsNullOrEmpty(id))
+            {
+                await response.WriteAsJsonAsync(ApplicationResponse.Fail("Invalid id."));
+                return response;
+            }
+            try
+            {
+                var result = await _postService.GetPostById(id);
+                if (result.IsSuccess)
+                {
+                    await response.WriteAsJsonAsync(result);
+                    return response;
+                }
+
+                await response.WriteAsJsonAsync(ApplicationResponse.Fail($"Post with id {id} - unable to retrieve."));
                 return response;
             }
             catch (Exception ex)

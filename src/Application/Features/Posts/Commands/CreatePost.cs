@@ -26,6 +26,7 @@ namespace ObakiSite.Application.Features.Posts.Commands
             var post = _mapper.Map<Post>(request.post);
             var serializedPost = JsonSerializer.Serialize(post).ToJsonStringContent();
             var response = await httpClient.PostAsync(PostConstants.CreatePost.EndPoint, serializedPost).ConfigureAwait(false);
+
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStreamAsync();

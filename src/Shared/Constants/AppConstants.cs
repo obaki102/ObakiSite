@@ -85,7 +85,10 @@ public static class PostConstants
     public static class CreatePost
     {
         public const string EndPoint = "/api/createPost";
-        
+    }
+    public static class GetPostById
+    {
+        public const string EndPoint = "/api/getPost/";
     }
 }
 

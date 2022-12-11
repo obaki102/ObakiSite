@@ -46,7 +46,6 @@ namespace ObakiSite.Application.Features.Email.Services
                                 """";
             builder.HtmlBody = htmlBody;
             message.Body = builder.ToMessageBody();
-
             try
             {
                 using (var emailClient = new SmtpClient())
@@ -57,7 +56,6 @@ namespace ObakiSite.Application.Features.Email.Services
                     await emailClient.SendAsync(message).ConfigureAwait(false);
                     await emailClient.DisconnectAsync(true).ConfigureAwait(false);
                 }
-
                 return ApplicationResponse.Success();
             }
             catch (Exception ex)
@@ -65,6 +63,7 @@ namespace ObakiSite.Application.Features.Email.Services
                 return ApplicationResponse.Fail(ex.Message);
             }
         }
+
         private async Task<Stream> GetFile(string filePath)
         {
             var httpClient = _httpClientFactory.CreateClient(HttpNameClient.Email);

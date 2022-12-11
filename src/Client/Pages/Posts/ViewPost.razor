@@ -1,7 +1,40 @@
-﻿@page "/post/view"
+﻿@page "/post/view/{id}"
+@using ObakiSite.Application.Features.Posts.Queries;
+@inject ISender Mediatr
 <h3>ViewPost</h3>
+
+@if (post == null)
+{
+    <MudOverlay Visible="true" DarkBackground="true" ZIndex="9999" AutoClose="true">
+        <MudProgressCircular Color="Color.Primary" Indeterminate="true" Size="Size.Large" />
+    </MudOverlay>
+}
+else
+{
+    <MudPaper Elevation="1" Class="my-4">
+        <div class="ma-4">
+            <MudText>@post.Title</MudText>
+            @htmlBody
+        </div>
+
+    </MudPaper>
+}
 
 @code {
     [Parameter]
     public string Id { get; set; } = string.Empty;
+    private MarkupString htmlBody;
+
+
+    private PostDTO? post;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var result = await Mediatr.Send(new GetPostById(Id));
+        if (result.Data is not null && result.IsSuccess)
+        {
+            post = result.Data;
+            htmlBody = (MarkupString)post.HtmlBody;
+        }
+    }
 }

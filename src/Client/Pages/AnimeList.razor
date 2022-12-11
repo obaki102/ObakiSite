@@ -3,7 +3,7 @@
 @inject ISender Mediatr
 <PageTitle>Animelist</PageTitle>
 
-@if (AnimeLists == null)
+@if (animeLists == null)
 {
     <div class="d-flex justify-center flex-row flex-wrap gap-4">
         @for (int i = 0; i < 100; i++)
@@ -37,7 +37,7 @@ else
 {
     <div class="d-flex justify-center flex-row flex-wrap gap-4">
 
-        @foreach (var anime in AnimeLists.OrderBy(o => o.Node.Popularity))
+        @foreach (var anime in animeLists.OrderBy(o => o.Node.Popularity))
         {
             if (anime.Node != null && anime.Node.MainPicture != null)
             {
@@ -112,11 +112,14 @@ else
     Anchor anchor;
     private int year = DateTime.Today.Year;
     private Node? node = default;
-    private IReadOnlyList<Datum>? AnimeLists = default;
+    private IReadOnlyList<Datum>? animeLists;
     protected override async Task OnInitializedAsync()
     {
         var result = await Mediatr.Send(new GetAnimeListBySeasonAndYear(new Season(year, GetCurrentSeason())));
-        AnimeLists = result.Data.Data;
+        if (result.IsSuccess && result.Data is not null)
+        {
+            animeLists = result.Data.Data;
+        }
     }
 
     private string GetCurrentSeason()

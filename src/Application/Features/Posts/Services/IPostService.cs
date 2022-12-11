@@ -8,5 +8,6 @@ namespace ObakiSite.Application.Features.Posts.Services
         Task<ApplicationResponse> CreatePost(Post post);
         Task<ApplicationResponse> UpdatePost(Post post);
         Task<ApplicationResponse> DeletePost(string id);
+        Task<ApplicationResponse<Post>> GetPostById(string id);
     }
 }
