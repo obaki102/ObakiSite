@@ -48,7 +48,7 @@ namespace ObakiSite.Application.Features.Posts.Services
         public async Task<ApplicationResponse<PostDTO>> GetPostById(string id)
         {
             using var context = _factory.CreateDbContext();
-            var post = await context.Posts.WithPartitionKey(id).SingleOrDefaultAsync(i=> i.Id == id);
+            var post = await context.Posts.WithPartitionKey(id).AsNoTracking().SingleOrDefaultAsync(i=> i.Id == id);
             if (post is not null)
             {
                 var postDTO = _mapper.Map<PostDTO>(post);
