@@ -23,7 +23,7 @@
         <MudPaper Class="mt-16" Elevation="2">
             <MudTextField T="string" Class="ma-4" @bind-value="title" Immediate="true" Label="Title" Variant="Variant.Text" />
             <div class="ma-4">
-                <BlazoredTextEditor @ref=RichTextEditor Placeholder="write a post...">
+                <BlazoredTextEditor @ref=RichTextEditor Placeholder="write a post..." DebugLevel="error">
                     <ToolbarContent>
                         <div class="ql-bubble">
                             <select class="ql-header">
