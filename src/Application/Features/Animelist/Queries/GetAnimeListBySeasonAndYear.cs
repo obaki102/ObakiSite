@@ -41,7 +41,14 @@ namespace ObakiSite.Application.Features.Animelist.Queries
                     {
                         return ApplicationResponse<AnimeListRoot>.Fail("No data.");
                     }
-                    _localStorageCache.Data = result;
+
+                    try
+                    {
+                        await _localStorageCache.SetData(result);
+                    }catch(Exception ex)
+                    {
+                        return ApplicationResponse<AnimeListRoot>.Fail(ex.Message);
+                    }
                 }
             }
             return await _localStorageCache.GetCacheData();

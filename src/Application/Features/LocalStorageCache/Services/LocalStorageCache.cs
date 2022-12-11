@@ -1,6 +1,5 @@
 ﻿
 using Blazored.LocalStorage;
-using ObakiSite.Shared.Constants;
 using ObakiSite.Shared.DTO.Response;
 
 namespace ObakiSite.Application.Features.LocalStorageCache.Services
@@ -12,7 +11,7 @@ namespace ObakiSite.Application.Features.LocalStorageCache.Services
         {
             _localStorageService = localStorageService;
         }
-        public T? Data { get; set; }
+        private T? Data { get; set; }
         public LocalStorageCacheOptions? Options { get; set; }
         private bool perfromRefreshData { get; set; } = false;
         public async Task<ApplicationResponse<T>> GetCacheData()
@@ -22,12 +21,10 @@ namespace ObakiSite.Application.Features.LocalStorageCache.Services
                 throw new ArgumentNullException($"{nameof(Options)} is null.");
             }
 
-            if(perfromRefreshData)
+            if(!perfromRefreshData)
             {
-                await RefreshData();
+                Data = await _localStorageService.GetItemAsync<T>(Options.DataKey).ConfigureAwait(false);
             }
-                
-            Data = await _localStorageService.GetItemAsync<T>(Options?.DataKey).ConfigureAwait(false);
 
             if (Data is not null)
             {
@@ -40,8 +37,12 @@ namespace ObakiSite.Application.Features.LocalStorageCache.Services
         //todo: Check how can data refresh  happen inside LocalStorageCache
         public async Task<bool> IsDataNeedsRefresh()
         {
-            var cacheData =  await _localStorageService.GetItemAsync<T>(Options?.DataKey).ConfigureAwait(false);
-            var cacheDataCreateDate = await _localStorageService.GetItemAsync<DateTime?>(Options?.CreationDateKey).ConfigureAwait(false);
+            if (Options is null)
+            {
+                throw new ArgumentNullException($"{nameof(Options)} is null.");
+            }
+            var cacheData =  await _localStorageService.GetItemAsync<T>(Options.DataKey).ConfigureAwait(false);
+            var cacheDataCreateDate = await _localStorageService.GetItemAsync<DateTime?>(Options.CreationDateKey).ConfigureAwait(false);
             double totalHrsSinceCacheCreated = 0;
 
             if (cacheDataCreateDate is not null)
@@ -49,7 +50,7 @@ namespace ObakiSite.Application.Features.LocalStorageCache.Services
                 totalHrsSinceCacheCreated = DateTime.UtcNow.Subtract((DateTime)cacheDataCreateDate).TotalHours;
             }
 
-            if (cacheData is null || cacheDataCreateDate is null || totalHrsSinceCacheCreated > Options?.NumberOfHrsToRefreshCache)
+            if (cacheData is null || cacheDataCreateDate is null || totalHrsSinceCacheCreated > Options.NumberOfHrsToRefreshCache)
             {
                 perfromRefreshData = true;
                 return true;
@@ -58,21 +59,26 @@ namespace ObakiSite.Application.Features.LocalStorageCache.Services
             return false;
         }
 
+
         private async Task ClearCache()
         {
             if (Options is null)
             {
                 throw new ArgumentNullException($"{nameof(Options)} is null.");
             }
-
             await _localStorageService.RemoveItemAsync(Options.DataKey).ConfigureAwait(false);
             await _localStorageService.RemoveItemAsync(Options.CreationDateKey).ConfigureAwait(false);
         }
 
-        private async Task RefreshData()
+        public async Task SetData(T data)
         {
-            await _localStorageService.SetItemAsync(AnimeList.CacheDataKey, Data).ConfigureAwait(false);
-            await _localStorageService.SetItemAsync(AnimeList.CacheDataCreateDateKey, DateTime.UtcNow).ConfigureAwait(false);
+            if (Options is null)
+            {
+                throw new ArgumentNullException($"{nameof(Options)} is null.");
+            }
+            Data = data;
+            await _localStorageService.SetItemAsync(Options.DataKey, Data).ConfigureAwait(false);
+            await _localStorageService.SetItemAsync(Options.CreationDateKey, DateTime.UtcNow).ConfigureAwait(false);
         }
 
 

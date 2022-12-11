@@ -2,6 +2,7 @@
 @layout EmptyLayout
 @using Blazored.TextEditor
 @using ObakiSite.Application.Features.Posts.Commands;
+@using ObakiSite.Shared.DTO.Response;
 @inject ISender Mediatr
 @inject ISnackbar Snackbar
 @inject NavigationManager NavManager
@@ -19,7 +20,7 @@
             </MudContainer>
         </MudAppBar>
         <MudPaper Class="mt-16" Elevation="2" Height="800px">
-            <MudTextField Style="font-size: 30px" T="string" Class="ma-4 mb-5" @bind-Value="title" Immediate="true"  Variant="Variant.Text" Lines="2" />
+            <MudTextField Style="font-size: 30px" T="string" Class="ma-4 mb-5" @bind-Value="title" Immediate="true" Variant="Variant.Text" Lines="2" />
             <div class="ma-4" style="height:600px">
                 <BlazoredTextEditor @ref=RichTextEditor Placeholder="write a post..." DebugLevel="error">
                     <ToolbarContent>
@@ -90,14 +91,20 @@
 
     <MudAppBar Bottom="true" Fixed="true" Color="Color.Dark" Elevation="1">
         <MudContainer MaxWidth="MaxWidth.Large">
-            @if (!isPosting)
-            {
-                <MudButton Variant="Variant.Filled" Color="Color.Primary" Size="Size.Medium" OnClick="@PublishPost">Publish</MudButton>
-            }
-            else
-            {
-                <MudProgressCircular Color="Color.Primary" Size="Size.Medium" Indeterminate="true" />
-            }
+            <div class="d-flex flex-row ma-4">
+                <div class="mr-4">
+                    @if (!isPosting)
+                    {
+                        <MudButton Variant="Variant.Filled" Color="Color.Primary" Size="Size.Medium" OnClick="@PublishPost">Publish</MudButton>
+                    }
+                    else
+                    {
+                        <MudProgressCircular Color="Color.Primary" Size="Size.Medium" Indeterminate="true" />
+                    }
+                </div>
+                <div>  <MudButton Variant="Variant.Filled" Color="Color.Primary" Size="Size.Medium" OnClick="@SaveDraft">Save Draft</MudButton></div>
+            </div>
+
         </MudContainer>
     </MudAppBar>
 </MudContainer>
@@ -111,17 +118,7 @@
     private BlazoredTextEditor? RichTextEditor;
     private MarkupString body;
     private string title { get; set; } = "Write your title here...";
-
-    private async Task<string> GetHtmlStringValue()
-    {
-        return RichTextEditor != null ? await RichTextEditor.GetHTML() : string.Empty;
-    }
-
-    private async Task ShowAoutPutPreview()
-    {
-        var hmltContent = await GetHtmlStringValue();
-        body = (MarkupString)hmltContent;
-    }
+    private PostDTO? activePost { get; set; }
 
     private async Task PublishPost()
     {
@@ -133,13 +130,50 @@
                 HtmlBody = textContent,
                 Title = title
             };
-
         var command = new CreatePost(post);
         var result = await Mediatr.Send(command);
 
+        Notify(result, "post");
+        isPosting = false;
+
         if (result.IsSuccess)
         {
-            Snackbar.Add("Post has been created", Severity.Success);
+            NavManager.NavigateTo($"/post/view/{post.Id}");
+        }
+    }
+
+    private async Task SaveDraft()
+    {
+        var post = new PostDTO
+            {
+                CreationDate = DateTime.Now,
+                HtmlBody = await GetHtmlStringValue(),
+                Title = title
+            };
+
+        var command = new SaveDraft(post);
+        var result = await Mediatr.Send(command);
+        Notify(result, "draft");
+
+    }
+    //Helper Methods
+    private async Task<string> GetHtmlStringValue()
+    {
+        return RichTextEditor != null ? await RichTextEditor.GetHTML() : string.Empty;
+    }
+
+    private async Task ShowAoutPutPreview()
+    {
+        var hmltContent = await GetHtmlStringValue();
+        body = (MarkupString)hmltContent;
+    }
+
+    private void Notify(ApplicationResponse result, string origin)
+    {
+        //Todo: refine how messages are displayed
+        if (result.IsSuccess)
+        {
+            Snackbar.Add($"{origin} has been created", Severity.Success);
         }
         else
         {
@@ -148,15 +182,8 @@
                 foreach (var error in result.Messages)
                     Snackbar.Add(error, Severity.Error);
             }
-            Snackbar.Add("Sorry, unable to create the post.", Severity.Error);
+            Snackbar.Add($"Sorry, unable to create the {origin}.", Severity.Error);
         }
-
-        isPosting = false;
         StateHasChanged();
-
-        if (result.IsSuccess)
-        {
-            NavManager.NavigateTo($"/post/view/{post.Id}");
-        }
     }
 }

@@ -19,8 +19,8 @@ public static class AnimeList
     public const string XmalClientId = "X-MAL-CLIENT-ID";
     public const string AnimelistClientId = "ClientId";
     public const string BaseUrl = "https://api.myanimelist.net/";
-    public const string CacheDataKey = "CacheData";
-    public const string CacheDataCreateDateKey = "CacheDataCreateDate";
+    public const string CacheDataKey = "AnimeListCacheData";
+    public const string CacheDataCreateDateKey = "AnimeListCacheDataCreateDate";
     public const string Endpoint = "/api/animelists/";
     
 }
@@ -90,6 +90,9 @@ public static class PostConstants
     {
         public const string EndPoint = "/api/getPost/";
     }
+
+    public const string CacheDataKey = "PostCacheData";
+    public const string CacheDataCreateDateKey = "PostCacheDataCreateDate";
 }
 
 
