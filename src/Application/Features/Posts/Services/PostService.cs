@@ -1,21 +1,25 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using ObakiSite.Application.Domain.Entities;
+using ObakiSite.Shared.DTO;
 using ObakiSite.Shared.DTO.Response;
 namespace ObakiSite.Application.Features.Posts.Services
 {
     public class PostService : IPostService
     {
         private readonly IDbContextFactory<PostContext> _factory;
-
-        public PostService(IDbContextFactory<PostContext> factory)
+        private readonly IMapper _mapper;
+        public PostService(IDbContextFactory<PostContext> factory,IMapper mapper)
         {
             _factory = factory;
+            _mapper = mapper;
         }
 
-        public async Task<ApplicationResponse> CreatePost(Post post)
+        public async Task<ApplicationResponse> CreatePost(PostDTO post)
         {
             using var context = _factory.CreateDbContext();
-            context.Posts.Add(post);
+            var postDomain = _mapper.Map<Post>(post);
+            context.Posts.Add(postDomain);
             var result = await context.SaveChangesAsync().ConfigureAwait(false);
             if (result > 0)
             {
@@ -41,26 +45,28 @@ namespace ObakiSite.Application.Features.Posts.Services
             return ApplicationResponse.Fail();
         }
 
-        public async Task<ApplicationResponse<Post>> GetPostById(string id)
+        public async Task<ApplicationResponse<PostDTO>> GetPostById(string id)
         {
             using var context = _factory.CreateDbContext();
             var post = await context.Posts.WithPartitionKey(id).SingleOrDefaultAsync(i=> i.Id == id);
             if (post is not null)
             {
-                return ApplicationResponse<Post>.Success(post);
+                var postDTO = _mapper.Map<PostDTO>(post);
+                return ApplicationResponse<PostDTO>.Success(postDTO);
             }
-            return ApplicationResponse<Post>.Fail();    
+            return ApplicationResponse<PostDTO>.Fail();    
         }
 
-        public async Task<ApplicationResponse> UpdatePost(Post post)
+        public async Task<ApplicationResponse> UpdatePost(PostDTO post)
         {
             using var context = _factory.CreateDbContext();
-            var postToUpdate = await context.Posts.Where(i => i.Id == post.Id).FirstOrDefaultAsync().ConfigureAwait(false);
+            var postDomain = _mapper.Map<Post>(post);
+            var postToUpdate = await context.Posts.Where(i => i.Id == postDomain.Id).FirstOrDefaultAsync().ConfigureAwait(false);
             if (postToUpdate == null)
             {
                 return ApplicationResponse.Fail("Post does not exist.");
             }
-            context.Posts.Update(post);
+            context.Posts.Update(postDomain);
             var result = await context.SaveChangesAsync().ConfigureAwait(false);
             if (result > 0)
             {

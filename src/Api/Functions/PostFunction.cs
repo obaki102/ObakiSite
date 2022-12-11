@@ -4,10 +4,10 @@ using System.Threading.Tasks;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
-using ObakiSite.Application.Domain.Entities;
 using ObakiSite.Application.Features.Posts.Services;
 using ObakiSite.Shared.DTO.Response;
 using System.Text.Json;
+using ObakiSite.Shared.DTO;
 
 namespace ObakiSite.Api.Functions
 {
@@ -36,7 +36,7 @@ namespace ObakiSite.Api.Functions
             }
             try
             {
-                var post = await JsonSerializer.DeserializeAsync<Post>(request);
+                var post = await JsonSerializer.DeserializeAsync<PostDTO>(request);
                 var result = await _postService.CreatePost(post);
                 if (result.IsSuccess)
                 {
@@ -69,7 +69,7 @@ namespace ObakiSite.Api.Functions
             try
             {
 
-                var post = await JsonSerializer.DeserializeAsync<Post>(request);
+                var post = await JsonSerializer.DeserializeAsync<PostDTO>(request);
                 var result = await _postService.UpdatePost(post);
                 if (result.IsSuccess)
                 {

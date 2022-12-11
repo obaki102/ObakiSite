@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using MediatR;
-using ObakiSite.Application.Domain.Entities;
 using ObakiSite.Shared.Constants;
 using ObakiSite.Shared.DTO;
 using ObakiSite.Shared.DTO.Response;
@@ -13,11 +12,9 @@ namespace ObakiSite.Application.Features.Posts.Queries
     public class GetPostByIdHandler : IRequestHandler<GetPostById, ApplicationResponse<PostDTO>>
     {
         private readonly IHttpClientFactory _httpClientFactory;
-        private readonly IMapper _mapper;
         public GetPostByIdHandler(IHttpClientFactory httpClientFactory, IMapper mapper)
         {
             _httpClientFactory = httpClientFactory;
-            _mapper = mapper;
         }
         public async Task<ApplicationResponse<PostDTO>> Handle(GetPostById request, CancellationToken cancellationToken)
         {
@@ -27,13 +24,12 @@ namespace ObakiSite.Application.Features.Posts.Queries
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStreamAsync();
-                var result = await JsonSerializer.DeserializeAsync<ApplicationResponse<Post>>(content).ConfigureAwait(false);
-                if (result is null)
+                var result = await JsonSerializer.DeserializeAsync<ApplicationResponse<PostDTO>>(content).ConfigureAwait(false);
+                if (result is not null && result.IsSuccess)
                 {
-                    return ApplicationResponse<PostDTO>.Fail("No data.");
+                    return result;
                 }
-                var data = _mapper.Map<PostDTO>(result.Data);
-                return ApplicationResponse<PostDTO>.Success(data);
+                return ApplicationResponse<PostDTO>.Fail("No data.");
             }
             return ApplicationResponse<PostDTO>.Fail(response.StatusCode.ToString());
         }
