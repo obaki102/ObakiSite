@@ -1,8 +1,6 @@
 ﻿@page "/post/view/{id}"
 @using ObakiSite.Application.Features.Posts.Queries;
 @inject ISender Mediatr
-<h3>ViewPost</h3>
-
 @if (post == null)
 {
     <MudOverlay Visible="true" DarkBackground="true" ZIndex="9999" AutoClose="true">
@@ -11,21 +9,33 @@
 }
 else
 {
-    <MudPaper Elevation="1" Class="my-4">
-        <div class="ma-4">
-            <MudText>@post.Title</MudText>
-            @htmlBody
-        </div>
-
-    </MudPaper>
+    <MudContainer MaxWidth="MaxWidth.Medium">
+        <MudPaper Elevation="1" Class="ma-4">
+            <MudCard Elevation="0">
+                <MudCardHeader>
+                    <CardHeaderAvatar>
+                        <MudAvatar Color="Color.Secondary">A</MudAvatar>
+                    </CardHeaderAvatar>
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.body1">@post.Author</MudText>
+                        <MudText Typo="Typo.caption">Posted on @post.CreationDate</MudText>
+                    </CardHeaderContent>
+                </MudCardHeader>
+            </MudCard>
+            <div class="ml-4">
+                <MudText Style="font-size:35px" Typo="Typo.body2">@post.Title</MudText>
+            </div>
+            <div class="ma-4">
+                @htmlBody
+            </div>
+        </MudPaper>
+    </MudContainer>
 }
 
 @code {
     [Parameter]
     public string Id { get; set; } = string.Empty;
     private MarkupString htmlBody;
-
-
     private PostDTO? post;
 
     protected override async Task OnInitializedAsync()

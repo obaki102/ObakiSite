@@ -9,17 +9,17 @@
     <MudThemeProvider @bind-IsDarkMode="@_isDarkMode" Theme="_theme" />
     <MudSnackbarProvider />
     <div class="d-flex flex-column">
-            <MudAppBar Fixed="true" Color="Color.Dark" Elevation="0">
-                <MudContainer MaxWidth="MaxWidth.Large">
-                    <div class="d-flex align-center my-8" >
-                        <MudChip Color="Color.Dark" Href="/"><MudText Typo="Typo.button" Style="font-size: 35px;">O</MudText><MudText Typo="Typo.caption" Style="font-size: 20px;">baki</MudText></MudChip>
-                        <MudDivider Class="ma-1" Vertical="true" FlexItem="true" />
-                        <MudText Class="ml-4">Create Post</MudText>
-                    </div>
-                </MudContainer>
-            </MudAppBar>
-        <MudPaper Class="mt-16" Elevation="2"  Height="750px">
-            <MudTextField T="string" Class="ma-4 mb-5" @bind-value="title" Immediate="true" Label="Title" Variant="Variant.Text" />
+        <MudAppBar Fixed="true" Color="Color.Dark" Elevation="0">
+            <MudContainer MaxWidth="MaxWidth.Large">
+                <div class="d-flex align-center my-8">
+                    <MudChip Color="Color.Dark" Href="/"><MudText Typo="Typo.button" Style="font-size: 35px;">O</MudText><MudText Typo="Typo.caption" Style="font-size: 20px;">baki</MudText></MudChip>
+                    <MudDivider Class="ma-1" Vertical="true" FlexItem="true" />
+                    <MudText Class="ml-4">Create Post</MudText>
+                </div>
+            </MudContainer>
+        </MudAppBar>
+        <MudPaper Class="mt-16" Elevation="2" Height="800px">
+            <MudTextField Style="font-size: 30px" T="string" Class="ma-4 mb-5" @bind-Value="title" Immediate="true"  Variant="Variant.Text" Lines="2" />
             <div class="ma-4" style="height:600px">
                 <BlazoredTextEditor @ref=RichTextEditor Placeholder="write a post..." DebugLevel="error">
                     <ToolbarContent>
@@ -32,31 +32,44 @@
                                 }
 
                             </select>
-                            <span class="ql-formats">
-                                <button class="ql-font"></button>
-                            </span>
-                            <span class="ql-formats">
-                                <button class="ql-bold"></button>
-                                <button class="ql-italic"></button>
-                                <button class="ql-underline"></button>
-                                <button class="ql-strike"></button>
-                            </span>
-                            <span class="ql-formats">
-                                <select class="ql-color"></select>
-                                <select class="ql-background"></select>
-                            </span>
-                            <span class="ql-formats">
-                                <button class="ql-list" value="ordered"></button>
-                                <button class="ql-list" value="bullet"></button>
-                                <button class="ql-indent" value="-1"></button>
-                                <button class="ql-indent" value="+1"></button>
-                            </span>
-                            <span class="ql-formats">
-                                <button class="ql-code-block"></button>
-                            </span>
-                            <span class="ql-formats">
-                                <button class="ql-video"></button>
-                            </span>
+                            <button class="ql-font" title="Font Size" />
+                            <MudTooltip Text="Bold Ctrl+B" Color="Color.Primary" Placement="Placement.Bottom">
+                                <button class="ql-bold" />
+                            </MudTooltip>
+                            <MudTooltip Text="Italic Ctrl+I" Color="Color.Primary" Placement="Placement.Bottom">
+                                <button class="ql-italic" />
+                            </MudTooltip>
+                            <MudTooltip Text="Underline Ctrl+U" Color="Color.Primary" Placement="Placement.Bottom">
+                                <button class="ql-underline" />
+                            </MudTooltip>
+                            <MudTooltip Text="Strike" Color="Color.Primary" Placement="Placement.Bottom">
+                                <button class="ql-strike" />
+                            </MudTooltip>
+                            <MudTooltip Text="Color" Color="Color.Primary" Placement="Placement.Bottom">
+                                <select class="ql-color" />
+                            </MudTooltip>
+                            <MudTooltip Text="Background" Color="Color.Primary" Placement="Placement.Bottom">
+                                <select class="ql-background" />
+                            </MudTooltip>
+                            <MudTooltip Text="List" Color="Color.Primary" Placement="Placement.Bottom">
+                                <button class="ql-list" value="ordered" />
+                            </MudTooltip>
+                            <MudTooltip Text="Bullet" Color="Color.Primary" Placement="Placement.Bottom">
+                                <button class="ql-list" value="bullet" />
+                            </MudTooltip>
+                            <MudTooltip Text="Indent Left" Color="Color.Primary" Placement="Placement.Bottom">
+                                <button class="ql-indent" value="-1" />
+                            </MudTooltip>
+                            <MudTooltip Text="Indent Right" Color="Color.Primary" Placement="Placement.Bottom">
+                                <button class="ql-indent" value="+1" />
+                            </MudTooltip>
+                            <MudTooltip Text="Code Block" Color="Color.Primary" Placement="Placement.Bottom">
+                                <button class="ql-code-block" />
+                            </MudTooltip>
+                            <MudTooltip Text="Video Link" Color="Color.Primary" Placement="Placement.Bottom">
+                                <button class="ql-video" />
+                            </MudTooltip>
+
                             @*  <span class="ql-formats">
                             <button class="ql-image"></button>
                             </span>*@
@@ -75,7 +88,7 @@
         </MudCard>
     </div>
 
-     <MudAppBar Bottom="true" Fixed="true" Color="Color.Dark" Elevation="1">
+    <MudAppBar Bottom="true" Fixed="true" Color="Color.Dark" Elevation="1">
         <MudContainer MaxWidth="MaxWidth.Large">
             @if (!isPosting)
             {
@@ -97,26 +110,29 @@
     private bool isPosting = false;
     private BlazoredTextEditor? RichTextEditor;
     private MarkupString body;
-    private string title = string.Empty;
+    private string title { get; set; } = "Write your title here...";
+
+    private async Task<string> GetHtmlStringValue()
+    {
+        return RichTextEditor != null ? await RichTextEditor.GetHTML() : string.Empty;
+    }
 
     private async Task ShowAoutPutPreview()
     {
-        var hmltContent = RichTextEditor != null ? await RichTextEditor.GetHTML() : string.Empty;
+        var hmltContent = await GetHtmlStringValue();
         body = (MarkupString)hmltContent;
     }
 
     private async Task PublishPost()
     {
         isPosting = true;
-        var textContent = RichTextEditor != null ? await RichTextEditor.GetHTML() : string.Empty;
+        var textContent = await GetHtmlStringValue();
         var post = new PostDTO
             {
                 CreationDate = DateTime.Now,
-                Description = "Test",
                 HtmlBody = textContent,
                 Title = title
             };
-
 
         var command = new CreatePost(post);
         var result = await Mediatr.Send(command);
@@ -134,9 +150,12 @@
             }
             Snackbar.Add("Sorry, unable to create the post.", Severity.Error);
         }
+
         isPosting = false;
         StateHasChanged();
-        if (result.IsSuccess) {
+
+        if (result.IsSuccess)
+        {
             NavManager.NavigateTo($"/post/view/{post.Id}");
         }
     }
