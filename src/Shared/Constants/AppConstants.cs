@@ -92,6 +92,10 @@ public static class PostConstants
     {
         public const string EndPoint = "/api/getPost/";
     }
+    public static class GetPostSummaries
+    {
+        public const string EndPoint = "/api/getPostSummaries";
+    }
 
     public const string CacheDataKey = "PostCacheData";
     public const string CacheDataCreateDateKey = "PostCacheDataCreateDate";

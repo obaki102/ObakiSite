@@ -22,6 +22,7 @@ namespace ObakiSite.Api.Functions
             _postService = postService;
         }
 
+        #region Writes
         [Function("CreatePost")]
         public async Task<HttpResponseData> CreatePost([HttpTrigger(AuthorizationLevel.Function, "post", Route = "createPost")] HttpRequestData req)
         {
@@ -122,7 +123,9 @@ namespace ObakiSite.Api.Functions
                 return response;
             }
         }
+        #endregion
 
+        #region Reads
         [Function("GetPostById")]
         public async Task<HttpResponseData> GetPostById([HttpTrigger(AuthorizationLevel.Function, "get", Route = "getPost/{id?}")] HttpRequestData req, string id)
         {
@@ -153,5 +156,32 @@ namespace ObakiSite.Api.Functions
                 return response;
             }
         }
+
+        [Function("GetAllPostSummaries")]
+        public async Task<HttpResponseData> GetAllPostSummaries([HttpTrigger(AuthorizationLevel.Function, "get", Route = "getPostSummaries")] HttpRequestData req)
+        {
+            _logger.LogInformation("PostFunction trigger function processed a request.");
+
+            var response = req.CreateResponse(HttpStatusCode.OK);
+
+            try
+            {
+                var result = await _postService.GetAllPostSummaries();
+                if (result.IsSuccess)
+                {
+                    await response.WriteAsJsonAsync(result);
+                    return response;
+                }
+
+                await response.WriteAsJsonAsync(ApplicationResponse.Fail($"Unable to retrieve post summaries."));
+                return response;
+            }
+            catch (Exception ex)
+            {
+                await response.WriteAsJsonAsync(ApplicationResponse.Fail(ex.Message));
+                return response;
+            }
+        }
+        #endregion
     }
 }

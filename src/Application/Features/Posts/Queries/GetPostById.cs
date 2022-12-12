@@ -22,15 +22,19 @@ namespace ObakiSite.Application.Features.Posts.Queries
             var httpClient = _httpClientFactory.CreateClient(HttpNameClient.Default);
             var uriRequest = $"{PostConstants.GetPostById.EndPoint}{request.Id}";
             var response = await httpClient.GetAsync(uriRequest).ConfigureAwait(false);
+
             if (response.IsSuccessStatusCode)
             {
                 var result = await response.ConvertStreamToTAsync<ApplicationResponse<PostDTO>>();
+
                 if (result is not null && result.IsSuccess)
                 {
                     return result;
                 }
+
                 return ApplicationResponse<PostDTO>.Fail("No data retrieved.");
             }
+
             return ApplicationResponse<PostDTO>.Fail(response.StatusCode.ToString());
         }
     }

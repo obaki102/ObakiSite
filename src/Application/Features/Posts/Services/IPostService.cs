@@ -10,5 +10,6 @@ namespace ObakiSite.Application.Features.Posts.Services
         Task<ApplicationResponse> UpdatePost(PostDTO post);
         Task<ApplicationResponse> DeletePost(string id);
         Task<ApplicationResponse<PostDTO>> GetPostById(string id);
+        Task<ApplicationResponse<IReadOnlyList<PostSummaryDTO>>> GetAllPostSummaries();
     }
 }
