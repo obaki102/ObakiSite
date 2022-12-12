@@ -4,71 +4,41 @@
 @inject NavigationManager NavManager
 <PageTitle>Home</PageTitle>
 
-@if (posts == null)
-{
-    <MudOverlay Visible="true" DarkBackground="true" ZIndex="9999" AutoClose="true">
-        <MudProgressCircular Color="Color.Primary" Indeterminate="true" Size="Size.Large" />
-    </MudOverlay>
-}
-else
-{
-    <div class="d-flex flex-row flex-grow-1 gap-4">
-        <MudPaper Class="align-self-start flex-1" Outlined="true" Elevation="1">
-            <MudCardContent>
-                <MudText Typo="Typo.h6">
-                    Demo
-                </MudText>
-                <MudList Clickable="true">
-                    <MudListItem Text="Chat App" Icon="@Icons.Material.Filled.Chat" Color="Color.Primary" Href="/livechat" Dense="true" />
-                </MudList>
-                <MudList Clickable="true">
-                    <MudListItem Text="Create Post" Icon="@Icons.Material.Filled.Create" Color="Color.Primary" Href="/post/create" Dense="true" />
-                </MudList>
-            </MudCardContent>
-        </MudPaper>
-        <div class="d-flex flex-column flex-grow-1 gap-4" style="width:100%">
-            @foreach (var post in posts)
-            {
-                <MudPaper  Outlined="true" Elevation="25" Width="100%">
-                    <MudCard Elevation="0" @onclick="@(e => NavManager.NavigateTo($"/post/view/{post.Id}"))">
-                        <MudCardHeader>
-                            <CardHeaderAvatar>
-                                <MudAvatar Color="Color.Secondary">A</MudAvatar>
-                            </CardHeaderAvatar>
-                            <CardHeaderContent>
-                                <MudText Typo="Typo.body1">@post.Author</MudText>
-                                <MudText Typo="Typo.caption">Posted on @post.CreationDate</MudText>
-                            </CardHeaderContent>
-                        </MudCardHeader>
-                        <MudText Class="ml-4" Style="font-size:25px" Typo="Typo.body2">@post.Title</MudText>
-                    </MudCard>
-                </MudPaper>
-            }
-        </div>
-    </div>
-}
-@*<MudCarousel Class="mud-width-full" Style="width:250px;" ShowArrows="true" ShowBullets="true" EnableSwipeGesture="true" AutoCycle="true" TData="object">
+
+<div class="d-flex flex-row flex-grow-1 gap-4">
+    <MudPaper Class="align-self-start flex-1" Outlined="true" Elevation="1">
+        <MudCardContent>
+            <MudText Typo="Typo.h6">
+                Demo
+            </MudText>
+            <MudList Clickable="true">
+                <MudListItem Text="Chat App" Icon="@Icons.Material.Filled.Chat" Color="Color.Primary" Href="/livechat" Dense="true" />
+            </MudList>
+            <MudList Clickable="true">
+                <MudListItem Text="Create Post" Icon="@Icons.Material.Filled.Create" Color="Color.Primary" Href="/post/create" Dense="true" />
+            </MudList>
+            <MudList Clickable="true">
+                <MudListItem Text="View Posts" Icon="@Icons.Material.Filled.ListAlt" Color="Color.Primary" Href="/post/view/summaries" Dense="true" />
+            </MudList>
+        </MudCardContent>
+    </MudPaper>
+    <MudCarousel Class="mud-width-full" Style="width:80%;" ShowArrows="true" ShowBullets="true" EnableSwipeGesture="true" AutoCycle="true" TData="object">
     <MudCarouselItem Transition="Transition.Slide" Color="@Color.Primary">
-    <div class="d-flex" style="height:100%">
-    <MudText Class="mx-auto my-auto" Typo="Typo.caption" GutterBottom="true" Style="font-size: 15px;">Hello there! Welcome to my site.</MudText>
-    </div>
+        <div class="d-flex" style="height:100%">
+            <MudText Class="mx-auto my-auto" Typo="Typo.caption" GutterBottom="true" Style="font-size: 15px;">Hello there! Welcome to my site.</MudText>
+        </div>
     </MudCarouselItem>
     <MudCarouselItem Transition="Transition.Slide" Color="@Color.Secondary">
-    <div class="d-flex" style="height:100%">
-    <MudText Class="mx-auto my-auto" Typo="Typo.caption" GutterBottom="true" Style="font-size: 15px;">Hello there! Welcome to my site.</MudText>
-    </div>
+        <div class="d-flex" style="height:100%">
+            <MudText Class="mx-auto my-auto" Typo="Typo.caption" GutterBottom="true" Style="font-size: 15px;">Hello there! Welcome to my site.</MudText>
+        </div>
     </MudCarouselItem>
-    </MudCarousel>*@
+
+</MudCarousel>
+</div>
+
+
 
 @code {
-    private IReadOnlyList<PostSummaryDTO>? posts { get; set; }
-    protected override async Task OnInitializedAsync()
-    {
-        var result = await Mediatr.Send(new GetPostSummaries());
-        if (result.Data is not null && result.IsSuccess)
-        {
-            posts = result.Data;
-        }
-    }
-   
+
 }

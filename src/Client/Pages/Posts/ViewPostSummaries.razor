@@ -1,0 +1,58 @@
+﻿@page "/post/view/summaries"
+@using ObakiSite.Application.Features.Posts.Queries;
+@inject ISender Mediatr
+@inject NavigationManager NavManager
+<PageTitle>Home</PageTitle>
+
+@if (posts == null)
+{
+    <MudOverlay Visible="true" DarkBackground="true" ZIndex="9999" AutoClose="true">
+        <MudProgressCircular Color="Color.Primary" Indeterminate="true" Size="Size.Large" />
+    </MudOverlay>
+}
+else
+{
+    <div class="d-flex flex-row flex-grow-1 gap-4">
+        <div class="d-flex flex-column flex-grow-1 gap-4" style="width:40%">
+            @foreach (var post in posts)
+            {
+                <MudPaper Outlined="true" Elevation="25">
+                    <MudCard Elevation="0" @onclick="@(e => NavManager.NavigateTo($"/post/view/{post.Id}"))">
+                        <MudCardHeader>
+                            <CardHeaderAvatar>
+                                <MudAvatar Color="Color.Secondary">A</MudAvatar>
+                            </CardHeaderAvatar>
+                            <CardHeaderContent>
+                                <MudText Typo="Typo.body1">@post.Author</MudText>
+                                <MudText Typo="Typo.caption">Posted on @post.CreationDate</MudText>
+                            </CardHeaderContent>
+                        </MudCardHeader>
+                        <MudText Class="ml-4" Style="font-size:25px" Typo="Typo.body2">@post.Title</MudText>
+                    </MudCard>
+                </MudPaper>
+            }
+        </div>
+        <MudPaper Class="align-self-start flex-1" Outlined="true" Elevation="1" >
+            <MudCard >
+                <MudText Class="ma-4 mud-secondary-text" Typo="Typo.caption" GutterBottom="true" Style="font-size: 20px;">This feature is still in development</MudText>
+                <MudCardContent>
+                    <MudText Typo="Typo.body2">
+                        Attaching an image is yet to be implemented. I'm still deciding what storage store to use at the minimum cost.  :)
+                    </MudText>
+                </MudCardContent>
+            </MudCard>
+        </MudPaper>
+    </div>
+}
+@code {
+    private IReadOnlyList<PostSummaryDTO>? posts { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        var result = await Mediatr.Send(new GetPostSummaries());
+        if (result.Data is not null && result.IsSuccess)
+        {
+            posts = result.Data;
+        }
+    }
+
+}
