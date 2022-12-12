@@ -80,7 +80,7 @@ public static class CosmosDB
 {
     public const string EndPoint = "CosmosEndPoint";
     public const string AccessKey = "CosmosAccessKey";
-    public const string Database= "obakidb";
+    public const string Database= "obakisitedb";
 }
 public static class PostConstants
 {

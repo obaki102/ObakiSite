@@ -33,7 +33,7 @@ namespace ObakiSite.Application.Features.Posts.Commands
                     return result;
                 }
 
-                return ApplicationResponse.Fail("No data retrieved.");
+                return ApplicationResponse.Fail("Unable to save  post.");
             }
 
             return ApplicationResponse.Fail(response.StatusCode.ToString());
