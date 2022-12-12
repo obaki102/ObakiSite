@@ -29,7 +29,7 @@ namespace ObakiSite.Application.Features.Posts.Queries
                 {
                     return result;
                 }
-                return ApplicationResponse<PostDTO>.Fail("No data.");
+                return ApplicationResponse<PostDTO>.Fail("No data retrieved.");
             }
             return ApplicationResponse<PostDTO>.Fail(response.StatusCode.ToString());
         }

@@ -2,6 +2,7 @@
 @layout EmptyLayout
 @using Blazored.TextEditor
 @using ObakiSite.Application.Features.Posts.Commands;
+@using ObakiSite.Application.Features.Posts.Queries;
 @using ObakiSite.Shared.DTO.Response;
 @inject ISender Mediatr
 @inject ISnackbar Snackbar
@@ -118,7 +119,19 @@
     private BlazoredTextEditor? RichTextEditor;
     private MarkupString body;
     private string title { get; set; } = "Write your title here...";
-    private PostDTO? activePost { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var result = await Mediatr.Send(new GetSavedPostDraft());
+        if (result.Data is not null && result.IsSuccess)
+        {
+            title = result.Data.Title;
+            if (RichTextEditor is not null)
+            {
+                await RichTextEditor.LoadHTMLContent(result.Data.HtmlBody);
+            }
+        }
+    }
 
     private async Task PublishPost()
     {
@@ -138,6 +151,7 @@
 
         if (result.IsSuccess)
         {
+            await Mediatr.Send(new ClearDraftPost());
             NavManager.NavigateTo($"/post/view/{post.Id}");
         }
     }
@@ -151,7 +165,7 @@
                 Title = title
             };
 
-        var command = new SaveDraft(post);
+        var command = new SaveDraftPost(post);
         var result = await Mediatr.Send(command);
         Notify(result, "draft");
 
@@ -173,7 +187,13 @@
         //Todo: refine how messages are displayed
         if (result.IsSuccess)
         {
-            Snackbar.Add($"{origin} has been created", Severity.Success);
+            var message = origin switch
+            {
+                "post" => "Post has been published.",
+                "draft" => "Draft saved.",
+                _ => ""
+            };
+            Snackbar.Add(message, Severity.Success);
         }
         else
         {
@@ -182,7 +202,13 @@
                 foreach (var error in result.Messages)
                     Snackbar.Add(error, Severity.Error);
             }
-            Snackbar.Add($"Sorry, unable to create the {origin}.", Severity.Error);
+            var errorMessage = origin switch
+            {
+                "post" => "Sorry, unable to create publish your post.",
+                "draft" => "Sorry, draft was not saved.",
+                _ => ""
+            };
+            Snackbar.Add(errorMessage, Severity.Error);
         }
         StateHasChanged();
     }

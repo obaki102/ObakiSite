@@ -59,8 +59,7 @@ namespace ObakiSite.Application.Features.LocalStorageCache.Services
             return false;
         }
 
-
-        private async Task ClearCache()
+        public async Task ClearCache()
         {
             if (Options is null)
             {

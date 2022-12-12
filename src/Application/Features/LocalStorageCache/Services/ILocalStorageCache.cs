@@ -8,5 +8,6 @@ namespace ObakiSite.Application.Features.LocalStorageCache.Services
         LocalStorageCacheOptions? Options { get; set; }
         Task<bool> IsDataNeedsRefresh();
         Task SetData(T data);
+        Task ClearCache();
     }
 }
