@@ -23,15 +23,16 @@ namespace ObakiSite.Application.Features.Posts.Commands
             var httpClient  = _httpClientFactory.CreateClient(HttpNameClient.Default);
             var serializedPost = JsonSerializer.Serialize(request.Post).ToJsonStringContent();
             var response = await httpClient.PostAsync(PostConstants.CreatePost.EndPoint, serializedPost).ConfigureAwait(false);
+
             if (response.IsSuccessStatusCode)
             {
-                var content = await response.Content.ReadAsStreamAsync();
-                var result = await JsonSerializer.DeserializeAsync<ApplicationResponse>(content).ConfigureAwait(false);
+                var result = await response.ConvertStreamToTAsync<ApplicationResponse>();
 
                 if (result is not null && result.IsSuccess)
                 {
                     return result;
                 }
+
                 return ApplicationResponse.Fail("No data retrieved.");
             }
 

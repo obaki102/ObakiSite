@@ -25,6 +25,7 @@ namespace ObakiSite.Api.Functions
             int year)
         {
             _logger.LogInformation("AnimelistFunction processed a request.");
+
             var response = req.CreateResponse(HttpStatusCode.OK);
             var result = await _animeListService.GetAnimeListBySeasonAndYear(year, season);
 

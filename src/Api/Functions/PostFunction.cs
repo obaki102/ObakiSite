@@ -29,11 +29,13 @@ namespace ObakiSite.Api.Functions
 
             var response = req.CreateResponse(HttpStatusCode.OK);
             var request = req.Body;
+
             if (request.Length == 0)
             {
                 await response.WriteAsJsonAsync(ApplicationResponse.Fail("No data posted."));
                 return response;
             }
+
             try
             {
                 var post = await JsonSerializer.DeserializeAsync<PostDTO>(request);
@@ -61,11 +63,13 @@ namespace ObakiSite.Api.Functions
 
             var response = req.CreateResponse(HttpStatusCode.OK);
             var request = req.Body;
+
             if (request.Length == 0)
             {
                 await response.WriteAsJsonAsync(ApplicationResponse.Fail("No data posted."));
                 return response;
             }
+
             try
             {
 
@@ -93,11 +97,13 @@ namespace ObakiSite.Api.Functions
             _logger.LogInformation("PostFunction trigger function processed a request.");
 
             var response = req.CreateResponse(HttpStatusCode.OK);
+
             if (string.IsNullOrEmpty(id))
             {
                 await response.WriteAsJsonAsync(ApplicationResponse.Fail("Invalid id."));
                 return response;
             }
+
             try
             {
                 var result = await _postService.DeletePost(id);
@@ -123,6 +129,7 @@ namespace ObakiSite.Api.Functions
             _logger.LogInformation("PostFunction trigger function processed a request.");
 
             var response = req.CreateResponse(HttpStatusCode.OK);
+
             if (string.IsNullOrEmpty(id))
             {
                 await response.WriteAsJsonAsync(ApplicationResponse.Fail("Invalid id."));

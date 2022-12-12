@@ -23,6 +23,7 @@ namespace ObakiSite.Application.Features.Chat.Services
             {
                 throw new ArgumentNullException(nameof(hubClientOptions));
             }
+
             _hubClientOptions = hubClientOptions.Value;
             _httpClient = httpClientFactory.CreateClient(HttpNameClient.Default);
 
@@ -75,6 +76,7 @@ namespace ObakiSite.Application.Features.Chat.Services
                         var chatMessage = JsonConvert.DeserializeObject<ChatMessage>(receivedMessage);
                         OnReceivedMessage?.Invoke(this, new ChatMessageEventArgs { ChatMessage = chatMessage ?? new() });
                     });
+
                     await hubConnection.StartAsync();
                     OnConnected?.Invoke(this, hubConnection.State.Equals(HubConnectionState.Connected) ? true : false);
                     isConnectionStarted = true;

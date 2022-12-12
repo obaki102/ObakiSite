@@ -41,6 +41,7 @@ namespace ObakiSite.Application.Features.LocalStorageCache.Services
             {
                 throw new ArgumentNullException($"{nameof(Options)} is null.");
             }
+
             var cacheData =  await _localStorageService.GetItemAsync<T>(Options.DataKey).ConfigureAwait(false);
             var cacheDataCreateDate = await _localStorageService.GetItemAsync<DateTime?>(Options.CreationDateKey).ConfigureAwait(false);
             double totalHrsSinceCacheCreated = 0;
@@ -65,6 +66,7 @@ namespace ObakiSite.Application.Features.LocalStorageCache.Services
             {
                 throw new ArgumentNullException($"{nameof(Options)} is null.");
             }
+
             await _localStorageService.RemoveItemAsync(Options.DataKey).ConfigureAwait(false);
             await _localStorageService.RemoveItemAsync(Options.CreationDateKey).ConfigureAwait(false);
         }
@@ -75,6 +77,7 @@ namespace ObakiSite.Application.Features.LocalStorageCache.Services
             {
                 throw new ArgumentNullException($"{nameof(Options)} is null.");
             }
+
             Data = data;
             await _localStorageService.SetItemAsync(Options.DataKey, Data).ConfigureAwait(false);
             await _localStorageService.SetItemAsync(Options.CreationDateKey, DateTime.UtcNow).ConfigureAwait(false);

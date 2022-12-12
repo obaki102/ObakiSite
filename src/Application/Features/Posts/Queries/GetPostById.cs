@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using ObakiSite.Application.Extensions;
 using ObakiSite.Shared.Constants;
 using ObakiSite.Shared.DTO;
 using ObakiSite.Shared.DTO.Response;
@@ -23,8 +24,7 @@ namespace ObakiSite.Application.Features.Posts.Queries
             var response = await httpClient.GetAsync(uriRequest).ConfigureAwait(false);
             if (response.IsSuccessStatusCode)
             {
-                var content = await response.Content.ReadAsStreamAsync();
-                var result = await JsonSerializer.DeserializeAsync<ApplicationResponse<PostDTO>>(content).ConfigureAwait(false);
+                var result = await response.ConvertStreamToTAsync<ApplicationResponse<PostDTO>>();
                 if (result is not null && result.IsSuccess)
                 {
                     return result;

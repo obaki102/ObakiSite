@@ -33,10 +33,12 @@ namespace ObakiSite.Application.Features.Email.Services
             var builder = new BodyBuilder();
             builder.TextBody = emailMessage.Message;
             var fileStream = await GetFile(emailMessage.AttachmentFilePath);
+           
             if (fileStream.Length > 0)
             {
                 builder.Attachments.Add(emailMessage.AttachmentFileName, fileStream);
             }
+            
             string htmlBody = """"
                                 <p> Hello,<br><br>
                                 Thank you so much for taking interest in my profile, please don’t hesitate to contact me if I you need additional information.<br>
@@ -44,8 +46,10 @@ namespace ObakiSite.Application.Features.Email.Services
                                 Regards,<br>
                                 Josh</p>
                                 """";
+           
             builder.HtmlBody = htmlBody;
             message.Body = builder.ToMessageBody();
+            
             try
             {
                 using (var emailClient = new SmtpClient())
@@ -56,6 +60,7 @@ namespace ObakiSite.Application.Features.Email.Services
                     await emailClient.SendAsync(message).ConfigureAwait(false);
                     await emailClient.DisconnectAsync(true).ConfigureAwait(false);
                 }
+               
                 return ApplicationResponse.Success();
             }
             catch (Exception ex)
@@ -68,11 +73,13 @@ namespace ObakiSite.Application.Features.Email.Services
         {
             var httpClient = _httpClientFactory.CreateClient(HttpNameClient.Email);
             var result =  await httpClient.GetAsync(filePath).ConfigureAwait(false);
+           
             if (result.IsSuccessStatusCode)
             {
                 var content = await result.Content.ReadAsStreamAsync().ConfigureAwait(false) ;
                 return content;
             }
+           
             return Stream.Null;
         }
     }

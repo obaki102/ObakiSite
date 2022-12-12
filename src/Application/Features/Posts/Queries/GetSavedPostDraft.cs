@@ -27,10 +27,12 @@ namespace ObakiSite.Application.Features.Posts.Queries
             try
             {
                 var result = await _localStorageCache.GetCacheData();
+
                 if(result is not null && result.IsSuccess)
                 {
                     return result;
                 }
+
                 return ApplicationResponse<PostDTO>.Fail("No data retrieved.");
             }
             catch (Exception ex)

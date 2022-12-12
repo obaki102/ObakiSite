@@ -23,16 +23,19 @@ namespace ObakiSite.Application.Features.Email.Commands
             var httpClient = _httpClientFactory.CreateClient(HttpNameClient.Default);
             var serializedEmailMessage = JsonSerializer.Serialize(request.EmailMessage).ToJsonStringContent();
             var response = await httpClient.PostAsync(EmailConstants.Endpoint, serializedEmailMessage).ConfigureAwait(false);
+
             if (response.IsSuccessStatusCode)
             {
-                var content = await response.Content.ReadAsStreamAsync();
-                var result = await JsonSerializer.DeserializeAsync<ApplicationResponse>(content).ConfigureAwait(false);
+                var result = await response.ConvertStreamToTAsync<ApplicationResponse>();
+
                 if (result is null || !result.IsSuccess)
                 {
                     return ApplicationResponse.Fail();
                 }
+
                 return result;
             }
+
             return ApplicationResponse.Fail(response.StatusCode.ToString());
         }
     }
