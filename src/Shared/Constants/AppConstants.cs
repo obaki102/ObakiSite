@@ -92,6 +92,10 @@ public static class PostConstants
     {
         public const string EndPoint = "/api/getPost/";
     }
+    public static class DeletePost
+    {
+        public const string EndPoint = "/api/deletePost/";
+    }
     public static class GetPostSummaries
     {
         public const string EndPoint = "/api/getPostSummaries";

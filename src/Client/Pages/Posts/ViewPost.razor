@@ -1,6 +1,10 @@
 ﻿@page "/post/view/{id}"
+@using ObakiSite.Application.Features.Posts.Commands;
 @using ObakiSite.Application.Features.Posts.Queries;
 @inject ISender Mediatr
+@inject ISnackbar Snackbar
+@inject NavigationManager NavManager
+
 @if (post == null)
 {
     <MudOverlay Visible="true" DarkBackground="true" ZIndex="9999" AutoClose="true">
@@ -9,7 +13,7 @@
 }
 else
 {
-    <MudContainer MaxWidth="MaxWidth.Medium">
+    <MudContainer MaxWidth="MaxWidth.Medium" Class="d-flex flex-row">
         <MudPaper Elevation="1" Class="ma-4">
             <MudCard Elevation="0">
                 <MudCardHeader>
@@ -20,6 +24,20 @@ else
                         <MudText Typo="Typo.body1">@post.Author</MudText>
                         <MudText Typo="Typo.caption">Posted on @post.CreationDate</MudText>
                     </CardHeaderContent>
+                    <CardHeaderActions>
+                        <MudMenu AnchorOrigin="Origin.TopRight" TransformOrigin="Origin.BottomLeft">
+                            <ActivatorContent>
+                                <MudTooltip Text="Options" Color="Color.Primary" Placement="Placement.Bottom">
+                                    <MudIconButton Icon="@Icons.Filled.Dehaze" Color="Color.Default" />
+                                </MudTooltip>
+                            </ActivatorContent>
+                            <ChildContent>
+                                <MudList Clickable="true">
+                                    <MudListItem Text="Delete Post" Icon="@Icons.Material.Filled.Delete" Color="Color.Primary" Dense="true" OnClick="OnButtonClicked" />
+                                </MudList>
+                            </ChildContent>
+                        </MudMenu>
+                    </CardHeaderActions>
                 </MudCardHeader>
             </MudCard>
             <div class="ml-4">
@@ -30,13 +48,26 @@ else
             </div>
         </MudPaper>
     </MudContainer>
+
+    <MudMessageBox @ref="mbox" Title="Delete this post?" CancelText="Cancel">
+        <MessageContent>
+            <div class="ma-1">
+                Deleting can <b><i>not</i></b> be undone!
+            </div>
+        </MessageContent>
+        <YesButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Error" StartIcon="@Icons.Material.Filled.DeleteForever" OnClick="@DeletePost">Delete!</MudButton>
+        </YesButton>
+    </MudMessageBox>
 }
 
 @code {
+
     [Parameter]
     public string Id { get; set; } = string.Empty;
     private MarkupString htmlBody;
     private PostDTO? post;
+    MudMessageBox? mbox { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -45,6 +76,40 @@ else
         {
             post = result.Data;
             htmlBody = (MarkupString)post.HtmlBody;
+        }
+    }
+
+    private async Task OnButtonClicked()
+    {
+        if (mbox is not null)
+        {
+            bool? result = await mbox.Show();
+            var state = result == null ? "Cancelled" : "Deleted!";
+            StateHasChanged();
+        }
+    }
+
+    private async Task DeletePost()
+    {
+        if (post is not null)
+        {
+            var result = await Mediatr.Send(new DeletePost(post.Id.ToString()));
+            if (result.IsSuccess)
+            {
+                NavManager.NavigateTo($"/post/view/summaries");
+            }
+            else
+            {
+                if (result.Messages.Count > 0)
+                {
+                    foreach (var error in result.Messages)
+                        Snackbar.Add(error, Severity.Error);
+                }
+               
+                Snackbar.Add("Sorry, unable to delete post.", Severity.Error);
+            }
+
+            StateHasChanged();
         }
     }
 }

@@ -93,7 +93,7 @@ namespace ObakiSite.Api.Functions
         }
 
         [Function("DeletePost")]
-        public async Task<HttpResponseData> DeletePost([HttpTrigger(AuthorizationLevel.Function, "post", Route = "deletePost/{id?}")] HttpRequestData req , string id)
+        public async Task<HttpResponseData> DeletePost([HttpTrigger(AuthorizationLevel.Function, "delete", Route = "deletePost/{id?}")] HttpRequestData req , string id)
         {
             _logger.LogInformation("PostFunction trigger function processed a request.");
 

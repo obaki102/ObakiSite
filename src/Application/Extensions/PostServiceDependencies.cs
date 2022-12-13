@@ -7,7 +7,7 @@ using System.Reflection;
 
 namespace ObakiSite.Application.Extensions
 {
-    public static class PostDependencies
+    public static class PostServiceDependencies
     {
         public static IServiceCollection AddPostService(this IServiceCollection services, string endPoint, string accessKey)
         {
