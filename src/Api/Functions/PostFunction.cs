@@ -41,13 +41,8 @@ namespace ObakiSite.Api.Functions
             {
                 var post = await JsonSerializer.DeserializeAsync<PostDTO>(request);
                 var result = await _postService.CreatePost(post);
-                if (result.IsSuccess)
-                {
-                    await response.WriteAsJsonAsync(result);
-                    return response;
-                }
 
-                await response.WriteAsJsonAsync(ApplicationResponse.Fail($"Post with id {post.Id} - creation failed."));
+                await response.WriteAsJsonAsync(result);
                 return response;
             }
             catch (Exception ex)
@@ -73,17 +68,12 @@ namespace ObakiSite.Api.Functions
 
             try
             {
-
                 var post = await JsonSerializer.DeserializeAsync<PostDTO>(request);
                 var result = await _postService.UpdatePost(post);
-                if (result.IsSuccess)
-                {
-                    await response.WriteAsJsonAsync(result);
-                    return response;
-                }
 
-                await response.WriteAsJsonAsync(ApplicationResponse.Fail($"Post with id {post.Id} - update  operation failed."));
+                await response.WriteAsJsonAsync(result);
                 return response;
+
             }
             catch (Exception ex)
             {
@@ -93,7 +83,7 @@ namespace ObakiSite.Api.Functions
         }
 
         [Function("DeletePost")]
-        public async Task<HttpResponseData> DeletePost([HttpTrigger(AuthorizationLevel.Function, "delete", Route = "deletePost/{id?}")] HttpRequestData req , string id)
+        public async Task<HttpResponseData> DeletePost([HttpTrigger(AuthorizationLevel.Function, "delete", Route = "deletePost/{id?}")] HttpRequestData req, string id)
         {
             _logger.LogInformation("PostFunction trigger function processed a request.");
 
@@ -108,14 +98,10 @@ namespace ObakiSite.Api.Functions
             try
             {
                 var result = await _postService.DeletePost(id);
-                if (result.IsSuccess)
-                {
-                    await response.WriteAsJsonAsync(result);
-                    return response;
-                }
 
-                await response.WriteAsJsonAsync(ApplicationResponse.Fail($"Post with id {id} -  delete operation failed."));
+                await response.WriteAsJsonAsync(result);
                 return response;
+
             }
             catch (Exception ex)
             {
@@ -141,14 +127,10 @@ namespace ObakiSite.Api.Functions
             try
             {
                 var result = await _postService.GetPostById(id);
-                if (result.IsSuccess)
-                {
-                    await response.WriteAsJsonAsync(result);
-                    return response;
-                }
 
-                await response.WriteAsJsonAsync(ApplicationResponse.Fail($"Post with id {id} - unable to retrieve."));
+                await response.WriteAsJsonAsync(result);
                 return response;
+
             }
             catch (Exception ex)
             {
@@ -167,14 +149,10 @@ namespace ObakiSite.Api.Functions
             try
             {
                 var result = await _postService.GetAllPostSummaries();
-                if (result.IsSuccess)
-                {
-                    await response.WriteAsJsonAsync(result);
-                    return response;
-                }
 
-                await response.WriteAsJsonAsync(ApplicationResponse.Fail($"Unable to retrieve post summaries."));
+                await response.WriteAsJsonAsync(result);
                 return response;
+
             }
             catch (Exception ex)
             {

@@ -13,7 +13,7 @@
 }
 else
 {
-    <MudContainer MaxWidth="MaxWidth.Medium" Class="d-flex flex-row">
+    <MudContainer MaxWidth="MaxWidth.Medium">
         <MudPaper Elevation="1" Class="ma-4">
             <MudCard Elevation="0">
                 <MudCardHeader>
@@ -105,7 +105,7 @@ else
                     foreach (var error in result.Messages)
                         Snackbar.Add(error, Severity.Error);
                 }
-               
+
                 Snackbar.Add("Sorry, unable to delete post.", Severity.Error);
             }
 

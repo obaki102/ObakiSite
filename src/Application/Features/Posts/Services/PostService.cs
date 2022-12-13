@@ -19,49 +19,65 @@ namespace ObakiSite.Application.Features.Posts.Services
         public async Task<ApplicationResponse> CreatePost(PostDTO post)
         {
             using var context = _factory.CreateDbContext();
+            var checkIfPostAlreadyExist = await context.Posts.Where(i => i.Id == post.Id).FirstOrDefaultAsync().ConfigureAwait(false);
+
+            if(checkIfPostAlreadyExist is not null)
+            {
+                return ApplicationResponse.Fail("Post already exist.");
+            }
+
             var postDomain = _mapper.Map<Post>(post);
             context.Posts.Add(postDomain);
             var result = await context.SaveChangesAsync().ConfigureAwait(false);
+
             if (result > 0)
             {
                 return ApplicationResponse.Success();
             }
-            return ApplicationResponse.Fail();
+
+            return ApplicationResponse.Fail($"Post with id {post.Id} - creation failed.");
         }
 
         public async Task<ApplicationResponse> DeletePost(string  id)
         {
             using var context = _factory.CreateDbContext();
             var postToDelete = await context.Posts.Where(i => i.Id == id).FirstOrDefaultAsync().ConfigureAwait(false);
+           
             if (postToDelete == null)
             {
                 return ApplicationResponse.Fail("Post does not exist.");
             }
+
             context.Posts.Remove(postToDelete);
             var result = await context.SaveChangesAsync().ConfigureAwait(false);
+           
             if (result > 0)
             {
                 return ApplicationResponse.Success();
             }
-            return ApplicationResponse.Fail();
+
+            return ApplicationResponse.Fail($"Post with id {id} -  delete operation failed.");
         }
         public async Task<ApplicationResponse> UpdatePost(PostDTO post)
         {
             using var context = _factory.CreateDbContext();
             var postDomain = _mapper.Map<Post>(post);
             var postToUpdate = await context.Posts.Where(i => i.Id == postDomain.Id).FirstOrDefaultAsync().ConfigureAwait(false);
+            
             if (postToUpdate == null)
             {
                 return ApplicationResponse.Fail("Post does not exist.");
             }
+           
             context.Posts.Update(postDomain);
+           
             var result = await context.SaveChangesAsync().ConfigureAwait(false);
             if (result > 0)
             {
                 return ApplicationResponse.Success();
             }
 
-            return ApplicationResponse.Fail();
+            return ApplicationResponse.Fail($"Post with id {post.Id} - update  operation failed.");
         }
 
         //Reads
@@ -78,7 +94,7 @@ namespace ObakiSite.Application.Features.Posts.Services
                 return ApplicationResponse<IReadOnlyList<PostSummaryDTO>>.Success(postSummaryDTO);
             }
 
-            return ApplicationResponse<IReadOnlyList<PostSummaryDTO>>.Fail("Post summary does not exist.");
+            return ApplicationResponse<IReadOnlyList<PostSummaryDTO>>.Fail("PUnable to retrieve post summaries.");
         }
 
         public async Task<ApplicationResponse<PostDTO>> GetPostById(string id)
@@ -91,7 +107,7 @@ namespace ObakiSite.Application.Features.Posts.Services
                 var postDTO = _mapper.Map<PostDTO>(post);
                 return ApplicationResponse<PostDTO>.Success(postDTO);
             }
-            return ApplicationResponse<PostDTO>.Fail();    
+            return ApplicationResponse<PostDTO>.Fail($"Post with id {id} - unable to retrieve.");
         }
 
        
