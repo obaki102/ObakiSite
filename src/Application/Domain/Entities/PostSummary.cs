@@ -11,7 +11,7 @@
             Id = post.Id;
             Title = post.Title;
             Author = post.Author;
-            CreationDate = post.CreationDate;
+            CreationDate = post.Created;
         }
 
         public string Id { get; set; } = string.Empty;

@@ -19,9 +19,9 @@ namespace ObakiSite.Application.Features.Posts.Services
         public async Task<ApplicationResponse> CreatePost(PostDTO post)
         {
             using var context = _factory.CreateDbContext();
-            var checkIfPostAlreadyExist = await context.Posts.Where(i => i.Id == post.Id).FirstOrDefaultAsync().ConfigureAwait(false);
+            var checkIfPostAlreadyExist = await context.Posts.FindAsync(post.Id).ConfigureAwait(false);
 
-            if(checkIfPostAlreadyExist is not null)
+            if (checkIfPostAlreadyExist is not null)
             {
                 return ApplicationResponse.Fail("Post already exist.");
             }
@@ -41,7 +41,7 @@ namespace ObakiSite.Application.Features.Posts.Services
         public async Task<ApplicationResponse> DeletePost(string  id)
         {
             using var context = _factory.CreateDbContext();
-            var postToDelete = await context.Posts.Where(i => i.Id == id).FirstOrDefaultAsync().ConfigureAwait(false);
+            var postToDelete = await context.Posts.FindAsync(id).ConfigureAwait(false);
            
             if (postToDelete == null)
             {
@@ -61,15 +61,17 @@ namespace ObakiSite.Application.Features.Posts.Services
         public async Task<ApplicationResponse> UpdatePost(PostDTO post)
         {
             using var context = _factory.CreateDbContext();
-            var postDomain = _mapper.Map<Post>(post);
-            var postToUpdate = await context.Posts.Where(i => i.Id == postDomain.Id).FirstOrDefaultAsync().ConfigureAwait(false);
-            
+            var postToUpdate = await context.Posts.FindAsync(post.Id).ConfigureAwait(false);
+
             if (postToUpdate == null)
             {
                 return ApplicationResponse.Fail("Post does not exist.");
             }
-           
-            context.Posts.Update(postDomain);
+
+            postToUpdate.Title = post.Title;
+            postToUpdate.HtmlBody= post.HtmlBody;
+            postToUpdate.Modified  = DateTime.Now;
+            context.Posts.Update(postToUpdate);
            
             var result = await context.SaveChangesAsync().ConfigureAwait(false);
             if (result > 0)

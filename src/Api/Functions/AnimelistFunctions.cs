@@ -9,11 +9,11 @@ using ObakiSite.Shared.DTO.Response;
 
 namespace ObakiSite.Api.Functions
 {
-    public class AnimelistFunction
+    public class AnimelistFunctions
     {
         private readonly IAnimeListService _animeListService;
-        private readonly ILogger<AnimelistFunction> _logger;
-        public AnimelistFunction(IAnimeListService animeListService, ILogger<AnimelistFunction> logger)
+        private readonly ILogger<AnimelistFunctions> _logger;
+        public AnimelistFunctions(IAnimeListService animeListService, ILogger<AnimelistFunctions> logger)
         {
             _animeListService = animeListService;
             _logger = logger;

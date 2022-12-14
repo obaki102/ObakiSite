@@ -11,14 +11,14 @@ using ObakiSite.Shared.DTO;
 
 namespace ObakiSite.Api.Functions
 {
-    public class PostFunction
+    public class PostFunctions
     {
         private readonly ILogger _logger;
         private readonly IPostService _postService;
 
-        public PostFunction(ILoggerFactory loggerFactory, IPostService postService)
+        public PostFunctions(ILoggerFactory loggerFactory, IPostService postService)
         {
-            _logger = loggerFactory.CreateLogger<PostFunction>();
+            _logger = loggerFactory.CreateLogger<PostFunctions>();
             _postService = postService;
         }
 
@@ -53,7 +53,7 @@ namespace ObakiSite.Api.Functions
         }
 
         [Function("UpdatePost")]
-        public async Task<HttpResponseData> UpdatePost([HttpTrigger(AuthorizationLevel.Function, "post", Route = "updatePost")] HttpRequestData req)
+        public async Task<HttpResponseData> UpdatePost([HttpTrigger(AuthorizationLevel.Function, "put", Route = "updatePost")] HttpRequestData req)
         {
             _logger.LogInformation("PostFunction trigger function processed a request.");
 

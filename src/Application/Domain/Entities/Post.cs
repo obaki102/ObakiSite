@@ -8,7 +8,8 @@ namespace ObakiSite.Application.Domain.Entities
         public required string Title { get; set; }
         public required string  HtmlBody { get; set; }
         public string Author { get; set; } = "Anonymous";
-        public DateTime CreationDate { get; set; }
+        public DateTime Created { get; set; }
+        public DateTime Modified { get; set; }
         public List<Tag>? Tags { get; set; }
     }
 }

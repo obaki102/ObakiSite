@@ -140,7 +140,7 @@
         var textContent = await GetHtmlStringValue();
         var post = new PostDTO
             {
-                CreationDate = DateTime.Now,
+                Created = DateTime.Now,
                 HtmlBody = textContent,
                 Title = title
             };
@@ -161,7 +161,7 @@
     {
         var post = new PostDTO
             {
-                CreationDate = DateTime.Now,
+                Created = DateTime.Now,
                 HtmlBody = await GetHtmlStringValue(),
                 Title = title
             };

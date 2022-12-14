@@ -12,11 +12,11 @@ using ObakiSite.Shared.DTO;
 
 namespace ObakiSite.Api.Functions
 {
-    public class EmailFunction
+    public class EmailFunctions
     {
         private readonly IEmailService _emailService;
-        private readonly ILogger<EmailFunction> _logger;
-        public EmailFunction(IEmailService emailService, ILogger<EmailFunction> logger)
+        private readonly ILogger<EmailFunctions> _logger;
+        public EmailFunctions(IEmailService emailService, ILogger<EmailFunctions> logger)
         {
             _emailService = emailService;
             _logger = logger;
