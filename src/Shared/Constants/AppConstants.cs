@@ -100,7 +100,7 @@ public static class PostConstants
     }
     public static class GetPostSummaries
     {
-        public const string EndPoint = "/api/post/get-summarries";
+        public const string EndPoint = "/api/post/get-summaries";
     }
     public static class GetPostById
     {
