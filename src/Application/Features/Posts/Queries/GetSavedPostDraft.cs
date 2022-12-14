@@ -28,7 +28,7 @@ namespace ObakiSite.Application.Features.Posts.Queries
             {
                 var result = await _localStorageCache.GetCacheData();
 
-                if(result is not null && result.IsSuccess)
+                if(result is not null)
                 {
                     return result;
                 }

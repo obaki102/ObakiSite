@@ -4,25 +4,30 @@ using ObakiSite.Application.Extensions;
 using ObakiSite.Shared.Constants;
 using ObakiSite.Shared.DTO;
 using ObakiSite.Shared.DTO.Response;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace ObakiSite.Application.Features.Posts.Commands
 {
-    public  record CreatePost(PostDTO Post) : IRequest<ApplicationResponse>;
+    public record UpdatePost(PostDTO Post) : IRequest<ApplicationResponse>;
 
-    public class CreatePostHandler : IRequestHandler<CreatePost, ApplicationResponse>
+    public class UpdatePostHandler : IRequestHandler<UpdatePost, ApplicationResponse>
     {
         private readonly IHttpClientFactory _httpClientFactory;
-        
-        public CreatePostHandler(IHttpClientFactory httpClientFactory, IMapper mapper)
+
+        public UpdatePostHandler(IHttpClientFactory httpClientFactory, IMapper mapper)
         {
             _httpClientFactory = httpClientFactory;
         }
-        public async Task<ApplicationResponse> Handle(CreatePost request, CancellationToken cancellationToken)
+        public async Task<ApplicationResponse> Handle(UpdatePost request, CancellationToken cancellationToken)
         {
-            var httpClient  = _httpClientFactory.CreateClient(HttpNameClient.Default);
+            var httpClient = _httpClientFactory.CreateClient(HttpNameClient.Default);
             var serializedPost = JsonSerializer.Serialize(request.Post).ToJsonStringContent();
-            var response = await httpClient.PostAsync(PostConstants.CreatePost.EndPoint, serializedPost).ConfigureAwait(false);
+            var response = await httpClient.PutAsync(PostConstants.UpdatePost.EndPoint, serializedPost).ConfigureAwait(false);
 
             if (response.IsSuccessStatusCode)
             {
@@ -33,11 +38,13 @@ namespace ObakiSite.Application.Features.Posts.Commands
                     return result;
                 }
 
-                return ApplicationResponse.Fail("Unable to save post.");
+                return ApplicationResponse.Fail("Unable to update post.");
             }
 
             return ApplicationResponse.Fail(response.StatusCode.ToString());
         }
     }
-
 }
+
+        
+   

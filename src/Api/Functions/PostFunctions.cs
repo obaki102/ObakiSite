@@ -24,7 +24,7 @@ namespace ObakiSite.Api.Functions
 
         #region Writes
         [Function("CreatePost")]
-        public async Task<HttpResponseData> CreatePost([HttpTrigger(AuthorizationLevel.Function, "post", Route = "createPost")] HttpRequestData req)
+        public async Task<HttpResponseData> CreatePost([HttpTrigger(AuthorizationLevel.Function, "post", Route = "post/create")] HttpRequestData req)
         {
             _logger.LogInformation("PostFunction trigger function processed a request.");
 
@@ -53,7 +53,7 @@ namespace ObakiSite.Api.Functions
         }
 
         [Function("UpdatePost")]
-        public async Task<HttpResponseData> UpdatePost([HttpTrigger(AuthorizationLevel.Function, "put", Route = "updatePost")] HttpRequestData req)
+        public async Task<HttpResponseData> UpdatePost([HttpTrigger(AuthorizationLevel.Function, "put", Route = "post/update")] HttpRequestData req)
         {
             _logger.LogInformation("PostFunction trigger function processed a request.");
 
@@ -83,7 +83,7 @@ namespace ObakiSite.Api.Functions
         }
 
         [Function("DeletePost")]
-        public async Task<HttpResponseData> DeletePost([HttpTrigger(AuthorizationLevel.Function, "delete", Route = "deletePost/{id?}")] HttpRequestData req, string id)
+        public async Task<HttpResponseData> DeletePost([HttpTrigger(AuthorizationLevel.Function, "delete", Route = "post/delete/{id?}")] HttpRequestData req, string id)
         {
             _logger.LogInformation("PostFunction trigger function processed a request.");
 
@@ -113,7 +113,7 @@ namespace ObakiSite.Api.Functions
 
         #region Reads
         [Function("GetPostById")]
-        public async Task<HttpResponseData> GetPostById([HttpTrigger(AuthorizationLevel.Function, "get", Route = "getPost/{id?}")] HttpRequestData req, string id)
+        public async Task<HttpResponseData> GetPostById([HttpTrigger(AuthorizationLevel.Function, "get", Route = "post/get/{id?}")] HttpRequestData req, string id)
         {
             _logger.LogInformation("PostFunction trigger function processed a request.");
 
@@ -140,7 +140,7 @@ namespace ObakiSite.Api.Functions
         }
 
         [Function("GetAllPostSummaries")]
-        public async Task<HttpResponseData> GetAllPostSummaries([HttpTrigger(AuthorizationLevel.Function, "get", Route = "getPostSummaries")] HttpRequestData req)
+        public async Task<HttpResponseData> GetAllPostSummaries([HttpTrigger(AuthorizationLevel.Function, "get", Route = "post/get-summaries")] HttpRequestData req)
         {
             _logger.LogInformation("PostFunction trigger function processed a request.");
 

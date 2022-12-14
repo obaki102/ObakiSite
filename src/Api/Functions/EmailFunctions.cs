@@ -23,7 +23,7 @@ namespace ObakiSite.Api.Functions
         }
         [Function("SendEmail")]
         public async Task<HttpResponseData> SendEmail(
-            [HttpTrigger(AuthorizationLevel.Function, "post", Route = "sendEmail")] HttpRequestData req)
+            [HttpTrigger(AuthorizationLevel.Function, "post", Route = "send-email")] HttpRequestData req)
         {
             _logger.LogInformation("EmailFunction function processed a request.");
             var response = req.CreateResponse(HttpStatusCode.OK);
@@ -40,13 +40,7 @@ namespace ObakiSite.Api.Functions
                 var deserializedEmailMessage = await JsonSerializer.DeserializeAsync<EmailMessage>(request);
                 var result = await _emailService.SendEmail(deserializedEmailMessage);
 
-                if (result.IsSuccess)
-                {
-                    await response.WriteAsJsonAsync(result);
-                    return response;
-                }
-
-                await response.WriteAsJsonAsync(ApplicationResponse.Fail("Email not sent."));
+                await response.WriteAsJsonAsync(result);
                 return response;
             }
             catch (Exception ex)

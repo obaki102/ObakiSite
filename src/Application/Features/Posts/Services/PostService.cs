@@ -72,7 +72,7 @@ namespace ObakiSite.Application.Features.Posts.Services
             postToUpdate.HtmlBody= post.HtmlBody;
             postToUpdate.Modified  = DateTime.Now;
             context.Posts.Update(postToUpdate);
-           
+
             var result = await context.SaveChangesAsync().ConfigureAwait(false);
             if (result > 0)
             {
@@ -96,7 +96,7 @@ namespace ObakiSite.Application.Features.Posts.Services
                 return ApplicationResponse<IReadOnlyList<PostSummaryDTO>>.Success(postSummaryDTO);
             }
 
-            return ApplicationResponse<IReadOnlyList<PostSummaryDTO>>.Fail("PUnable to retrieve post summaries.");
+            return ApplicationResponse<IReadOnlyList<PostSummaryDTO>>.Fail("Unable to retrieve post summaries.");
         }
 
         public async Task<ApplicationResponse<PostDTO>> GetPostById(string id)

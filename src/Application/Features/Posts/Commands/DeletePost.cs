@@ -25,7 +25,7 @@ namespace ObakiSite.Application.Features.Posts.Commands
             {
                 var result = await response.ConvertStreamToTAsync<ApplicationResponse>();
 
-                if (result is not null && result.IsSuccess)
+                if (result is not null)
                 {
                     return result;
                 }

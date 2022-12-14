@@ -74,7 +74,7 @@ public static class EmailConstants
     public const string SmtpServer = "smtp.gmail.com";
     public const string DefaultEmail = "joshuajpiluden@gmail.com";
     public const string AppPassword = "AppPassword";
-    public const string Endpoint = "/api/sendEmail";
+    public const string Endpoint = "/api/send-email";
 }
 public static class CosmosDB
 {
@@ -86,20 +86,28 @@ public static class PostConstants
 {
     public static class CreatePost
     {
-        public const string EndPoint = "/api/createPost";
+        public const string EndPoint = "/api/post/create";
     }
-    public static class GetPostById
-    {
-        public const string EndPoint = "/api/getPost/";
-    }
+   
     public static class DeletePost
     {
-        public const string EndPoint = "/api/deletePost/";
+        public const string EndPoint = "/api/post/delete/";
+    }
+
+    public static class UpdatePost
+    {
+        public const string EndPoint = "/api/post/update";
     }
     public static class GetPostSummaries
     {
-        public const string EndPoint = "/api/getPostSummaries";
+        public const string EndPoint = "/api/post/get-summarries";
     }
+    public static class GetPostById
+    {
+        public const string EndPoint = "/api/post/get/";
+    }
+
+
 
     public const string CacheDataKey = "PostCacheData";
     public const string CacheDataCreateDateKey = "PostCacheDataCreateDate";

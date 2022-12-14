@@ -9,8 +9,8 @@ namespace ObakiSite.Shared.DTO
         public  string Title { get; init; } = string.Empty;
         public string HtmlBody { get; init; } = string.Empty;
         public string Author { get; init; } = "Anonymous";
-        public DateTime Created { get; init; }
-        public DateTime Modified { get; set; }
+        public DateTime Created { get; init; } 
+        public DateTime Modified { get; init; } 
         public List<TagDTO>? Tags { get; init; }
     }
 }

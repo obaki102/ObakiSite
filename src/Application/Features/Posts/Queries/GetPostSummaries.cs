@@ -20,14 +20,13 @@ namespace ObakiSite.Application.Features.Posts.Queries
         public async Task<ApplicationResponse<IReadOnlyList<PostSummaryDTO>>> Handle(GetPostSummaries request, CancellationToken cancellationToken)
         {
             var httpClient = _httpClientFactory.CreateClient(HttpNameClient.Default);
-            var uriRequest = $"{PostConstants.GetPostSummaries.EndPoint}";
-            var response = await httpClient.GetAsync(uriRequest).ConfigureAwait(false);
+            var response = await httpClient.GetAsync(PostConstants.GetPostSummaries.EndPoint).ConfigureAwait(false);
 
             if (response.IsSuccessStatusCode)
             {
                 //To do implement caching
                 var result = await response.ConvertStreamToTAsync<ApplicationResponse<IReadOnlyList<PostSummaryDTO>>>();
-                if (result is not null && result.IsSuccess)
+                if (result is not null)
                 {
                     return result;
                 }
