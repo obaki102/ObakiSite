@@ -35,6 +35,9 @@ else
                                 <MudList Clickable="true">
                                     <MudListItem Text="Delete Post" Icon="@Icons.Material.Filled.Delete" Color="Color.Primary" Dense="true" OnClick="OnButtonClicked" />
                                 </MudList>
+                                <MudList Clickable="true">
+                                    <MudListItem Text="Edit Post" Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" Dense="true" OnClick="@(() => NavManager.NavigateTo($"/post/edit/{Id}"))" />
+                                </MudList>
                             </ChildContent>
                         </MudMenu>
                     </CardHeaderActions>
@@ -71,12 +74,16 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        var result = await Mediatr.Send(new GetPostById(Id));
-        if (result.Data is not null && result.IsSuccess)
+        if (!string.IsNullOrEmpty(Id))
         {
-            post = result.Data;
-            htmlBody = (MarkupString)post.HtmlBody;
+            var result = await Mediatr.Send(new GetPostById(Id));
+            if (result.Data is not null && result.IsSuccess)
+            {
+                post = result.Data;
+                htmlBody = (MarkupString)post.HtmlBody;
+            }
         }
+
     }
 
     private async Task OnButtonClicked()
