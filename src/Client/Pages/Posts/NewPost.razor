@@ -1,6 +1,6 @@
 ﻿@page "/post/create"
 @layout EmptyLayout
-@using Blazored.TextEditor
+@using WYSIWYGTextEditor;
 @using ObakiSite.Application.Features.Posts.Commands;
 @using ObakiSite.Application.Features.Posts.Queries;
 @using ObakiSite.Shared.DTO.Response;
@@ -8,7 +8,7 @@
 @inject ISnackbar Snackbar
 @inject NavigationManager NavManager
 
-<MudContainer MaxWidth="MaxWidth.Large" Class="mt-4">
+<MudContainer MaxWidth="MaxWidth.Medium" Class="mt-4">
     <MudThemeProvider @bind-IsDarkMode="@_isDarkMode" Theme="_theme" />
     <MudSnackbarProvider />
     <div class="d-flex flex-column">
@@ -24,7 +24,7 @@
         <MudPaper Class="mt-16" Elevation="2" Height="800px">
             <MudTextField Style="font-size: 30px" T="string" Class="ma-4 mb-5" @bind-Value="title" Immediate="true" Variant="Variant.Text" Lines="2" />
             <div class="ma-4" style="height:600px">
-                <BlazoredTextEditor @ref=RichTextEditor Placeholder="write a post..." DebugLevel="error" > 
+                <TextEditor @ref="RichTextEditor" Placeholder="write a post..." DebugLevel="error">
                     <ToolbarContent>
                         <div class="ql-bubble">
                             <select class="ql-header">
@@ -78,7 +78,7 @@
                             </span>*@
                         </div>
                     </ToolbarContent>
-                </BlazoredTextEditor>
+                </TextEditor>
             </div>
         </MudPaper>
         <MudCard Outlined="true" Elevation="25" Class="mt-4">
@@ -92,7 +92,7 @@
     </div>
 
     <MudAppBar Bottom="true" Fixed="true" Color="Color.Dark" Elevation="1">
-        <MudContainer MaxWidth="MaxWidth.Large">
+        <MudContainer MaxWidth="MaxWidth.Medium">
             <div class="d-flex flex-row ma-4">
                 <div class="mr-4">
                     @if (!isPosting)
@@ -117,7 +117,7 @@
     private MudTheme _theme = Theme.Default();
     private bool _isDarkMode = true;
     private bool isPosting = false;
-    private BlazoredTextEditor? RichTextEditor;
+    private TextEditor? RichTextEditor;
     private MarkupString body;
     private string title { get; set; } = "Write your title here...";
 

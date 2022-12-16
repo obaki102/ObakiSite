@@ -8,7 +8,6 @@
   </PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Blazored.TextEditor" Version="1.0.8" />
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="7.0.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="7.0.0" PrivateAssets="all" />
 		<PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="7.0.0" />
@@ -17,6 +16,7 @@
 		<PackageReference Include="MudBlazor" Version="6.1.2" />
 		<PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+		<PackageReference Include="WYSIWYGTextEditor" Version="1.0.1" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -26,6 +26,7 @@
 
 	<ItemGroup>
 	  <Folder Include="Extensions\" />
+	  <Folder Include="wwwroot\lib\" />
 	</ItemGroup>
 	
 	
