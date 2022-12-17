@@ -15,6 +15,7 @@ namespace ObakiSite.Application.Features.Chat.Services
         private readonly HttpClient _httpClient;
         private HubConnection? hubConnection;
         private bool isConnectionStarted = false;
+        internal bool _isDisposed;
         private string HubUrl => _hubClientOptions.HubUrl;
         public string HubConenctionId => hubConnection?.ConnectionId ?? string.Empty;
         public ChatHubClient(IOptions<ChatHubClientOptions> hubClientOptions, IHttpClientFactory httpClientFactory)
@@ -88,27 +89,35 @@ namespace ObakiSite.Application.Features.Chat.Services
             }
         }
 
-        public async Task DisconnectAsync()
+        protected virtual async ValueTask Dispose(bool disposing)
         {
-            if (isConnectionStarted && hubConnection is not null)
+            if (!_isDisposed)
             {
-                await hubConnection.StopAsync();
-                await hubConnection.DisposeAsync();
-                hubConnection = null;
-                isConnectionStarted = false;
+                if (disposing)
+                {
+                    if (isConnectionStarted && hubConnection is not null)
+                    {
+                        await hubConnection.StopAsync();
+                        await hubConnection.DisposeAsync();
+                        hubConnection = null;
+                        isConnectionStarted = false;
+                    }
+                }
+                _isDisposed = true;
             }
         }
 
+        public async ValueTask DisposeAsync() => await Dispose(true);
         public event EventHandler<ChatMessageEventArgs>? OnReceivedMessage;
         public event EventHandler<bool>? OnConnecting;
         public event EventHandler<bool>? OnConnected;
         public event EventHandler<ClosedConnectionEventArgs>? OnClosed;
         public event EventHandler<string>? OnConnectionError;
-        public async ValueTask DisposeAsync() => await DisconnectAsync();
 
         public async Task SendMessage(ChatMessage chatMessage)
         {
-             await _httpClient.PostAsJsonAsync($"{HubUrl}/messages", chatMessage);
+            await _httpClient.PostAsJsonAsync($"{HubUrl}/messages", chatMessage);
         }
+
     }
 }

@@ -162,7 +162,7 @@
 
     public async ValueTask DisposeAsync()
     {
-        await ChatHubClient.DisconnectAsync();
+        await ChatHubClient.DisposeAsync();
         ChatHubClient.OnReceivedMessage -= ReceivedChatMessage;
         ChatHubClient.OnConnecting -= ConnectingToServer;
         ChatHubClient.OnConnected -= ConnectedToServer;

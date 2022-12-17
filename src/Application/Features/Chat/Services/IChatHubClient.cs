@@ -6,7 +6,7 @@ namespace ObakiSite.Application.Features.Chat.Services
     public interface IChatHubClient
     {
         Task ConnectAsync();
-        Task DisconnectAsync();
+        ValueTask DisposeAsync();
         string HubConenctionId { get; }
         Task SendMessage(ChatMessage chatMessage);
         event EventHandler<ChatMessageEventArgs>? OnReceivedMessage;
