@@ -1,0 +1,35 @@
+﻿@inherits LayoutComponentBase
+
+<MudLayout>
+    <MudContainer MaxWidth="MaxWidth.Medium" Class="mt-4">
+        <MudThemeProvider @bind-IsDarkMode="@_isDarkMode" Theme="_theme" />
+        <MudSnackbarProvider />
+        <div class="d-flex flex-column">
+            <MudAppBar Fixed="true" Color="Color.Dark" Elevation="0">
+                <MudContainer MaxWidth="MaxWidth.Large">
+                    <div class="d-flex align-center my-8">
+                        <MudChip Color="Color.Dark" Href="/"><MudText Typo="Typo.button" Style="font-size: 35px;">O</MudText><MudText Typo="Typo.caption" Style="font-size: 20px;">baki</MudText></MudChip>
+                        <MudDivider Class="ma-1" Vertical="true" FlexItem="true" />
+                        <MudText Class="ml-4">Create Post</MudText>
+                    </div>
+                </MudContainer>
+            </MudAppBar>
+            <ErrorBoundary>
+                <ChildContent>  @Body </ChildContent>
+                <ErrorContent Context="Exception">
+                    <MudChip Color="Color.Secondary">@Exception.GetType()</MudChip>
+                    <MudChip Color="Color.Secondary">@Exception.Message</MudChip>
+                    <p class="errorUI">Nothing to see here right now. Sorry!</p>
+                </ErrorContent>
+            </ErrorBoundary>
+            <MudScrollToTop>
+                <MudFab Color="Color.Tertiary" Icon="@Icons.Filled.ArrowCircleUp" />
+            </MudScrollToTop>
+        </div>
+    </MudContainer>
+</MudLayout>
+@code {
+    //todo: Global theme defaults accross all layouts.
+    private MudTheme _theme = Theme.Default();
+    private bool _isDarkMode = true;
+}
