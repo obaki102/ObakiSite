@@ -25,7 +25,7 @@ namespace ObakiSite.Tests.Features.Animelist
             httpFactory.Setup(x => x.CreateClient(It.IsAny<string>())).Returns(mockHttpClient);
 
             var mockLocalStorageCache = new Mock<ILocalStorageCache<AnimeListRoot>>();
-            mockLocalStorageCache.Setup(x => x.IsDataNeedsRefresh().Result).Returns(false);
+            mockLocalStorageCache.Setup(x => x.IsCacheNeedsDataRefresh().Result).Returns(false);
             mockLocalStorageCache.Setup(x => x.GetCacheData().Result).Returns(mockTestData);
 
             var handler = new GetAnimeListBySeasonAndYearHandler(httpFactory.Object, mockLocalStorageCache.Object);
@@ -57,7 +57,7 @@ namespace ObakiSite.Tests.Features.Animelist
             httpFactory.Setup(x => x.CreateClient(It.IsAny<string>())).Returns(httpClient);
 
             var mockLocalStorageCache = new Mock<ILocalStorageCache<AnimeListRoot>>();
-            mockLocalStorageCache.Setup(x => x.IsDataNeedsRefresh().Result).Returns(true);
+            mockLocalStorageCache.Setup(x => x.IsCacheNeedsDataRefresh().Result).Returns(true);
             mockLocalStorageCache.Setup(x => x.GetCacheData().Result).Returns(mockTestData);
 
             var handler = new GetAnimeListBySeasonAndYearHandler(httpFactory.Object, mockLocalStorageCache.Object);
@@ -88,7 +88,7 @@ namespace ObakiSite.Tests.Features.Animelist
             httpFactory.Setup(x => x.CreateClient(It.IsAny<string>())).Returns(httpClient);
 
             var mockLocalStorageCache = new Mock<ILocalStorageCache<AnimeListRoot>>();
-            mockLocalStorageCache.Setup(x => x.IsDataNeedsRefresh().Result).Returns(true);
+            mockLocalStorageCache.Setup(x => x.IsCacheNeedsDataRefresh().Result).Returns(true);
             mockLocalStorageCache.Setup(x => x.GetCacheData().Result).Returns(mockTestData);
 
             var handler = new GetAnimeListBySeasonAndYearHandler(httpFactory.Object, mockLocalStorageCache.Object);
@@ -118,7 +118,7 @@ namespace ObakiSite.Tests.Features.Animelist
             httpFactory.Setup(x => x.CreateClient(It.IsAny<string>())).Returns(httpClient);
 
             var mockLocalStorageCache = new Mock<ILocalStorageCache<AnimeListRoot>>();
-            mockLocalStorageCache.Setup(x => x.IsDataNeedsRefresh().Result).Returns(true);
+            mockLocalStorageCache.Setup(x => x.IsCacheNeedsDataRefresh().Result).Returns(true);
             mockLocalStorageCache.Setup(x => x.GetCacheData().Result).Returns(mockTestData);
 
             var handler = new GetAnimeListBySeasonAndYearHandler(httpFactory.Object, mockLocalStorageCache.Object);

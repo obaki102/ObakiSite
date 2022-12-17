@@ -18,8 +18,7 @@ namespace ObakiSite.Application.Features.Posts.Queries
             _localStorageCache.Options = new LocalStorageCacheOptions
             {
                 CreationDateKey = PostConstants.CacheDataCreateDateKey,
-                DataKey = PostConstants.CacheDataKey,
-                NumberOfHrsToRefreshCache = 6
+                DataKey = PostConstants.CacheDataKey
             };
         }
         public async Task<ApplicationResponse<PostDTO>> Handle(GetSavedPostDraft request, CancellationToken cancellationToken)

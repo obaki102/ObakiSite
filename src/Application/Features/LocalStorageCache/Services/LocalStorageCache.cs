@@ -35,7 +35,7 @@ namespace ObakiSite.Application.Features.LocalStorageCache.Services
         }
 
         //todo: Check how can data refresh  happen inside LocalStorageCache
-        public async Task<bool> IsDataNeedsRefresh()
+        public async Task<bool> IsCacheNeedsDataRefresh()
         {
             if (Options is null)
             {
