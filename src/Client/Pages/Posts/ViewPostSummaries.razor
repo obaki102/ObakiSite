@@ -6,14 +6,38 @@
 
 @if (posts == null)
 {
-    <MudOverlay Visible="true" DarkBackground="true" ZIndex="9999" AutoClose="true">
-        <MudProgressCircular Color="Color.Primary" Indeterminate="true" Size="Size.Large" />
-    </MudOverlay>
+    <div class="d-flex flex-row flex-grow-1 gap-4">
+        <div style="width:50%">
+        </div>
+        <div class="d-flex flex-column flex-grow-1 gap-4">
+            @for (int i = 0; i < 10; i++)
+            {
+                <MudPaper Outlined="true" Elevation="25">
+                    <MudCard Elevation="0">
+                        <MudCardHeader>
+                            <CardHeaderAvatar>
+                                <MudAvatar Color="Color.Secondary">A</MudAvatar>
+                            </CardHeaderAvatar>
+                            <CardHeaderContent>
+                                <MudSkeleton Width="100%" Animation="Animation.Wave" />
+                                <MudSkeleton Width="100%" Animation="Animation.Wave" />
+                            </CardHeaderContent>
+                        </MudCardHeader>
+                        <MudSkeleton Width="100%" Animation="Animation.Wave" />
+                    </MudCard>
+                </MudPaper>
+            }
+        </div>
+        <div style="width:50%">
+        </div>
+    </div>
 }
 else
 {
     <div class="d-flex flex-row flex-grow-1 gap-4">
-        <div class="d-flex flex-column flex-grow-1 gap-4" style="width:40%">
+        <div style="width:50%">
+        </div>
+        <div class="d-flex flex-column flex-grow-1 gap-4">
             @foreach (var post in posts)
             {
                 <MudPaper Outlined="true" Elevation="25">
@@ -27,21 +51,13 @@ else
                                 <MudText Typo="Typo.caption">Posted on @post.CreationDate</MudText>
                             </CardHeaderContent>
                         </MudCardHeader>
-                        <MudText Class="ml-4" Style="font-size:25px" Typo="Typo.body2">@post.Title</MudText>
+                        <MudText Class="ma-4" GutterBottom="true" Typo="Typo.h6">@post.Title</MudText>
                     </MudCard>
                 </MudPaper>
             }
         </div>
-        <MudPaper Class="align-self-start flex-1" Outlined="true" Elevation="1" >
-            <MudCard >
-                <MudText Class="ma-4 mud-secondary-text" Typo="Typo.caption" GutterBottom="true" Style="font-size: 20px;">This feature is still in development</MudText>
-                <MudCardContent>
-                    <MudText Typo="Typo.body2">
-                        Attaching an image is yet to be implemented. I'm still deciding what storage store to use at the minimum cost.  :)
-                    </MudText>
-                </MudCardContent>
-            </MudCard>
-        </MudPaper>
+        <div style="width:50%">
+        </div>
     </div>
 }
 @code {
@@ -54,5 +70,4 @@ else
             posts = result.Data;
         }
     }
-
 }
