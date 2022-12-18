@@ -10,20 +10,20 @@
         <div style="width:50%">
         </div>
         <div class="d-flex flex-column flex-grow-1 gap-4">
-            @for (int i = 0; i < 10; i++)
+            @for (int i = 0; i < 5; i++)
             {
-                <MudPaper Outlined="true" Elevation="25">
+                <MudPaper Outlined="true" Elevation="25" Width="700px" Height="200px">
                     <MudCard Elevation="0">
                         <MudCardHeader>
                             <CardHeaderAvatar>
                                 <MudAvatar Color="Color.Secondary">A</MudAvatar>
                             </CardHeaderAvatar>
                             <CardHeaderContent>
-                                <MudSkeleton Width="100%" Animation="Animation.Wave" />
-                                <MudSkeleton Width="100%" Animation="Animation.Wave" />
+                                <MudSkeleton Width="90%" Animation="Animation.Wave" />
+                                <MudSkeleton Width="90%" Animation="Animation.Wave" />
                             </CardHeaderContent>
                         </MudCardHeader>
-                        <MudSkeleton Width="100%" Animation="Animation.Wave" />
+                        <MudSkeleton Width="90%" Animation="Animation.Wave" />
                     </MudCard>
                 </MudPaper>
             }
