@@ -23,7 +23,7 @@
                                 <MudSkeleton Width="90%" Animation="Animation.Wave" />
                             </CardHeaderContent>
                         </MudCardHeader>
-                        <MudSkeleton Width="90%" Animation="Animation.Wave" />
+                        <MudSkeleton Class="ml-16 mr-8 mb-4"  Width="90%" Animation="Animation.Wave" />
                     </MudCard>
                 </MudPaper>
             }
@@ -40,7 +40,7 @@ else
         <div class="d-flex flex-column flex-grow-1 gap-4">
             @foreach (var post in posts)
             {
-                <MudPaper Outlined="true" Elevation="25">
+                <MudPaper Outlined="true" Elevation="25" Width="700px">
                     <MudCard Elevation="0" @onclick="@(e => NavManager.NavigateTo($"/post/view/{post.Id}"))">
                         <MudCardHeader>
                             <CardHeaderAvatar>
@@ -51,7 +51,7 @@ else
                                 <MudText Typo="Typo.caption">Posted on @post.CreationDate</MudText>
                             </CardHeaderContent>
                         </MudCardHeader>
-                        <MudText Class="ma-4" GutterBottom="true" Typo="Typo.h6">@post.Title</MudText>
+                        <MudText Class="ml-16 mr-8 mb-4" GutterBottom="true" Typo="Typo.h6">@post.Title</MudText>
                     </MudCard>
                 </MudPaper>
             }

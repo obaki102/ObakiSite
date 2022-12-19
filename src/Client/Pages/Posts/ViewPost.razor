@@ -7,9 +7,45 @@
 
 @if (post == null)
 {
-    <MudOverlay Visible="true" DarkBackground="true" ZIndex="9999" AutoClose="true">
-        <MudProgressCircular Color="Color.Primary" Indeterminate="true" Size="Size.Large" />
-    </MudOverlay>
+    <MudContainer MaxWidth="MaxWidth.Medium">
+        <MudPaper Elevation="1" Class="ma-4">
+            <MudCard Elevation="0">
+                <MudCardHeader>
+                    <CardHeaderAvatar>
+                        <MudAvatar Color="Color.Secondary">   <MudSkeleton Width="100%" Animation="Animation.Wave" /></MudAvatar>
+                    </CardHeaderAvatar>
+                    <CardHeaderContent>
+                        <MudSkeleton Width="20%" Animation="Animation.Wave" />
+                        <MudSkeleton Width="20%" Animation="Animation.Wave" />
+                    </CardHeaderContent>
+                    <CardHeaderActions>
+                        <MudMenu AnchorOrigin="Origin.TopRight" TransformOrigin="Origin.BottomLeft">
+                            <ActivatorContent>
+                                <MudTooltip Text="Options" Color="Color.Primary" Placement="Placement.Bottom">
+                                    <MudIconButton Icon="@Icons.Filled.Dehaze" Color="Color.Default" />
+                                </MudTooltip>
+                            </ActivatorContent>
+                            <ChildContent>
+                                <MudList Clickable="true">
+                                </MudList>
+                                <MudList Clickable="true">
+                                </MudList>
+                            </ChildContent>
+                        </MudMenu>
+                    </CardHeaderActions>
+                </MudCardHeader>
+            </MudCard>
+            <MudSkeleton Class="ml-16 mr-8 mb-4" Width="80%" Animation="Animation.Wave" />
+            <div class="ma-4">
+                <MudElement HtmlTag="html" Class="ma-4">
+                    @for (int i = 0; i < 10; i++)
+                    {
+                        <MudSkeleton Class="my-4" Width="80%" Animation="Animation.Wave" />
+                    }
+                </MudElement>
+            </div>
+        </MudPaper>
+    </MudContainer>
 }
 else
 {
@@ -43,23 +79,23 @@ else
                     </CardHeaderActions>
                 </MudCardHeader>
             </MudCard>
-            <div class="ml-4">
-                <MudText Style="font-size:35px" Typo="Typo.body2">@post.Title</MudText>
-            </div>
+            <MudText Class="ma-4" Style="font-size:35px" Typo="Typo.body2">@post.Title</MudText>
             <div class="ma-4">
-                @htmlBody
+                <MudElement HtmlTag="html" Class="ma-4">
+                    @htmlBody
+                </MudElement>
             </div>
         </MudPaper>
     </MudContainer>
 
     <MudMessageBox @ref="mbox" Title="Delete this post?" CancelText="Cancel">
         <MessageContent>
-            <div class="ma-1">
+            <div class="ma-1" style="width:250px">
                 Deleting can <b><i>not</i></b> be undone!
             </div>
         </MessageContent>
         <YesButton>
-            <MudButton Variant="Variant.Filled" Color="Color.Error" StartIcon="@Icons.Material.Filled.DeleteForever" OnClick="@DeletePost">Delete!</MudButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Error" Class="mx-4" StartIcon="@Icons.Material.Filled.DeleteForever" OnClick="@DeletePost">Delete!</MudButton>
         </YesButton>
     </MudMessageBox>
 }
@@ -83,7 +119,6 @@ else
                 htmlBody = (MarkupString)post.HtmlBody;
             }
         }
-
     }
 
     private async Task OnButtonClicked()
