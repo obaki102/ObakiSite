@@ -5,6 +5,7 @@ using ObakiSite.Shared.Constants;
 using ObakiSite.Shared.DTO.Response;
 using Microsoft.Extensions.Options;
 using ObakiSite.Shared.DTO;
+using ObakiSite.Application.Features.Email.Constants;
 
 namespace ObakiSite.Application.Features.Email.Services
 {
@@ -73,7 +74,7 @@ namespace ObakiSite.Application.Features.Email.Services
 
         private async Task<Stream> GetFile(string filePath)
         {
-            var httpClient = _httpClientFactory.CreateClient(HttpNameClient.Email);
+            var httpClient = _httpClientFactory.CreateClient(HttpNameClientConstants.Email);
             var result = await httpClient.GetAsync(filePath).ConfigureAwait(false);
 
             if (result.IsSuccessStatusCode)

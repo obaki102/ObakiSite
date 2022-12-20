@@ -50,13 +50,11 @@ namespace ObakiSite.Application.Behaviours.Validation
                     //Find the method "fail" in Application Response object
                     var failMethodInApplicationResponse = typeof(TResponse).GetMethod("Fail", parameterType);
                     //Create the Application Response object
-                    var responseObject = (TResponse)Activator.CreateInstance(typeof(TResponse));
+                    var responseObject = (TResponse?)Activator.CreateInstance(typeof(TResponse));
                     //Pass the list of errors as a parameter
                     object[] parameters = new object[] { errorLists.Select(e=> e.ErrorMessage).Distinct().ToList() };
-                    return (TResponse)failMethodInApplicationResponse.Invoke(responseObject, parameters);
+                    return (TResponse?)failMethodInApplicationResponse.Invoke(responseObject, parameters);
                 }
-
-
             }
 
             return await next();

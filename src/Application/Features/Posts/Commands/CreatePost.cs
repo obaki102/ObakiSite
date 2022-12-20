@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using ObakiSite.Application.Extensions;
+using ObakiSite.Application.Features.Posts.Constants;
 using ObakiSite.Shared.Constants;
 using ObakiSite.Shared.DTO;
 using ObakiSite.Shared.DTO.Response;
@@ -20,7 +21,7 @@ namespace ObakiSite.Application.Features.Posts.Commands
         }
         public async Task<ApplicationResponse> Handle(CreatePost request, CancellationToken cancellationToken)
         {
-            var httpClient  = _httpClientFactory.CreateClient(HttpNameClient.Default);
+            var httpClient  = _httpClientFactory.CreateClient(HttpNameClientConstants.Default);
             var serializedPost = JsonSerializer.Serialize(request.Post).ToJsonStringContent();
             var response = await httpClient.PostAsync(PostConstants.CreatePost.EndPoint, serializedPost).ConfigureAwait(false);
 

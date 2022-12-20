@@ -4,6 +4,7 @@ using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using System.IO;
 using System.Net;
+using ObakiSite.Application.Features.Chat.Constants;
 
 namespace ObakiSite.Api.Functions
 {
@@ -27,7 +28,7 @@ namespace ObakiSite.Api.Functions
          HttpRequestData req)
         {
             using var bodyReader = new StreamReader(req.Body);
-            return new SignalRMessageAction(HubHandler.ReceivedMessage)
+            return new SignalRMessageAction(HubHandlerConstants.ReceivedMessage)
             {
                 Arguments = new[] { bodyReader.ReadToEnd() },
             };

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using ObakiSite.Application.Extensions;
+using ObakiSite.Application.Features.Posts.Constants;
 using ObakiSite.Shared.Constants;
 using ObakiSite.Shared.DTO.Response;
 
@@ -17,7 +18,7 @@ namespace ObakiSite.Application.Features.Posts.Commands
         }
         public async Task<ApplicationResponse> Handle(DeletePost request, CancellationToken cancellationToken)
         {
-            var httpClient = _httpClientFactory.CreateClient(HttpNameClient.Default);
+            var httpClient = _httpClientFactory.CreateClient(HttpNameClientConstants.Default);
             var uriRequest = $"{PostConstants.DeletePost.EndPoint}{request.Id}";
             var response = await httpClient.DeleteAsync(uriRequest).ConfigureAwait(false);
 

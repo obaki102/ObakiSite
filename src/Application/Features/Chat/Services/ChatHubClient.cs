@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using Microsoft.Extensions.DependencyInjection;
 using System.Net.Http.Json;
 using ObakiSite.Shared.DTO;
+using ObakiSite.Application.Features.Chat.Constants;
 
 namespace ObakiSite.Application.Features.Chat.Services
 {
@@ -26,7 +27,7 @@ namespace ObakiSite.Application.Features.Chat.Services
             }
 
             _hubClientOptions = hubClientOptions.Value;
-            _httpClient = httpClientFactory.CreateClient(HttpNameClient.Default);
+            _httpClient = httpClientFactory.CreateClient(HttpNameClientConstants.Default);
 
         }
 
@@ -72,7 +73,7 @@ namespace ObakiSite.Application.Features.Chat.Services
                     //        //todo: Create  reconencted event. 
                     //    });
                     //};
-                    hubConnection.On<string>(HubHandler.ReceivedMessage, (receivedMessage) =>
+                    hubConnection.On<string>(HubHandlerConstants.ReceivedMessage, (receivedMessage) =>
                     {
                         var chatMessage = JsonConvert.DeserializeObject<ChatMessage>(receivedMessage);
                         OnReceivedMessage?.Invoke(this, new ChatMessageEventArgs { ChatMessage = chatMessage ?? new() });

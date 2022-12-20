@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using ObakiSite.Application.Extensions;
+using ObakiSite.Application.Features.Posts.Constants;
 using ObakiSite.Shared.Constants;
 using ObakiSite.Shared.DTO;
 using ObakiSite.Shared.DTO.Response;
@@ -19,7 +20,7 @@ namespace ObakiSite.Application.Features.Posts.Queries
         }
         public async Task<ApplicationResponse<PostDTO>> Handle(GetPostById request, CancellationToken cancellationToken)
         {
-            var httpClient = _httpClientFactory.CreateClient(HttpNameClient.Default);
+            var httpClient = _httpClientFactory.CreateClient(HttpNameClientConstants.Default);
             var uriRequest = $"{PostConstants.GetPostById.EndPoint}{request.Id}";
             var response = await httpClient.GetAsync(uriRequest).ConfigureAwait(false);
 

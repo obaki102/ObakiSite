@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using ObakiSite.Application.Extensions;
+using ObakiSite.Application.Features.Animelist.Constants;
 using ObakiSite.Application.Features.LocalStorageCache.Services;
 using ObakiSite.Shared.Constants;
 using ObakiSite.Shared.DTO;
@@ -19,8 +20,8 @@ namespace ObakiSite.Application.Features.Animelist.Queries
             _localStorageCache = localStorageCache;
             _localStorageCache.Options = new LocalStorageCacheOptions
             {
-                CreationDateKey = AnimeList.CacheDataCreateDateKey,
-                DataKey = AnimeList.CacheDataKey,
+                CreationDateKey = AnimelistConstants.CacheDataCreateDateKey,
+                DataKey = AnimelistConstants.CacheDataKey,
                 NumberOfHrsToRefreshCache = 6
             };
         }
@@ -31,8 +32,8 @@ namespace ObakiSite.Application.Features.Animelist.Queries
 
             if (isRefreshNeeded)
             {
-                var httpClient = _httpClientFactory.CreateClient(HttpNameClient.Default);
-                var uriRequest = $"{AnimeList.Endpoint}{request.Season.SeasonName}/{request.Season.Year}";
+                var httpClient = _httpClientFactory.CreateClient(HttpNameClientConstants.Default);
+                var uriRequest = $"{AnimelistConstants.Endpoint}{request.Season.SeasonName}/{request.Season.Year}";
                 var response = await httpClient.GetAsync(uriRequest).ConfigureAwait(false);
 
                 if (response.IsSuccessStatusCode)

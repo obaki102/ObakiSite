@@ -1,5 +1,6 @@
 ﻿using System.Text.Json;
 using ObakiSite.Application.Extensions;
+using ObakiSite.Application.Features.Animelist.Constants;
 using ObakiSite.Application.Features.Animelist.DTO;
 using ObakiSite.Shared.Constants;
 using ObakiSite.Shared.DTO.Response;
@@ -11,13 +12,13 @@ namespace ObakiSite.Application.Features.Animelist.Services
         private readonly HttpClient _httpClient;
         public AnimeListService(IHttpClientFactory httpClientFactory)
         {
-            _httpClient = httpClientFactory.CreateClient(HttpNameClient.AnimeList);
+            _httpClient = httpClientFactory.CreateClient(HttpNameClientConstants.AnimeList);
         }
 
         public async Task<ApplicationResponse<AnimeListRoot>> GetAnimeListBySeasonAndYear(int year, string season)
         {
             //todo: clean the magic strings
-            var uriRequest = $"v2/anime/season/{year}/{season}{AnimeList.UrLQuery}";
+            var uriRequest = $"v2/anime/season/{year}/{season}{AnimelistConstants.UrLQuery}";
             var response = await _httpClient.GetAsync(uriRequest).ConfigureAwait(false);
             
             if (response.IsSuccessStatusCode)

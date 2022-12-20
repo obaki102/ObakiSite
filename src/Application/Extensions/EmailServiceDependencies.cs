@@ -16,7 +16,7 @@ namespace ObakiSite.Application.Extensions
                 throw new ArgumentNullException(nameof(services));
             }
             
-            services.AddHttpClient(HttpNameClient.Email).AddTransientHttpErrorPolicy(policyBuilder =>
+            services.AddHttpClient(HttpNameClientConstants.Email).AddTransientHttpErrorPolicy(policyBuilder =>
              policyBuilder.WaitAndRetryAsync(Backoff.DecorrelatedJitterBackoffV2(TimeSpan.FromSeconds(1), 3), (exception, timeSpan, retryCount, context) =>
              {
                  // todo: log exception and retries.

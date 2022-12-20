@@ -23,7 +23,7 @@ namespace ObakiSite.Application.Extensions
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
             //HttpNamedClient
-            services.AddHttpClient(HttpNameClient.Default, client =>
+            services.AddHttpClient(HttpNameClientConstants.Default, client =>
             {
                 client.BaseAddress = baseUrl;
 

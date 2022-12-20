@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Moq;
+using ObakiSite.Application.Features.Email.Constants;
 using ObakiSite.Application.Features.Email.Services;
 using ObakiSite.Shared.Constants;
 using ObakiSite.Shared.DTO;

@@ -22,7 +22,7 @@ namespace ObakiSite.Application.Extensions
                    opts.UseCosmos(
                        endPoint,
                        accessKey,
-                       CosmosDB.Database);
+                       CosmosDBConstants.Database);
                });
             services.TryAddScoped<IPostService, PostService>();
             return services;
