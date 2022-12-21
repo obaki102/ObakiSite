@@ -1,6 +1,6 @@
-﻿@using ObakiSite.Client.Services.Components.Badge
-@inherits LayoutComponentBase
-<MudThemeProvider @bind-IsDarkMode="@_isDarkMode" Theme="_theme" />
+﻿@inherits LayoutComponentBase
+@inject IMySettings MySettings
+<MudThemeProvider @bind-IsDarkMode="@MySettings.Data.IsDarkTheme" Theme="_theme" />
 <MudDialogProvider />
 <MudSnackbarProvider />
 <MudLayout>
@@ -38,9 +38,11 @@
 
 @code {
     private MudTheme _theme = Theme.Default();
-    private bool _isDarkMode = true;
     bool _drawerOpen = false;
-
+    protected override async Task OnInitializedAsync()
+    {
+        await MySettings.GetMyDefaultSettings();
+    }
     public void OpenDrawer()
     {
         _drawerOpen = !_drawerOpen;

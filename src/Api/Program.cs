@@ -15,14 +15,10 @@ namespace ObakiSite.Api
                 .ConfigureFunctionsWorkerDefaults()
                 .ConfigureServices(services =>
                 {
-                    services.AddHttpAnimeListService(Environment.GetEnvironmentVariable(AnimelistConstants.AnimelistClientId));
-
-                    services.AddEmailService(options =>
-                    {
-                        options.AppPassword = Environment.GetEnvironmentVariable(EmailConstants.AppPassword);
-                    });
-
-                    services.AddPostService(Environment.GetEnvironmentVariable(CosmosDBConstants.EndPoint), Environment.GetEnvironmentVariable(CosmosDBConstants.AccessKey));
+                    services.AddApiDependencies(Environment.GetEnvironmentVariable(AnimelistConstants.AnimelistClientId),
+                        Environment.GetEnvironmentVariable(EmailConstants.AppPassword),
+                        Environment.GetEnvironmentVariable(CosmosDBConstants.EndPoint),
+                        Environment.GetEnvironmentVariable(CosmosDBConstants.AccessKey));
                 })
 
                 .Build();

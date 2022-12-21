@@ -5,7 +5,7 @@
 @inject IJSRuntime JsRuntime
 @inject ISender Mediatr
 @inject ISnackbar Snackbar
-
+@inject IMySettings MySettings
 <PageTitle>My CV</PageTitle>
 <div class="d-flex flex-row">
     <div style="height:100px" class="ml-4 mt-3">
@@ -278,9 +278,15 @@
 </div>
 @code {
     private MudTheme _theme = Theme.CvTheme();
-    private bool _isDarkMode = true;
+    private bool _isDarkMode = false;
     private bool isSending = false;
     public string EmailValue { get; set; } = string.Empty;
+
+    protected override void OnInitialized()
+    {
+        _isDarkMode = MySettings.Data.IsDarkTheme;
+    }
+
     private async Task DownloadFileFromURL()
     {
 
@@ -290,7 +296,7 @@
     private async Task SendEmail()
     {
         isSending = true;
-        var emailMessage = new SendEmail(new EmailMessage
+        var emailMessage = new SendEmail(new EmailMessageDTO
             {
                 RecipientEmail = EmailValue,
                 RecipientName = EmailValue,

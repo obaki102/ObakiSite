@@ -2,7 +2,8 @@
 @implements IDisposable
 @inherits LayoutComponentBase
 @inject IBadgeUpdater BadgeUpdater
-<MudThemeProvider @bind-IsDarkMode="@_isDarkMode" Theme="_theme" />
+@inject IMySettings MySettings
+<MudThemeProvider @bind-IsDarkMode="@MySettings.Data.IsDarkTheme" Theme="_theme" />
 <MudDialogProvider />
 <MudSnackbarProvider />
 <MudLayout>

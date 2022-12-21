@@ -2,6 +2,7 @@
 using ObakiSite.Application.Features.Email.Commands;
 using System.Net;
 using ObakiSite.Shared.DTO;
+using ObakiSite.Application.Domain.Entities;
 
 namespace ObakiSite.Tests.Features.Email
 {
@@ -22,7 +23,7 @@ namespace ObakiSite.Tests.Features.Email
             httpFactory.Setup(x => x.CreateClient(It.IsAny<string>())).Returns(httpClient);
 
             var handler = new SendEmailHandler(httpFactory.Object);
-            var dummyEmailMessage = new SendEmail(new EmailMessage
+            var dummyEmailMessage = new SendEmail(new EmailMessageDTO
             {
                 RecipientEmail = "joshuajpiluden@gmail.com",
                 RecipientName = "Joshua",
@@ -51,7 +52,7 @@ namespace ObakiSite.Tests.Features.Email
             httpFactory.Setup(x => x.CreateClient(It.IsAny<string>())).Returns(httpClient);
 
             var handler = new SendEmailHandler(httpFactory.Object);
-            var dummyEmailMessage = new SendEmail(new EmailMessage
+            var dummyEmailMessage = new SendEmail(new EmailMessageDTO
             {
                 RecipientEmail = "joshuajpiluden@gmail.com",
                 RecipientName = "Joshua",
@@ -80,7 +81,7 @@ namespace ObakiSite.Tests.Features.Email
             httpFactory.Setup(x => x.CreateClient(It.IsAny<string>())).Returns(httpClient);
 
             var handler = new SendEmailHandler(httpFactory.Object);
-            var dummyEmailMessage = new SendEmail(new EmailMessage
+            var dummyEmailMessage = new SendEmail(new EmailMessageDTO
             {
                 RecipientEmail = "joshuajpiluden@gmail.com",
                 RecipientName = "Joshua",

@@ -2,7 +2,7 @@
 {
     public class ChatMessage
     {
-        private DateTime _createDate;
+        private readonly DateTime _createDate;
 
         public ChatMessage()
         {

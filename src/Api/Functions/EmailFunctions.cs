@@ -9,6 +9,7 @@ using System.Text.Json;
 using System;
 using ObakiSite.Shared.DTO.Response;
 using ObakiSite.Shared.DTO;
+using ObakiSite.Application.Domain.Entities;
 
 namespace ObakiSite.Api.Functions
 {
@@ -37,7 +38,7 @@ namespace ObakiSite.Api.Functions
 
             try
             {
-                var deserializedEmailMessage = await JsonSerializer.DeserializeAsync<EmailMessage>(request);
+                var deserializedEmailMessage = await JsonSerializer.DeserializeAsync<EmailMessageDTO>(request);
                 var result = await _emailService.SendEmail(deserializedEmailMessage);
 
                 await response.WriteAsJsonAsync(result);

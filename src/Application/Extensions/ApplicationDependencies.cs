@@ -2,9 +2,12 @@
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using ObakiSite.Application.Behaviours.Validation;
+using ObakiSite.Application.Features.Animelist.Constants;
+using ObakiSite.Application.Features.Email.Constants;
 using ObakiSite.Shared.Constants;
 using Polly;
 using Polly.Contrib.WaitAndRetry;
+using System.Drawing;
 using System.Reflection;
 
 namespace ObakiSite.Application.Extensions
@@ -35,6 +38,26 @@ namespace ObakiSite.Application.Extensions
              }));;
 
             services.AddLocalStorageCahce();
+            return services;
+        }
+
+        public static IServiceCollection AddApiDependencies(this IServiceCollection services, string animeListClientId, 
+            string emailAppPassword,string cosmosDBEndpoint, string cosmosDbAccessKey)
+        {
+            if (services == null)
+            {
+                throw new ArgumentNullException(nameof(services));
+            }
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
+            services.AddHttpAnimeListService(animeListClientId);
+
+            services.AddEmailService(options =>
+            {
+                options.AppPassword = emailAppPassword;
+            });
+
+            services.AddPostService(cosmosDBEndpoint, cosmosDbAccessKey);
             return services;
         }
     }

@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using ObakiSite.Application.Features.LocalStorageCache.Services;
 using ObakiSite.Application.Features.Posts.Constants;
-using ObakiSite.Shared.Constants;
 using ObakiSite.Shared.DTO;
 using ObakiSite.Shared.DTO.Response;
 
@@ -18,7 +17,6 @@ namespace ObakiSite.Application.Features.Posts.Queries
             _localStorageCache = localStorageCache;
             _localStorageCache.Options = new LocalStorageCacheOptions
             {
-                CreationDateKey = PostConstants.CacheDataCreateDateKey,
                 DataKey = PostConstants.CacheDataKey
             };
         }

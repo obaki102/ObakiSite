@@ -34,4 +34,8 @@
     <ProjectReference Include="..\Shared\ObakiSite.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\DefaultSettings\Command\" />
+  </ItemGroup>
+
 </Project>

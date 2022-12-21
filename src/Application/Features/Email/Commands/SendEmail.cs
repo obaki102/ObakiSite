@@ -8,7 +8,7 @@ using System.Text.Json;
 
 namespace ObakiSite.Application.Features.Email.Commands
 {
-    public record SendEmail(EmailMessage EmailMessage) : IRequest<ApplicationResponse>;
+    public record SendEmail(EmailMessageDTO EmailMessage) : IRequest<ApplicationResponse>;
 
     public class SendEmailHandler : IRequestHandler<SendEmail, ApplicationResponse>
     {

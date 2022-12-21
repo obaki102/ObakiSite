@@ -23,7 +23,11 @@ namespace ObakiSite.Application.Features.LocalStorageCache.Services
 
             if(!perfromRefreshData)
             {
-                Data = await _localStorageService.GetItemAsync<T>(Options.DataKey).ConfigureAwait(false);
+                var cacheData = await _localStorageService.GetItemAsync<CacheData<T>>(Options.DataKey).ConfigureAwait(false);
+                if (cacheData is not null)
+                {
+                    Data = cacheData.Data;
+                }
             }
 
             if (Data is not null)
@@ -42,16 +46,15 @@ namespace ObakiSite.Application.Features.LocalStorageCache.Services
                 throw new ArgumentNullException($"{nameof(Options)} is null.");
             }
 
-            var cacheData =  await _localStorageService.GetItemAsync<T>(Options.DataKey).ConfigureAwait(false);
-            var cacheDataCreateDate = await _localStorageService.GetItemAsync<DateTime?>(Options.CreationDateKey).ConfigureAwait(false);
+            var cacheData =  await _localStorageService.GetItemAsync<CacheData<T>>(Options.DataKey).ConfigureAwait(false);
             double totalHrsSinceCacheCreated = 0;
 
-            if (cacheDataCreateDate is not null)
+            if (cacheData is not null)
             {
-                totalHrsSinceCacheCreated = DateTime.UtcNow.Subtract((DateTime)cacheDataCreateDate).TotalHours;
+                totalHrsSinceCacheCreated = DateTime.UtcNow.Subtract((DateTime)cacheData.Created).TotalHours;
             }
 
-            if (cacheData is null || cacheDataCreateDate is null || totalHrsSinceCacheCreated > Options.NumberOfHrsToRefreshCache)
+            if (cacheData is null || totalHrsSinceCacheCreated > Options.NumberOfHrsToRefreshCache)
             {
                 perfromRefreshData = true;
                 return true;
@@ -68,7 +71,6 @@ namespace ObakiSite.Application.Features.LocalStorageCache.Services
             }
 
             await _localStorageService.RemoveItemAsync(Options.DataKey).ConfigureAwait(false);
-            await _localStorageService.RemoveItemAsync(Options.CreationDateKey).ConfigureAwait(false);
         }
 
         public async Task SetData(T data)
@@ -79,8 +81,8 @@ namespace ObakiSite.Application.Features.LocalStorageCache.Services
             }
 
             Data = data;
-            await _localStorageService.SetItemAsync(Options.DataKey, Data).ConfigureAwait(false);
-            await _localStorageService.SetItemAsync(Options.CreationDateKey, DateTime.UtcNow).ConfigureAwait(false);
+            var dataCache = new CacheData<T> { Data = data };
+            await _localStorageService.SetItemAsync<CacheData<T>>(Options.DataKey, dataCache).ConfigureAwait(false);
         }
 
 

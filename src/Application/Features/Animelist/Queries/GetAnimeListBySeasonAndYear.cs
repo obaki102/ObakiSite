@@ -20,7 +20,6 @@ namespace ObakiSite.Application.Features.Animelist.Queries
             _localStorageCache = localStorageCache;
             _localStorageCache.Options = new LocalStorageCacheOptions
             {
-                CreationDateKey = AnimelistConstants.CacheDataCreateDateKey,
                 DataKey = AnimelistConstants.CacheDataKey,
                 NumberOfHrsToRefreshCache = 6
             };

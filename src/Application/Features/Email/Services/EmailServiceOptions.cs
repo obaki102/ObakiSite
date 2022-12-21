@@ -1,11 +1,4 @@
-﻿using ObakiSite.Application.Features.Chat.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ObakiSite.Application.Features.Email.Services
+﻿namespace ObakiSite.Application.Features.Email.Services
 {
     public class EmailServiceOptions
     {

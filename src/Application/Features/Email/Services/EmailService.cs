@@ -6,6 +6,8 @@ using ObakiSite.Shared.DTO.Response;
 using Microsoft.Extensions.Options;
 using ObakiSite.Shared.DTO;
 using ObakiSite.Application.Features.Email.Constants;
+using ObakiSite.Application.Domain.Entities;
+using AutoMapper;
 
 namespace ObakiSite.Application.Features.Email.Services
 {
@@ -13,10 +15,13 @@ namespace ObakiSite.Application.Features.Email.Services
     {
         private readonly EmailServiceOptions _emailServiceOptions;
         private readonly IHttpClientFactory _httpClientFactory;
-        public EmailService(IOptions<EmailServiceOptions> emailServiceOptions, IHttpClientFactory httpClientFactory)
+        private readonly IMapper _mapper;
+        public EmailService(IOptions<EmailServiceOptions> emailServiceOptions, 
+            IHttpClientFactory httpClientFactory, IMapper mapper)
         {
             _emailServiceOptions = emailServiceOptions.Value;
             _httpClientFactory = httpClientFactory;
+            _mapper = mapper;
         }
 
         public EmailService(EmailServiceOptions emailServiceOptions, IHttpClientFactory httpClientFactory)
@@ -24,10 +29,12 @@ namespace ObakiSite.Application.Features.Email.Services
             _emailServiceOptions = emailServiceOptions;
             _httpClientFactory = httpClientFactory;
         }
-        public async Task<ApplicationResponse> SendEmail(EmailMessage emailMessage)
+        public async Task<ApplicationResponse> SendEmail(EmailMessageDTO emailMessageDto)
         {
             try
             {
+
+                var emailMessage = _mapper.Map<EmailMessage>(emailMessageDto);
                 var message = new MimeMessage();
                 message.From.Add(new MailboxAddress(emailMessage.SenderName, emailMessage.SenderEmail));
                 message.To.Add(new MailboxAddress(emailMessage.RecipientName, emailMessage.RecipientEmail));
@@ -43,6 +50,7 @@ namespace ObakiSite.Application.Features.Email.Services
                     builder.Attachments.Add(emailMessage.AttachmentFileName, fileStream);
                 }
 
+                //toddo: check markupstring or explore a more elegant way to format the html body
                 string htmlBody = """"
                                 <p> Hello,<br><br>
                                 Thank you so much for taking interest in my profile, please don’t hesitate to contact me if I you need additional information.<br>
@@ -74,6 +82,7 @@ namespace ObakiSite.Application.Features.Email.Services
 
         private async Task<Stream> GetFile(string filePath)
         {
+            //todo: store the file stream in db instead.
             var httpClient = _httpClientFactory.CreateClient(HttpNameClientConstants.Email);
             var result = await httpClient.GetAsync(filePath).ConfigureAwait(false);
 
