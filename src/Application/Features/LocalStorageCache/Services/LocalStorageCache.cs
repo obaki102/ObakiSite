@@ -26,7 +26,7 @@ namespace ObakiSite.Application.Features.LocalStorageCache.Services
                 var cacheData = await _localStorageService.GetItemAsync<CacheData<T>>(Options.DataKey).ConfigureAwait(false);
                 if (cacheData is not null)
                 {
-                    Data = cacheData.Data;
+                    Data = cacheData.Content;
                 }
             }
 
@@ -51,7 +51,7 @@ namespace ObakiSite.Application.Features.LocalStorageCache.Services
 
             if (cacheData is not null)
             {
-                totalHrsSinceCacheCreated = DateTime.UtcNow.Subtract((DateTime)cacheData.Created).TotalHours;
+                totalHrsSinceCacheCreated = DateTime.Now.Subtract(cacheData.Created).TotalHours;
             }
 
             if (cacheData is null || totalHrsSinceCacheCreated > Options.NumberOfHrsToRefreshCache)
@@ -81,8 +81,10 @@ namespace ObakiSite.Application.Features.LocalStorageCache.Services
             }
 
             Data = data;
-            var dataCache = new CacheData<T> { Data = data };
-            await _localStorageService.SetItemAsync<CacheData<T>>(Options.DataKey, dataCache).ConfigureAwait(false);
+            var updatedCacheData = new CacheData<T> {
+                Content = data ,  
+            };
+            await _localStorageService.SetItemAsync<CacheData<T>>(Options.DataKey, updatedCacheData).ConfigureAwait(false);
         }
 
 

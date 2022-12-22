@@ -2,13 +2,13 @@
 {
     public record CacheData<T>
     {
-        private readonly DateTime _createDateTime;
+        private  DateTime _createDateTime;
 
         public CacheData()
         {
-            _createDateTime = DateTime.UtcNow;
+            _createDateTime = DateTime.Now;
         }
-        public T? Data { get; init; }
-        public DateTime Created { get => _createDateTime; }
+        public T? Content { get; init; }
+        public DateTime Created { get => _createDateTime; set => _createDateTime = value; }
     }
 }

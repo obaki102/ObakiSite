@@ -27,7 +27,7 @@ namespace ObakiSite.Application.Features.Animelist.Services
 
                 if (data is null)
                 {
-                    return ApplicationResponse<AnimeListRoot>.Fail("Data is empty.");
+                    return ApplicationResponse<AnimeListRoot>.Fail("Content is empty.");
                 }
 
                 return ApplicationResponse<AnimeListRoot>.Success(data);
