@@ -1,9 +1,6 @@
 ﻿@page "/post/view/{id}"
 @using ObakiSite.Application.Features.Posts.Commands;
 @using ObakiSite.Application.Features.Posts.Queries;
-@using WYSIWYGTextEditor.Internal;
-@using WYSIWYGTextEditor;
-@using __Blazor.WYSIWYGTextEditor.TextEditor;
 @inject ISender Mediatr
 @inject ISnackbar Snackbar
 @inject NavigationManager NavManager
@@ -110,7 +107,7 @@ else
     public string Id { get; set; } = string.Empty;
     private ElementReference QuillElement;
     private MarkupString htmlBody;
-    private PostDTO? post = new();
+    private PostDTO? post;
     MudMessageBox? mbox { get; set; }
 
     protected override async Task OnInitializedAsync()
