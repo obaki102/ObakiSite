@@ -1,9 +1,13 @@
 ﻿@page "/post/view/{id}"
 @using ObakiSite.Application.Features.Posts.Commands;
 @using ObakiSite.Application.Features.Posts.Queries;
+@using WYSIWYGTextEditor.Internal;
+@using WYSIWYGTextEditor;
+@using __Blazor.WYSIWYGTextEditor.TextEditor;
 @inject ISender Mediatr
 @inject ISnackbar Snackbar
 @inject NavigationManager NavManager
+@inject IJSRuntime JSRuntime
 
 @if (post == null)
 {
@@ -80,7 +84,7 @@ else
                 </MudCardHeader>
             </MudCard>
             <MudText Class="ma-4" Style="font-size:35px" Typo="Typo.body2">@post.Title</MudText>
-            <div class="ma-4">
+            <div class="ma-4" id="test" @ref="QuillElement">
                 <MudElement HtmlTag="html" Class="ma-4">
                     @htmlBody
                 </MudElement>
@@ -104,8 +108,9 @@ else
 
     [Parameter]
     public string Id { get; set; } = string.Empty;
+    private ElementReference QuillElement;
     private MarkupString htmlBody;
-    private PostDTO? post;
+    private PostDTO? post = new();
     MudMessageBox? mbox { get; set; }
 
     protected override async Task OnInitializedAsync()
@@ -116,9 +121,22 @@ else
             if (result.Data is not null && result.IsSuccess)
             {
                 post = result.Data;
-                htmlBody = (MarkupString)post.HtmlBody;
+                // await LoadHTMLContent(Mpost.HtmlBody;
             }
         }
+    }
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+            await LoadHTMLContent(QuillElement, post.HtmlBody);
+    }
+    public async Task LoadHTMLContent(ElementReference element,string quillHTMLContent)
+    {
+        await JSRuntime.InvokeAsync<object>(
+                "QuillFunctions.loadQuillHTMLContent",
+                element, quillHTMLContent);
     }
 
     private async Task OnButtonClicked()
