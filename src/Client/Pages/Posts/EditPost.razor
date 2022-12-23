@@ -9,31 +9,10 @@
 @inject NavigationManager NavManager
 
 @*Todo: implement authorization*@
-@if (!islaoding)
-{
-    <MudPaper Class="mt-16" Elevation="2" Height="800px">
-        <MudSkeleton Style="font-size: 30px" Width="90%" Class="ma-4 mb-5" Animation="Animation.Wave" />
-        <div class="ma-4" style="height:600px">
-            <TextEditor @ref="RichTextEditor" Placeholder="write a post..." DebugLevel="error">
-                <ToolbarContent>
-                    <MudSkeleton Width="90%" Animation="Animation.Wave" />
-                </ToolbarContent>
-            </TextEditor>
-        </div>
-    </MudPaper>
-    <MudCard Outlined="true" Elevation="25" Class="mt-4">
-        <MudText Class="ma-4 mud-secondary-text" Typo="Typo.caption" GutterBottom="true" Style="font-size: 20px;">This feature is still in development</MudText>
-        <MudCardContent>
-            <MudSkeleton Width="100%" Animation="Animation.Wave" />
-        </MudCardContent>
-    </MudCard>
-}
-else
-{
     <MudPaper Class="mt-16" Elevation="2" Height="800px">
         <MudTextField Style="font-size: 30px" T="string" Class="ma-4 mb-5" @bind-Value="title" Immediate="true" Variant="Variant.Text" Lines="2" />
         <div class="ma-4" style="height:600px">
-            <TextEditor @ref="RichTextEditor" Placeholder="write a post..." DebugLevel="error">
+            <TextEditor @ref="EditRichTextEditor" Placeholder="write a post..." DebugLevel="error">
                 <ToolbarContent>
                     <div class="ql-bubble">
                         <select class="ql-header">
@@ -115,8 +94,6 @@ else
 
         </MudContainer>
     </MudAppBar>
-}
-
 
 @code
 {
@@ -127,7 +104,7 @@ else
     private bool _isDarkMode = true;
     private bool isPosting = false;
     private bool islaoding = false;
-    private TextEditor? RichTextEditor;
+    private TextEditor? EditRichTextEditor;
     private string title { get; set; } = "Write your title here...";
 
     protected override async Task OnInitializedAsync()
@@ -138,9 +115,9 @@ else
             if (result.Data is not null && result.IsSuccess)
             {
                 title = result.Data.Title;
-                if (RichTextEditor is not null)
+                if (EditRichTextEditor is not null)
                 {
-                    await RichTextEditor.LoadHTMLContent(result.Data.HtmlBody);
+                    await EditRichTextEditor.LoadHTMLContent(result.Data.HtmlBody);
                 }
                 islaoding = true;
             }
@@ -175,7 +152,7 @@ else
     //Helper Methods
     private async Task<string> GetHtmlStringValue()
     {
-        return RichTextEditor != null ? await RichTextEditor.GetHTML() : string.Empty;
+        return EditRichTextEditor != null ? await EditRichTextEditor.GetHTML() : string.Empty;
     }
 
     private void Notify(ApplicationResponse result, string origin)
