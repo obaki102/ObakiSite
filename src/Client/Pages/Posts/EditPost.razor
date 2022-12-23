@@ -9,7 +9,7 @@
 @inject NavigationManager NavManager
 
 @*Todo: implement authorization*@
-<MudPaper Class="mt-16" Elevation="2">
+<MudPaper Class="mt-16 mb-4" Elevation="1" Outlined="true">
     <MudTextField Style="font-size: 30px" T="string" Class="ma-4 mb-5" @bind-Value="title" Immediate="true" Variant="Variant.Text" Lines="2" />
     <div class="ma-4">
         <TextEditor @ref="EditRichTextEditor" Placeholder="write a post..." DebugLevel="error">
