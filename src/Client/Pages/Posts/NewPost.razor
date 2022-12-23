@@ -8,10 +8,10 @@
 @inject ISnackbar Snackbar
 @inject NavigationManager NavManager
 
-<MudPaper Class="mt-16" Elevation="2" Height="800px">
+<MudPaper Class="mt-16 mb-8" Elevation="2">
     <MudTextField Style="font-size: 30px" T="string" Class="ma-4 mb-5" @bind-Value="title" Immediate="true" Variant="Variant.Text" Lines="2" />
-    <div class="ma-4" style="height:600px">
-        <TextEditor @ref="RichTextEditor" Placeholder="write a post..." DebugLevel="error">
+    <div id="scrollableDiv1" class="ma-4">
+        <TextEditor  @ref="RichTextEditor" Placeholder="write a post..." DebugLevel="error">
             <ToolbarContent>
                 <div class="ql-bubble">
                     <select class="ql-header">
@@ -59,6 +59,10 @@
                     <MudTooltip Text="Video Link" Color="Color.Primary" Placement="Placement.Bottom">
                         <button class="ql-video" />
                     </MudTooltip>
+                   @* todo: Set the default width of images attached.
+                       There is a curent bug that will take the original width of the image and this cause the image to overlap with the 
+                       div container when viewing the post.
+                   *@
                     <MudTooltip Text="Image" Color="Color.Primary" Placement="Placement.Bottom">
                         <button class="ql-image"></button>
                     </MudTooltip>
@@ -66,31 +70,23 @@
             </ToolbarContent>
         </TextEditor>
     </div>
-</MudPaper>
-<MudAppBar Bottom="true" Fixed="true" Color="Color.Dark" Elevation="1">
-    <MudContainer MaxWidth="MaxWidth.Medium">
-        <div class="d-flex flex-row ma-4">
-            <div class="mr-4">
-                @if (!isPosting)
-                {
-                    <MudButton Variant="Variant.Filled" Color="Color.Primary" Size="Size.Medium" OnClick="@PublishPost">Publish</MudButton>
-                }
-                else
-                {
-                    <MudProgressCircular Color="Color.Primary" Size="Size.Medium" Indeterminate="true" />
-                }
-            </div>
-            <div>  <MudButton Variant="Variant.Filled" Color="Color.Primary" Size="Size.Medium" OnClick="@SaveDraft">Save Draft</MudButton></div>
+    <MudDivider Class="ma-4" />
+    <div class="d-flex justify-end flex-row ma-4">
+        <div class="mr-4">
+            @if (!isPosting)
+            {
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" OnClick="@PublishPost">Publish</MudButton>
+            }
+            else
+            {
+                <MudProgressCircular Color="Color.Primary" Size="Size.Small" Indeterminate="true" />
+            }
         </div>
-
-    </MudContainer>
-</MudAppBar>
-
-
+        <div>  <MudButton Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" OnClick="@SaveDraft">Save Draft</MudButton></div>
+    </div>
+</MudPaper>
 @code
 {
-
-
     private bool isPosting = false;
     private TextEditor? RichTextEditor;
     private MarkupString body;
@@ -188,4 +184,5 @@
         }
         StateHasChanged();
     }
+
 }
