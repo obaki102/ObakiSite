@@ -8,6 +8,13 @@
   </PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="Extensions\**" />
+	  <Content Remove="Extensions\**" />
+	  <EmbeddedResource Remove="Extensions\**" />
+	  <None Remove="Extensions\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="7.0.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="7.0.0" PrivateAssets="all" />
 		<PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="7.0.0" />
@@ -25,7 +32,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Extensions\" />
+	  <Folder Include="Services\Extensions\" />
 	  <Folder Include="wwwroot\lib\" />
 	</ItemGroup>
 	

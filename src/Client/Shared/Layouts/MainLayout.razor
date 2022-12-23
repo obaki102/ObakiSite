@@ -1,6 +1,5 @@
 ﻿@inherits LayoutComponentBase
-@inject IMySettings MySettings
-<MudThemeProvider @bind-IsDarkMode="@MySettings.Data.IsDarkTheme" Theme="_theme" />
+<MudThemeProvider @bind-IsDarkMode="@AppState.Settings.IsDarkTheme" Theme="_theme" />
 <MudDialogProvider />
 <MudSnackbarProvider />
 <MudLayout>
@@ -37,12 +36,10 @@
 </MudLayout>
 
 @code {
+    [CascadingParameter] public CascadingAppState AppState { get; set; }
     private MudTheme _theme = Theme.Default();
     bool _drawerOpen = false;
-    protected override async Task OnInitializedAsync()
-    {
-        await MySettings.GetMyDefaultSettings();
-    }
+   
     public void OpenDrawer()
     {
         _drawerOpen = !_drawerOpen;

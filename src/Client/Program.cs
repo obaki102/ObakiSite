@@ -6,7 +6,6 @@ using ObakiSite.Client.Services.Components.Badge;
 using ObakiSite.Application.Extensions;
 using MudBlazor;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using ObakiSite.Client.Services.Extensions;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 var baseUrl = new Uri(builder.Configuration["API_Prefix"] ?? builder.HostEnvironment.BaseAddress);
@@ -16,7 +15,6 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.TryAddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 builder.Services.AddAppDependencies(baseUrl);
 builder.Services.TryAddScoped<IBadgeUpdater, BadgeUpdater>();
-builder.Services.AddMySettings();
 builder.Services.AddChatHubClient(options =>
 {
     options.HubUrl = builder.Configuration["API_Prefix"] is null ? $"{builder.HostEnvironment.BaseAddress}api" : $"{builder.Configuration["API_Prefix"]}/api";

@@ -1,0 +1,29 @@
+﻿@inject ISender Mediator
+
+<CascadingValue Value="this">
+    @ChildContent
+</CascadingValue>
+
+@code {
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    private Preferences _setting = new();
+    protected override async Task OnInitializedAsync()
+    {
+        var result =  await Mediator.Send(new GetPreferences());
+        if (result.Data is not null && result.IsSuccess)
+        {
+            _setting = result.Data;
+        }
+    }
+
+    public Preferences Settings
+    {
+        get
+        {
+            return _setting;
+        }
+    }
+}

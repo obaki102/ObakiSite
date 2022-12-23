@@ -1,8 +1,7 @@
 ﻿@inherits LayoutComponentBase
-@inject IMySettings MySettings
 <MudLayout>
     <MudContainer MaxWidth="MaxWidth.Medium" Class="mt-4">
-        <MudThemeProvider @bind-IsDarkMode="@MySettings.Data.IsDarkTheme" Theme="_theme" />
+        <MudThemeProvider @bind-IsDarkMode="@AppState.Settings.IsDarkTheme" Theme="_theme" />
         <MudSnackbarProvider />
         <div class="d-flex flex-column">
             <MudAppBar Fixed="true" Color="Color.Dark" Elevation="0">
@@ -29,6 +28,7 @@
     </MudContainer>
 </MudLayout>
 @code {
-    //todo: Global theme defaults accross all layouts.
+    [CascadingParameter] public CascadingAppState AppState { get; set; }
     private MudTheme _theme = Theme.Default();
+    
 }
