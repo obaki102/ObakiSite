@@ -9,91 +9,83 @@
 @inject NavigationManager NavManager
 
 @*Todo: implement authorization*@
-    <MudPaper Class="mt-16" Elevation="2" Height="800px">
-        <MudTextField Style="font-size: 30px" T="string" Class="ma-4 mb-5" @bind-Value="title" Immediate="true" Variant="Variant.Text" Lines="2" />
-        <div class="ma-4" style="height:600px">
-            <TextEditor @ref="EditRichTextEditor" Placeholder="write a post..." DebugLevel="error">
-                <ToolbarContent>
-                    <div class="ql-bubble">
-                        <select class="ql-header">
-                            <option selected=""></option>
-                            @for (int i = 1; i < 7; i++)
-                            {
-                                <option value="@i"></option>
-                            }
+<MudPaper Class="mt-16" Elevation="2" Height="800px">
+    <MudTextField Style="font-size: 30px" T="string" Class="ma-4 mb-5" @bind-Value="title" Immediate="true" Variant="Variant.Text" Lines="2" />
+    <div class="ma-4" style="height:600px">
+        <TextEditor @ref="EditRichTextEditor" Placeholder="write a post..." DebugLevel="error">
+            <ToolbarContent>
+                <div class="ql-bubble">
+                    <select class="ql-header">
+                        <option selected=""></option>
+                        @for (int i = 1; i < 7; i++)
+                        {
+                            <option value="@i"></option>
+                        }
 
-                        </select>
-                        <button class="ql-font" title="Font Size" />
-                        <MudTooltip Text="Bold Ctrl+B" Color="Color.Primary" Placement="Placement.Bottom">
-                            <button class="ql-bold" />
-                        </MudTooltip>
-                        <MudTooltip Text="Italic Ctrl+I" Color="Color.Primary" Placement="Placement.Bottom">
-                            <button class="ql-italic" />
-                        </MudTooltip>
-                        <MudTooltip Text="Underline Ctrl+U" Color="Color.Primary" Placement="Placement.Bottom">
-                            <button class="ql-underline" />
-                        </MudTooltip>
-                        <MudTooltip Text="Strike" Color="Color.Primary" Placement="Placement.Bottom">
-                            <button class="ql-strike" />
-                        </MudTooltip>
-                        <MudTooltip Text="Color" Color="Color.Primary" Placement="Placement.Bottom">
-                            <select class="ql-color" />
-                        </MudTooltip>
-                        <MudTooltip Text="Background" Color="Color.Primary" Placement="Placement.Bottom">
-                            <select class="ql-background" />
-                        </MudTooltip>
-                        <MudTooltip Text="List" Color="Color.Primary" Placement="Placement.Bottom">
-                            <button class="ql-list" value="ordered" />
-                        </MudTooltip>
-                        <MudTooltip Text="Bullet" Color="Color.Primary" Placement="Placement.Bottom">
-                            <button class="ql-list" value="bullet" />
-                        </MudTooltip>
-                        <MudTooltip Text="Indent Left" Color="Color.Primary" Placement="Placement.Bottom">
-                            <button class="ql-indent" value="-1" />
-                        </MudTooltip>
-                        <MudTooltip Text="Indent Right" Color="Color.Primary" Placement="Placement.Bottom">
-                            <button class="ql-indent" value="+1" />
-                        </MudTooltip>
-                        <MudTooltip Text="Code Block" Color="Color.Primary" Placement="Placement.Bottom">
-                            <button class="ql-code-block" />
-                        </MudTooltip>
-                        <MudTooltip Text="Video Link" Color="Color.Primary" Placement="Placement.Bottom">
-                            <button class="ql-video" />
-                        </MudTooltip>
+                    </select>
+                    <button class="ql-font" title="Font Size" />
+                    <MudTooltip Text="Bold Ctrl+B" Color="Color.Primary" Placement="Placement.Bottom">
+                        <button class="ql-bold" />
+                    </MudTooltip>
+                    <MudTooltip Text="Italic Ctrl+I" Color="Color.Primary" Placement="Placement.Bottom">
+                        <button class="ql-italic" />
+                    </MudTooltip>
+                    <MudTooltip Text="Underline Ctrl+U" Color="Color.Primary" Placement="Placement.Bottom">
+                        <button class="ql-underline" />
+                    </MudTooltip>
+                    <MudTooltip Text="Strike" Color="Color.Primary" Placement="Placement.Bottom">
+                        <button class="ql-strike" />
+                    </MudTooltip>
+                    <MudTooltip Text="Color" Color="Color.Primary" Placement="Placement.Bottom">
+                        <select class="ql-color" />
+                    </MudTooltip>
+                    <MudTooltip Text="Background" Color="Color.Primary" Placement="Placement.Bottom">
+                        <select class="ql-background" />
+                    </MudTooltip>
+                    <MudTooltip Text="List" Color="Color.Primary" Placement="Placement.Bottom">
+                        <button class="ql-list" value="ordered" />
+                    </MudTooltip>
+                    <MudTooltip Text="Bullet" Color="Color.Primary" Placement="Placement.Bottom">
+                        <button class="ql-list" value="bullet" />
+                    </MudTooltip>
+                    <MudTooltip Text="Indent Left" Color="Color.Primary" Placement="Placement.Bottom">
+                        <button class="ql-indent" value="-1" />
+                    </MudTooltip>
+                    <MudTooltip Text="Indent Right" Color="Color.Primary" Placement="Placement.Bottom">
+                        <button class="ql-indent" value="+1" />
+                    </MudTooltip>
+                    <MudTooltip Text="Code Block" Color="Color.Primary" Placement="Placement.Bottom">
+                        <button class="ql-code-block" />
+                    </MudTooltip>
+                    <MudTooltip Text="Video Link" Color="Color.Primary" Placement="Placement.Bottom">
+                        <button class="ql-video" />
+                    </MudTooltip>
 
-                        @*  <span class="ql-formats">
-                    <button class="ql-image"></button>
-                    </span>*@
-                    </div>
-                </ToolbarContent>
-            </TextEditor>
-        </div>
-    </MudPaper>
-    <MudCard Outlined="true" Elevation="25" Class="mt-4">
-        <MudText Class="ma-4 mud-secondary-text" Typo="Typo.caption" GutterBottom="true" Style="font-size: 20px;">This feature is still in development</MudText>
-        <MudCardContent>
-            <MudText Typo="Typo.body2">
-                Attaching an image is yet to be implemented. I'm still deciding what storage store to use at the minimum cost.  :)
-            </MudText>
-        </MudCardContent>
-    </MudCard>
-    <MudAppBar Bottom="true" Fixed="true" Color="Color.Dark" Elevation="1">
-        <MudContainer MaxWidth="MaxWidth.Medium">
-            <div class="d-flex flex-row ma-4">
-                <div class="mr-4">
-                    @if (!isPosting)
-                    {
-                        <MudButton Variant="Variant.Filled" Color="Color.Primary" Size="Size.Medium" OnClick="@ModifyPost">Save Changes</MudButton>
-                    }
-                    else
-                    {
-                        <MudProgressCircular Color="Color.Primary" Size="Size.Medium" Indeterminate="true" />
-                    }
+                    <MudTooltip Text="Image" Color="Color.Primary" Placement="Placement.Bottom">
+                        <button class="ql-image"></button>
+                    </MudTooltip>
                 </div>
+            </ToolbarContent>
+        </TextEditor>
+    </div>
+</MudPaper>
+<MudAppBar Bottom="true" Fixed="true" Color="Color.Dark" Elevation="1">
+    <MudContainer MaxWidth="MaxWidth.Medium">
+        <div class="d-flex flex-row ma-4">
+            <div class="mr-4">
+                @if (!isPosting)
+                {
+                    <MudButton Variant="Variant.Filled" Color="Color.Primary" Size="Size.Medium" OnClick="@ModifyPost">Save Changes</MudButton>
+                }
+                else
+                {
+                    <MudProgressCircular Color="Color.Primary" Size="Size.Medium" Indeterminate="true" />
+                }
             </div>
+        </div>
 
-        </MudContainer>
-    </MudAppBar>
+    </MudContainer>
+</MudAppBar>
 
 @code
 {

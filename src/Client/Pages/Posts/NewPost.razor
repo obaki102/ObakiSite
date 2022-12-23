@@ -59,25 +59,14 @@
                     <MudTooltip Text="Video Link" Color="Color.Primary" Placement="Placement.Bottom">
                         <button class="ql-video" />
                     </MudTooltip>
-
-                    @*  <span class="ql-formats">
-                    <button class="ql-image"></button>
-                    </span>*@
+                    <MudTooltip Text="Image" Color="Color.Primary" Placement="Placement.Bottom">
+                        <button class="ql-image"></button>
+                    </MudTooltip>
                 </div>
             </ToolbarContent>
         </TextEditor>
     </div>
 </MudPaper>
-<MudCard Outlined="true" Elevation="25" Class="mt-4">
-    <MudText Class="ma-4 mud-secondary-text" Typo="Typo.caption" GutterBottom="true" Style="font-size: 20px;">This feature is still in development</MudText>
-    <MudCardContent>
-        <MudText Typo="Typo.body2">
-            Attaching an image is yet to be implemented. I'm still deciding what storage store to use at the minimum cost.  :)
-        </MudText>
-    </MudCardContent>
-</MudCard>
-
-
 <MudAppBar Bottom="true" Fixed="true" Color="Color.Dark" Elevation="1">
     <MudContainer MaxWidth="MaxWidth.Medium">
         <div class="d-flex flex-row ma-4">
@@ -100,7 +89,7 @@
 
 @code
 {
-   
+
 
     private bool isPosting = false;
     private TextEditor? RichTextEditor;
