@@ -1,14 +1,16 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Google.Cloud.Firestore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using ObakiSite.Application.Features.Posts.Services;
+using ObakiSite.Application.Infra.Data;
 using ObakiSite.Shared.Constants;
 
 namespace ObakiSite.Application.Extensions
 {
     public static class PostServiceDependencies
     {
-        public static IServiceCollection AddPostService(this IServiceCollection services, string endPoint, string accessKey)
+        public static IServiceCollection AddPostCosmosService(this IServiceCollection services, string endPoint, string accessKey)
         {
             if (services == null)
             {
@@ -22,7 +24,24 @@ namespace ObakiSite.Application.Extensions
                        accessKey,
                        CosmosDBConstants.Database);
                });
-            services.TryAddScoped<IPostService, PostService>();
+            services.TryAddScoped<IPostService, PostCosmosService>();
+            return services;
+        }
+
+        public static IServiceCollection AddPostFirebaseService(this IServiceCollection services, string projectId, string serviceAccount)
+        {
+            if (services == null)
+            {
+                throw new ArgumentNullException(nameof(services));
+            }
+            services.AddSingleton(_ => new FirestoreProvider(
+              new FirestoreDbBuilder
+              {
+                  ProjectId = projectId,
+                  JsonCredentials = serviceAccount
+              }.Build()
+            ));
+            services.TryAddScoped<IPostService, PostFirebaseService>();
             return services;
         }
     }

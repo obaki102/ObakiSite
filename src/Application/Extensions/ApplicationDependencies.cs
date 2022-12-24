@@ -41,7 +41,7 @@ namespace ObakiSite.Application.Extensions
             return services;
         }
 
-        public static IServiceCollection AddApiDependencies(this IServiceCollection services, string animeListClientId, 
+        public static IServiceCollection AddApiDependenciesWithCosmos(this IServiceCollection services, string animeListClientId, 
             string emailAppPassword,string cosmosDBEndpoint, string cosmosDbAccessKey)
         {
             if (services == null)
@@ -57,7 +57,27 @@ namespace ObakiSite.Application.Extensions
                 options.AppPassword = emailAppPassword;
             });
 
-            services.AddPostService(cosmosDBEndpoint, cosmosDbAccessKey);
+            services.AddPostCosmosService(cosmosDBEndpoint, cosmosDbAccessKey);
+            return services;
+        }
+
+        public static IServiceCollection AddApiDependenciesWithFirebase(this IServiceCollection services, string animeListClientId,
+            string emailAppPassword, string projectId,  string serviceAccount)
+        {
+            if (services == null)
+            {
+                throw new ArgumentNullException(nameof(services));
+            }
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
+            services.AddHttpAnimeListService(animeListClientId);
+
+            services.AddEmailService(options =>
+            {
+                options.AppPassword = emailAppPassword;
+            });
+
+            services.AddPostFirebaseService(projectId,serviceAccount);
             return services;
         }
     }

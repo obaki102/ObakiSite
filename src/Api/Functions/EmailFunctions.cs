@@ -9,7 +9,7 @@ using System.Text.Json;
 using System;
 using ObakiSite.Shared.DTO.Response;
 using ObakiSite.Shared.DTO;
-using ObakiSite.Application.Domain.Entities;
+
 
 namespace ObakiSite.Api.Functions
 {

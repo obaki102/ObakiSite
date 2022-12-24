@@ -1,24 +1,41 @@
 ﻿using System;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 using ObakiSite.Application.Extensions;
 using ObakiSite.Application.Features.Animelist.Constants;
 using ObakiSite.Application.Features.Email.Constants;
 using ObakiSite.Shared.Constants;
+using ObakiSite.Shared.DTO;
+
 namespace ObakiSite.Api
 {
     public class Program
     {
-        static async Task Main(string[] args)
+        static async Task Main()
         {
+            //todo: Explore azure vault.
+            var fireBaseVar = new FirebaseSettings
+            {
+                Type = Environment.GetEnvironmentVariable(FirebaseConstants.GoogleServiceAccount.ServiceAccount),
+                AuthProvider = Environment.GetEnvironmentVariable(FirebaseConstants.GoogleServiceAccount.AuthProvider),
+                AuthUri = Environment.GetEnvironmentVariable(FirebaseConstants.GoogleServiceAccount.AuthUri),
+                ClientCertUrl = Environment.GetEnvironmentVariable(FirebaseConstants.GoogleServiceAccount.ClientCertUrl),
+                ClientEmail = Environment.GetEnvironmentVariable(FirebaseConstants.GoogleServiceAccount.ClientEmail),
+                ClientId = Environment.GetEnvironmentVariable(FirebaseConstants.GoogleServiceAccount.ClientId),
+                PrivateKey = Environment.GetEnvironmentVariable(FirebaseConstants.GoogleServiceAccount.PrivateKey),
+                PrivateKeyId = Environment.GetEnvironmentVariable(FirebaseConstants.GoogleServiceAccount.PrivateKeyId),
+                ProjectId = Environment.GetEnvironmentVariable(FirebaseConstants.GoogleServiceAccount.ProjectId),
+                TokenUri = Environment.GetEnvironmentVariable(FirebaseConstants.GoogleServiceAccount.TokenUri)
+            };
+            var firebaseSettings = JsonSerializer.Serialize(fireBaseVar);
             var host = new HostBuilder()
                 .ConfigureFunctionsWorkerDefaults()
                 .ConfigureServices(services =>
                 {
-                    services.AddApiDependencies(Environment.GetEnvironmentVariable(AnimelistConstants.AnimelistClientId),
+                    services.AddApiDependenciesWithFirebase(Environment.GetEnvironmentVariable(AnimelistConstants.AnimelistClientId),
                         Environment.GetEnvironmentVariable(EmailConstants.AppPassword),
-                        Environment.GetEnvironmentVariable(CosmosDBConstants.EndPoint),
-                        Environment.GetEnvironmentVariable(CosmosDBConstants.AccessKey));
+                        fireBaseVar.ProjectId,firebaseSettings);
                 })
 
                 .Build();

@@ -277,7 +277,7 @@
     </MudContainer>
 </div>
 @code {
-    [CascadingParameter] public CascadingAppState AppState { get; set; }
+    [CascadingParameter] public CascadingAppState? AppState { get; set; }
     private MudTheme _theme = Theme.CvTheme();
     private bool _isDarkMode = false;
     private bool isSending = false;
@@ -285,7 +285,10 @@
 
     protected override void OnInitialized()
     {
-        _isDarkMode = AppState.Settings.IsDarkTheme;
+        if (AppState is not null)
+        {
+            _isDarkMode = AppState.Settings.IsDarkTheme;
+        }
     }
 
     private async Task DownloadFileFromURL()

@@ -2,7 +2,7 @@
 @implements IDisposable
 @inherits LayoutComponentBase
 @inject IBadgeUpdater BadgeUpdater
-<MudThemeProvider @bind-IsDarkMode="@AppState.Settings.IsDarkTheme" Theme="_theme" />
+<MudThemeProvider @bind-IsDarkMode="_isDarkMode" Theme="_theme" />
 <MudDialogProvider />
 <MudSnackbarProvider />
 <MudLayout>
@@ -79,7 +79,7 @@
 </MudLayout>
 
 @code {
-    [CascadingParameter] public CascadingAppState AppState { get; set; }
+    [CascadingParameter] public CascadingAppState? AppState { get; set; }
     private MudTheme _theme = Theme.Default();
     private bool _isDarkMode = true;
     private int _bagedeNo = 0;
@@ -92,6 +92,11 @@
 
     protected override void OnInitialized()
     {
+        if(AppState is not null)
+        {
+            _isDarkMode = AppState.Settings.IsDarkTheme;
+        }
+
         BadgeUpdater.BadgeChangedHandler += UpdateBadge;
     }
 

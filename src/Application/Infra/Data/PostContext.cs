@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ObakiSite.Application.Domain.Entities;
 
-namespace ObakiSite.Application.Features.Posts.Services
+namespace ObakiSite.Application.Infra.Data
 {
     public sealed class PostContext : DbContext
     {
-       
+
         public PostContext(DbContextOptions<PostContext> options)
            : base(options)
         {

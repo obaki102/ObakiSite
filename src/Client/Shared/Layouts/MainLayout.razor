@@ -1,5 +1,5 @@
 ﻿@inherits LayoutComponentBase
-<MudThemeProvider @bind-IsDarkMode="@AppState.Settings.IsDarkTheme" Theme="_theme" />
+<MudThemeProvider @bind-IsDarkMode="_isDarkMode" Theme="_theme" />
 <MudDialogProvider />
 <MudSnackbarProvider />
 <MudLayout>
@@ -36,13 +36,20 @@
 </MudLayout>
 
 @code {
-    [CascadingParameter] public CascadingAppState AppState { get; set; }
+    [CascadingParameter] public CascadingAppState? AppState { get; set; }
     private MudTheme _theme = Theme.Default();
+    private bool _isDarkMode = true;
     bool _drawerOpen = false;
    
     public void OpenDrawer()
     {
         _drawerOpen = !_drawerOpen;
     }
-
+    protected override void OnInitialized()
+    {
+        if (AppState is not null)
+        {
+            _isDarkMode = AppState.Settings.IsDarkTheme;
+        }
+    }
 }

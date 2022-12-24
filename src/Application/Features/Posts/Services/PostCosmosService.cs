@@ -1,16 +1,17 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using ObakiSite.Application.Domain.Entities;
+using ObakiSite.Application.Infra.Data;
 using ObakiSite.Shared.DTO;
 using ObakiSite.Shared.DTO.Response;
 
 namespace ObakiSite.Application.Features.Posts.Services
 {
-    public class PostService : IPostService
+    public class PostCosmosService : IPostService
     {
         private readonly IDbContextFactory<PostContext> _factory;
         private readonly IMapper _mapper;
-        public PostService(IDbContextFactory<PostContext> factory,IMapper mapper)
+        public PostCosmosService(IDbContextFactory<PostContext> factory,IMapper mapper)
         {
             _factory = factory;
             _mapper = mapper;
@@ -43,7 +44,7 @@ namespace ObakiSite.Application.Features.Posts.Services
             using var context = _factory.CreateDbContext();
             var postToDelete = await context.Posts.FindAsync(id).ConfigureAwait(false);
            
-            if (postToDelete == null)
+            if (postToDelete is null)
             {
                 return ApplicationResponse.Fail("Post does not exist.");
             }
@@ -63,7 +64,7 @@ namespace ObakiSite.Application.Features.Posts.Services
             using var context = _factory.CreateDbContext();
             var postToUpdate = await context.Posts.FindAsync(post.Id).ConfigureAwait(false);
 
-            if (postToUpdate == null)
+            if (postToUpdate is null)
             {
                 return ApplicationResponse.Fail("Post does not exist.");
             }
