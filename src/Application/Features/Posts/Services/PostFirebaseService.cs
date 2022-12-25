@@ -60,6 +60,9 @@ namespace ObakiSite.Application.Features.Posts.Services
             }
 
             var postDomain = _mapper.Map<Post>(post);
+            postDomain.Created = post.Created.ToUniversalTime();
+            postDomain.Modified= DateTime.UtcNow;
+
             await _firebaseProvider.AddOrUpdate(postDomain, default).ConfigureAwait(false);
             return ApplicationResponse.Success();
         }
