@@ -2,8 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using ObakiSite.Application.Domain.Entities;
 using ObakiSite.Application.Infra.Data;
-using ObakiSite.Shared.DTO;
-using ObakiSite.Shared.DTO.Response;
+using ObakiSite.Application.Shared.DTO;
+using ObakiSite.Application.Shared.DTO.Response;
 
 namespace ObakiSite.Application.Features.Posts.Services
 {

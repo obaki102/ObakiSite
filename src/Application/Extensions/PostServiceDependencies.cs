@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using ObakiSite.Application.Features.Posts.Services;
 using ObakiSite.Application.Infra.Data;
-using ObakiSite.Shared.Constants;
+using ObakiSite.Application.Shared.Constants;
 
 namespace ObakiSite.Application.Extensions
 {

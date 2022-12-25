@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using ObakiSite.Application.Features.Animelist.Constants;
 using ObakiSite.Application.Features.Animelist.Services;
-using ObakiSite.Shared.Constants;
+using ObakiSite.Application.Shared.Constants;
 using Polly;
 using Polly.Contrib.WaitAndRetry;
 

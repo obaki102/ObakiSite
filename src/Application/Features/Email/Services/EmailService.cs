@@ -1,10 +1,10 @@
 ﻿using MailKit.Security;
 using MimeKit;
 using MailKit.Net.Smtp;
-using ObakiSite.Shared.Constants;
-using ObakiSite.Shared.DTO.Response;
+using ObakiSite.Application.Shared.Constants;
+using ObakiSite.Application.Shared.DTO.Response;
 using Microsoft.Extensions.Options;
-using ObakiSite.Shared.DTO;
+using ObakiSite.Application.Shared.DTO;
 using ObakiSite.Application.Features.Email.Constants;
 using ObakiSite.Application.Domain.Entities;
 using AutoMapper;

@@ -1,4 +1,4 @@
-﻿namespace ObakiSite.Shared.DTO.Response
+﻿namespace ObakiSite.Application.Shared.DTO.Response
 {
     public interface IApplicationResponse
     {

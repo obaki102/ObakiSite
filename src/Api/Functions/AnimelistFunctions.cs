@@ -5,7 +5,7 @@ using Microsoft.Azure.Functions.Worker;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Azure.Functions.Worker.Http;
 using System.Net;
-using ObakiSite.Shared.DTO.Response;
+using ObakiSite.Application.Shared.DTO.Response;
 
 namespace ObakiSite.Api.Functions
 {

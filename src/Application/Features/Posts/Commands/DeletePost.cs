@@ -2,8 +2,8 @@
 using MediatR;
 using ObakiSite.Application.Extensions;
 using ObakiSite.Application.Features.Posts.Constants;
-using ObakiSite.Shared.Constants;
-using ObakiSite.Shared.DTO.Response;
+using ObakiSite.Application.Shared.Constants;
+using ObakiSite.Application.Shared.DTO.Response;
 
 namespace ObakiSite.Application.Features.Posts.Commands
 {

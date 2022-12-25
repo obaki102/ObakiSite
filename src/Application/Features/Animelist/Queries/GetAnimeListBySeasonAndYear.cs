@@ -2,9 +2,9 @@
 using ObakiSite.Application.Extensions;
 using ObakiSite.Application.Features.Animelist.Constants;
 using ObakiSite.Application.Features.LocalStorageCache.Services;
-using ObakiSite.Shared.Constants;
-using ObakiSite.Shared.DTO;
-using ObakiSite.Shared.DTO.Response;
+using ObakiSite.Application.Shared.Constants;
+using ObakiSite.Application.Shared.DTO;
+using ObakiSite.Application.Shared.DTO.Response;
 
 namespace ObakiSite.Application.Features.Animelist.Queries
 {

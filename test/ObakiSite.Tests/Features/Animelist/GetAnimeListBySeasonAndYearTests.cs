@@ -1,8 +1,8 @@
 ﻿using Moq;
-using ObakiSite.Shared.DTO;
+using ObakiSite.Application.Shared.DTO;
 using ObakiSite.Application.Features.Animelist.Queries;
 using ObakiSite.Application.Features.LocalStorageCache.Services;
-using ObakiSite.Shared.DTO.Response;
+using ObakiSite.Application.Shared.DTO.Response;
 using System.Text.Json;
 using System.Net;
 

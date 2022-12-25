@@ -1,7 +1,7 @@
 ﻿using Moq;
 using ObakiSite.Application.Features.Email.Commands;
 using System.Net;
-using ObakiSite.Shared.DTO;
+using ObakiSite.Application.Shared.DTO;
 using ObakiSite.Application.Domain.Entities;
 
 namespace ObakiSite.Tests.Features.Email

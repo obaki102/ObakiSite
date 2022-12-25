@@ -2,8 +2,8 @@
 using Google.Cloud.Firestore.V1;
 using ObakiSite.Application.Domain.Entities;
 using ObakiSite.Application.Infra.Data;
-using ObakiSite.Shared.DTO.Response;
-using ObakiSite.Shared.DTO;
+using ObakiSite.Application.Shared.DTO.Response;
+using ObakiSite.Application.Shared.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;

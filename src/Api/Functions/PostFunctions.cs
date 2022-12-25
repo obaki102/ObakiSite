@@ -5,9 +5,9 @@ using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
 using ObakiSite.Application.Features.Posts.Services;
-using ObakiSite.Shared.DTO.Response;
+using ObakiSite.Application.Shared.DTO.Response;
 using System.Text.Json;
-using ObakiSite.Shared.DTO;
+using ObakiSite.Application.Shared.DTO;
 
 namespace ObakiSite.Api.Functions
 {

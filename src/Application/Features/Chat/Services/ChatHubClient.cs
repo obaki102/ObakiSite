@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.Extensions.Options;
-using ObakiSite.Shared.Events;
-using ObakiSite.Shared.Constants;
+using ObakiSite.Application.Shared.Events;
+using ObakiSite.Application.Shared.Constants;
 using Newtonsoft.Json;
 using Microsoft.Extensions.DependencyInjection;
 using System.Net.Http.Json;
-using ObakiSite.Shared.DTO;
+using ObakiSite.Application.Shared.DTO;
 using ObakiSite.Application.Features.Chat.Constants;
 
 namespace ObakiSite.Application.Features.Chat.Services

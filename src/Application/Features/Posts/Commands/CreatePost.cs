@@ -2,9 +2,9 @@
 using MediatR;
 using ObakiSite.Application.Extensions;
 using ObakiSite.Application.Features.Posts.Constants;
-using ObakiSite.Shared.Constants;
-using ObakiSite.Shared.DTO;
-using ObakiSite.Shared.DTO.Response;
+using ObakiSite.Application.Shared.Constants;
+using ObakiSite.Application.Shared.DTO;
+using ObakiSite.Application.Shared.DTO.Response;
 using System.Text.Json;
 
 namespace ObakiSite.Application.Features.Posts.Commands

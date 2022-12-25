@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using ObakiSite.Application.Domain.Entities;
-using ObakiSite.Shared.DTO;
+using ObakiSite.Application.Shared.DTO;
 
 namespace ObakiSite.Application.Features.Posts.Mapping
 {

@@ -1,8 +1,8 @@
 ﻿
 using Microsoft.AspNetCore.Components;
 
-namespace ObakiSite.Shared.DTO
-{
+namespace ObakiSite.Application.Shared.DTO
+{ 
     public record PostDTO
     {
         public  string Id { get; init; } = Guid.NewGuid().ToString();

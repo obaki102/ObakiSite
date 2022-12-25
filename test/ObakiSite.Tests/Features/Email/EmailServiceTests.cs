@@ -2,8 +2,8 @@
 using Moq;
 using ObakiSite.Application.Features.Email.Constants;
 using ObakiSite.Application.Features.Email.Services;
-using ObakiSite.Shared.DTO;
-using ObakiSite.Shared.DTO.Response;
+using ObakiSite.Application.Shared.DTO;
+using ObakiSite.Application.Shared.DTO.Response;
 
 namespace ObakiSite.Tests.Features.Email
 {

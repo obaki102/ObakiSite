@@ -1,4 +1,4 @@
-﻿using ObakiSite.Shared.Constants;
+﻿using ObakiSite.Application.Shared.Constants;
 using System.Threading.Tasks;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;

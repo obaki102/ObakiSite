@@ -1,4 +1,4 @@
-﻿using ObakiSite.Shared.DTO.Response;
+﻿using ObakiSite.Application.Shared.DTO.Response;
 
 namespace ObakiSite.Application.Features.LocalStorageCache.Services
 {

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ObakiSite.Shared.DTO;
+using ObakiSite.Application.Shared.DTO;
 
-namespace ObakiSite.Shared.Events
+namespace ObakiSite.Application.Shared.Events
 {
     public class ChatMessageEventArgs : EventArgs
     {

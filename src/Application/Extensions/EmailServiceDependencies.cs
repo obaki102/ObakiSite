@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using ObakiSite.Application.Features.Email.Services;
-using ObakiSite.Shared.Constants;
+using ObakiSite.Application.Shared.Constants;
 using Polly.Contrib.WaitAndRetry;
 using Polly;
 

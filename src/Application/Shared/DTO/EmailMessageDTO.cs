@@ -1,4 +1,4 @@
-﻿namespace ObakiSite.Shared.DTO
+﻿namespace ObakiSite.Application.Shared.DTO
 {
     public record EmailMessageDTO
     {

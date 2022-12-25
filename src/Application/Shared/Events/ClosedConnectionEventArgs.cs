@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ObakiSite.Shared.Events
+namespace ObakiSite.Application.Shared.Events
 {
     public record ClosedConnectionEventArgs(bool IsSuccess, string Message);
 }

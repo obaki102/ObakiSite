@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ObakiSite.Shared.DTO
+namespace ObakiSite.Application.Shared.DTO
 {
     public class PostSummaryDTO
     {

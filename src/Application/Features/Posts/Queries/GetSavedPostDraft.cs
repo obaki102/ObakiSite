@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using ObakiSite.Application.Features.LocalStorageCache.Services;
 using ObakiSite.Application.Features.Posts.Constants;
-using ObakiSite.Shared.DTO;
-using ObakiSite.Shared.DTO.Response;
+using ObakiSite.Application.Shared.DTO;
+using ObakiSite.Application.Shared.DTO.Response;
 
 
 namespace ObakiSite.Application.Features.Posts.Queries

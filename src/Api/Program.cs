@@ -5,8 +5,8 @@ using Microsoft.Extensions.Hosting;
 using ObakiSite.Application.Extensions;
 using ObakiSite.Application.Features.Animelist.Constants;
 using ObakiSite.Application.Features.Email.Constants;
-using ObakiSite.Shared.Constants;
-using ObakiSite.Shared.DTO;
+using ObakiSite.Application.Shared.Constants;
+using ObakiSite.Application.Shared.DTO;
 
 namespace ObakiSite.Api
 {

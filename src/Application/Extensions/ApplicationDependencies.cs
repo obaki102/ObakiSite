@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using ObakiSite.Application.Behaviours.Validation;
 using ObakiSite.Application.Features.Animelist.Constants;
 using ObakiSite.Application.Features.Email.Constants;
-using ObakiSite.Shared.Constants;
+using ObakiSite.Application.Shared.Constants;
 using Polly;
 using Polly.Contrib.WaitAndRetry;
 using System.Drawing;

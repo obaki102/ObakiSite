@@ -1,7 +1,7 @@
 ﻿using System.Text.Json.Serialization;
 
 
-namespace ObakiSite.Shared.DTO
+namespace ObakiSite.Application.Shared.DTO
 {
     public class FirebaseSettings
     {
