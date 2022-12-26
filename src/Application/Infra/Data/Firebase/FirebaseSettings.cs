@@ -60,7 +60,7 @@ namespace ObakiSite.Application.Infra.Data.Firebase
 
             foreach (PropertyInfo property in porerties)
             {
-                property.SetValue(newObject, config.GetSection(property.Name));
+                property.SetValue(newObject, config.GetSection(property.Name).Value);
             }
 
             return newObject;
