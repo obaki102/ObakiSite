@@ -1,5 +1,5 @@
 ﻿using Google.Cloud.Firestore;
-using ObakiSite.Application.Infra.Data;
+using ObakiSite.Application.Infra.Data.Firebase;
 
 namespace ObakiSite.Application.Domain.Entities
 {

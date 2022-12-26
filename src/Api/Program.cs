@@ -5,8 +5,7 @@ using Microsoft.Extensions.Hosting;
 using ObakiSite.Application.Extensions;
 using ObakiSite.Application.Features.Animelist.Constants;
 using ObakiSite.Application.Features.Email.Constants;
-using ObakiSite.Application.Shared.Constants;
-using ObakiSite.Application.Shared.DTO;
+using ObakiSite.Application.Infra.Data.Firebase;
 
 namespace ObakiSite.Api
 {
@@ -15,19 +14,7 @@ namespace ObakiSite.Api
         static async Task Main()
         {
             //todo: Explore azure vault.
-            var fireBaseVar = new FirebaseSettings
-            {
-                Type = Environment.GetEnvironmentVariable(FirebaseConstants.GoogleServiceAccount.ServiceAccount),
-                AuthProvider = Environment.GetEnvironmentVariable(FirebaseConstants.GoogleServiceAccount.AuthProvider),
-                AuthUri = Environment.GetEnvironmentVariable(FirebaseConstants.GoogleServiceAccount.AuthUri),
-                ClientCertUrl = Environment.GetEnvironmentVariable(FirebaseConstants.GoogleServiceAccount.ClientCertUrl),
-                ClientEmail = Environment.GetEnvironmentVariable(FirebaseConstants.GoogleServiceAccount.ClientEmail),
-                ClientId = Environment.GetEnvironmentVariable(FirebaseConstants.GoogleServiceAccount.ClientId),
-                PrivateKey = Environment.GetEnvironmentVariable(FirebaseConstants.GoogleServiceAccount.PrivateKey),
-                PrivateKeyId = Environment.GetEnvironmentVariable(FirebaseConstants.GoogleServiceAccount.PrivateKeyId),
-                ProjectId = Environment.GetEnvironmentVariable(FirebaseConstants.GoogleServiceAccount.ProjectId),
-                TokenUri = Environment.GetEnvironmentVariable(FirebaseConstants.GoogleServiceAccount.TokenUri)
-            };
+            var fireBaseVar = FirebaseSettings.GetFireBaseSettings();
             var firebaseSettings = JsonSerializer.Serialize(fireBaseVar);
             var host = new HostBuilder()
                 .ConfigureFunctionsWorkerDefaults()

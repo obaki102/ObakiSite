@@ -1,5 +1,4 @@
-﻿using ObakiSite.Application.Shared.Constants;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using System.IO;
@@ -10,6 +9,7 @@ namespace ObakiSite.Api.Functions
 {
     public static class SignalRFunctions
     {
+        //todo:mugrate to web api.
         [Function("negotiate")]
         public static async Task<HttpResponseData> GetSignalRInfo(
         [HttpTrigger(AuthorizationLevel.Function, "post")] HttpRequestData req,

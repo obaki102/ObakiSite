@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Google.Cloud.Firestore.V1;
 using ObakiSite.Application.Domain.Entities;
-using ObakiSite.Application.Infra.Data;
 using ObakiSite.Application.Shared.DTO.Response;
 using ObakiSite.Application.Shared.DTO;
 using System;
@@ -9,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ObakiSite.Application.Infra.Data.Firebase;
 
 namespace ObakiSite.Application.Features.Posts.Services
 {

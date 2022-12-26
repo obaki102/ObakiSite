@@ -1,6 +1,6 @@
 ﻿using Google.Cloud.Firestore;
 
-namespace ObakiSite.Application.Infra.Data
+namespace ObakiSite.Application.Infra.Data.Firebase
 {
     public class FirestoreProvider
     {
