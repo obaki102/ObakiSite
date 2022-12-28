@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using Obaki.LocalStorageCache.Extensions;
+using Obaki.LocalStorageCache;
 using ObakiSite.Application.Behaviours.Validation;
 using ObakiSite.Application.Shared.Constants;
 using Polly;

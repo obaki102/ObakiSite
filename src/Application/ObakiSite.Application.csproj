@@ -34,7 +34,7 @@
 	  <PackageReference Include="MimeKit" Version="3.4.3" />
 	  <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
-    <PackageReference Include="Obaki.LocalStorageCache" Version="1.0.6" />
+    <PackageReference Include="Obaki.LocalStorageCache" Version="1.0.7" />
     <PackageReference Include="Polly.Contrib.WaitAndRetry" Version="1.1.1" />
   </ItemGroup>
 

@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using Obaki.LocalStorageCache;
-using Obaki.LocalStorageCache.Extensions;
 using ObakiSite.Application.Extensions;
 using ObakiSite.Application.Features.Animelist.Constants;
 using ObakiSite.Application.Shared.Constants;

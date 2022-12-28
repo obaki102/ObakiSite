@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using Obaki.LocalStorageCache;
-using Obaki.LocalStorageCache.Extensions;
 using ObakiSite.Application.Features.Posts.Constants;
 using ObakiSite.Application.Shared.DTO;
 using ObakiSite.Application.Shared.DTO.Response;
