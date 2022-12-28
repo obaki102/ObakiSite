@@ -24,7 +24,7 @@ namespace ObakiSite.Application.Features.Preference.Commands
                      cache =>
                     {
                         cache.SetExpirationHrs(12);
-                        return Task.FromResult(ApplicationResponse<Preferences>.Success(new Preferences()));
+                        return ValueTask.FromResult(ApplicationResponse<Preferences>.Success(new Preferences()));
 
                     });
             }
