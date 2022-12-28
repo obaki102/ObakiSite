@@ -1,7 +1,6 @@
 ﻿using MediatR;
-using ObakiSite.Application.Features.LocalStorageCache.Services;
+using Obaki.LocalStorageCache;
 using ObakiSite.Application.Features.Posts.Constants;
-using ObakiSite.Application.Shared.Constants;
 using ObakiSite.Application.Shared.DTO;
 using ObakiSite.Application.Shared.DTO.Response;
 
@@ -11,20 +10,16 @@ namespace ObakiSite.Application.Features.Posts.Commands
 
     public class SaveDraftHandler : IRequestHandler<SaveDraftPost, ApplicationResponse>
     {
-        private readonly ILocalStorageCache<PostDTO> _localStorageCache;
-        public SaveDraftHandler(ILocalStorageCache<PostDTO> localStorageCache)
+        private readonly ILocalStorageCache _localStorageCache;
+        public SaveDraftHandler(ILocalStorageCache localStorageCache)
         {
             _localStorageCache = localStorageCache;
-            _localStorageCache.Options = new LocalStorageCacheOptions
-            {
-                DataKey = PostConstants.CacheDataKey
-            };
         }
         public async Task<ApplicationResponse> Handle(SaveDraftPost request, CancellationToken cancellationToken)
         {
             try
             {
-                await _localStorageCache.SetData(request.Post);
+                await _localStorageCache.SetCacheValue(PostConstants.CacheDataKey,request.Post);
                 return ApplicationResponse.Success();
             }
             catch (Exception ex)
@@ -33,5 +28,4 @@ namespace ObakiSite.Application.Features.Posts.Commands
             }
         }
     }
-
 }

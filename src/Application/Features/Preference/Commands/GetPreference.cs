@@ -1,6 +1,7 @@
 ﻿using MediatR;
+using Obaki.LocalStorageCache;
+using Obaki.LocalStorageCache.Extensions;
 using ObakiSite.Application.Features.DefaultSettings.Constants;
-using ObakiSite.Application.Features.LocalStorageCache.Services;
 using ObakiSite.Application.Shared.DTO;
 using ObakiSite.Application.Shared.DTO.Response;
 
@@ -10,35 +11,23 @@ namespace ObakiSite.Application.Features.Preference.Commands
 
     public class GetPreferencesHandler : IRequestHandler<GetPreferences, ApplicationResponse<Preferences>>
     {
-        private readonly ILocalStorageCache<Preferences> _localStorageCache;
-        public GetPreferencesHandler(ILocalStorageCache<Preferences> localStorageCache)
+        private readonly ILocalStorageCache _localStorageCache;
+        public GetPreferencesHandler(ILocalStorageCache localStorageCache)
         {
             _localStorageCache = localStorageCache;
-            _localStorageCache.Options = new LocalStorageCacheOptions
-            {
-                DataKey = PreferenceConstants.CacheDataKey
-            };
         }
         public async Task<ApplicationResponse<Preferences>> Handle(GetPreferences request, CancellationToken cancellationToken)
         {
             try
             {
-                var result = await _localStorageCache.GetCacheData();
-
-                if (result is not null)
-                {
-                    if (!result.IsSuccess)
+                return await _localStorageCache.GetOrCreateCacheAsync(
+                 PreferenceConstants.CacheDataKey,
+                     cache =>
                     {
-                        var defaulSetting = new Preferences();
-                        await _localStorageCache.SetData(defaulSetting);
-                        var refreshedData = await _localStorageCache.GetCacheData();
-                        return refreshedData;
-                    }
+                        cache.SetExpirationHrs(12);
+                        return Task.FromResult(ApplicationResponse<Preferences>.Success(new Preferences()));
 
-                    return result;
-                }
-
-                return ApplicationResponse<Preferences>.Fail("No data retrieved.");
+                    });
             }
             catch (Exception ex)
             {

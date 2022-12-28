@@ -1,5 +1,6 @@
 ﻿using MediatR;
-using ObakiSite.Application.Features.LocalStorageCache.Services;
+using Obaki.LocalStorageCache;
+using Obaki.LocalStorageCache.Extensions;
 using ObakiSite.Application.Features.Posts.Constants;
 using ObakiSite.Application.Shared.DTO;
 using ObakiSite.Application.Shared.DTO.Response;
@@ -11,24 +12,19 @@ namespace ObakiSite.Application.Features.Posts.Queries
 
     public class GetSavedPostDraftHandler : IRequestHandler<GetSavedPostDraft, ApplicationResponse<PostDTO>>
     {
-        private readonly ILocalStorageCache<PostDTO> _localStorageCache;
-        public GetSavedPostDraftHandler(ILocalStorageCache<PostDTO> localStorageCache)
+        private readonly ILocalStorageCache _localStorageCache;
+        public GetSavedPostDraftHandler(ILocalStorageCache localStorageCache)
         {
             _localStorageCache = localStorageCache;
-            _localStorageCache.Options = new LocalStorageCacheOptions
-            {
-                DataKey = PostConstants.CacheDataKey
-            };
         }
         public async Task<ApplicationResponse<PostDTO>> Handle(GetSavedPostDraft request, CancellationToken cancellationToken)
         {
             try
             {
-                var result = await _localStorageCache.GetCacheData();
-
+                var result = await _localStorageCache.GetCacheAsync<PostDTO>(PostConstants.CacheDataKey);
                 if(result is not null)
                 {
-                    return result;
+                    return  ApplicationResponse<PostDTO>.Success(result);
                 }
 
                 return ApplicationResponse<PostDTO>.Fail("No data retrieved.");

@@ -1,9 +1,8 @@
 ﻿
 using MediatR;
-using ObakiSite.Application.Features.LocalStorageCache.Services;
+using Obaki.LocalStorageCache;
+using Obaki.LocalStorageCache.Extensions;
 using ObakiSite.Application.Features.Posts.Constants;
-using ObakiSite.Application.Shared.Constants;
-using ObakiSite.Application.Shared.DTO;
 using ObakiSite.Application.Shared.DTO.Response;
 
 namespace ObakiSite.Application.Features.Posts.Commands
@@ -12,21 +11,16 @@ namespace ObakiSite.Application.Features.Posts.Commands
 
     public class ClearDraftPosthandler : IRequestHandler<ClearDraftPost, ApplicationResponse>
     {
-        private readonly ILocalStorageCache<PostDTO> _localStorageCache;
-        public ClearDraftPosthandler(ILocalStorageCache<PostDTO> localStorageCache)
+        private readonly ILocalStorageCache _localStorageCache;
+        public ClearDraftPosthandler(ILocalStorageCache localStorageCache)
         {
             _localStorageCache = localStorageCache;
-            _localStorageCache.Options = new LocalStorageCacheOptions
-            {
-                DataKey = PostConstants.CacheDataKey,
-                NumberOfHrsToRefreshCache = 6
-            };
         }
         public async Task<ApplicationResponse> Handle(ClearDraftPost request, CancellationToken cancellationToken)
         {
             try
             {
-                await _localStorageCache.ClearCache();
+                await _localStorageCache.ClearCacheAsync(PostConstants.CacheDataKey);
                 return ApplicationResponse.Success();
             }
             catch (Exception ex)

@@ -1,13 +1,11 @@
 ﻿using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using Obaki.LocalStorageCache.Extensions;
 using ObakiSite.Application.Behaviours.Validation;
-using ObakiSite.Application.Features.Animelist.Constants;
-using ObakiSite.Application.Features.Email.Constants;
 using ObakiSite.Application.Shared.Constants;
 using Polly;
 using Polly.Contrib.WaitAndRetry;
-using System.Drawing;
 using System.Reflection;
 
 namespace ObakiSite.Application.Extensions
@@ -36,8 +34,7 @@ namespace ObakiSite.Application.Extensions
              {
                 // todo: log exception and retries.
              }));;
-
-            services.AddLocalStorageCahce();
+            services.AddLocalStorageCacheAsSingleton();
             return services;
         }
 

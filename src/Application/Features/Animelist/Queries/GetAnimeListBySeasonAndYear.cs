@@ -1,7 +1,8 @@
 ﻿using MediatR;
+using Obaki.LocalStorageCache;
+using Obaki.LocalStorageCache.Extensions;
 using ObakiSite.Application.Extensions;
 using ObakiSite.Application.Features.Animelist.Constants;
-using ObakiSite.Application.Features.LocalStorageCache.Services;
 using ObakiSite.Application.Shared.Constants;
 using ObakiSite.Application.Shared.DTO;
 using ObakiSite.Application.Shared.DTO.Response;
@@ -13,24 +14,21 @@ namespace ObakiSite.Application.Features.Animelist.Queries
     public class GetAnimeListBySeasonAndYearHandler : IRequestHandler<GetAnimeListBySeasonAndYear, ApplicationResponse<AnimeListRoot>>
     {
         private readonly IHttpClientFactory _httpClientFactory;
-        private readonly ILocalStorageCache<AnimeListRoot> _localStorageCache;
-        public GetAnimeListBySeasonAndYearHandler(IHttpClientFactory httpClientFactory, ILocalStorageCache<AnimeListRoot> localStorageCache)
+        private readonly ILocalStorageCache _localStorageCache;
+        public GetAnimeListBySeasonAndYearHandler(IHttpClientFactory httpClientFactory, ILocalStorageCache localStorageCache)
         {
             _httpClientFactory = httpClientFactory;
             _localStorageCache = localStorageCache;
-            _localStorageCache.Options = new LocalStorageCacheOptions
-            {
-                DataKey = AnimelistConstants.CacheDataKey,
-                NumberOfHrsToRefreshCache = 6
-            };
         }
 
         public async Task<ApplicationResponse<AnimeListRoot>> Handle(GetAnimeListBySeasonAndYear request, CancellationToken cancellationToken)
         {
-            var isRefreshNeeded = await _localStorageCache.IsCacheNeedsDataRefresh().ConfigureAwait(false);
-
-            if (isRefreshNeeded)
+            return await _localStorageCache.GetOrCreateCacheAsync(
+                 AnimelistConstants.CacheDataKey,
+            async cache =>
             {
+                cache.SetExpirationHrs(1);
+
                 var httpClient = _httpClientFactory.CreateClient(HttpNameClientConstants.Default);
                 var uriRequest = $"{AnimelistConstants.Endpoint}{request.Season.SeasonName}/{request.Season.Year}";
                 var response = await httpClient.GetAsync(uriRequest).ConfigureAwait(false);
@@ -44,17 +42,10 @@ namespace ObakiSite.Application.Features.Animelist.Queries
                         return ApplicationResponse<AnimeListRoot>.Fail("No data.");
                     }
 
-                    try
-                    {
-                        await _localStorageCache.SetData(result);
-                    }catch(Exception ex)
-                    {
-                        return ApplicationResponse<AnimeListRoot>.Fail(ex.Message);
-                    }
+                    return ApplicationResponse<AnimeListRoot>.Success(result);
                 }
-            }
-
-            return await _localStorageCache.GetCacheData();
+                return ApplicationResponse<AnimeListRoot>.Fail("No data.");
+            });
         }
     }
 }
