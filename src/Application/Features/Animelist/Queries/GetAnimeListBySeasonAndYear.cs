@@ -24,7 +24,7 @@ namespace ObakiSite.Application.Features.Animelist.Queries
         {
             var cache = await _localStorageCache.GetOrCreateCacheAsync(
                  AnimelistConstants.CacheDataKey,
-                 TimeSpan.FromHours(1),
+                 TimeSpan.FromHours(6),
                 async () =>
                 {
                     var httpClient = _httpClientFactory.CreateClient(HttpNameClientConstants.Default);

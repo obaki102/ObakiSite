@@ -19,13 +19,15 @@ namespace ObakiSite.Application.Features.Preference.Commands
         {
             try
             {
-                return await _localStorageCache.GetOrCreateCacheAsync(
+                var cache = await _localStorageCache.GetOrCreateCacheAsync(
                  PreferenceConstants.CacheDataKey,
                  TimeSpan.FromHours(6),
                    () =>
-                    {
-                        return ValueTask.FromResult(ApplicationResponse<Preferences>.Success(new Preferences()));
-                    });
+                   {
+                       return ValueTask.FromResult(ApplicationResponse<Preferences>.Success(new Preferences()));
+                   });
+
+                return cache ?? ApplicationResponse<Preferences>.Fail("No cache data retrieved.");
             }
             catch (Exception ex)
             {
