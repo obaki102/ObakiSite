@@ -21,11 +21,10 @@ namespace ObakiSite.Application.Features.Preference.Commands
             {
                 return await _localStorageCache.GetOrCreateCacheAsync(
                  PreferenceConstants.CacheDataKey,
-                     cache =>
+                 TimeSpan.FromHours(6),
+                   () =>
                     {
-                        cache.SetExpirationHrs(12);
                         return ValueTask.FromResult(ApplicationResponse<Preferences>.Success(new Preferences()));
-
                     });
             }
             catch (Exception ex)
