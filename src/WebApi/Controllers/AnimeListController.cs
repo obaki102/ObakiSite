@@ -15,7 +15,7 @@ namespace ObakiSite.WebApi.Controllers
             _animeListService = animeListService;
         }
 
-        [HttpGet("api/animeList")]
+        [HttpGet("api/animelist")]
         public async Task<ActionResult<ApplicationResponse<AnimeListRoot>>> GetAnimeList(int year, string season)
         {
             var result = await _animeListService.GetAnimeListBySeasonAndYear(year, season);
