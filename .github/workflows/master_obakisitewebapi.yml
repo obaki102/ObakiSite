@@ -7,6 +7,9 @@ on:
   push:
     branches:
       - master
+    paths:
+    - 'src/WebApi/**'
+    
   workflow_dispatch:
 
 jobs:
