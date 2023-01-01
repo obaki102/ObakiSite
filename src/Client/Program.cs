@@ -32,5 +32,6 @@ else
 builder.Services.AddMudServices(config =>
 {
     config.SnackbarConfiguration.PositionClass = Defaults.Classes.Position.BottomStart;
+    config.SnackbarConfiguration.ShowTransitionDuration = 1;
 });
 await builder.Build().RunAsync();
