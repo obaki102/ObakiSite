@@ -6,7 +6,6 @@ using ObakiSite.Application.Shared.DTO;
 namespace ObakiSite.WebApi.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
     public class AnimeListController : Controller
     {
         private readonly IAnimeListService _animeListService;
@@ -15,7 +14,8 @@ namespace ObakiSite.WebApi.Controllers
             _animeListService = animeListService;
         }
 
-        [HttpGet("api/animeList")]
+
+        [HttpGet("api/animelists/{year}/{season}")]
         public async Task<ActionResult<ApplicationResponse<AnimeListRoot>>> GetAnimeList(int year, string season)
         {
             var result = await _animeListService.GetAnimeListBySeasonAndYear(year, season);
