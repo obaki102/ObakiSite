@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "ObakiApi": {
+    "ObakiSite.AzureFunction": {
       "commandName": "Project",
       "commandLineArgs": "--port 7080"
     }

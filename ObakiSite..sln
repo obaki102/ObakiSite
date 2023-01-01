@@ -4,11 +4,13 @@ VisualStudioVersion = 17.0.31717.71
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ObakiSite.Client", "src\Client\ObakiSite.Client.csproj", "{E6DB1D36-AE36-41B7-9D0C-34F84503258B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ObakiSite.Api", "src\Api\ObakiSite.Api.csproj", "{71A8290A-3797-4AAC-A7B3-F7BEA9B538F0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ObakiSite.AzureFunction", "src\Api\ObakiSite.AzureFunction.csproj", "{71A8290A-3797-4AAC-A7B3-F7BEA9B538F0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ObakiSite.Application", "src\Application\ObakiSite.Application.csproj", "{4AD54B49-25B2-4E44-A861-F994422AD74A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ObakiSite.Tests", "test\ObakiSite.Tests\ObakiSite.Tests.csproj", "{DA5AE286-68F8-4E35-9EB0-06637CF9DCC3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ObakiSite.WebApi", "src\WebApi\ObakiSite.WebApi.csproj", "{2966FDBC-5EF1-414E-B50A-65FF4044CAF6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,6 +34,10 @@ Global
 		{DA5AE286-68F8-4E35-9EB0-06637CF9DCC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA5AE286-68F8-4E35-9EB0-06637CF9DCC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DA5AE286-68F8-4E35-9EB0-06637CF9DCC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2966FDBC-5EF1-414E-B50A-65FF4044CAF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2966FDBC-5EF1-414E-B50A-65FF4044CAF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2966FDBC-5EF1-414E-B50A-65FF4044CAF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2966FDBC-5EF1-414E-B50A-65FF4044CAF6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
