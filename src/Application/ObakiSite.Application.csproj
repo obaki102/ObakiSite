@@ -26,6 +26,7 @@
 	  <PackageReference Include="MailKit" Version="3.4.3" />
 	  <PackageReference Include="MediatR" Version="11.1.0" />
 	  <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+	  <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
 	  <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="7.0.1" />
 	  <PackageReference Include="Microsoft.AspNetCore.SignalR.Protocols.MessagePack" Version="7.0.1" />
 	  <PackageReference Include="Microsoft.EntityFrameworkCore.Cosmos" Version="7.0.1" />
@@ -34,7 +35,7 @@
 	  <PackageReference Include="MimeKit" Version="3.4.3" />
 	  <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
-    <PackageReference Include="Obaki.LocalStorageCache" Version="1.1.3" />
+    <PackageReference Include="Obaki.LocalStorageCache" Version="1.1.6" />
     <PackageReference Include="Polly.Contrib.WaitAndRetry" Version="1.1.1" />
   </ItemGroup>
 

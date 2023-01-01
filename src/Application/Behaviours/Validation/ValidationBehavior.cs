@@ -41,7 +41,7 @@ namespace ObakiSite.Application.Behaviours.Validation
 
             if (errorLists.Any())
             {
-                //TODO: Check other ways to throw the validation error message
+                //TODO: Throw error to middleware to avoid reflection.
                 //Check if response is an application response type
                 if (typeof(TResponse).Name.Contains(typeof(ApplicationResponse).Name))
                 {
@@ -52,9 +52,10 @@ namespace ObakiSite.Application.Behaviours.Validation
                     //Create the Application Response object
                     var responseObject = (TResponse?)Activator.CreateInstance(typeof(TResponse));
                     //Pass the list of errors as a parameter
-                    object[] parameters = new object[] { errorLists.Select(e=> e.ErrorMessage).Distinct().ToList() };
+                    object[] parameters = new object[] { errorLists.Select(e => e.ErrorMessage).Distinct().ToList() };
                     return (TResponse?)failMethodInApplicationResponse.Invoke(responseObject, parameters);
                 }
+                // throw new ValidationException(errorLists);
             }
 
             return await next();

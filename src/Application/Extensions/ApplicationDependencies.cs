@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Obaki.LocalStorageCache;
 using ObakiSite.Application.Behaviours.Validation;
+using ObakiSite.Application.Middleware;
 using ObakiSite.Application.Shared.Constants;
 using Polly;
 using Polly.Contrib.WaitAndRetry;
@@ -22,6 +23,8 @@ namespace ObakiSite.Application.Extensions
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             services.AddMediatR(Assembly.GetExecutingAssembly());
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
+            //Middleware
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
             //HttpNamedClient
             services.AddHttpClient(HttpNameClientConstants.Default, client =>
