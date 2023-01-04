@@ -15,16 +15,16 @@ namespace ObakiSite.WebApi.Controllers
         }
 
 
-        [HttpGet("api/animelists/{year}/{season}")]
-        public async Task<ActionResult<ApplicationResponse<AnimeListRoot>>> GetAnimeList(int year, string season)
+        [HttpGet("api/animelists/{season}/{year}")]
+        public async Task<ActionResult<ApplicationResponse<AnimeListRoot>>> GetAnimeList(string season, int year)
         {
             var result = await _animeListService.GetAnimeListBySeasonAndYear(year, season);
             if (result.IsSuccess)
             {
-                return Ok(result);
+                return Ok(result.Data);
             }
 
-            return BadRequest(result);
+            return BadRequest(result.Messages);
         }
     }
 }
