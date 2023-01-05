@@ -22,11 +22,10 @@ namespace ObakiSite.Application.Features.Posts.Queries
         {
             var httpClient = _httpClientFactory.CreateClient(HttpNameClientConstants.Default);
             var response = await httpClient.GetAsync(PostConstants.GetPostSummaries.EndPoint).ConfigureAwait(false);
-
             if (response.IsSuccessStatusCode)
             {
                 //To do implement caching
-                var result = await response.ConvertStreamToTAsync<ApplicationResponse<IReadOnlyList<PostSummaryDTO>>>();
+                var result = await response.ReadJson<ApplicationResponse<IReadOnlyList<PostSummaryDTO>>>();
                 if (result is not null)
                 {
                     return result;

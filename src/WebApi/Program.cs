@@ -15,13 +15,11 @@ builder.Services.AddCors(options =>
     options.AddDefaultPolicy(
         policy =>
         {
-            policy.WithOrigins("https://localhost:5011", "https://www.joshuajpiluden.site");
-           // policy.AllowAnyOrigin(); //set the allowed origin
+            policy.WithOrigins("https://localhost:5011", "https://www.joshuajpiluden.site")
+            .AllowAnyHeader()
+            .AllowAnyMethod();
         });
 });
-
-builder.Logging.ClearProviders();
-builder.Logging.AddConsole();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -39,6 +37,7 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseHttpLogging();
 }
 
 app.UseHttpsRedirection();

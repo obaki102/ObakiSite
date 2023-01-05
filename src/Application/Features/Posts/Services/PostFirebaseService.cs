@@ -25,6 +25,9 @@ namespace ObakiSite.Application.Features.Posts.Services
 
         public async Task<ApplicationResponse> CreatePost(PostDTO post)
         {
+            if(post is null)
+                throw new ArgumentNullException(nameof(post));
+
             var checkIfPostAlreadyExist = await _firebaseProvider.Get<Post>(post.Id, default).ConfigureAwait(false);
 
             if (checkIfPostAlreadyExist is not null)
@@ -40,6 +43,9 @@ namespace ObakiSite.Application.Features.Posts.Services
 
         public async Task<ApplicationResponse> DeletePost(string id)
         {
+            if(string.IsNullOrEmpty(id))
+                    throw new ArgumentNullException(nameof(id));
+
             var postToDelete = await _firebaseProvider.Get<Post>(id, default).ConfigureAwait(false);
 
             if (postToDelete is null)
@@ -52,6 +58,9 @@ namespace ObakiSite.Application.Features.Posts.Services
         }
         public async Task<ApplicationResponse> UpdatePost(PostDTO post)
         {
+            if (post is null)
+                throw new ArgumentNullException(nameof(post));
+
             var postToUpdate = await _firebaseProvider.Get<Post>(post.Id,default).ConfigureAwait(false);
 
             if (postToUpdate == null)
@@ -85,6 +94,9 @@ namespace ObakiSite.Application.Features.Posts.Services
 
         public async Task<ApplicationResponse<PostDTO>> GetPostById(string id)
         {
+            if (string.IsNullOrEmpty(id))
+                throw new ArgumentNullException(nameof(id));
+
             var post = await _firebaseProvider.Get<Post>(id, default).ConfigureAwait(false);
             if (post is not null)
             {
