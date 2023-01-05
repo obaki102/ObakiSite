@@ -24,15 +24,13 @@ namespace ObakiSite.Application.Features.Email.Services
             _mapper = mapper;
         }
 
-        public EmailService(EmailServiceOptions emailServiceOptions, IHttpClientFactory httpClientFactory)
-        {
-            _emailServiceOptions = emailServiceOptions;
-            _httpClientFactory = httpClientFactory;
-        }
+      
         public async Task<ApplicationResponse> SendEmail(EmailMessageDTO emailMessageDto)
         {
             try
             {
+                if(emailMessageDto is null)
+                       throw new ArgumentNullException(nameof(emailMessageDto));
 
                 var emailMessage = _mapper.Map<EmailMessage>(emailMessageDto);
                 var message = new MimeMessage();

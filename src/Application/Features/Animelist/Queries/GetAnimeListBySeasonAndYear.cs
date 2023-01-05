@@ -33,7 +33,7 @@ namespace ObakiSite.Application.Features.Animelist.Queries
 
                     if (response.IsSuccessStatusCode)
                     {
-                        var result = await response.ConvertStreamToTAsync<AnimeListRoot>();
+                        var result = await response.ReadJson<AnimeListRoot>();
 
                         if (result is null)
                         {
