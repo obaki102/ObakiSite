@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using AutoMapper;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Moq;
 using ObakiSite.Application.Features.Email.Constants;
 using ObakiSite.Application.Features.Email.Services;
@@ -10,12 +12,15 @@ namespace ObakiSite.Tests.Features.Email
     public class EmailServiceTests
     {
         private IConfigurationRoot _configuration;
+        private IMapper _mapper;
 
         public EmailServiceTests()
         {
+            var mockMapper = new Mock<IMapper>();   
             _configuration = new ConfigurationBuilder()
                .AddUserSecrets<EmailServiceTests>()
                .Build();
+            _mapper = mockMapper.Object;
         }
 
         [Fact]
@@ -73,11 +78,14 @@ namespace ObakiSite.Tests.Features.Email
             httpFactory.Setup(x => x.CreateClient(It.IsAny<string>())).Returns(mockHttpClient);
 
             var message = new EmailMessageDTO();
-            var options = new EmailServiceOptions
+
+            var ioptions  = Options.Create(new EmailServiceOptions
             {
                 AppPassword = _configuration[EmailConstants.AppPassword]
-            };
-            var emailClient = new EmailService(options, httpFactory.Object);
+            });
+            
+           
+            var emailClient = new EmailService(ioptions, httpFactory.Object, _mapper) ;
 
             //Act
             var result = emailClient.SendEmail(message);
@@ -99,11 +107,11 @@ namespace ObakiSite.Tests.Features.Email
             httpFactory.Setup(x => x.CreateClient(It.IsAny<string>())).Returns(mockHttpClient);
 
             var message = new EmailMessageDTO();
-            var options = new EmailServiceOptions
+            var ioptions = Options.Create(new EmailServiceOptions
             {
                 AppPassword = "InvalidCredemtial"
-            };
-            var emailClient = new EmailService(options, httpFactory.Object);
+            });
+            var emailClient = new EmailService(ioptions, httpFactory.Object,_mapper);
 
             //Act
             var result = emailClient.SendEmail(message);
@@ -128,11 +136,12 @@ namespace ObakiSite.Tests.Features.Email
                 RecipientName = "May",
                 Message = "Test"
             };
-            var options = new EmailServiceOptions
+            var ioptions = Options.Create(new EmailServiceOptions
             {
                 AppPassword = _configuration[EmailConstants.AppPassword]
-            };
-            var emailClient = new EmailService(options, httpFactory.Object);
+            });
+
+            var emailClient = new EmailService(ioptions, httpFactory.Object, _mapper);
 
             //Act
             var result = emailClient.SendEmail(message);

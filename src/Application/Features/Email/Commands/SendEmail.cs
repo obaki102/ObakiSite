@@ -27,7 +27,7 @@ namespace ObakiSite.Application.Features.Email.Commands
 
             if (response.IsSuccessStatusCode)
             {
-                var result = await response.ConvertStreamToTAsync<ApplicationResponse>();
+                var result = await response.ReadJson<ApplicationResponse>();
 
                 if (result is null || !result.IsSuccess)
                 {

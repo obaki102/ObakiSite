@@ -26,7 +26,7 @@ namespace ObakiSite.Application.Features.Posts.Queries
 
             if (response.IsSuccessStatusCode)
             {
-                var result = await response.ConvertStreamToTAsync<ApplicationResponse<PostDTO>>();
+                var result = await response.ReadJson<ApplicationResponse<PostDTO>>();
 
                 if (result is not null)
                 {

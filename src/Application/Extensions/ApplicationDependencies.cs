@@ -35,7 +35,7 @@ namespace ObakiSite.Application.Extensions
             .AddTransientHttpErrorPolicy(policyBuilder =>
              policyBuilder.WaitAndRetryAsync(Backoff.DecorrelatedJitterBackoffV2(TimeSpan.FromSeconds(1), 3), (exception, timeSpan, retryCount, context) =>
              {
-                // todo: log exception and retries.
+                 Console.WriteLine(exception);
              }));;
             services.AddLocalStorageCacheAsSingleton();
             return services;

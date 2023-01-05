@@ -19,6 +19,9 @@ namespace ObakiSite.Application.Features.Posts.Services
         //To do separate writes from reads
         public async Task<ApplicationResponse> CreatePost(PostDTO post)
         {
+            if(post is null)
+                throw new ArgumentNullException(nameof(post));
+
             using var context = _factory.CreateDbContext();
             var checkIfPostAlreadyExist = await context.Posts.FindAsync(post.Id).ConfigureAwait(false);
 
@@ -41,6 +44,9 @@ namespace ObakiSite.Application.Features.Posts.Services
 
         public async Task<ApplicationResponse> DeletePost(string  id)
         {
+            if(string.IsNullOrEmpty(id))
+                  throw new ArgumentNullException(nameof(id));  
+
             using var context = _factory.CreateDbContext();
             var postToDelete = await context.Posts.FindAsync(id).ConfigureAwait(false);
            
@@ -61,6 +67,9 @@ namespace ObakiSite.Application.Features.Posts.Services
         }
         public async Task<ApplicationResponse> UpdatePost(PostDTO post)
         {
+            if (post is null)
+                throw new ArgumentNullException(nameof(post));
+
             using var context = _factory.CreateDbContext();
             var postToUpdate = await context.Posts.FindAsync(post.Id).ConfigureAwait(false);
 
@@ -102,6 +111,9 @@ namespace ObakiSite.Application.Features.Posts.Services
 
         public async Task<ApplicationResponse<PostDTO>> GetPostById(string id)
         {
+            if (string.IsNullOrEmpty(id))
+                throw new ArgumentNullException(nameof(id));
+
             using var context = _factory.CreateDbContext();
             var post = await context.Posts.WithPartitionKey(id)
                         .AsNoTracking().SingleOrDefaultAsync(i=> i.Id == id);
