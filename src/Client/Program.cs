@@ -8,7 +8,7 @@ using MudBlazor;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
-var baseUrl = new Uri(builder.Configuration["WEBAPI_Prefix"] ?? builder.Configuration["WebApiHost"] ?? string.Empty);
+var baseUrl = new Uri(builder.Configuration["WEBAPI_Prefix"] ?? builder.HostEnvironment.BaseAddress);
 
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");

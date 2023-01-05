@@ -328,7 +328,7 @@
         StateHasChanged();
     }
 
-    private string GetCVFilePath() => $"{WebAssemblyHostEnvironment.BaseAddress}files/{GetFileName()}";
+    private string GetCVFilePath() => $"{WebAssemblyHostEnvironment.BaseAddress}/files/{GetFileName()}";
 
     private string GetFileName() => _isDarkMode ? "JoshuaJPiludenCV_dark.pdf" : "JoshuaJPiludenCV_light.pdf";
 
