@@ -15,7 +15,7 @@ builder.Services.AddCors(options =>
     options.AddDefaultPolicy(
         policy =>
         {
-            policy.WithOrigins("https://localhost:5011", "https://www.joshuajpiluden.site")
+            policy.WithOrigins("https://localhost:5011", "https://www.joshuajpiluden.site", "https://victorious-sea-07588b900.2.azurestaticapps.net")
             .AllowAnyHeader()
             .AllowAnyMethod();
         });
