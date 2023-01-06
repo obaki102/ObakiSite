@@ -9,9 +9,13 @@
 
 	<ItemGroup>
 	  <Compile Remove="Extensions\**" />
+	  <Compile Remove="Services\Extensions\**" />
 	  <Content Remove="Extensions\**" />
+	  <Content Remove="Services\Extensions\**" />
 	  <EmbeddedResource Remove="Extensions\**" />
+	  <EmbeddedResource Remove="Services\Extensions\**" />
 	  <None Remove="Extensions\**" />
+	  <None Remove="Services\Extensions\**" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -31,7 +35,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Services\Extensions\" />
 	  <Folder Include="wwwroot\lib\" />
 	</ItemGroup>
 	
