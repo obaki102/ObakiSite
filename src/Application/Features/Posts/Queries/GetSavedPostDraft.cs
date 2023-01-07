@@ -20,7 +20,7 @@ namespace ObakiSite.Application.Features.Posts.Queries
         {
             try
             {
-                var result = await _localStorageCache.GetCacheAsync<PostDTO>(PostConstants.CacheDataKey);
+                var result = await _localStorageCache.GetCacheAsync<PostDTO>(PostConstants.CreatePost.CacheDataKey);
                 if(result is not null)
                 {
                     return  ApplicationResponse<PostDTO>.Success(result);

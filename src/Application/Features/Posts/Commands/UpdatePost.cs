@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Obaki.LocalStorageCache;
 using ObakiSite.Application.Extensions;
 using ObakiSite.Application.Features.Posts.Constants;
 using ObakiSite.Application.Shared.Constants;
@@ -19,10 +20,12 @@ namespace ObakiSite.Application.Features.Posts.Commands
     public class UpdatePostHandler : IRequestHandler<UpdatePost, ApplicationResponse>
     {
         private readonly IHttpClientFactory _httpClientFactory;
+        private readonly ILocalStorageCache _localStorageCache;
 
-        public UpdatePostHandler(IHttpClientFactory httpClientFactory, IMapper mapper)
+        public UpdatePostHandler(IHttpClientFactory httpClientFactory, ILocalStorageCache localStorageCache)
         {
             _httpClientFactory = httpClientFactory;
+            _localStorageCache = localStorageCache;
         }
         public async Task<ApplicationResponse> Handle(UpdatePost request, CancellationToken cancellationToken)
         {
@@ -36,6 +39,7 @@ namespace ObakiSite.Application.Features.Posts.Commands
 
                 if (result is not null)
                 {
+                    await _localStorageCache.ClearCacheAsync(PostConstants.GetPostSummaries.CacheDataKey);
                     return result;
                 }
 

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Obaki.LocalStorageCache;
 using ObakiSite.Application.Extensions;
 using ObakiSite.Application.Features.Posts.Constants;
 using ObakiSite.Application.Shared.Constants;
@@ -13,28 +14,40 @@ namespace ObakiSite.Application.Features.Posts.Queries
     public class GetPostSummariesHandler : IRequestHandler<GetPostSummaries, ApplicationResponse<IReadOnlyList<PostSummaryDTO>>>
     {
         private readonly IHttpClientFactory _httpClientFactory;
-        public GetPostSummariesHandler(IHttpClientFactory httpClientFactory, IMapper mapper)
+        private readonly ILocalStorageCache _localStorageCache;
+        public GetPostSummariesHandler(IHttpClientFactory httpClientFactory, ILocalStorageCache localStorageCache)
         {
             _httpClientFactory = httpClientFactory;
+            _localStorageCache = localStorageCache;
         }
       
         public async Task<ApplicationResponse<IReadOnlyList<PostSummaryDTO>>> Handle(GetPostSummaries request, CancellationToken cancellationToken)
         {
-            var httpClient = _httpClientFactory.CreateClient(HttpNameClientConstants.Default);
-            var response = await httpClient.GetAsync(PostConstants.GetPostSummaries.EndPoint).ConfigureAwait(false);
-            if (response.IsSuccessStatusCode)
-            {
-                //To do implement caching
-                var result = await response.ReadJson<ApplicationResponse<IReadOnlyList<PostSummaryDTO>>>();
-                if (result is not null)
+            var cache = await _localStorageCache.GetOrCreateCacheAsync(
+                PostConstants.GetPostSummaries.CacheDataKey,
+                TimeSpan.FromMinutes(5),
+                async () =>
                 {
-                    return result;
-                }
+                    var httpClient = _httpClientFactory.CreateClient(HttpNameClientConstants.Default);
+                    var response = await httpClient.GetAsync(PostConstants.GetPostSummaries.EndPoint).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        //To do implement caching
+                        var result = await response.ReadJson<ApplicationResponse<IReadOnlyList<PostSummaryDTO>>>();
+                        if (result is not null)
+                        {
+                            return result;
+                        }
 
-                return ApplicationResponse<IReadOnlyList<PostSummaryDTO>>.Fail("No data retrieved.");
-            }
+                        return ApplicationResponse<IReadOnlyList<PostSummaryDTO>>.Fail("No data retrieved.");
+                    }
 
-            return ApplicationResponse<IReadOnlyList<PostSummaryDTO>>.Fail(response.StatusCode.ToString());
+                    return ApplicationResponse<IReadOnlyList<PostSummaryDTO>>.Fail(response.StatusCode.ToString());
+                });
+
+            return cache ?? ApplicationResponse<IReadOnlyList<PostSummaryDTO>>.Fail();
+
+
         }
     }
 }

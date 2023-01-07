@@ -5,6 +5,7 @@ public static class PostConstants
     public static class CreatePost
     {
         public const string EndPoint = "/api/post/create";
+        public const string CacheDataKey = "obaki-site-post-create-cachedata";
     }
 
     public static class DeletePost
@@ -19,11 +20,11 @@ public static class PostConstants
     public static class GetPostSummaries
     {
         public const string EndPoint = "/api/post/get-summaries";
+        public const string CacheDataKey = "obaki-site-post-summaries-cachedata";
     }
     public static class GetPostById
     {
         public const string EndPoint = "/api/post/get/";
     }
-
-    public const string CacheDataKey = "obaki-site-post-cachedata";
+   
 }
