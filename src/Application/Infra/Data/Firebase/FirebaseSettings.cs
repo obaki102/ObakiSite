@@ -39,9 +39,9 @@ namespace ObakiSite.Application.Infra.Data.Firebase
         public static FirebaseSettings GetFireBaseSettings()
         {
             var newObject = new FirebaseSettings();
-            var porerties = typeof(FirebaseSettings).GetProperties();
+            var properties = typeof(FirebaseSettings).GetProperties();
 
-            foreach (PropertyInfo property in porerties)
+            foreach (PropertyInfo property in properties)
             {
                 property.SetValue(newObject, Environment.GetEnvironmentVariable($"Google{property.Name}"));    
             }
@@ -56,9 +56,9 @@ namespace ObakiSite.Application.Infra.Data.Firebase
                 throw new ArgumentNullException(nameof(config));
             }
             var newObject = new FirebaseSettings();
-            var porerties = typeof(FirebaseSettings).GetProperties();
+            var properties = typeof(FirebaseSettings).GetProperties();
 
-            foreach (PropertyInfo property in porerties)
+            foreach (PropertyInfo property in properties)
             {
                 property.SetValue(newObject, config.GetSection(property.Name).Value);
             }

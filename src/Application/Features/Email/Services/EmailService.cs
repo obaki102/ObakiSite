@@ -7,7 +7,6 @@ using Microsoft.Extensions.Options;
 using ObakiSite.Application.Shared.DTO;
 using ObakiSite.Application.Features.Email.Constants;
 using ObakiSite.Application.Domain.Entities;
-using AutoMapper;
 
 namespace ObakiSite.Application.Features.Email.Services
 {
@@ -15,13 +14,11 @@ namespace ObakiSite.Application.Features.Email.Services
     {
         private readonly EmailServiceOptions _emailServiceOptions;
         private readonly IHttpClientFactory _httpClientFactory;
-        private readonly IMapper _mapper;
         public EmailService(IOptions<EmailServiceOptions> emailServiceOptions, 
-            IHttpClientFactory httpClientFactory, IMapper mapper)
+            IHttpClientFactory httpClientFactory)
         {
             _emailServiceOptions = emailServiceOptions.Value;
             _httpClientFactory = httpClientFactory;
-            _mapper = mapper;
         }
 
       
@@ -32,7 +29,7 @@ namespace ObakiSite.Application.Features.Email.Services
                 if(emailMessageDto is null)
                        throw new ArgumentNullException(nameof(emailMessageDto));
 
-                var emailMessage = _mapper.Map<EmailMessage>(emailMessageDto);
+                EmailMessage emailMessage = emailMessageDto;
                 var message = new MimeMessage();
                 message.From.Add(new MailboxAddress(emailMessage.SenderName, emailMessage.SenderEmail));
                 message.To.Add(new MailboxAddress(emailMessage.RecipientName, emailMessage.RecipientEmail));

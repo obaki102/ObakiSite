@@ -19,7 +19,7 @@ namespace ObakiSite.Application.Features.Posts.Commands
         {
             try
             {
-                await _localStorageCache.ClearCacheAsync(PostConstants.GetPostSummaries.CacheDataKey);
+                await _localStorageCache.ClearCacheAsync(PostConstants.CreatePost.CacheDataKey);
                 return ApplicationResponse.Success();
             }
             catch (Exception ex)

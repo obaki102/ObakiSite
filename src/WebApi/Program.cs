@@ -1,15 +1,8 @@
 using ObakiSite.Application.Extensions;
 using ObakiSite.Application.Features.Email.Constants;
-using ObakiSite.Application.Infra.Data.Firebase;
-using Polly;
-using System.Text.Json;
+using ObakiSite.Application.Shared.Constants;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
-var firebaseSettingsVar = FirebaseSettings.GetFireBaseSettings(builder.Configuration);
-var firebaseSettings = JsonSerializer.Serialize(firebaseSettingsVar);
-
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(
@@ -25,10 +18,11 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddApiDependenciesWithFirebase(builder.Configuration.GetSection("AnimelistClientId").Value??string.Empty,
-                       builder.Configuration.GetSection(EmailConstants.AppPassword).Value??string.Empty,
-                        firebaseSettingsVar.ProjectId, firebaseSettings);
-
+builder.Services.AddApiDependenciesWithCosmos(builder.Configuration.GetSection("AnimelistClientId").Value ?? string.Empty,
+                       builder.Configuration.GetSection(EmailConstants.AppPassword).Value ?? string.Empty,
+                       builder.Configuration.GetSection(CosmosDBConstants.EndPoint).Value ?? string.Empty,
+                       builder.Configuration.GetSection(CosmosDBConstants.AccessKey).Value ?? string.Empty
+                       );
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -10,11 +10,9 @@ namespace ObakiSite.Application.Features.Posts.Services
     public class PostCosmosService : IPostService
     {
         private readonly IDbContextFactory<PostContext> _factory;
-        private readonly IMapper _mapper;
-        public PostCosmosService(IDbContextFactory<PostContext> factory,IMapper mapper)
+        public PostCosmosService(IDbContextFactory<PostContext> factory)
         {
             _factory = factory;
-            _mapper = mapper;
         }
         //To do separate writes from reads
         public async Task<ApplicationResponse> CreatePost(PostDTO post)
@@ -30,7 +28,7 @@ namespace ObakiSite.Application.Features.Posts.Services
                 return ApplicationResponse.Fail("Post already exist.");
             }
 
-            var postDomain = _mapper.Map<Post>(post);
+            Post postDomain = post;
             context.Posts.Add(postDomain);
             var result = await context.SaveChangesAsync().ConfigureAwait(false);
 
@@ -42,10 +40,10 @@ namespace ObakiSite.Application.Features.Posts.Services
             return ApplicationResponse.Fail($"Post with id {post.Id} - creation failed.");
         }
 
-        public async Task<ApplicationResponse> DeletePost(string  id)
+        public async Task<ApplicationResponse> DeletePost(Guid id)
         {
-            if(string.IsNullOrEmpty(id))
-                  throw new ArgumentNullException(nameof(id));  
+            if (id == Guid.Empty)
+                throw new ArgumentNullException(nameof(id));  
 
             using var context = _factory.CreateDbContext();
             var postToDelete = await context.Posts.FindAsync(id).ConfigureAwait(false);
@@ -71,16 +69,16 @@ namespace ObakiSite.Application.Features.Posts.Services
                 throw new ArgumentNullException(nameof(post));
 
             using var context = _factory.CreateDbContext();
-            var postToUpdate = await context.Posts.FindAsync(post.Id).ConfigureAwait(false);
+            var checkPost = await context.Posts.WithPartitionKey(post.Id.ToString())
+                        .AsNoTracking().SingleOrDefaultAsync(i => i.Id == post.Id);
 
-            if (postToUpdate is null)
+            if (checkPost is null)
             {
                 return ApplicationResponse.Fail("Post does not exist.");
             }
 
-            postToUpdate.Title = post.Title;
-            postToUpdate.HtmlBody= post.HtmlBody;
-            postToUpdate.Modified  = DateTime.Now;
+            Post postToUpdate = post;
+            postToUpdate.SetModifiedNow();
             context.Posts.Update(postToUpdate);
 
             var result = await context.SaveChangesAsync().ConfigureAwait(false);
@@ -102,24 +100,24 @@ namespace ObakiSite.Application.Features.Posts.Services
 
             if (postSummary is not null)
             {
-                var postSummaryDTO = _mapper.Map<IReadOnlyList<PostSummaryDTO>>(postSummary);
+                var postSummaryDTO = postSummary.Select(s=> (PostSummaryDTO)s).ToList();
                 return ApplicationResponse<IReadOnlyList<PostSummaryDTO>>.Success(postSummaryDTO);
             }
 
             return ApplicationResponse<IReadOnlyList<PostSummaryDTO>>.Fail("Unable to retrieve post summaries.");
         }
 
-        public async Task<ApplicationResponse<PostDTO>> GetPostById(string id)
+        public async Task<ApplicationResponse<PostDTO>> GetPostById(Guid id)
         {
-            if (string.IsNullOrEmpty(id))
+            if (id == Guid.Empty)
                 throw new ArgumentNullException(nameof(id));
 
             using var context = _factory.CreateDbContext();
-            var post = await context.Posts.WithPartitionKey(id)
+            var post = await context.Posts.WithPartitionKey(id.ToString())
                         .AsNoTracking().SingleOrDefaultAsync(i=> i.Id == id);
             if (post is not null)
             {
-                var postDTO = _mapper.Map<PostDTO>(post);
+                var postDTO = (PostDTO)(post);
                 return ApplicationResponse<PostDTO>.Success(postDTO);
             }
             return ApplicationResponse<PostDTO>.Fail($"Post with id {id} - unable to retrieve.");

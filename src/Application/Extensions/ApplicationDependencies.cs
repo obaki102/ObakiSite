@@ -48,7 +48,6 @@ namespace ObakiSite.Application.Extensions
             {
                 throw new ArgumentNullException(nameof(services));
             }
-            services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
             services.AddHttpAnimeListService(animeListClientId);
 

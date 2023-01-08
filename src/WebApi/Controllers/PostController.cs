@@ -39,7 +39,7 @@ namespace ObakiSite.WebApi.Controllers
         }
 
         [HttpDelete("api/post/delete/{id}")]
-        public async Task<IActionResult> DeletePost(string id)
+        public async Task<IActionResult> DeletePost(Guid id)
         {
             var result = await _postService.DeletePost(id);
             if (result.IsSuccess)
@@ -51,7 +51,7 @@ namespace ObakiSite.WebApi.Controllers
         }
 
         [HttpGet("api/post/get/{id}")]
-        public async Task<IActionResult> GetPostById(string id)
+        public async Task<IActionResult> GetPostById(Guid id)
         {
             var result = await _postService.GetPostById(id);
             if (result.IsSuccess)

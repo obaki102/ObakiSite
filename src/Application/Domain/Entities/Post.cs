@@ -1,24 +1,38 @@
-﻿using Google.Cloud.Firestore;
-using ObakiSite.Application.Infra.Data.Firebase;
+﻿using ObakiSite.Application.Domain.Primitives;
 
 namespace ObakiSite.Application.Domain.Entities
 {
-    [FirestoreData]
-    public class Post : IFirebaseEntity
+
+    public class Post : Entity
     {
-        [FirestoreProperty]
-        public required string Id { get; set; }
-        [FirestoreProperty]
-        public required string Title { get; set; }
-        [FirestoreProperty]
-        public required string  HtmlBody { get; set; }
-        [FirestoreProperty]
-        public required string Author { get; set; }
-        [FirestoreProperty]
-        public DateTime Created { get; set; }
-        [FirestoreProperty]
-        public DateTime Modified { get; set; }
-        [FirestoreProperty]
-        public List<Tag>? Tags { get; set; }
+        public Post(Guid id, string title, string htmlBody, string author,
+            DateTime created, DateTime modified
+            ) : base(id)
+        {
+            Title = title;
+            HtmlBody = htmlBody;
+            Author = author;
+            Created = created;
+            Modified = modified;
+            IdStr = id.ToString();
+        }
+
+        public string IdStr { get; init; }
+        public string Title { get; init; }
+
+        public string HtmlBody { get; init; }
+
+        public string Author { get; init; }
+
+        public DateTime Created { get; private set; }
+
+        public DateTime Modified { get; private set; }
+
+        public List<Tag>? Tags { get; private set; }
+
+        public void SetModifiedNow()
+        {
+            Modified = DateTime.Now;
+        }
     }
 }

@@ -118,7 +118,7 @@
         var textContent = await GetHtmlStringValue();
         var post = new PostDTO
             {
-                Id = Id,
+                Id = Guid.Parse(Id),
                 Created = DateTime.Now,
                 HtmlBody = textContent,
                 Title = title

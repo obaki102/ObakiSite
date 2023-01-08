@@ -85,7 +85,7 @@ namespace ObakiSite.Tests.Features.Email
             });
             
            
-            var emailClient = new EmailService(ioptions, httpFactory.Object, _mapper) ;
+            var emailClient = new EmailService(ioptions, httpFactory.Object) ;
 
             //Act
             var result = emailClient.SendEmail(message);
@@ -111,7 +111,7 @@ namespace ObakiSite.Tests.Features.Email
             {
                 AppPassword = "InvalidCredemtial"
             });
-            var emailClient = new EmailService(ioptions, httpFactory.Object,_mapper);
+            var emailClient = new EmailService(ioptions, httpFactory.Object);
 
             //Act
             var result = emailClient.SendEmail(message);
@@ -141,7 +141,7 @@ namespace ObakiSite.Tests.Features.Email
                 AppPassword = _configuration[EmailConstants.AppPassword]
             });
 
-            var emailClient = new EmailService(ioptions, httpFactory.Object, _mapper);
+            var emailClient = new EmailService(ioptions, httpFactory.Object);
 
             //Act
             var result = emailClient.SendEmail(message);

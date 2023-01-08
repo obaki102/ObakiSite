@@ -1,13 +1,7 @@
 ﻿using AutoMapper;
-using Google.Cloud.Firestore.V1;
 using ObakiSite.Application.Domain.Entities;
 using ObakiSite.Application.Shared.DTO.Response;
 using ObakiSite.Application.Shared.DTO;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ObakiSite.Application.Infra.Data.Firebase;
 
 namespace ObakiSite.Application.Features.Posts.Services
@@ -28,32 +22,32 @@ namespace ObakiSite.Application.Features.Posts.Services
             if(post is null)
                 throw new ArgumentNullException(nameof(post));
 
-            var checkIfPostAlreadyExist = await _firebaseProvider.Get<Post>(post.Id, default).ConfigureAwait(false);
+            var checkIfPostAlreadyExist = await _firebaseProvider.Get<PostFirebase>(post.Id.ToString(), default).ConfigureAwait(false);
 
             if (checkIfPostAlreadyExist is not null)
             {
                 return ApplicationResponse.Fail("Post already exist.");
             }
 
-            var postDomain = _mapper.Map<Post>(post);
+            var postDomain = _mapper.Map<PostFirebase>(post);
             await _firebaseProvider.AddOrUpdate(postDomain, default).ConfigureAwait(false);
             return ApplicationResponse.Success();
 
         }
 
-        public async Task<ApplicationResponse> DeletePost(string id)
+        public async Task<ApplicationResponse> DeletePost(Guid id)
         {
-            if(string.IsNullOrEmpty(id))
-                    throw new ArgumentNullException(nameof(id));
+            if (id == Guid.Empty)
+                throw new ArgumentNullException(nameof(id));
 
-            var postToDelete = await _firebaseProvider.Get<Post>(id, default).ConfigureAwait(false);
+            var postToDelete = await _firebaseProvider.Get<PostFirebase>(id.ToString(), default).ConfigureAwait(false);
 
             if (postToDelete is null)
             {
                 return ApplicationResponse.Fail("Post does not exist.");
             }
 
-            await _firebaseProvider.Delete<Post>(id, default).ConfigureAwait(false);
+            await _firebaseProvider.Delete<PostFirebase>(id.ToString(), default).ConfigureAwait(false);
             return ApplicationResponse.Success();
         }
         public async Task<ApplicationResponse> UpdatePost(PostDTO post)
@@ -61,14 +55,14 @@ namespace ObakiSite.Application.Features.Posts.Services
             if (post is null)
                 throw new ArgumentNullException(nameof(post));
 
-            var postToUpdate = await _firebaseProvider.Get<Post>(post.Id,default).ConfigureAwait(false);
+            var postToUpdate = await _firebaseProvider.Get<PostFirebase>(post.Id.ToString(),default).ConfigureAwait(false);
 
             if (postToUpdate == null)
             {
                 return ApplicationResponse.Fail("Post does not exist.");
             }
 
-            var postDomain = _mapper.Map<Post>(post);
+            var postDomain = _mapper.Map<PostFirebase>(post);
             postDomain.Created = post.Created.ToUniversalTime();
             postDomain.Modified= DateTime.UtcNow;
 
@@ -80,8 +74,8 @@ namespace ObakiSite.Application.Features.Posts.Services
 
         public async Task<ApplicationResponse<IReadOnlyList<PostSummaryDTO>>> GetAllPostSummaries()
         {
-            var postSummary = (await _firebaseProvider.GetAll<Post>(default).ConfigureAwait(false))
-                            .Select(p => new PostSummary(p)).ToList();
+            var postSummary = (await _firebaseProvider.GetAll<PostFirebase>(default).ConfigureAwait(false))
+                            .Select(p => new PostSummary { Id = Guid.Parse(p.Id), Author = p.Author, CreationDate = p.Created, Title = p.Title  }).ToList();
 
             if (postSummary is not null)
             {
@@ -92,12 +86,12 @@ namespace ObakiSite.Application.Features.Posts.Services
             return ApplicationResponse<IReadOnlyList<PostSummaryDTO>>.Fail("Unable to retrieve post summaries.");
         }
 
-        public async Task<ApplicationResponse<PostDTO>> GetPostById(string id)
+        public async Task<ApplicationResponse<PostDTO>> GetPostById(Guid  id)
         {
-            if (string.IsNullOrEmpty(id))
+            if (id == Guid.Empty)
                 throw new ArgumentNullException(nameof(id));
 
-            var post = await _firebaseProvider.Get<Post>(id, default).ConfigureAwait(false);
+            var post = await _firebaseProvider.Get<PostFirebase>(id.ToString(), default).ConfigureAwait(false);
             if (post is not null)
             {
                 var postDTO = _mapper.Map<PostDTO>(post);
