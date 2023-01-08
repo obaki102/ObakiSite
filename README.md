@@ -1,5 +1,5 @@
 # ObakiSite
-This is my personal web site that I created to mainly familiarize myself when trying new stuff. 
+I created this personal website mainly as a way to familiarize myself with new concepts and technologies. 
 
 # Rich text box 
 This is made possible using the following packages:
