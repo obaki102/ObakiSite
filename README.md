@@ -1,5 +1,5 @@
 # ObakiSite
-This is my personal web site that I created to mainly familiarize myself with blazor. This is also serves as my "code diary" to record my learnings when trying new stuff. 
+This is my personal web site that I created to mainly familiarize myself when trying new stuff. 
 
 # Rich text box 
 This is made possible using the following packages:
