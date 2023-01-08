@@ -97,7 +97,7 @@ namespace ObakiSite.Api.Functions
 
             try
             {
-                var result = await _postService.DeletePost(id);
+                var result = await _postService.DeletePost(Guid.Parse(id));
 
                 await response.WriteAsJsonAsync(result);
                 return response;
@@ -126,7 +126,7 @@ namespace ObakiSite.Api.Functions
             }
             try
             {
-                var result = await _postService.GetPostById(id);
+                var result = await _postService.GetPostById(Guid.Parse(id));
 
                 await response.WriteAsJsonAsync(result);
                 return response;
