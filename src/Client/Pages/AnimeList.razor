@@ -8,13 +8,10 @@
     <div class="d-flex justify-center flex-row flex-wrap gap-4">
         @for (int i = 0; i < 100; i++)
         {
-            <MudCard Style="width:250px;height:550px;">
-                <MudCardHeader>
+            <MudCard Style="width:300px;height:500px;">
+                <MudCardHeader Style="height:100px;" Class="mt-2">
                     <CardHeaderContent>
-                        <div class="d-flex justify-space-between">
-                            <MudSkeleton Width="50%" Animation="Animation.Wave" />
-                            <MudSkeleton Width="10%" Animation="Animation.Wave" />
-                        </div>
+                        <MudSkeleton Width="90%" Animation="Animation.Wave" />
                     </CardHeaderContent>
                     <CardHeaderActions>
                         <MudSkeleton Width="10%" Animation="Animation.Wave" />
@@ -41,23 +38,10 @@ else
         {
             if (anime.Node != null && anime.Node.MainPicture != null)
             {
-                <MudCard Style="width:250px;">
-                    <MudCardHeader>
+                <MudCard Class="mx-2" Style="width:300px;">
+                    <MudCardHeader Style="height:100px;" Class="mt-2">
                         <CardHeaderContent>
-                            @if (@anime.Node.NumEpisodes == 0 && anime.Node.NumEpisodes != 0)
-                            {
-                                <MudText Typo="Typo.body2">
-                                    @FormatDate(anime.Node.StartDate)
-
-                                </MudText>
-                            }
-                            else
-                            {
-                                <MudText Typo="Typo.body2">
-                                    @FormatDate(anime.Node.StartDate) | @anime.Node.NumEpisodes eps
-
-                                </MudText>
-                            }
+                            <MudText Align="Align.Center" Typo="Typo.subtitle1">@FormatTitle(anime.Node.Title) </MudText>
                         </CardHeaderContent>
                         <CardHeaderActions>
                             <MudButton Variant="Variant.Text" OnClick="@(() => OpenDrawer(Anchor.Bottom, anime.Node))">
@@ -67,10 +51,23 @@ else
                             </MudButton>
                         </CardHeaderActions>
                     </MudCardHeader>
-                    <MudCardMedia ObjectFit="ObjectFit.Fill"  Image="@anime.Node.MainPicture.Large" Class="pa-1 rounded-lg" Height="250" />
+                    <MudCardMedia ObjectFit="ObjectFit.Fill" Image="@anime.Node.MainPicture.Large" Class="ma-2 rounded-lg" Height="250" />
                     <MudCardContent>
-                        <MudText Typo="Typo.h6">@anime.Node.Title (@anime.Node.AlternativeTitles.Ja)</MudText>
-                        <MudDivider />
+                        @if (@anime.Node.NumEpisodes == 0 && anime.Node.NumEpisodes != 0)
+                        {
+                            <MudText Typo="Typo.body2">
+                                @FormatDate(anime.Node.StartDate)
+
+                            </MudText>
+                        }
+                        else
+                        {
+                            <MudText Typo="Typo.body2">
+                                @FormatDate(anime.Node.StartDate) | @anime.Node.NumEpisodes eps
+
+                            </MudText>
+                        }
+                        <MudDivider Class="my-2" />
                         @if (anime.Node.Genres != null)
                         {
                             @foreach (var genre in anime.Node.Genres)
@@ -147,5 +144,13 @@ else
     private string FormatDate(string date)
     {
         return DateTime.Parse(date).ToString("MMM dd, yyyy");
+    }
+
+    private string FormatTitle(string title)
+    {
+        if (title.Length >= 90)
+            return $"{title.Substring(0, 90)} ...";
+
+        return title;
     }
 }

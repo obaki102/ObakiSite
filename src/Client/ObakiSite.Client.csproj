@@ -10,12 +10,16 @@
 	<ItemGroup>
 	  <Compile Remove="Extensions\**" />
 	  <Compile Remove="Services\Extensions\**" />
+	  <Compile Remove="wwwroot\lib\**" />
 	  <Content Remove="Extensions\**" />
 	  <Content Remove="Services\Extensions\**" />
+	  <Content Remove="wwwroot\lib\**" />
 	  <EmbeddedResource Remove="Extensions\**" />
 	  <EmbeddedResource Remove="Services\Extensions\**" />
+	  <EmbeddedResource Remove="wwwroot\lib\**" />
 	  <None Remove="Extensions\**" />
 	  <None Remove="Services\Extensions\**" />
+	  <None Remove="wwwroot\lib\**" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -32,10 +36,6 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\Application\ObakiSite.Application.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="wwwroot\lib\" />
 	</ItemGroup>
 	
 	

@@ -1,5 +1,6 @@
 ﻿.app-post-text {
     white-space: nowrap;
+    width: 200px;
     overflow: hidden;
     text-overflow: ellipsis;
 }
