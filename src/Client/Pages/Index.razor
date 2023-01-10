@@ -14,30 +14,30 @@
             <MudList Clickable="true">
                 <MudListItem Text="Chat App" Icon="@Icons.Material.Filled.Chat" Color="Color.Primary" Href="/livechat" Dense="true" />
             </MudList>
-            <MudList Clickable="true">
+           @* <MudList Clickable="true">
                 <MudListItem Text="Create Post" Icon="@Icons.Material.Filled.Create" Color="Color.Primary" Href="/post/create" Dense="true" />
             </MudList>
             <MudList Clickable="true">
                 <MudListItem Text="View Posts" Icon="@Icons.Material.Filled.ListAlt" Color="Color.Primary" Href="/post/view/summaries" Dense="true" />
-            </MudList>
+            </MudList>*@
         </MudCardContent>
     </MudPaper>
-    <MudCarousel Class="mud-width-full" Style="width:80%;" ShowArrows="true" ShowBullets="true" EnableSwipeGesture="true" AutoCycle="true" TData="object">
+    @*   <MudCarousel Class="mud-width-full" Style="width:80%;" ShowArrows="true" ShowBullets="true" EnableSwipeGesture="true" AutoCycle="true" TData="object">
     <MudCarouselItem Transition="Transition.Slide" Color="@Color.Primary">
-        <div class="d-flex" style="height:100%">
-            <MudText Class="mx-auto my-auto" Typo="Typo.caption" GutterBottom="true" Style="font-size: 15px;">Hello there! Welcome to my site.</MudText>
-        </div>
+    <div class="d-flex" style="height:100%">
+    <MudText Class="mx-auto my-auto" Typo="Typo.caption" GutterBottom="true" Style="font-size: 15px;">Hello there! Welcome to my site.</MudText>
+    </div>
     </MudCarouselItem>
     <MudCarouselItem Transition="Transition.Slide" Color="@Color.Secondary">
-        <div class="d-flex" style="height:100%">
-            <MudText Class="mx-auto my-auto" Typo="Typo.caption" GutterBottom="true" Style="font-size: 15px;">Hello there! Welcome to my site.</MudText>
-        </div>
+    <div class="d-flex" style="height:100%">
+    <MudText Class="mx-auto my-auto" Typo="Typo.caption" GutterBottom="true" Style="font-size: 15px;">Hello there! Welcome to my site.</MudText>
+    </div>
     </MudCarouselItem>
 
-</MudCarousel>
+    </MudCarousel>*@
+    <ObakiSite.Client.Pages.Posts.ViewPostSummaries />
+
 </div>
-
-
 
 @code {
 
