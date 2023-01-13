@@ -9,7 +9,7 @@
 @if (post == null)
 {
     <MudContainer MaxWidth="MaxWidth.Medium">
-        <MudPaper Elevation="1" Class="ma-4" Outlined="true">
+        <MudPaper Elevation="1" Class="ma-4" Outlined="true" Height="800px">
             <MudCard Elevation="0">
                 <MudCardHeader>
                     <CardHeaderAvatar>
@@ -39,7 +39,7 @@
             <MudSkeleton Class="ml-16 mr-8 mb-4" Width="80%" Animation="Animation.Wave" />
             <div class="ma-4">
                 <MudElement HtmlTag="html" Class="ma-4">
-                    @for (int i = 0; i < 10; i++)
+                    @for (int i = 0; i < 18; i++)
                     {
                         <MudSkeleton Class="my-4" Width="80%" Animation="Animation.Wave" />
                     }
@@ -80,9 +80,10 @@ else
                     </CardHeaderActions>
                 </MudCardHeader>
             </MudCard>
-            <MudText Class="ma-4" Style="font-size:30px" Typo="Typo.body2">@post.Title</MudText>
-            <MudElement HtmlTag="html" Class="ma-4">
-                <MudElement HtmlTag="div" Class="ma-4">
+            <MudText Class="ml-16 mt-4 mb-4" Style="font-size:30px" Typo="Typo.body2">@post.Title</MudText>
+            <MudDivider Class="mx-16" />
+            <MudElement HtmlTag="html" Class="ma-8">
+                <MudElement HtmlTag="div" Class="ma-8">
                     @htmlBody
                 </MudElement>
             </MudElement>
