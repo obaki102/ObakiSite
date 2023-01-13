@@ -5,7 +5,6 @@ I created this personal website mainly as a way to familiarize myself with new c
 This is made possible using the following packages:
  ##### https://github.com/Blazored/TextEditor
  ##### https://quilljs.com/
- ##### https://github.com/somegenericdev/WYSIWYGTextEditor
 Please check and support their work.
  
 # License
