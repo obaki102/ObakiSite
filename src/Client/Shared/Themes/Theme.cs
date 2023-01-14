@@ -11,15 +11,16 @@ namespace ObakiSite.Client.Shared.Themes
             var defaultLightPallete = defaultTheme.Palette;
             //Dark 
             defaultDarkPallete.Dark = "#0d1117";
-            defaultDarkPallete.Primary = "#286b5e";
+            defaultDarkPallete.Primary = "#EEEEEE";
             defaultDarkPallete.AppbarBackground = "#161b22";
             defaultDarkPallete.DarkContrastText = "#ecf2f8";
             defaultDarkPallete.Background = "#0d1117";
             defaultDarkPallete.DrawerBackground = "#161b22";
             defaultDarkPallete.Surface = "#161b22";
             defaultDarkPallete.TextPrimary = "#ecf2f8";
+            defaultDarkPallete.PrimaryContrastText = "161b22";
             //Light
-            defaultLightPallete.Primary = "#286b5e";
+            defaultLightPallete.Primary = "#EEEEEE";
             return defaultTheme;  
         }
        
