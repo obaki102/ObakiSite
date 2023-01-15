@@ -15,7 +15,7 @@
             @if (IsMyMessage(message.User))
             {
                 <div class="d-flex justify-end">
-                    <MudPaper Class="pa-2 mt-4 mb-4 mr-2 overflow-auto mud-theme-primary" MaxWidth="300px" Style="word-break: break-all;">
+                    <MudPaper Class="pa-2 mt-4 mb-4 mr-2 overflow-auto mud-theme-primary" MaxWidth="300px" Style="word-break: break-all;" Outlined="true">
                         <div class="d-flex flex-row">
                             <MudChip Variant="Variant.Outlined" Color="Color.Tertiary" Size="Size.Small">@message.MessageCreateDate</MudChip>
                         </div>
@@ -26,7 +26,7 @@
             else
             {
                 <div class="d-flex justify-start">
-                    <MudPaper Class="pa-2 mt-4 mb-4 ml-4 overflow-auto" MaxWidth="300px" Style="@($"background:{Colors.Indigo.Darken1};word-break: break-all;")">
+                    <MudPaper Class="pa-2 mt-4 mb-4 ml-4 overflow-auto" MaxWidth="300px" Style="word-break: break-all;" Outlined="true">
                         <div class="d-flex flex-row">
                             <MudChip Variant="Variant.Outlined" Size="Size.Small">@message.MessageCreateDate</MudChip>
                         </div>

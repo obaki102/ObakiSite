@@ -20,11 +20,15 @@ namespace ObakiSite.Client.Shared.Themes
             defaultDarkPallete.TextPrimary = "#ecf2f8";
             defaultDarkPallete.PrimaryContrastText = "161b22";
             defaultDarkPallete.AppbarText = "#EEEEEE";
-            defaultDarkPallete.Tertiary = "161b22";
+            defaultDarkPallete.Tertiary = "#161b22";
             //Light
             defaultLightPallete.Primary = "#EEEEEE";
-            defaultLightPallete.PrimaryContrastText = "161b22";
+            defaultLightPallete.PrimaryContrastText = "#161b22";
             defaultLightPallete.AppbarText = "#EEEEEE";
+            defaultLightPallete.TextPrimary = "#161b22";
+            defaultLightPallete.AppbarBackground = "#2C74B3";
+            defaultLightPallete.Tertiary = "#161b22";
+
             return defaultTheme;  
         }
        
@@ -34,21 +38,24 @@ namespace ObakiSite.Client.Shared.Themes
             var defaultDarkPallete = defaultTheme.PaletteDark;
             var defaultLightPallete = defaultTheme.Palette;
             //Dark 
-            defaultDarkPallete.Dark = "#161b22";
-           // defaultDarkPallete.Primary = "#7c797c";
+            defaultDarkPallete.Dark = "#0d1117";
+            defaultDarkPallete.Primary = "#EEEEEE";
             defaultDarkPallete.AppbarBackground = "#161b22";
             defaultDarkPallete.DarkContrastText = "#ecf2f8";
             defaultDarkPallete.Background = "#0d1117";
             defaultDarkPallete.DrawerBackground = "#161b22";
-            defaultDarkPallete.Surface = "#21262d";
+            defaultDarkPallete.Surface = "#161b22";
             defaultDarkPallete.TextPrimary = "#ecf2f8";
-
+            defaultDarkPallete.PrimaryContrastText = "161b22";
+            defaultDarkPallete.AppbarText = "#EEEEEE";
+            defaultDarkPallete.Tertiary = "#161b22";
             //Light
-            defaultLightPallete.Dark = "#ffffffff";
-          //  defaultLightPallete.Primary = "#7c797c";
-            defaultLightPallete.DarkContrastText = "#424242ff";
-            defaultLightPallete.Background = "#ecf2f8";
-
+            defaultLightPallete.Primary = "#2C74B3";
+            defaultLightPallete.PrimaryContrastText = "#ecf2f8";
+            defaultLightPallete.AppbarText = "#EEEEEE";
+            defaultLightPallete.TextPrimary = "#161b22";
+            defaultLightPallete.AppbarBackground = "#2C74B3";
+            defaultLightPallete.Tertiary = "#161b22";
             return defaultTheme;
         }
         public static MudTheme Dark()

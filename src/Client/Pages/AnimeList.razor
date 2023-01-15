@@ -38,7 +38,7 @@ else
         {
             if (anime.Node != null && anime.Node.MainPicture != null)
             {
-                <MudCard Class="mx-2" Style="width:300px;">
+                <MudCard Class="mx-2" Style="width:300px;" Elevation="2">
                     <MudCardHeader Style="height:100px;" Class="mt-2">
                         <CardHeaderContent>
                             <MudText Align="Align.Center" Typo="Typo.subtitle1">@FormatTitle(anime.Node.Title) </MudText>
@@ -51,7 +51,7 @@ else
                             </MudButton>
                         </CardHeaderActions>
                     </MudCardHeader>
-                    <MudCardMedia ObjectFit="ObjectFit.Fill" Image="@anime.Node.MainPicture.Large" Class="ma-2 rounded-lg" Height="250" />
+                    <MudCardMedia ObjectFit="ObjectFit.Fill" Image="@anime.Node.MainPicture.Large" Class="rounded-lg" Height="250" />
                     <MudCardContent>
                         @if (@anime.Node.NumEpisodes == 0 && anime.Node.NumEpisodes != 0)
                         {
