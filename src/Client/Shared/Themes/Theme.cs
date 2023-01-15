@@ -22,12 +22,12 @@ namespace ObakiSite.Client.Shared.Themes
             defaultDarkPallete.AppbarText = "#EEEEEE";
             defaultDarkPallete.Tertiary = "#161b22";
             //Light
-            defaultLightPallete.Primary = "#EEEEEE";
-            defaultLightPallete.PrimaryContrastText = "#161b22";
+            defaultLightPallete.Primary = "#161b22";
+            defaultLightPallete.PrimaryContrastText = "#EEEEEE";
             defaultLightPallete.AppbarText = "#EEEEEE";
             defaultLightPallete.TextPrimary = "#161b22";
-            defaultLightPallete.AppbarBackground = "#2C74B3";
-            defaultLightPallete.Tertiary = "#161b22";
+            defaultLightPallete.AppbarBackground = "#58A6FF";
+            defaultLightPallete.Tertiary = "#EEEEEE";
 
             return defaultTheme;  
         }
@@ -50,11 +50,11 @@ namespace ObakiSite.Client.Shared.Themes
             defaultDarkPallete.AppbarText = "#EEEEEE";
             defaultDarkPallete.Tertiary = "#161b22";
             //Light
-            defaultLightPallete.Primary = "#2C74B3";
+            defaultLightPallete.Primary = "#58A6FF";
             defaultLightPallete.PrimaryContrastText = "#ecf2f8";
-            defaultLightPallete.AppbarText = "#EEEEEE";
+            defaultLightPallete.AppbarText = "#ecf2f8";
             defaultLightPallete.TextPrimary = "#161b22";
-            defaultLightPallete.AppbarBackground = "#2C74B3";
+            defaultLightPallete.AppbarBackground = "#58A6FF";
             defaultLightPallete.Tertiary = "#161b22";
             return defaultTheme;
         }

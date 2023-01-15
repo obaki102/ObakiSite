@@ -15,22 +15,20 @@
             @if (IsMyMessage(message.User))
             {
                 <div class="d-flex justify-end">
-                    <MudPaper Class="pa-2 mt-4 mb-4 mr-2 overflow-auto mud-theme-primary" MaxWidth="300px" Style="word-break: break-all;" Outlined="true">
-                        <div class="d-flex flex-row">
-                            <MudChip Variant="Variant.Outlined" Color="Color.Tertiary" Size="Size.Small">@message.MessageCreateDate</MudChip>
-                        </div>
-                        <MudText Typo="Typo.body2">@message.Message</MudText>
+                    <MudPaper Class="pa-2 mt-4 mb-4 mr-2 overflow-auto mud-theme-primary rounded-lg" MaxWidth="300px" Style="word-break: break-all;" Outlined="true">
+                        <MudTooltip Text="@message.MessageCreateDate.ToString()" Color="Color.Primary" Placement="Placement.Start" >
+                            <MudText Typo="Typo.body2" Class="mx-1">@message.Message</MudText>
+                        </MudTooltip>
                     </MudPaper>
                 </div>
             }
             else
             {
                 <div class="d-flex justify-start">
-                    <MudPaper Class="pa-2 mt-4 mb-4 ml-4 overflow-auto" MaxWidth="300px" Style="word-break: break-all;" Outlined="true">
-                        <div class="d-flex flex-row">
-                            <MudChip Variant="Variant.Outlined" Size="Size.Small">@message.MessageCreateDate</MudChip>
-                        </div>
-                        <MudText Typo="Typo.body2">@message.Message</MudText>
+                    <MudPaper Class="pa-2 mt-4 mb-4 ml-4 overflow-auto rounded-lg" MaxWidth="300px" Style="word-break: break-all;" Outlined="true">
+                        <MudTooltip Text="@message.MessageCreateDate.ToString()" Color="Color.Primary" Placement="Placement.Start">
+                            <MudText Typo="Typo.body2" Class="mx-1">@message.Message</MudText>
+                        </MudTooltip>
                     </MudPaper>
                 </div>
             }
