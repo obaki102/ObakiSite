@@ -4,7 +4,7 @@ using ObakiSite.Application.Features.DefaultSettings.Constants;
 using ObakiSite.Application.Shared.DTO;
 using ObakiSite.Application.Shared.DTO.Response;
 
-namespace ObakiSite.Application.Features.Preference.Commands
+namespace ObakiSite.Application.Features.Preference.Queries
 {
     public record GetPreferences : IRequest<ApplicationResponse<Preferences>>;
 
@@ -19,15 +19,8 @@ namespace ObakiSite.Application.Features.Preference.Commands
         {
             try
             {
-                var cache = await _localStorageCache.GetOrCreateCacheAsync(
-                 PreferenceConstants.CacheDataKey,
-                 TimeSpan.FromHours(6),
-                   () =>
-                   {
-                       return ValueTask.FromResult(ApplicationResponse<Preferences>.Success(new Preferences()));
-                   });
-
-                return cache ?? ApplicationResponse<Preferences>.Fail("No cache data retrieved.");
+                var cache = await _localStorageCache.GetCacheAsync<Preferences>(PreferenceConstants.CacheDataKey);
+                return ApplicationResponse<Preferences>.Success(cache ?? new Preferences());
             }
             catch (Exception ex)
             {

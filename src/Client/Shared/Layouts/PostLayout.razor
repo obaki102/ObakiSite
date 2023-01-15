@@ -4,7 +4,7 @@
         <MudThemeProvider @bind-IsDarkMode="_isDarkMode" Theme="_theme" />
         <MudSnackbarProvider />
         <div class="d-flex flex-column">
-            <MudAppBar Fixed="true"  Elevation="0">
+            <MudAppBar Fixed="true" Elevation="0">
                 <MudContainer MaxWidth="MaxWidth.Large">
                     <div class="d-flex align-center my-8">
                         <MudChip Color="Color.Dark" Href="/"><MudText Typo="Typo.button" Style="font-size: 35px;">O</MudText><MudText Typo="Typo.caption" Style="font-size: 20px;">baki</MudText></MudChip>
@@ -32,11 +32,11 @@
     private MudTheme _theme = Theme.Default();
     private bool _isDarkMode = true;
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
         if (AppState is not null)
         {
-            _isDarkMode = AppState.Settings.IsDarkTheme;
+            _isDarkMode = await AppState.IsDarkMode();
         }
     }
 }

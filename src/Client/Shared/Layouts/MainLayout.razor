@@ -1,20 +1,21 @@
 ﻿@inherits LayoutComponentBase
+@inject ISender Mediator
 <MudThemeProvider @bind-IsDarkMode="_isDarkMode" Theme="_theme" />
 <MudDialogProvider />
 <MudSnackbarProvider />
 <MudLayout>
     <MudAppBar Elevation="1">
         <MudContainer MaxWidth="MaxWidth.Large">
-            <div class="d-flex align-center my-8" Elevation="1">
-                <MudChip Color="Color.Dark" Href="/"><MudText Typo="Typo.button" Style="font-size: 35px;">O</MudText><MudText Typo="Typo.caption" Style="font-size: 20px;">baki</MudText></MudChip>
-                <MudDivider Class="ma-1" Vertical="true" FlexItem="true" />
+            <div class="d-flex align-center" Elevation="1">
+                <a class="mt-2" href="/"> <MudImage Src="/img/logo.png" Width="70" Height="45" ObjectFit="ObjectFit.Cover" Elevation="2" Class="rounded-lg" /></a>
+                <MudDivider Class="my-4 mr-2 ml-4" Vertical="true" FlexItem="true" />
                 <MudTooltip Text="About me" Color="Color.Primary" Placement="Placement.Bottom">
                     <MudIconButton Href="mycv" Icon="@Icons.Filled.Person" Color="Color.Primary" />
                 </MudTooltip>
                 <MudTooltip Text="GitHub repo" Color="Color.Primary" Placement="Placement.Bottom">
                     <MudIconButton Href="https://github.com/obaki102/ObakiSite" Icon="@Icons.Custom.Brands.GitHub" Color="Color.Primary" />
                 </MudTooltip>
-                 <MudTooltip Text="Anime List" Color="Color.Primary" Placement="Placement.Bottom">
+                <MudTooltip Text="Anime List" Color="Color.Primary" Placement="Placement.Bottom">
                     <MudIconButton Href="anime" Icon="@Icons.Filled.LibraryBooks" Color="Color.Primary" />
                 </MudTooltip>
                 <MudSpacer />
@@ -23,6 +24,9 @@
                 </MudButton>
             </div>
         </MudContainer>
+        <MudTooltip Text="Toggle Light/Dark Mode" Color="Color.Primary" Placement="Placement.Left">
+            <MudToggleIconButton ToggledChanged="()=> SetPreference()" Icon="@Icons.Material.Filled.LightMode" ToggledIcon="@Icons.Material.Filled.DarkMode"></MudToggleIconButton>
+        </MudTooltip>
     </MudAppBar>
     <MudMainContent>
         <MudContainer MaxWidth="MaxWidth.Large" Class="my-4">
@@ -41,18 +45,34 @@
 @code {
     [CascadingParameter] public CascadingAppState? AppState { get; set; }
     private MudTheme _theme = Theme.Default();
-    private bool _isDarkMode = true;
+    private bool _isDarkMode;
     bool _drawerOpen = false;
 
     public void OpenDrawer()
     {
         _drawerOpen = !_drawerOpen;
     }
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
         if (AppState is not null)
         {
-            _isDarkMode = AppState.Settings.IsDarkTheme;
+            _isDarkMode = await AppState.IsDarkMode();
         }
+    }
+
+    private async Task SetPreference()
+    {
+        _isDarkMode = !_isDarkMode;
+        var command = new SetPreference(new Preferences
+            {
+                IsDarkTheme = _isDarkMode
+            });
+
+        await Mediator.Send(command);
+
+        if (AppState is not null)
+            AppState.Settings.IsDarkTheme = _isDarkMode;
+
+        StateHasChanged();
     }
 }

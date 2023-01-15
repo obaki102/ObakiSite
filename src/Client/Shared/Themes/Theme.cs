@@ -19,8 +19,12 @@ namespace ObakiSite.Client.Shared.Themes
             defaultDarkPallete.Surface = "#161b22";
             defaultDarkPallete.TextPrimary = "#ecf2f8";
             defaultDarkPallete.PrimaryContrastText = "161b22";
+            defaultDarkPallete.AppbarText = "#EEEEEE";
+            defaultDarkPallete.Tertiary = "161b22";
             //Light
             defaultLightPallete.Primary = "#EEEEEE";
+            defaultLightPallete.PrimaryContrastText = "161b22";
+            defaultLightPallete.AppbarText = "#EEEEEE";
             return defaultTheme;  
         }
        

@@ -10,14 +10,6 @@
     public RenderFragment? ChildContent { get; set; }
 
     private Preferences _setting = new();
-    protected override async Task OnInitializedAsync()
-    {
-        var result =  await Mediator.Send(new GetPreferences());
-        if (result.Data is not null && result.IsSuccess)
-        {
-            _setting = result.Data;
-        }
-    }
 
     public Preferences Settings
     {
@@ -25,5 +17,15 @@
         {
             return _setting;
         }
+    }
+
+    public async Task<bool> IsDarkMode()
+    {
+        var result = await Mediator.Send(new GetPreferences());
+        if (result.Data is not null && result.IsSuccess)
+        {
+            return result.Data.IsDarkTheme;
+        }
+        return true;
     }
 }

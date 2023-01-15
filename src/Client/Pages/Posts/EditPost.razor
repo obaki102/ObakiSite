@@ -158,11 +158,11 @@
         }
         else
         {
-            if (result.Messages.Count > 0)
-            {
-                foreach (var error in result.Messages)
-                    Snackbar.Add(error, Severity.Error);
-            }
+            //if (result.Messages.Count > 0)
+            //{
+            //    foreach (var error in result.Messages)
+            //        Snackbar.Add(error, Severity.Error);
+            //}
             var errorMessage = origin switch
             {
                 "post" => "Sorry, unable to save your post.",
