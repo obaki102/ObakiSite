@@ -19,14 +19,18 @@
                     <MudIconButton Href="anime" Icon="@Icons.Filled.LibraryBooks" Color="Color.Primary" />
                 </MudTooltip>
                 <MudSpacer />
-                <MudButton Variant="Variant.Outlined" Color="Color.Primary" Size="Size.Large" Href="/post/create">
-                    Create Post
-                </MudButton>
+                <MudHidden Breakpoint="Breakpoint.MdAndUp" Invert="true">
+                    <MudButton Variant="Variant.Outlined" Class="flex-none" Color="Color.Primary" Size="Size.Large" Href="/post/create">
+                        Create Post
+                    </MudButton>
+                </MudHidden>
             </div>
         </MudContainer>
-        <MudTooltip Text="Toggle Light/Dark Mode" Color="Color.Primary" Placement="Placement.Left">
-            <MudToggleIconButton ToggledChanged="()=> SetPreference()" Icon="@Icons.Material.Filled.LightMode" ToggledIcon="@Icons.Material.Filled.DarkMode"></MudToggleIconButton>
-        </MudTooltip>
+        <MudHidden Breakpoint="Breakpoint.MdAndUp" Invert="true">
+            <MudTooltip Text="Toggle Light/Dark Mode" Color="Color.Primary" Placement="Placement.Left">
+                <MudToggleIconButton ToggledChanged="()=> SetPreference()" Class="flex-none" Icon="@Icons.Material.Filled.LightMode" ToggledIcon="@Icons.Material.Filled.DarkMode"></MudToggleIconButton>
+            </MudTooltip>
+        </MudHidden>
     </MudAppBar>
     <MudMainContent>
         <MudContainer MaxWidth="MaxWidth.Large" Class="my-4">
