@@ -83,8 +83,10 @@ else
             <MudText Class="ml-16 mt-4 mb-4" Style="font-size:30px" Typo="Typo.body2">@post.Title</MudText>
             <MudDivider Class="mx-16" />
             <MudElement HtmlTag="html" Class="ma-8">
-                <MudElement HtmlTag="div" Class="ma-8">
+                <MudElement HtmlTag="div" Class="ql-container ql-bubble">
+                    <div class="ql-editor">
                     @htmlBody
+                    </div>
                 </MudElement>
             </MudElement>
         </MudPaper>
