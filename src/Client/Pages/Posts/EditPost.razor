@@ -11,10 +11,10 @@
 @*Todo: implement authorization*@
 <MudPaper Class="mt-16 mb-4" Elevation="1" Outlined="true">
     <MudTextField Style="font-size: 30px" T="string" Class="ma-4 mb-5" @bind-Value="title" Immediate="true" Variant="Variant.Text" Lines="2" />
-    <div class="ma-4">
+    <div id="scrollableDiv1" class="ma-4">
         <TextEditor @ref="EditRichTextEditor" Placeholder="write a post..." DebugLevel="error">
             <ToolbarContent>
-                <div class="ql-bubble">
+                <div class="@_textEditorCssTheme">
                     <select class="ql-header">
                         <option selected=""></option>
                         @for (int i = 1; i < 7; i++)
@@ -85,11 +85,13 @@
 
 @code
 {
+    //todo: consolidate all default settings
+    [CascadingParameter]
+    protected bool _isDarkMode { get; set; }
     [Parameter]
     public string Id { get; set; } = string.Empty;
-    //todo: Global theme defaults accross all layouts.
     private MudTheme _theme = Theme.Default();
-    private bool _isDarkMode = true;
+    private string _textEditorCssTheme = string.Empty;
     private bool isPosting = false;
     private bool islaoding = false;
     private TextEditor? EditRichTextEditor;
@@ -110,6 +112,8 @@
                 islaoding = true;
             }
         }
+
+        _textEditorCssTheme = _isDarkMode ? "ql-bubble" : "ql-snow";
     }
 
     private async Task ModifyPost()

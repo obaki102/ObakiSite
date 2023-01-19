@@ -1,0 +1,66 @@
+﻿@using WYSIWYGTextEditor;
+<div id="scrollableDiv1" class="ma-4">
+    <TextEditor @ref="RichTextEditor" Placeholder="write a post..." DebugLevel="error">
+        <ToolbarContent>
+            <div class="ql-bubble">
+                <select class="ql-header">
+                    <option selected=""></option>
+                    @for (int i = 1; i < 7; i++)
+                    {
+                        <option value="@i"></option>
+                    }
+
+                </select>
+                <button class="ql-font" title="Font Size" />
+                <MudTooltip Text="Bold Ctrl+B" Color="Color.Primary" Placement="Placement.Bottom">
+                    <button class="ql-bold" />
+                </MudTooltip>
+                <MudTooltip Text="Italic Ctrl+I" Color="Color.Primary" Placement="Placement.Bottom">
+                    <button class="ql-italic" />
+                </MudTooltip>
+                <MudTooltip Text="Underline Ctrl+U" Color="Color.Primary" Placement="Placement.Bottom">
+                    <button class="ql-underline" />
+                </MudTooltip>
+                <MudTooltip Text="Strike" Color="Color.Primary" Placement="Placement.Bottom">
+                    <button class="ql-strike" />
+                </MudTooltip>
+                <MudTooltip Text="Color" Color="Color.Primary" Placement="Placement.Bottom">
+                    <select class="ql-color" />
+                </MudTooltip>
+                <MudTooltip Text="Background" Color="Color.Primary" Placement="Placement.Bottom">
+                    <select class="ql-background" />
+                </MudTooltip>
+                <MudTooltip Text="List" Color="Color.Primary" Placement="Placement.Bottom">
+                    <button class="ql-list" value="ordered" />
+                </MudTooltip>
+                <MudTooltip Text="Bullet" Color="Color.Primary" Placement="Placement.Bottom">
+                    <button class="ql-list" value="bullet" />
+                </MudTooltip>
+                <MudTooltip Text="Indent Left" Color="Color.Primary" Placement="Placement.Bottom">
+                    <button class="ql-indent" value="-1" />
+                </MudTooltip>
+                <MudTooltip Text="Indent Right" Color="Color.Primary" Placement="Placement.Bottom">
+                    <button class="ql-indent" value="+1" />
+                </MudTooltip>
+                <MudTooltip Text="Code Block" Color="Color.Primary" Placement="Placement.Bottom">
+                    <button class="ql-code-block" />
+                </MudTooltip>
+                <MudTooltip Text="Video Link" Color="Color.Primary" Placement="Placement.Bottom">
+                    <button class="ql-video" />
+                </MudTooltip>
+                @* todo: Set the default width of images attached.
+                There is a curent bug that will take the original width of the image and this cause the image to overlap with the
+                div container when viewing the post.
+                *@
+                <MudTooltip Text="Image" Color="Color.Primary" Placement="Placement.Bottom">
+                    <button class="ql-image"></button>
+                </MudTooltip>
+            </div>
+        </ToolbarContent>
+    </TextEditor>
+</div>
+@code
+{
+    [Parameter]
+    public TextEditor? RichTextEditor { get; set; }
+}

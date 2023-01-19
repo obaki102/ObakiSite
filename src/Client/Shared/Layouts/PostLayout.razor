@@ -1,4 +1,5 @@
 ﻿@inherits LayoutComponentBase
+<CascadingValue Value="@_isDarkMode">
 <MudLayout>
     <MudContainer MaxWidth="MaxWidth.Medium" Class="mt-4">
         <MudThemeProvider @bind-IsDarkMode="_isDarkMode" Theme="_theme" />
@@ -27,6 +28,7 @@
         </div>
     </MudContainer>
 </MudLayout>
+</CascadingValue>
 @code {
     [CascadingParameter] public CascadingAppState? AppState { get; set; }
     private MudTheme _theme = Theme.Default();
