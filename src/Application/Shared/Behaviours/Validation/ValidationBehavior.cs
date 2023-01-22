@@ -2,7 +2,7 @@
 using MediatR;
 using ObakiSite.Application.Shared.DTO.Response;
 
-namespace ObakiSite.Application.Behaviours.Validation
+namespace ObakiSite.Application.Shared.Behaviours.Validation
 {
 
     public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>

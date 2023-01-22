@@ -3,7 +3,7 @@ using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 
-namespace ObakiSite.Application.Extensions
+namespace ObakiSite.Application.Shared.Extensions
 {
     public static class UtilityExtenstions
     {
@@ -11,7 +11,7 @@ namespace ObakiSite.Application.Extensions
         {
             return new StringContent(input, Encoding.UTF8, "application/json");
         }
-        public static async ValueTask<T?>  ConvertStreamToTAsync<T>(this HttpResponseMessage httpResponseMessage)
+        public static async ValueTask<T?> ConvertStreamToTAsync<T>(this HttpResponseMessage httpResponseMessage)
         {
             var content = await httpResponseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false);
             var result = await JsonSerializer.DeserializeAsync<T>(content).ConfigureAwait(false);

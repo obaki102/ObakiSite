@@ -1,9 +1,8 @@
-﻿using System.Text.Json;
-using ObakiSite.Application.Extensions;
-using ObakiSite.Application.Features.Animelist.Constants;
+﻿using ObakiSite.Application.Features.Animelist.Constants;
 using ObakiSite.Application.Features.Animelist.DTO;
 using ObakiSite.Application.Shared.Constants;
 using ObakiSite.Application.Shared.DTO.Response;
+using ObakiSite.Application.Shared.Extensions;
 
 namespace ObakiSite.Application.Features.Animelist.Services
 {

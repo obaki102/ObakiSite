@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using MediatR;
 using Obaki.LocalStorageCache;
-using ObakiSite.Application.Extensions;
 using ObakiSite.Application.Features.Posts.Constants;
 using ObakiSite.Application.Shared.Constants;
 using ObakiSite.Application.Shared.DTO;
 using ObakiSite.Application.Shared.DTO.Response;
+using ObakiSite.Application.Shared.Extensions;
 
 namespace ObakiSite.Application.Features.Posts.Queries
 {

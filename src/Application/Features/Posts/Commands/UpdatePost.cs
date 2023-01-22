@@ -1,17 +1,12 @@
 ﻿using AutoMapper;
 using MediatR;
 using Obaki.LocalStorageCache;
-using ObakiSite.Application.Extensions;
 using ObakiSite.Application.Features.Posts.Constants;
 using ObakiSite.Application.Shared.Constants;
 using ObakiSite.Application.Shared.DTO;
 using ObakiSite.Application.Shared.DTO.Response;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using ObakiSite.Application.Shared.Extensions;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace ObakiSite.Application.Features.Posts.Commands
 {

@@ -1,6 +1,6 @@
-using ObakiSite.Application.Extensions;
 using ObakiSite.Application.Features.Email.Constants;
 using ObakiSite.Application.Shared.Constants;
+using ObakiSite.Application.Shared.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddCors(options =>

@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using ObakiSite.Client;
 using MudBlazor.Services;
 using ObakiSite.Client.Services.Components.Badge;
-using ObakiSite.Application.Extensions;
 using MudBlazor;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using ObakiSite.Application.Shared.Constants;
+using ObakiSite.Application.Shared.Extensions;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 var baseUrl = new Uri(builder.Configuration["WEBAPI_Prefix"] ?? DefaultConstants.WebApiHost );

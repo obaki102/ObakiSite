@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using ObakiSite.Application.Features.Chat.Services;
 
-namespace ObakiSite.Application.Extensions
+namespace ObakiSite.Application.Shared.Extensions
 {
     public static class ChatHubDependencies
     {

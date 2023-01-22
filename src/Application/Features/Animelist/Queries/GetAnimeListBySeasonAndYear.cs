@@ -5,6 +5,7 @@ using ObakiSite.Application.Features.Animelist.Constants;
 using ObakiSite.Application.Shared.Constants;
 using ObakiSite.Application.Shared.DTO;
 using ObakiSite.Application.Shared.DTO.Response;
+using ObakiSite.Application.Shared.Extensions;
 
 namespace ObakiSite.Application.Features.Animelist.Queries
 {

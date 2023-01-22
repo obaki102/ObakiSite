@@ -2,14 +2,14 @@
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Obaki.LocalStorageCache;
-using ObakiSite.Application.Behaviours.Validation;
-using ObakiSite.Application.Middleware;
+using ObakiSite.Application.Extensions;
+using ObakiSite.Application.Shared.Behaviours.Validation;
 using ObakiSite.Application.Shared.Constants;
 using Polly;
 using Polly.Contrib.WaitAndRetry;
 using System.Reflection;
 
-namespace ObakiSite.Application.Extensions
+namespace ObakiSite.Application.Shared.Extensions
 {
     public static class ApplicationDependencies
     {
@@ -36,13 +36,13 @@ namespace ObakiSite.Application.Extensions
              policyBuilder.WaitAndRetryAsync(Backoff.DecorrelatedJitterBackoffV2(TimeSpan.FromSeconds(1), 3), (exception, timeSpan, retryCount, context) =>
              {
                  Console.WriteLine(exception);
-             }));;
+             })); ;
             services.AddLocalStorageCacheAsSingleton();
             return services;
         }
 
-        public static IServiceCollection AddApiDependenciesWithCosmos(this IServiceCollection services, string animeListClientId, 
-            string emailAppPassword,string cosmosDBEndpoint, string cosmosDbAccessKey)
+        public static IServiceCollection AddApiDependenciesWithCosmos(this IServiceCollection services, string animeListClientId,
+            string emailAppPassword, string cosmosDBEndpoint, string cosmosDbAccessKey)
         {
             if (services == null)
             {
@@ -61,7 +61,7 @@ namespace ObakiSite.Application.Extensions
         }
 
         public static IServiceCollection AddApiDependenciesWithFirebase(this IServiceCollection services, string animeListClientId,
-            string emailAppPassword, string projectId,  string serviceAccount)
+            string emailAppPassword, string projectId, string serviceAccount)
         {
             if (services == null)
             {
@@ -76,7 +76,7 @@ namespace ObakiSite.Application.Extensions
                 options.AppPassword = emailAppPassword;
             });
 
-            services.AddPostFirebaseService(projectId,serviceAccount);
+            services.AddPostFirebaseService(projectId, serviceAccount);
             return services;
         }
     }

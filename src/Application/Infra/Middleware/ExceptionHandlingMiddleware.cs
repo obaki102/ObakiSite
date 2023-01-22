@@ -4,7 +4,7 @@ using ValidationException = FluentValidation.ValidationException;
 using System.Text.Json;
 using ObakiSite.Application.Shared.DTO.Response;
 
-namespace ObakiSite.Application.Middleware
+namespace ObakiSite.Application.Infra.Middleware
 {
     public class ExceptionHandlingMiddleware : IMiddleware
     {

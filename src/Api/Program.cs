@@ -2,10 +2,10 @@
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
-using ObakiSite.Application.Extensions;
 using ObakiSite.Application.Features.Animelist.Constants;
 using ObakiSite.Application.Features.Email.Constants;
 using ObakiSite.Application.Infra.Data.Firebase;
+using ObakiSite.Application.Shared.Extensions;
 
 namespace ObakiSite.Api
 {
