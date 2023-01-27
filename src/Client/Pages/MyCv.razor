@@ -238,6 +238,9 @@
                         <MudTooltip Text="GitHub" Color="Color.Primary" Placement="Placement.Bottom">
                             <MudIconButton Href="https://github.com/obaki102" Icon="@Icons.Custom.Brands.GitHub" Color="Color.Primary" />
                         </MudTooltip>
+                        <MudTooltip Text="Phonenumber" Color="Color.Primary" Placement="Placement.Bottom">
+                            <MudIconButton OnClick="@CopyPhoneNumber" Icon="@Icons.Material.Filled.PhoneIphone" Color="Color.Primary" />
+                        </MudTooltip>
                         <MudTooltip Text="Email Address" Color="Color.Primary" Placement="Placement.Bottom">
                             <MudIconButton Href="mailto:joshuajpiluden@gmail.com" Icon="@Icons.Custom.Brands.Google" Color="Color.Primary" />
                         </MudTooltip>
@@ -334,6 +337,15 @@
     private string GetCVFilePath() => $"{WebAssemblyHostEnvironment.BaseAddress}/files/{GetFileName()}";
 
     private string GetFileName() => _isDarkMode ? "JoshuaJPiludenCV_dark.pdf" : "JoshuaJPiludenCV_light.pdf";
+
+    private async Task CopyToClipboard(string text) => await JsRuntime.InvokeVoidAsync("navigator.clipboard.writeText", text);
+
+    private async Task CopyPhoneNumber()
+    {
+        await CopyToClipboard("+639266094852");
+        Snackbar.Add("Phone number copied.", Severity.Success);
+    }
+
 
 }
 
