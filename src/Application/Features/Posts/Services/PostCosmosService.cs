@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using ObakiSite.Application.Domain.Entities;
 using ObakiSite.Application.Infra.Data;
 using ObakiSite.Application.Shared.DTO;
