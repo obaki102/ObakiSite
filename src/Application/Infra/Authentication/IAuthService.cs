@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ObakiSite.Application.Domain.Entities;
+using ObakiSite.Application.Shared.DTO.Response;
 
 namespace ObakiSite.Application.Infra.Authentication
 {
-    internal class IAuthService
+   public interface IAuthService
     {
-        //Create User
-        //Validate User
-        //Get User
+        Task<bool> TryCreateAndValidateUser(ApplicationUser user);
+
+        Task<ApplicationResponse<ApplicationUser>> GetUserById (Guid id);
     }
 }

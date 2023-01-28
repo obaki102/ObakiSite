@@ -3,9 +3,9 @@ using ObakiSite.Application.Domain.Primitives;
 
 namespace ObakiSite.Application.Domain.Entities
 {
-    public class User : Entity
+    public class ApplicationUser : Entity
     {
-        public User(Guid id, string displayname, string provider, string profilePictureDataUrl,
+        public ApplicationUser(Guid id, string displayname, string provider, string profilePictureDataUrl,
             bool isActive, string refreshToken, string accessToken, DateTime refreshTokenExpiryTime, string role) : base(id)
         {
             DisplayName = displayname;
