@@ -1,12 +1,12 @@
-﻿using ObakiSite.Application.Domain.Entities;
+﻿using ObakiSite.Application.Shared.DTO;
 using ObakiSite.Application.Shared.DTO.Response;
 
 namespace ObakiSite.Application.Infra.Authentication
 {
    public interface IAuthService
     {
-        Task<bool> TryCreateAndValidateUser(ApplicationUser user);
+        Task<ApplicationResponse> TryCreateAndValidateUser(ApplicationUserDTO user);
 
-        Task<ApplicationResponse<ApplicationUser>> GetUserById (Guid id);
+        Task<ApplicationResponse<ApplicationUserDTO>> GetUserById (Guid id);
     }
 }

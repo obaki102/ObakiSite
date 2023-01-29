@@ -7,6 +7,7 @@ namespace ObakiSite.Application.Shared.DTO
     {
         public Guid Id { get; set; } = Guid.NewGuid();
         public string DisplayName { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
         public string Provider { get; set; } = "Google";
         public string ProfilePictureDataUrl { get; set; } = string.Empty;
         public bool IsActive { get; set; }
@@ -21,6 +22,7 @@ namespace ObakiSite.Application.Shared.DTO
                 (
                  userDTO.Id,
                  userDTO.DisplayName,
+                 userDTO.Email
                  userDTO.Provider,
                  userDTO.ProfilePictureDataUrl,
                  userDTO.IsActive,
@@ -38,6 +40,7 @@ namespace ObakiSite.Application.Shared.DTO
                 Id = user.Id,
                 Role = user.Role,
                 DisplayName = user.DisplayName,
+                Email = user.Email,
                 Provider = user.Provider,
                 RefreshTokenExpiryTime = user.RefreshTokenExpiryTime,
                 AccessToken = user.AccessToken,
