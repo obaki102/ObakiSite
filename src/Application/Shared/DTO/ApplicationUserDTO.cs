@@ -22,7 +22,7 @@ namespace ObakiSite.Application.Shared.DTO
                 (
                  userDTO.Id,
                  userDTO.DisplayName,
-                 userDTO.Email
+                 userDTO.Email,
                  userDTO.Provider,
                  userDTO.ProfilePictureDataUrl,
                  userDTO.IsActive,
