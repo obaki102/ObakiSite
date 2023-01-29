@@ -5,19 +5,31 @@
 <PageTitle>Home</PageTitle>
 
 
-<div class="d-flex flex-row flex-grow-1 gap-4">
+<div class="d-flex flex-row flex-grow-1 gap-1">
     <MudHidden Breakpoint="Breakpoint.MdAndUp" Invert="true">
-        <div class="align-self-start flex-1" >
-                <MudList Clickable="true">
-                    <MudListItem Text="Home" Icon="@Icons.Material.Filled.Home" Href="/" />
-                    <MudListItem Text="Chat Demo" Icon="@Icons.Material.Filled.Chat" Href="/livechat" />
-                </MudList>
+        <div class="align-self-start flex-1">
+            <MudList Clickable="true" Color="Color.Primary">
+                <MudListItem Text="Home" Icon="@Icons.Material.Filled.Home" Href="/" />
+                <MudListItem Text="Anime List" Icon="@Icons.Material.Filled.LibraryBooks" Href="/anime" />
+                <MudListItem Text="Chat Demo" Icon="@Icons.Material.Filled.Chat" Href="/livechat"/>
+                <MudListItem Text="GitHub repo" Icon="@Icons.Custom.Brands.GitHub" Href="https://github.com/obaki102/ObakiSite"  />
+                <MudListItem Text="My CV" Icon="@Icons.Filled.Person" Href="/mycv"  />
+            </MudList>
         </div>
     </MudHidden>
     <ObakiSite.Client.Pages.Posts.ViewPostSummaries />
 
 </div>
-
+@*<MudDivider Class="my-4 mr-2 ml-4" Vertical="true" FlexItem="true" />
+<MudTooltip Text="About me" Color="Color.Primary" Placement="Placement.Bottom">
+    <MudIconButton Href="mycv" Icon="@Icons.Filled.Person" Color="Color.Primary" />
+</MudTooltip>
+<MudTooltip Text="GitHub repo" Color="Color.Primary" Placement="Placement.Bottom">
+    <MudIconButton Href="https://github.com/obaki102/ObakiSite" Icon="@Icons.Custom.Brands.GitHub" Color="Color.Primary" />
+</MudTooltip>
+<MudTooltip Text="Anime List" Color="Color.Primary" Placement="Placement.Bottom">
+    <MudIconButton Href="anime" Icon="@Icons.Filled.LibraryBooks" Color="Color.Primary" />
+</MudTooltip>*@
 @code {
 
 }

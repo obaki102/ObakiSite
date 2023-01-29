@@ -21,6 +21,7 @@ namespace ObakiSite.Client.Shared.Themes
             defaultDarkPallete.PrimaryContrastText = "161b22";
             defaultDarkPallete.AppbarText = "#EEEEEE";
             defaultDarkPallete.Tertiary = "#161b22";
+          
             //Light
             defaultLightPallete.Primary = "#161b22";
             defaultLightPallete.PrimaryContrastText = "#EEEEEE";
