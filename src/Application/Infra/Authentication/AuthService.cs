@@ -53,7 +53,8 @@ namespace ObakiSite.Application.Infra.Authentication
                     throw new ArgumentNullException(nameof(ApplicationUserDTO));
 
                 using var context = _factory.CreateDbContext();
-                var isExistingUser = await context.ApplicationUsers.FindAsync(user.Id).ConfigureAwait(false);
+                var isExistingUser = await context.ApplicationUsers.AsNoTracking()
+                    .SingleOrDefaultAsync(e => e.Email == user.Email).ConfigureAwait(false);
 
                 if (isExistingUser is null)
                 {
@@ -62,7 +63,7 @@ namespace ObakiSite.Application.Infra.Authentication
                     var result = await context.SaveChangesAsync().ConfigureAwait(false);
 
                     if (result == 0)
-                        return ApplicationResponse<string>.Fail($"User with id {user.Id} - creation failed.");
+                        return ApplicationResponse<string>.Fail($"User with email {user.Id} - creation failed.");
 
                     isExistingUser = newUser;
                 }
