@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using ObakiSite.Application.Domain.Entities;
 using ObakiSite.Application.Infra.Data;
@@ -17,44 +17,60 @@ namespace ObakiSite.Application.Infra.Authentication
 
         private readonly IDbContextFactory<ApplicationUserContext> _factory;
         private readonly SemaphoreSlim _semaphore = new(1, 1);
-        private readonly IConfiguration _configuration;
+        private readonly AuthServiceOptions _authServiceOptions;
 
-        public AuthService(IDbContextFactory<ApplicationUserContext> factory, IConfiguration configuration)
+        public AuthService(IDbContextFactory<ApplicationUserContext> factory, IOptions<AuthServiceOptions> authServiceOptions)
         {
             _factory = factory;
-            _configuration = configuration;
+            _authServiceOptions = authServiceOptions.Value;
         }
 
-        public Task<ApplicationResponse<ApplicationUserDTO>> GetUserById(Guid id)
+        public async Task<ApplicationResponse<ApplicationUserDTO>> GetUserById(Guid id)
         {
-            throw new NotImplementedException();
+            if (id == Guid.Empty)
+                throw new ArgumentNullException(nameof(id));
+
+            using var context = _factory.CreateDbContext();
+            var isExistingUser = await context.ApplicationUsers.FindAsync(id).ConfigureAwait(false);
+
+            var user = await context.ApplicationUsers.WithPartitionKey(id.ToString())
+                      .AsNoTracking().SingleOrDefaultAsync(i => i.Id == id).ConfigureAwait(false);
+            if (user is not null)
+            {
+                var userDTO = (ApplicationUserDTO)(user);
+                return ApplicationResponse<ApplicationUserDTO>.Success(userDTO);
+            }
+
+            return ApplicationResponse<ApplicationUserDTO>.Fail($"User with id {id} - unable to retrieve.");
         }
 
-        public async Task<ApplicationResponse> TryCreateAndValidateUser(ApplicationUserDTO user)
+        public async Task<ApplicationResponse<string>> TryCreateUserAndToken(ApplicationUserDTO user)
         {
             await _semaphore.WaitAsync();
             try
             {
-
                 if (user is null)
                     throw new ArgumentNullException(nameof(ApplicationUserDTO));
 
                 using var context = _factory.CreateDbContext();
-                var checkIfUserAlreadyExist = await context.ApplicationUsers.FindAsync(user.Id).ConfigureAwait(false);
+                var isExistingUser = await context.ApplicationUsers.FindAsync(user.Id).ConfigureAwait(false);
 
-                if (checkIfUserAlreadyExist is null)
+                if (isExistingUser is null)
                 {
                     ApplicationUser newUser = user;
                     context.ApplicationUsers.Add(newUser);
                     var result = await context.SaveChangesAsync().ConfigureAwait(false);
 
                     if (result == 0)
-                        return ApplicationResponse.Fail($"User with id {user.Id} - creation failed.");
+                        return ApplicationResponse<string>.Fail($"User with id {user.Id} - creation failed.");
+
+                    isExistingUser = newUser;
                 }
 
-                //validate
+                var claimsIdentity = GenerateClaimsIdentityFromUser(isExistingUser);
+                var token = CreateToken(claimsIdentity);
 
-                return ApplicationResponse.Success();
+                return ApplicationResponse<string>.Success(token);
             }
             finally
             {
@@ -95,11 +111,11 @@ namespace ObakiSite.Application.Infra.Authentication
         {
             try
             {
-                if (string.IsNullOrEmpty(_configuration.GetSection(DefaultConstants.TokenKey).Value))
-                    throw new ArgumentNullException("Cannot find token key.");
+                if (_authServiceOptions is null)
+                    throw new ArgumentNullException(nameof(_authServiceOptions));
 
                 var key = new SymmetricSecurityKey(Encoding.UTF8
-                       .GetBytes(_configuration.GetSection(DefaultConstants.TokenKey).Value));
+                       .GetBytes(_authServiceOptions.TokenKey));
                 var signingCredential = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
                 var token = new JwtSecurityToken(
                         claims: claimsIdentity.Claims,
@@ -119,13 +135,13 @@ namespace ObakiSite.Application.Infra.Authentication
         {
             try
             {
-                if (string.IsNullOrEmpty(_configuration.GetSection(DefaultConstants.TokenKey).Value))
-                    throw new ArgumentNullException("Cannot find token key.");
+                if (_authServiceOptions is null)
+                    throw new ArgumentNullException(nameof(_authServiceOptions));
 
                 var tokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.GetSection(DefaultConstants.TokenKey).Value)),
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_authServiceOptions.TokenKey)),
                     ValidateIssuer = false,
                     ValidateAudience = false,
                     RoleClaimType = ClaimTypes.Role,
@@ -148,8 +164,6 @@ namespace ObakiSite.Application.Infra.Authentication
                 return ApplicationResponse<ClaimsPrincipal>.Fail("Invalid token.");
             }
         }
-
-
 
 
         //Verify Credential based on Identity Provider

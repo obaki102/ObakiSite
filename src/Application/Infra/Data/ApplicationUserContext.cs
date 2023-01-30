@@ -15,7 +15,7 @@ namespace ObakiSite.Application.Infra.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ApplicationUser>()
-                .ToContainer("ApplicationUser")
+                .ToContainer("ApplicationUsers")
                 .HasPartitionKey(u => u.Id);
 
         }

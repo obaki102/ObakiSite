@@ -5,7 +5,7 @@ namespace ObakiSite.Application.Infra.Authentication
 {
    public interface IAuthService
     {
-        Task<ApplicationResponse> TryCreateAndValidateUser(ApplicationUserDTO user);
+        Task<ApplicationResponse<string>> TryCreateUserAndToken(ApplicationUserDTO user);
 
         Task<ApplicationResponse<ApplicationUserDTO>> GetUserById (Guid id);
     }

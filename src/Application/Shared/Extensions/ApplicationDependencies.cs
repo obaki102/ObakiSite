@@ -1,12 +1,15 @@
 ﻿using FluentValidation;
 using MediatR;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Obaki.LocalStorageCache;
 using ObakiSite.Application.Extensions;
 using ObakiSite.Application.Shared.Behaviours.Validation;
 using ObakiSite.Application.Shared.Constants;
+using ObakiSite.Application.Shared.Settings;
 using Polly;
 using Polly.Contrib.WaitAndRetry;
+using System.Configuration;
 using System.Reflection;
 
 namespace ObakiSite.Application.Shared.Extensions
@@ -40,23 +43,31 @@ namespace ObakiSite.Application.Shared.Extensions
             services.AddLocalStorageCacheAsSingleton();
             return services;
         }
-
-        public static IServiceCollection AddApiDependenciesWithCosmos(this IServiceCollection services, string animeListClientId,
-            string emailAppPassword, string cosmosDBEndpoint, string cosmosDbAccessKey)
+        
+        public static IServiceCollection AddApiDependenciesWithCosmos(this IServiceCollection services, IConfiguration config)
         {
             if (services == null)
             {
                 throw new ArgumentNullException(nameof(services));
             }
 
-            services.AddHttpAnimeListService(animeListClientId);
+           var settings = config.GetSection(DefaultConstants.WebApiSettings).Get<WebApiSettings>();
 
+            if(settings == null)
+            {
+                throw new ArgumentNullException(nameof(settings));
+            }
+            services.AddHttpAnimeListService(settings.AnimelistClientId);
             services.AddEmailService(options =>
             {
-                options.AppPassword = emailAppPassword;
+                options.AppPassword = settings.AppPassword;
             });
 
-            services.AddPostCosmosService(cosmosDBEndpoint, cosmosDbAccessKey);
+            services.AddPostCosmosService(settings.CosmosEndPoint, settings.CosmosAccessKey);
+            services.AddScopedAuthService(options =>
+            {
+                options.TokenKey = settings.TokenKey;
+            }, settings.CosmosEndPoint, settings.CosmosAccessKey);
             return services;
         }
 
@@ -67,7 +78,6 @@ namespace ObakiSite.Application.Shared.Extensions
             {
                 throw new ArgumentNullException(nameof(services));
             }
-            services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
             services.AddHttpAnimeListService(animeListClientId);
 

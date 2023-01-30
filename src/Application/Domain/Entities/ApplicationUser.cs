@@ -5,10 +5,10 @@ namespace ObakiSite.Application.Domain.Entities
 {
     public class ApplicationUser : Entity
     {
-        public ApplicationUser(Guid id, string displayname, string email,string provider, string profilePictureDataUrl,
+        public ApplicationUser(Guid id, string displayName, string email,string provider, string profilePictureDataUrl,
             bool isActive, string refreshToken, string accessToken, DateTime refreshTokenExpiryTime, string role) : base(id)
         {
-            DisplayName = displayname;
+            DisplayName = displayName;
             Email = email;
             Provider = provider;
             ProfilePictureDataUrl = profilePictureDataUrl;
