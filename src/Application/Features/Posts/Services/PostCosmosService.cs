@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using ObakiSite.Application.Domain.Entities;
 using ObakiSite.Application.Infra.Data;
 using ObakiSite.Application.Shared.DTO;
@@ -95,7 +94,7 @@ namespace ObakiSite.Application.Features.Posts.Services
         public async Task<ApplicationResponse<IReadOnlyList<PostSummaryDTO>>> GetAllPostSummaries()
         {
             using var context = _factory.CreateDbContext();
-            var postSummary = (await context.Posts.AsNoTracking().ToListAsync())
+            var postSummary = (await context.Posts.AsNoTracking().ToListAsync().ConfigureAwait(false))
                             .Select(p => new PostSummary(p)).ToList();
 
             if (postSummary is not null)
@@ -114,7 +113,7 @@ namespace ObakiSite.Application.Features.Posts.Services
 
             using var context = _factory.CreateDbContext();
             var post = await context.Posts.WithPartitionKey(id.ToString())
-                        .AsNoTracking().SingleOrDefaultAsync(i=> i.Id == id);
+                        .AsNoTracking().SingleOrDefaultAsync(i=> i.Id == id).ConfigureAwait(false);
             if (post is not null)
             {
                 var postDTO = (PostDTO)(post);

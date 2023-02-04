@@ -18,11 +18,9 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddApiDependenciesWithCosmos(builder.Configuration.GetSection("AnimelistClientId").Value ?? string.Empty,
-                       builder.Configuration.GetSection(EmailConstants.AppPassword).Value ?? string.Empty,
-                       builder.Configuration.GetSection(CosmosDBConstants.EndPoint).Value ?? string.Empty,
-                       builder.Configuration.GetSection(CosmosDBConstants.AccessKey).Value ?? string.Empty
-                       );
+
+builder.Services.AddApiDependenciesWithCosmos(builder.Configuration);
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -35,6 +33,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 app.UseCors();

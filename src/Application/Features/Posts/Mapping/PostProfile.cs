@@ -4,7 +4,7 @@ using ObakiSite.Application.Shared.DTO;
 
 namespace ObakiSite.Application.Features.Posts.Mapping
 {
-    public class PostProfile : Profile
+    public class PostProfile : AutoMapper.Profile
     {
         public PostProfile()
         {
