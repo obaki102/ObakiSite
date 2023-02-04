@@ -1,35 +1,30 @@
 ﻿
 using ObakiSite.Application.Domain.Entities;
+using ObakiSite.Application.Domain.Enums;
 
 namespace ObakiSite.Application.Shared.DTO
 {
     public class ApplicationUserDTO
     {
         public Guid Id { get; set; } = Guid.NewGuid();
-        public string DisplayName { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
-        public string Provider { get; set; } = "Google";
-        public string ProfilePictureDataUrl { get; set; } = string.Empty;
         public bool IsActive { get; set; }
-        public string RefreshToken { get; set; } = string.Empty;
-        public string AccessToken { get; set; } = string.Empty;
-        public DateTime RefreshTokenExpiryTime { get; set; }
-        public string Role { get; set; } = "User";
+        public Provider Provider { get; set; }
+        public Role UserRole { get; set; }
+        public string DisplayName { get; set; } = string.Empty;
+        public string ProfilePictureUrl { get; set; } = string.Empty;
 
         public static implicit operator ApplicationUser(ApplicationUserDTO userDTO)
         {
             return new ApplicationUser
                 (
                  userDTO.Id,
-                 userDTO.DisplayName,
                  userDTO.Email,
-                 userDTO.Provider,
-                 userDTO.ProfilePictureDataUrl,
                  userDTO.IsActive,
-                 userDTO.RefreshToken,
-                 userDTO.AccessToken,
-                 userDTO.RefreshTokenExpiryTime,
-                 userDTO.Role
+                 userDTO.Provider,
+                 userDTO.UserRole,
+                 userDTO.DisplayName,
+                 userDTO.ProfilePictureUrl
                 );
         }
 
@@ -38,15 +33,12 @@ namespace ObakiSite.Application.Shared.DTO
             return new ApplicationUserDTO
             {
                 Id = user.Id,
-                Role = user.Role,
+                UserRole = user.UserRole,
                 DisplayName = user.DisplayName,
                 Email = user.Email,
                 Provider = user.Provider,
-                RefreshTokenExpiryTime = user.RefreshTokenExpiryTime,
-                AccessToken = user.AccessToken,
                 IsActive = user.IsActive,
-                RefreshToken = user.RefreshToken,
-                ProfilePictureDataUrl = user.ProfilePictureDataUrl,
+                ProfilePictureUrl = user.ProfilePictureUrl
             };
         }
     }

@@ -25,25 +25,6 @@ namespace ObakiSite.Application.Infra.Authentication
             _authServiceOptions = authServiceOptions.Value;
         }
 
-        public async Task<ApplicationResponse<ApplicationUserDTO>> GetUserById(Guid id)
-        {
-            if (id == Guid.Empty)
-                throw new ArgumentNullException(nameof(id));
-
-            using var context = _factory.CreateDbContext();
-            var isExistingUser = await context.ApplicationUsers.FindAsync(id).ConfigureAwait(false);
-
-            var user = await context.ApplicationUsers.WithPartitionKey(id.ToString())
-                      .AsNoTracking().SingleOrDefaultAsync(i => i.Id == id).ConfigureAwait(false);
-            if (user is not null)
-            {
-                var userDTO = (ApplicationUserDTO)(user);
-                return ApplicationResponse<ApplicationUserDTO>.Success(userDTO);
-            }
-
-            return ApplicationResponse<ApplicationUserDTO>.Fail($"User with id {id} - unable to retrieve.");
-        }
-
         public async Task<ApplicationResponse<string>> TryCreateUserAndToken(ApplicationUserDTO user)
         {
             await _semaphore.WaitAsync();
@@ -98,10 +79,10 @@ namespace ObakiSite.Application.Infra.Authentication
                 new Claim(ClaimTypes.Email, user.Email)
             });
             }
-            if (!string.IsNullOrEmpty(user.Role))
+            if (!string.IsNullOrEmpty(user.UserRole.ToString()))
             {
                 claimsIdentity.AddClaims(new[] {
-                new Claim(ClaimTypes.Role, user.Role)
+                new Claim(ClaimTypes.Role, user.UserRole.ToString())
             });
             }
 

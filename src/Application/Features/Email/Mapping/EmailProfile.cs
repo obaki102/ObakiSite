@@ -4,7 +4,7 @@ using ObakiSite.Application.Shared.DTO;
 
 namespace ObakiSite.Application.Features.Email.Mapping
 {
-    public class EmailProfile : Profile
+    public class EmailProfile : AutoMapper.Profile
     {
         public EmailProfile()
         {
