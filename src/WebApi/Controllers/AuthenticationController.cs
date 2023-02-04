@@ -17,13 +17,13 @@ namespace ObakiSite.WebApi.Controllers
         [HttpPost("api/get-token")]
         public async Task<IActionResult> SendEmail(ApplicationUserDTO user)
         {
-            var result = await _authService.TryCreateUserAndToken(user);
+            var result = await _authService.GenerateToken(user);
             if (result.IsSuccess)
             {
                 return Ok(result);
             }
 
-            return BadRequest(result.Messages);
+            return BadRequest(result.Error);
         }
     }
 }

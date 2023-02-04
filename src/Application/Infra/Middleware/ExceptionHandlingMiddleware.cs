@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using ValidationException = FluentValidation.ValidationException;
 using System.Text.Json;
+using ObakiSite.Application.Shared;
 using ObakiSite.Application.Shared.DTO.Response;
 
 namespace ObakiSite.Application.Infra.Middleware
@@ -34,7 +35,7 @@ namespace ObakiSite.Application.Infra.Middleware
                 Errors = GetErrors(exception)
             };
 
-            var response = ApplicationResponse<ErrorResponse>.Fail(error);
+            var response = Result.Fail<ErrorResponse>("Error occrued");
             httpContext.Response.ContentType = "application/json";
             httpContext.Response.StatusCode = statusCode;
             await httpContext.Response.WriteAsync(JsonSerializer.Serialize(response));

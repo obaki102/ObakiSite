@@ -3,6 +3,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using ObakiSite.Application.Domain.Entities;
 using ObakiSite.Application.Infra.Data;
+using ObakiSite.Application.Shared;
 using ObakiSite.Application.Shared.Constants;
 using ObakiSite.Application.Shared.DTO;
 using ObakiSite.Application.Shared.DTO.Response;
@@ -25,7 +26,7 @@ namespace ObakiSite.Application.Infra.Authentication
             _authServiceOptions = authServiceOptions.Value;
         }
 
-        public async Task<ApplicationResponse<string>> TryCreateUserAndToken(ApplicationUserDTO user)
+        public async Task<Result> GenerateToken(ApplicationUserDTO user)
         {
             await _semaphore.WaitAsync();
             try
@@ -44,7 +45,7 @@ namespace ObakiSite.Application.Infra.Authentication
                     var result = await context.SaveChangesAsync().ConfigureAwait(false);
 
                     if (result == 0)
-                        return ApplicationResponse<string>.Fail($"User with email {user.Id} - creation failed.");
+                        return Result.Fail($"User with email {user.Id} - creation failed.");
 
                     isExistingUser = newUser;
                 }
@@ -52,7 +53,7 @@ namespace ObakiSite.Application.Infra.Authentication
                 var claimsIdentity = GenerateClaimsIdentityFromUser(isExistingUser);
                 var token = CreateToken(claimsIdentity);
 
-                return ApplicationResponse<string>.Success(token);
+                return Result.Success(token);
             }
             finally
             {
@@ -113,7 +114,7 @@ namespace ObakiSite.Application.Infra.Authentication
             }
         }
 
-        public ApplicationResponse<ClaimsPrincipal> ValidateTokenAndGetClaimsPrincipal(string token)
+        public Result<ClaimsPrincipal> ValidateTokenAndGetClaimsPrincipal(string token)
         {
             try
             {
@@ -136,23 +137,17 @@ namespace ObakiSite.Application.Infra.Authentication
                 if (securityToken is not JwtSecurityToken jwtSecurityToken || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha512Signature,
                     StringComparison.InvariantCultureIgnoreCase))
                 {
-                    return ApplicationResponse<ClaimsPrincipal>.Fail("Invalid token.");
+                    return Result.Fail<ClaimsPrincipal>("Invalid token.");
                 }
 
-                return ApplicationResponse<ClaimsPrincipal>.Success(principal);
+                return principal;
             }
             catch (Exception)
             {
-                return ApplicationResponse<ClaimsPrincipal>.Fail("Invalid token.");
+                return Result.Fail<ClaimsPrincipal>("Invalid token.");
             }
         }
 
-
-        //Verify Credential based on Identity Provider
-
-        //Google
-
-        //Microsoft
-
+       
     }
 }
