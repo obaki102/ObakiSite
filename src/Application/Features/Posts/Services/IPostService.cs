@@ -5,10 +5,10 @@ namespace ObakiSite.Application.Features.Posts.Services
 {
     public interface IPostService
     {
-        Task<Result> CreatePost(PostDTO post);
-        Task<Result> UpdatePost(PostDTO post);
-        Task<Result> DeletePost(Guid id);
-        Task<Result<PostDTO>> GetPostById(Guid id);
-        Task<Result<IReadOnlyList<PostSummaryDTO>>> GetAllPostSummaries();
+        Task<bool> CreatePost(PostDTO post);
+        Task<bool> UpdatePost(PostDTO post);
+        Task<bool> DeletePost(Guid id);
+        Task<PostDTO> GetPostById(Guid id);
+        Task<IReadOnlyList<PostSummaryDTO>> GetAllPostSummaries();
     }
 }

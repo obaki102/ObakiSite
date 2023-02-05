@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ObakiSite.Application.Infra.Authentication;
+using ObakiSite.Application.Shared;
 using ObakiSite.Application.Shared.DTO;
 
 namespace ObakiSite.WebApi.Controllers
@@ -18,12 +19,12 @@ namespace ObakiSite.WebApi.Controllers
         public async Task<IActionResult> SendEmail(ApplicationUserDTO user)
         {
             var result = await _authService.GenerateToken(user);
-            if (result.IsSuccess)
+            if (!string.IsNullOrEmpty(result))
             {
                 return Ok(result);
             }
 
-            return BadRequest(result.Error);
+            return BadRequest(Error.EmptyValue);
         }
     }
 }

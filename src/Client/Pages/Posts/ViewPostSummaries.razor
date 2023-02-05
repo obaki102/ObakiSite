@@ -60,9 +60,9 @@ else
     protected override async Task OnInitializedAsync()
     {
         var result = await Mediatr.Send(new GetPostSummaries());
-        if (result.Data is not null && result.IsSuccess)
+        if (result.Value is not null && result.IsSuccess)
         {
-            posts = result.Data;
+            posts = result.Value;
         }
     }
 }

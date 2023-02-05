@@ -3,7 +3,6 @@ using ObakiSite.Application.Domain.Entities;
 using ObakiSite.Application.Infra.Data;
 using ObakiSite.Application.Shared;
 using ObakiSite.Application.Shared.DTO;
-using ObakiSite.Application.Shared.DTO.Response;
 
 namespace ObakiSite.Application.Features.Posts.Services
 {
@@ -15,9 +14,9 @@ namespace ObakiSite.Application.Features.Posts.Services
             _factory = factory;
         }
         //To do separate writes from reads
-        public async Task<Result> CreatePost(PostDTO post)
+        public async Task<bool> CreatePost(PostDTO post)
         {
-            if(post is null)
+            if (post is null)
                 throw new ArgumentNullException(nameof(post));
 
             using var context = _factory.CreateDbContext();
@@ -25,7 +24,8 @@ namespace ObakiSite.Application.Features.Posts.Services
 
             if (checkIfPostAlreadyExist is not null)
             {
-                return Result.Fail(new Error("PostCosmosServiceError.CreatePost","Post already exist."));
+                return false;
+                //todo:log Result.Fail(new Error("PostCosmosServiceError.CreatePost","Post already exist."));
             }
 
             Post postDomain = post;
@@ -34,35 +34,38 @@ namespace ObakiSite.Application.Features.Posts.Services
 
             if (result > 0)
             {
-                return Result.Success();
+                return true;
             }
 
-            return Result.Fail(new Error("PostCosmosServiceError.CreatePost", $"Post with id {post.Id} - creation failed."));
+            return false;
+            //todo:log Result.Fail(new Error("PostCosmosServiceError.CreatePost", $"Post with id {post.Id} - creation failed."));
         }
 
-        public async Task<Result> DeletePost(Guid id)
+        public async Task<bool> DeletePost(Guid id)
         {
             if (id == Guid.Empty)
-                throw new ArgumentNullException(nameof(id));  
+                throw new ArgumentNullException(nameof(id));
 
             using var context = _factory.CreateDbContext();
             var postToDelete = await context.Posts.FindAsync(id).ConfigureAwait(false);
-           
+
             if (postToDelete is null)
             {
-                return Result.Fail(new Error("PostCosmosServiceError.DeletePost","Post does not exist."));
+                return false;
+                //todo:log   Result.Fail(new Error("PostCosmosServiceError.DeletePost","Post does not exist."));
             }
 
             context.Posts.Remove(postToDelete);
             var result = await context.SaveChangesAsync().ConfigureAwait(false);
-           
+
             if (result > 0)
             {
-                return Result.Success();
+                return true;
             }
-            return Result.Fail(new("PostCosmosServiceError.DeletePost", $"Post with id { id } - delete operation failed."));
+            return false;
+            //todo:log Result.Fail(new("PostCosmosServiceError.DeletePost", $"Post with id { id } - delete operation failed."));
         }
-        public async Task<Result> UpdatePost(PostDTO post)
+        public async Task<bool> UpdatePost(PostDTO post)
         {
             if (post is null)
                 throw new ArgumentNullException(nameof(post));
@@ -73,7 +76,8 @@ namespace ObakiSite.Application.Features.Posts.Services
 
             if (checkPost is null)
             {
-                return Result.Fail(new Error("PostCosmosServiceError.UpdatePost","Post does not exist."));
+                return false;
+                //todo: log Result.Fail(new Error("PostCosmosServiceError.UpdatePost", "Post does not exist."));
             }
 
             Post postToUpdate = post;
@@ -83,45 +87,40 @@ namespace ObakiSite.Application.Features.Posts.Services
             var result = await context.SaveChangesAsync().ConfigureAwait(false);
             if (result > 0)
             {
-                return Result.Success();
+                return true;
             }
 
-            return Result.Fail(new Error("PostCosmosServiceError.UpdatePost",$"Post with id {post.Id} - update  operation failed."));
+            return false;
+            // todo: log Result.Fail(new Error("PostCosmosServiceError.UpdatePost", $"Post with id {post.Id} - update  operation failed."));
         }
 
         //Reads
-
-        public async Task<Result<IReadOnlyList<PostSummaryDTO>>> GetAllPostSummaries()
+        public async Task<IReadOnlyList<PostSummaryDTO>> GetAllPostSummaries()
         {
             using var context = _factory.CreateDbContext();
             var postSummary = (await context.Posts.AsNoTracking().ToListAsync().ConfigureAwait(false))
                             .Select(p => new PostSummary(p)).ToList();
 
-            if (postSummary is not null)
-            {
-                var postSummaryDTO = postSummary.Select(s=> (PostSummaryDTO)s).ToList();
-                return postSummaryDTO;
-            }
-
-            return Result.Fail<IReadOnlyList<PostSummaryDTO>>(new Error("PostCosmosServiceError.GetAllPostSummaries", "Unable to retrieve post summaries."));
+            var postSummaryDTO = postSummary.Select(s => (PostSummaryDTO)s).ToList();
+            return postSummaryDTO;
         }
 
-        public async Task<Result<PostDTO>> GetPostById(Guid id)
+        public async Task<PostDTO> GetPostById(Guid id)
         {
             if (id == Guid.Empty)
                 throw new ArgumentNullException(nameof(id));
 
             using var context = _factory.CreateDbContext();
             var post = await context.Posts.WithPartitionKey(id.ToString())
-                        .AsNoTracking().SingleOrDefaultAsync(i=> i.Id == id).ConfigureAwait(false);
+                        .AsNoTracking().SingleOrDefaultAsync(i => i.Id == id).ConfigureAwait(false);
             if (post is not null)
             {
                 var postDTO = (PostDTO)(post);
                 return postDTO;
             }
-            return Result.Fail<PostDTO>(new Error("PostCosmosServiceError.GetPostById",$"Post with id {id} - unable to retrieve."));
+            throw new InvalidOperationException($"Post with id {id} - unable to retrieve.");
+           // todo: log return Result.Fail<PostDTO>(new Error("PostCosmosServiceError.GetPostById", $"Post with id {id} - unable to retrieve."));
         }
 
-       
     }
 }

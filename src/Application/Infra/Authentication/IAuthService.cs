@@ -2,14 +2,13 @@
 using ObakiSite.Application.Shared;
 using ObakiSite.Application.Shared.DTO;
 using System.Security.Claims;
-using Result = ObakiSite.Application.Shared.Result;
 
 namespace ObakiSite.Application.Infra.Authentication
 {
    public interface IAuthService
     {
-        Task<Result> GenerateToken(ApplicationUserDTO user);
+        Task<string> GenerateToken(ApplicationUserDTO user);
 
-        Result<ClaimsPrincipal> ValidateTokenAndGetClaimsPrincipal(string token);
+        ClaimsPrincipal ValidateTokenAndGetClaimsPrincipal(string token);
     }
 }

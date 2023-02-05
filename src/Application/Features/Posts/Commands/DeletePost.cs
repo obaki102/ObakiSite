@@ -27,12 +27,12 @@ namespace ObakiSite.Application.Features.Posts.Commands
 
             if (response.IsSuccessStatusCode)
             {
-                var result = await response.ReadJson<Result>();
+                var result = await response.ReadJson<bool>();
 
-                if (result is not null)
+                if (!result)
                 {
                     await _localStorageCache.ClearCacheAsync(PostConstants.GetPostSummaries.CacheDataKey);
-                    return result;
+                    return Result.Success();
                 }
 
                 return Result.Fail(new Error("DeletePostHandlerError", "No data retrieved."));

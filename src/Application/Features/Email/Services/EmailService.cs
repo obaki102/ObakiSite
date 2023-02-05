@@ -22,7 +22,7 @@ namespace ObakiSite.Application.Features.Email.Services
         }
 
       
-        public async Task<Result> SendEmail(EmailMessageDTO emailMessageDto)
+        public async Task<bool> SendEmail(EmailMessageDTO emailMessageDto)
         {
             try
             {
@@ -67,11 +67,11 @@ namespace ObakiSite.Application.Features.Email.Services
                     await emailClient.DisconnectAsync(true).ConfigureAwait(false);
                 }
 
-                return Result.Success();
+                return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return Result.Fail(new Error("EmailServiceError.SendEmail", ex.Message));
+                return false;
             }
         }
 

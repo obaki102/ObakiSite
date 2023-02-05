@@ -25,7 +25,7 @@ namespace ObakiSite.Application.Infra.Authentication
             _authServiceOptions = authServiceOptions.Value;
         }
 
-        public async Task<Result> GenerateToken(ApplicationUserDTO user)
+        public async Task<string> GenerateToken(ApplicationUserDTO user)
         {
             await _semaphore.WaitAsync();
             try
@@ -44,7 +44,7 @@ namespace ObakiSite.Application.Infra.Authentication
                     var result = await context.SaveChangesAsync().ConfigureAwait(false);
 
                     if (result == 0)
-                        return Result.Fail(new Error("AuthServiceError.GenerateToken", $"User with email {user.Id} - creation failed."));
+                        return  $"User with email {user.Id} - creation failed.";
 
                     isExistingUser = newUser;
                 }
@@ -52,7 +52,7 @@ namespace ObakiSite.Application.Infra.Authentication
                 var claimsIdentity = GenerateClaimsIdentityFromUser(isExistingUser);
                 var token = CreateToken(claimsIdentity);
 
-                return Result.Success(token);
+                return token;
             }
             finally
             {
@@ -113,7 +113,7 @@ namespace ObakiSite.Application.Infra.Authentication
             }
         }
 
-        public Result<ClaimsPrincipal> ValidateTokenAndGetClaimsPrincipal(string token)
+        public ClaimsPrincipal ValidateTokenAndGetClaimsPrincipal(string token)
         {
             try
             {
@@ -136,14 +136,14 @@ namespace ObakiSite.Application.Infra.Authentication
                 if (securityToken is not JwtSecurityToken jwtSecurityToken || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha512Signature,
                     StringComparison.InvariantCultureIgnoreCase))
                 {
-                    return Result.Fail<ClaimsPrincipal>(new Error("AuthService.ValidateTokenAndGetClaimsPrincipal", "Invalid token."));
+                    throw new InvalidOperationException("Invalid Token");
                 }
 
                 return principal;
             }
             catch (Exception ex)
             {
-                return Result.Fail<ClaimsPrincipal>(new Error("AuthService.ValidateTokenAndGetClaimsPrincipal", ex.Message));
+                throw new InvalidOperationException(ex.Message);
             }
         }
 

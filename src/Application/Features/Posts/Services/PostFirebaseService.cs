@@ -17,7 +17,7 @@ namespace ObakiSite.Application.Features.Posts.Services
             _mapper = mapper;
         }
 
-        public async Task<Result> CreatePost(PostDTO post)
+        public async Task<bool> CreatePost(PostDTO post)
         {
             if(post is null)
                 throw new ArgumentNullException(nameof(post));
@@ -26,16 +26,15 @@ namespace ObakiSite.Application.Features.Posts.Services
 
             if (checkIfPostAlreadyExist is not null)
             {
-                return Result.Fail(new Error("PostFirebaseServiceError.CreatePost","Post already exist."));
+                return false;
             }
 
             var postDomain = _mapper.Map<PostFirebase>(post);
             await _firebaseProvider.AddOrUpdate(postDomain, default).ConfigureAwait(false);
-            return Result.Success();
-
+            return true;
         }
 
-        public async Task<Result> DeletePost(Guid id)
+        public async Task<bool> DeletePost(Guid id)
         {
             if (id == Guid.Empty)
                 throw new ArgumentNullException(nameof(id));
@@ -44,13 +43,13 @@ namespace ObakiSite.Application.Features.Posts.Services
 
             if (postToDelete is null)
             {
-                return Result.Fail(new Error("PostFirebaseServiceError.DeletePost", "Post does not exist."));
+                return false;
             }
 
             await _firebaseProvider.Delete<PostFirebase>(id.ToString(), default).ConfigureAwait(false);
-            return Result.Success();
+            return true;
         }
-        public async Task<Result> UpdatePost(PostDTO post)
+        public async Task<bool> UpdatePost(PostDTO post)
         {
             if (post is null)
                 throw new ArgumentNullException(nameof(post));
@@ -59,7 +58,7 @@ namespace ObakiSite.Application.Features.Posts.Services
 
             if (postToUpdate == null)
             {
-                return Result.Fail(new Error("PostFirebaseServiceError.UpdatePost", "Post does not exist."));
+                return false;
             }
 
             var postDomain = _mapper.Map<PostFirebase>(post);
@@ -67,12 +66,12 @@ namespace ObakiSite.Application.Features.Posts.Services
             postDomain.Modified= DateTime.UtcNow;
 
             await _firebaseProvider.AddOrUpdate(postDomain, default).ConfigureAwait(false);
-            return Result.Success();
+            return true;
         }
 
         //Reads
 
-        public async Task<Result<IReadOnlyList<PostSummaryDTO>>> GetAllPostSummaries()
+        public async Task<IReadOnlyList<PostSummaryDTO>> GetAllPostSummaries()
         {
             var postSummary = (await _firebaseProvider.GetAll<PostFirebase>(default).ConfigureAwait(false))
                             .Select(p => new PostSummary { Id = Guid.Parse(p.Id), Author = p.Author, CreationDate = p.Created, Title = p.Title  }).ToList();
@@ -80,13 +79,13 @@ namespace ObakiSite.Application.Features.Posts.Services
             if (postSummary is not null)
             {
                 var postSummaryDTO = _mapper.Map<IReadOnlyList<PostSummaryDTO>>(postSummary);
-                return Result.Success(postSummaryDTO);
+                return postSummaryDTO;
             }
 
-            return Result.Fail<IReadOnlyList<PostSummaryDTO>> (new Error("PostFirebaseServiceError.GetAllPostSummaries", "Unable to retrieve post summaries."));
+            throw new InvalidOperationException("Unable to retrieve post summaries.");
         }
 
-        public async Task<Result<PostDTO>> GetPostById(Guid  id)
+        public async Task<PostDTO> GetPostById(Guid  id)
         {
             if (id == Guid.Empty)
                 throw new ArgumentNullException(nameof(id));
@@ -97,7 +96,7 @@ namespace ObakiSite.Application.Features.Posts.Services
                 var postDTO = _mapper.Map<PostDTO>(post);
                 return postDTO;
             }
-            return Result.Fail<PostDTO>(new Error("PostFirebaseServiceError.GetPostById",$"Post with id {id} - unable to retrieve."));
+            throw new InvalidOperationException($"Post with id {id} - unable to retrieve.");
         }
     }
 }

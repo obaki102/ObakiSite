@@ -18,12 +18,12 @@ namespace ObakiSite.WebApi.Controllers
         public async Task<IActionResult> SendEmail(EmailMessageDTO emailMessage)
         {
             var result = await _emailService.SendEmail(emailMessage);
-            if (result.IsSuccess)
+            if (result)
             {
                 return Ok(result);
             }
 
-            return BadRequest(result.Error.Message);
+            return BadRequest();
         }
     }
 }

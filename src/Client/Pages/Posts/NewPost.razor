@@ -100,12 +100,12 @@
     protected override async Task OnInitializedAsync()
     {
         var result = await Mediatr.Send(new GetSavedPostDraft());
-        if (result.Data is not null && result.IsSuccess)
+        if (result.Value is not null && result.IsSuccess)
         {
-            title = result.Data.Title;
+            title = result.Value.Title;
             if (RichTextEditor is not null)
             {
-                await RichTextEditor.LoadHTMLContent(result.Data.HtmlBody);
+                await RichTextEditor.LoadHTMLContent(result.Value.HtmlBody);
             }
         }
 

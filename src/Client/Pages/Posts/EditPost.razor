@@ -102,12 +102,12 @@
         if (!string.IsNullOrEmpty(Id))
         {
             var result = await Mediatr.Send(new GetPostById(Id));
-            if (result.Data is not null && result.IsSuccess)
+            if (result.Value is not null && result.IsSuccess)
             {
-                title = result.Data.Title;
+                title = result.Value.Title;
                 if (EditRichTextEditor is not null)
                 {
-                    await EditRichTextEditor.LoadHTMLContent(result.Data.HtmlBody);
+                    await EditRichTextEditor.LoadHTMLContent(result.Value.HtmlBody);
                 }
                 islaoding = true;
             }

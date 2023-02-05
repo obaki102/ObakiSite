@@ -27,14 +27,14 @@ namespace ObakiSite.Application.Features.Email.Commands
 
             if (response.IsSuccessStatusCode)
             {
-                var result = await response.ReadJson<Result>();
+                var result = await response.ReadJson<bool>();
 
-                if (result is null || !result.IsSuccess)
+                if (!result )
                 {
                     return Result.Fail(Error.EmptyValue);
                 }
 
-                return result;
+                return Result.Success();
             }
 
             return Result.Fail(Error.HttpError(response.StatusCode.ToString()));

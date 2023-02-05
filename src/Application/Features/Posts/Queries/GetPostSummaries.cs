@@ -1,17 +1,16 @@
-﻿using AutoMapper;
-using MediatR;
+﻿using MediatR;
 using Obaki.LocalStorageCache;
 using ObakiSite.Application.Features.Posts.Constants;
+using ObakiSite.Application.Shared;
 using ObakiSite.Application.Shared.Constants;
 using ObakiSite.Application.Shared.DTO;
-using ObakiSite.Application.Shared.DTO.Response;
 using ObakiSite.Application.Shared.Extensions;
 
 namespace ObakiSite.Application.Features.Posts.Queries
 {
-    public record GetPostSummaries : IRequest<ApplicationResponse<IReadOnlyList<PostSummaryDTO>>>;
+    public record GetPostSummaries : IRequest<Result<IReadOnlyList<PostSummaryDTO>>>;
 
-    public class GetPostSummariesHandler : IRequestHandler<GetPostSummaries, ApplicationResponse<IReadOnlyList<PostSummaryDTO>>>
+    public class GetPostSummariesHandler : IRequestHandler<GetPostSummaries, Result<IReadOnlyList<PostSummaryDTO>>>
     {
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly ILocalStorageCache _localStorageCache;
@@ -21,7 +20,7 @@ namespace ObakiSite.Application.Features.Posts.Queries
             _localStorageCache = localStorageCache;
         }
       
-        public async Task<ApplicationResponse<IReadOnlyList<PostSummaryDTO>>> Handle(GetPostSummaries request, CancellationToken cancellationToken)
+        public async Task<Result<IReadOnlyList<PostSummaryDTO>>> Handle(GetPostSummaries request, CancellationToken cancellationToken)
         {
             var cache = await _localStorageCache.GetOrCreateCacheAsync(
                 PostConstants.GetPostSummaries.CacheDataKey,
@@ -32,20 +31,19 @@ namespace ObakiSite.Application.Features.Posts.Queries
                     var response = await httpClient.GetAsync(PostConstants.GetPostSummaries.EndPoint).ConfigureAwait(false);
                     if (response.IsSuccessStatusCode)
                     {
-                        //To do implement caching
-                        var result = await response.ReadJson<ApplicationResponse<IReadOnlyList<PostSummaryDTO>>>();
+                        var result = await response.ReadJson<IReadOnlyList<PostSummaryDTO>>();
                         if (result is not null)
                         {
-                            return result;
+                            return Result.Success(result);
                         }
 
-                        return ApplicationResponse<IReadOnlyList<PostSummaryDTO>>.Fail("No data retrieved.");
+                        return Result.Fail<IReadOnlyList<PostSummaryDTO>>(new Error("GetPostSummariesHandlerError","No data retrieved."));
                     }
 
-                    return ApplicationResponse<IReadOnlyList<PostSummaryDTO>>.Fail(response.StatusCode.ToString());
+                    return Result.Fail<IReadOnlyList<PostSummaryDTO>>(Error.HttpError(response.StatusCode.ToString()));
                 });
 
-            return cache ?? ApplicationResponse<IReadOnlyList<PostSummaryDTO>>.Fail();
+            return cache ?? Result.Fail<IReadOnlyList<PostSummaryDTO>>(new Error("GetPostSummariesHandlerError", "No data retrieved."));
 
 
         }

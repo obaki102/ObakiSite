@@ -5,6 +5,6 @@ namespace ObakiSite.Application.Features.Email.Services
 {
     public interface IEmailService
     {
-        public Task<Result> SendEmail(EmailMessageDTO emailMessageDto);
+        public Task<bool> SendEmail(EmailMessageDTO emailMessageDto);
     }
 }

@@ -1,8 +1,4 @@
-﻿using ObakiSite.Application.Infra.Data.Firebase;
-using ObakiSite.Application.Shared.DTO;
-using System.Net.Http.Json;
-using System.Runtime.CompilerServices;
-using System.Security.Claims;
+﻿using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 
