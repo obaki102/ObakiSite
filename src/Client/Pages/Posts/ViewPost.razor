@@ -146,11 +146,6 @@ else
             }
             else
             {
-                if (result.Messages.Count > 0)
-                {
-                    foreach (var error in result.Messages)
-                        Snackbar.Add(error, Severity.Error);
-                }
 
                 Snackbar.Add("Sorry, unable to delete post.", Severity.Error);
             }

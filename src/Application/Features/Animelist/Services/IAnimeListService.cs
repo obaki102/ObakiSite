@@ -1,10 +1,10 @@
 ﻿using ObakiSite.Application.Features.Animelist.DTO;
-using ObakiSite.Application.Shared.DTO.Response;
+using ObakiSite.Application.Shared;
 
 namespace ObakiSite.Application.Features.Animelist.Services
 {
     public interface IAnimeListService
     {
-        Task<ApplicationResponse<AnimeListRoot>> GetAnimeListBySeasonAndYear(int year, string season);
+        Task<Result<AnimeListRoot>> GetAnimeListBySeasonAndYear(int year, string season);
     }
 }

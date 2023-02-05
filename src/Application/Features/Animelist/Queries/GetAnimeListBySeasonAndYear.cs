@@ -1,17 +1,17 @@
 ﻿using MediatR;
 using Obaki.LocalStorageCache;
-using ObakiSite.Application.Extensions;
+using ObakiSite.Application.Errors;
 using ObakiSite.Application.Features.Animelist.Constants;
+using ObakiSite.Application.Shared;
 using ObakiSite.Application.Shared.Constants;
 using ObakiSite.Application.Shared.DTO;
-using ObakiSite.Application.Shared.DTO.Response;
 using ObakiSite.Application.Shared.Extensions;
 
 namespace ObakiSite.Application.Features.Animelist.Queries
 {
-    public record GetAnimeListBySeasonAndYear(Season Season) : IRequest<ApplicationResponse<AnimeListRoot>>;
+    public record GetAnimeListBySeasonAndYear(Season Season) : IRequest<Result<AnimeListRoot>>;
 
-    public class GetAnimeListBySeasonAndYearHandler : IRequestHandler<GetAnimeListBySeasonAndYear, ApplicationResponse<AnimeListRoot>>
+    public class GetAnimeListBySeasonAndYearHandler : IRequestHandler<GetAnimeListBySeasonAndYear, Result<AnimeListRoot>>
     {
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly ILocalStorageCache _localStorageCache;
@@ -21,7 +21,7 @@ namespace ObakiSite.Application.Features.Animelist.Queries
             _localStorageCache = localStorageCache;
         }
 
-        public async Task<ApplicationResponse<AnimeListRoot>> Handle(GetAnimeListBySeasonAndYear request, CancellationToken cancellationToken)
+        public async Task<Result<AnimeListRoot>> Handle(GetAnimeListBySeasonAndYear request, CancellationToken cancellationToken)
         {
             var cache = await _localStorageCache.GetOrCreateCacheAsync(
                  AnimelistConstants.CacheDataKey,
@@ -38,15 +38,15 @@ namespace ObakiSite.Application.Features.Animelist.Queries
 
                         if (result is null)
                         {
-                            return ApplicationResponse<AnimeListRoot>.Fail("No data.");
+                            return Result.Fail<AnimeListRoot>(AnimelistErrors.NullResult);
                         }
 
-                        return ApplicationResponse<AnimeListRoot>.Success(result);
+                        return result;
                     }
-                    return ApplicationResponse<AnimeListRoot>.Fail("No data.");
+                    return Result.Fail<AnimeListRoot>(AnimelistErrors.NullResult);
                 });
 
-            return cache ?? ApplicationResponse<AnimeListRoot>.Fail("No data.");
+            return cache ??  Result.Fail<AnimeListRoot>(AnimelistErrors.NullResult); ;
         }
     }
 }

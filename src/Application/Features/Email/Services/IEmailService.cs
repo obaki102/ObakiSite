@@ -1,10 +1,10 @@
-﻿using ObakiSite.Application.Shared.DTO;
-using ObakiSite.Application.Shared.DTO.Response;
+﻿using ObakiSite.Application.Shared;
+using ObakiSite.Application.Shared.DTO;
 
 namespace ObakiSite.Application.Features.Email.Services
 {
     public interface IEmailService
     {
-        public Task<ApplicationResponse> SendEmail(EmailMessageDTO emailMessageDto);
+        public Task<Result> SendEmail(EmailMessageDTO emailMessageDto);
     }
 }

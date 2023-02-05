@@ -1,16 +1,16 @@
 ﻿using MediatR;
 using ObakiSite.Application.Features.Email.Constants;
+using ObakiSite.Application.Shared;
 using ObakiSite.Application.Shared.Constants;
 using ObakiSite.Application.Shared.DTO;
-using ObakiSite.Application.Shared.DTO.Response;
 using ObakiSite.Application.Shared.Extensions;
 using System.Text.Json;
 
 namespace ObakiSite.Application.Features.Email.Commands
 {
-    public record SendEmail(EmailMessageDTO EmailMessage) : IRequest<ApplicationResponse>;
+    public record SendEmail(EmailMessageDTO EmailMessage) : IRequest<Result>;
 
-    public class SendEmailHandler : IRequestHandler<SendEmail, ApplicationResponse>
+    public class SendEmailHandler : IRequestHandler<SendEmail, Result>
     {
         private readonly IHttpClientFactory _httpClientFactory;
         public SendEmailHandler(IHttpClientFactory httpClientFactory)
@@ -18,7 +18,7 @@ namespace ObakiSite.Application.Features.Email.Commands
             _httpClientFactory = httpClientFactory;
         }
 
-        public async Task<ApplicationResponse> Handle(SendEmail request, CancellationToken cancellationToken)
+        public async Task<Result> Handle(SendEmail request, CancellationToken cancellationToken)
         {
             //todo: Implement Web workers once .net 8 comes out.
             var httpClient = _httpClientFactory.CreateClient(HttpNameClientConstants.Default);
@@ -27,17 +27,17 @@ namespace ObakiSite.Application.Features.Email.Commands
 
             if (response.IsSuccessStatusCode)
             {
-                var result = await response.ReadJson<ApplicationResponse>();
+                var result = await response.ReadJson<Result>();
 
                 if (result is null || !result.IsSuccess)
                 {
-                    return ApplicationResponse.Fail();
+                    return Result.Fail(Error.EmptyValue);
                 }
 
                 return result;
             }
 
-            return ApplicationResponse.Fail(response.StatusCode.ToString());
+            return Result.Fail(Error.HttpError(response.StatusCode.ToString()));
         }
     }
 }

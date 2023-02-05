@@ -23,7 +23,7 @@ namespace ObakiSite.WebApi.Controllers
                 return Ok(result);
             }
 
-            return BadRequest(result.Messages);
+            return BadRequest(result.Error.Message);
         }
     }
 }

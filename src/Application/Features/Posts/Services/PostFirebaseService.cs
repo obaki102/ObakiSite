@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using ObakiSite.Application.Domain.Entities;
-using ObakiSite.Application.Shared.DTO.Response;
 using ObakiSite.Application.Shared.DTO;
 using ObakiSite.Application.Infra.Data.Firebase;
+using ObakiSite.Application.Shared;
 
 namespace ObakiSite.Application.Features.Posts.Services
 {
@@ -17,7 +17,7 @@ namespace ObakiSite.Application.Features.Posts.Services
             _mapper = mapper;
         }
 
-        public async Task<ApplicationResponse> CreatePost(PostDTO post)
+        public async Task<Result> CreatePost(PostDTO post)
         {
             if(post is null)
                 throw new ArgumentNullException(nameof(post));
@@ -26,16 +26,16 @@ namespace ObakiSite.Application.Features.Posts.Services
 
             if (checkIfPostAlreadyExist is not null)
             {
-                return ApplicationResponse.Fail("Post already exist.");
+                return Result.Fail(new Error("PostFirebaseServiceError.CreatePost","Post already exist."));
             }
 
             var postDomain = _mapper.Map<PostFirebase>(post);
             await _firebaseProvider.AddOrUpdate(postDomain, default).ConfigureAwait(false);
-            return ApplicationResponse.Success();
+            return Result.Success();
 
         }
 
-        public async Task<ApplicationResponse> DeletePost(Guid id)
+        public async Task<Result> DeletePost(Guid id)
         {
             if (id == Guid.Empty)
                 throw new ArgumentNullException(nameof(id));
@@ -44,13 +44,13 @@ namespace ObakiSite.Application.Features.Posts.Services
 
             if (postToDelete is null)
             {
-                return ApplicationResponse.Fail("Post does not exist.");
+                return Result.Fail(new Error("PostFirebaseServiceError.DeletePost", "Post does not exist."));
             }
 
             await _firebaseProvider.Delete<PostFirebase>(id.ToString(), default).ConfigureAwait(false);
-            return ApplicationResponse.Success();
+            return Result.Success();
         }
-        public async Task<ApplicationResponse> UpdatePost(PostDTO post)
+        public async Task<Result> UpdatePost(PostDTO post)
         {
             if (post is null)
                 throw new ArgumentNullException(nameof(post));
@@ -59,7 +59,7 @@ namespace ObakiSite.Application.Features.Posts.Services
 
             if (postToUpdate == null)
             {
-                return ApplicationResponse.Fail("Post does not exist.");
+                return Result.Fail(new Error("PostFirebaseServiceError.UpdatePost", "Post does not exist."));
             }
 
             var postDomain = _mapper.Map<PostFirebase>(post);
@@ -67,12 +67,12 @@ namespace ObakiSite.Application.Features.Posts.Services
             postDomain.Modified= DateTime.UtcNow;
 
             await _firebaseProvider.AddOrUpdate(postDomain, default).ConfigureAwait(false);
-            return ApplicationResponse.Success();
+            return Result.Success();
         }
 
         //Reads
 
-        public async Task<ApplicationResponse<IReadOnlyList<PostSummaryDTO>>> GetAllPostSummaries()
+        public async Task<Result<IReadOnlyList<PostSummaryDTO>>> GetAllPostSummaries()
         {
             var postSummary = (await _firebaseProvider.GetAll<PostFirebase>(default).ConfigureAwait(false))
                             .Select(p => new PostSummary { Id = Guid.Parse(p.Id), Author = p.Author, CreationDate = p.Created, Title = p.Title  }).ToList();
@@ -80,13 +80,13 @@ namespace ObakiSite.Application.Features.Posts.Services
             if (postSummary is not null)
             {
                 var postSummaryDTO = _mapper.Map<IReadOnlyList<PostSummaryDTO>>(postSummary);
-                return ApplicationResponse<IReadOnlyList<PostSummaryDTO>>.Success(postSummaryDTO);
+                return Result.Success(postSummaryDTO);
             }
 
-            return ApplicationResponse<IReadOnlyList<PostSummaryDTO>>.Fail("Unable to retrieve post summaries.");
+            return Result.Fail<IReadOnlyList<PostSummaryDTO>> (new Error("PostFirebaseServiceError.GetAllPostSummaries", "Unable to retrieve post summaries."));
         }
 
-        public async Task<ApplicationResponse<PostDTO>> GetPostById(Guid  id)
+        public async Task<Result<PostDTO>> GetPostById(Guid  id)
         {
             if (id == Guid.Empty)
                 throw new ArgumentNullException(nameof(id));
@@ -95,9 +95,9 @@ namespace ObakiSite.Application.Features.Posts.Services
             if (post is not null)
             {
                 var postDTO = _mapper.Map<PostDTO>(post);
-                return ApplicationResponse<PostDTO>.Success(postDTO);
+                return postDTO;
             }
-            return ApplicationResponse<PostDTO>.Fail($"Post with id {id} - unable to retrieve.");
+            return Result.Fail<PostDTO>(new Error("PostFirebaseServiceError.GetPostById",$"Post with id {id} - unable to retrieve."));
         }
     }
 }

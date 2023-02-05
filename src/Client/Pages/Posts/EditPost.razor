@@ -3,7 +3,7 @@
 @using WYSIWYGTextEditor;
 @using ObakiSite.Application.Features.Posts.Commands;
 @using ObakiSite.Application.Features.Posts.Queries;
-@using ObakiSite.Application.Shared.DTO.Response;
+@using ObakiSite.Application.Shared;
 @inject ISender Mediatr
 @inject ISnackbar Snackbar
 @inject NavigationManager NavManager
@@ -146,7 +146,7 @@
         return EditRichTextEditor != null ? await EditRichTextEditor.GetHTML() : string.Empty;
     }
 
-    private void Notify(ApplicationResponse result, string origin)
+    private void Notify(Result result, string origin)
     {
         //Todo: refine how messages are displayed
         //Todo: create a utility service that can be utilized by different pages.

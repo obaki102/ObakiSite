@@ -3,7 +3,7 @@
 @using WYSIWYGTextEditor;
 @using ObakiSite.Application.Features.Posts.Commands;
 @using ObakiSite.Application.Features.Posts.Queries;
-@using ObakiSite.Application.Shared.DTO.Response;
+@using ObakiSite.Application.Shared;
 @inject ISender Mediatr
 @inject ISnackbar Snackbar
 @inject NavigationManager NavManager
@@ -161,7 +161,7 @@
         body = (MarkupString)hmltContent;
     }
 
-    private void Notify(ApplicationResponse result, string origin)
+    private void Notify(Result result, string origin)
     {
         //Todo: refine how messages are displayed
         if (result.IsSuccess)

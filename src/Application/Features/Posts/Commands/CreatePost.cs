@@ -1,19 +1,17 @@
-﻿using AutoMapper;
-using MediatR;
+﻿using MediatR;
 using Obaki.LocalStorageCache;
-using ObakiSite.Application.Extensions;
 using ObakiSite.Application.Features.Posts.Constants;
+using ObakiSite.Application.Shared;
 using ObakiSite.Application.Shared.Constants;
 using ObakiSite.Application.Shared.DTO;
-using ObakiSite.Application.Shared.DTO.Response;
 using ObakiSite.Application.Shared.Extensions;
 using System.Text.Json;
 
 namespace ObakiSite.Application.Features.Posts.Commands
 {
-    public  record CreatePost(PostDTO Post) : IRequest<ApplicationResponse>;
+    public  record CreatePost(PostDTO Post) : IRequest<Result>;
 
-    public class CreatePostHandler : IRequestHandler<CreatePost, ApplicationResponse>
+    public class CreatePostHandler : IRequestHandler<CreatePost, Result>
     {
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly ILocalStorageCache _localStorageCache;
@@ -23,7 +21,7 @@ namespace ObakiSite.Application.Features.Posts.Commands
             _httpClientFactory = httpClientFactory;
             _localStorageCache = localStorageCache;
         }
-        public async Task<ApplicationResponse> Handle(CreatePost request, CancellationToken cancellationToken)
+        public async Task<Result> Handle(CreatePost request, CancellationToken cancellationToken)
         {
 
             var httpClient  = _httpClientFactory.CreateClient(HttpNameClientConstants.Default);
@@ -32,7 +30,7 @@ namespace ObakiSite.Application.Features.Posts.Commands
 
             if (response.IsSuccessStatusCode)
             {
-                var result = await response.ReadJson<ApplicationResponse>();
+                var result = await response.ReadJson<Result>();
 
                 if (result is not null)
                 {
@@ -40,10 +38,10 @@ namespace ObakiSite.Application.Features.Posts.Commands
                     return result;
                 }
 
-                return ApplicationResponse.Fail("Unable to save post.");
+                return Result.Fail(new Error("CreatePostHandlerError", "Unable to save post."));
             }
 
-            return ApplicationResponse.Fail(response.StatusCode.ToString());
+            return Result.Fail(Error.HttpError(response.StatusCode.ToString()));
         }
     }
 

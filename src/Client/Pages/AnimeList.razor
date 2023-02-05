@@ -46,7 +46,7 @@ else
                         <CardHeaderActions>
                             <MudButton Variant="Variant.Text" OnClick="@(() => OpenDrawer(Anchor.Bottom, anime.Node))">
                                 <MudTooltip Text="Synopsis">
-                                    <MudIcon Icon="@Icons.Filled.Newspaper" Color="Color.Default" />
+                                    <MudIcon Icon="@Icons.Material.Filled.Newspaper" Color="Color.Default" />
                                 </MudTooltip>
                             </MudButton>
                         </CardHeaderActions>
@@ -113,9 +113,9 @@ else
     protected override async Task OnInitializedAsync()
     {
         var result = await Mediatr.Send(new GetAnimeListBySeasonAndYear(new Season(year, GetCurrentSeason())));
-        if (result.IsSuccess && result.Data is not null)
+        if (result.IsSuccess && result.Value is not null)
         {
-            animeLists = result.Data.Data;
+            animeLists = result.Value.Data;
         }
     }
 

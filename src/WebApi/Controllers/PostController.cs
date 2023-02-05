@@ -23,7 +23,7 @@ namespace ObakiSite.WebApi.Controllers
                 return Ok(result);
             }
 
-            return BadRequest(result.Messages);
+            return BadRequest(result.Error.Message);
         }
 
         [HttpPut("api/post/update")]
@@ -35,7 +35,7 @@ namespace ObakiSite.WebApi.Controllers
                 return Ok(result);
             }
 
-            return BadRequest(result.Messages);
+            return BadRequest(result.Error.Message);
         }
 
         [HttpDelete("api/post/delete/{id}")]
@@ -47,7 +47,7 @@ namespace ObakiSite.WebApi.Controllers
                 return Ok(result);
             }
 
-            return BadRequest(result.Messages);
+            return BadRequest(result.Error.Message);
         }
 
         [HttpGet("api/post/get/{id}")]
@@ -59,7 +59,7 @@ namespace ObakiSite.WebApi.Controllers
                 return Ok(result);
             }
 
-            return BadRequest(result.Messages);
+            return BadRequest(result.Error.Message);
         }
 
         [HttpGet("api/post/get-summaries")]
@@ -71,7 +71,7 @@ namespace ObakiSite.WebApi.Controllers
                 return Ok(result);
             }
 
-            return BadRequest(result.Messages);
+            return BadRequest(result.Error.Message);
         }
     }
 }

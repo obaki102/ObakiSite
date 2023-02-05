@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ObakiSite.Application.Features.Animelist.Services;
-using ObakiSite.Application.Shared.DTO.Response;
 using ObakiSite.Application.Shared.DTO;
+using ObakiSite.Application.Shared;
 
 namespace ObakiSite.WebApi.Controllers
 {
@@ -16,15 +16,15 @@ namespace ObakiSite.WebApi.Controllers
 
 
         [HttpGet("api/animelists/{season}/{year}")]
-        public async Task<ActionResult<ApplicationResponse<AnimeListRoot>>> GetAnimeList(string season, int year)
+        public async Task<ActionResult<Result<AnimeListRoot>>> GetAnimeList(string season, int year)
         {
             var result = await _animeListService.GetAnimeListBySeasonAndYear(year, season);
             if (result.IsSuccess)
             {
-                return Ok(result.Data);
+                return Ok(result.Value);
             }
 
-            return BadRequest(result.Messages);
+            return BadRequest(result.Error.Message);
         }
     }
 }

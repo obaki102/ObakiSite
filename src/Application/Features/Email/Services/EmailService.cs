@@ -2,11 +2,11 @@
 using MimeKit;
 using MailKit.Net.Smtp;
 using ObakiSite.Application.Shared.Constants;
-using ObakiSite.Application.Shared.DTO.Response;
 using Microsoft.Extensions.Options;
 using ObakiSite.Application.Shared.DTO;
 using ObakiSite.Application.Features.Email.Constants;
 using ObakiSite.Application.Domain.Entities;
+using ObakiSite.Application.Shared;
 
 namespace ObakiSite.Application.Features.Email.Services
 {
@@ -22,7 +22,7 @@ namespace ObakiSite.Application.Features.Email.Services
         }
 
       
-        public async Task<ApplicationResponse> SendEmail(EmailMessageDTO emailMessageDto)
+        public async Task<Result> SendEmail(EmailMessageDTO emailMessageDto)
         {
             try
             {
@@ -67,11 +67,11 @@ namespace ObakiSite.Application.Features.Email.Services
                     await emailClient.DisconnectAsync(true).ConfigureAwait(false);
                 }
 
-                return ApplicationResponse.Success();
+                return Result.Success();
             }
             catch (Exception ex)
             {
-                return ApplicationResponse.Fail(ex.Message);
+                return Result.Fail(new Error("EmailServiceError.SendEmail", ex.Message));
             }
         }
 

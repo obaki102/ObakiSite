@@ -1,8 +1,9 @@
 ﻿using ObakiSite.Application.Features.Animelist.Constants;
 using ObakiSite.Application.Features.Animelist.DTO;
 using ObakiSite.Application.Shared.Constants;
-using ObakiSite.Application.Shared.DTO.Response;
+using ObakiSite.Application.Shared;
 using ObakiSite.Application.Shared.Extensions;
+using ObakiSite.Application.Errors;
 
 namespace ObakiSite.Application.Features.Animelist.Services
 {
@@ -14,7 +15,7 @@ namespace ObakiSite.Application.Features.Animelist.Services
             _httpClient = httpClientFactory.CreateClient(HttpNameClientConstants.AnimeList);
         }
 
-        public async Task<ApplicationResponse<AnimeListRoot>> GetAnimeListBySeasonAndYear(int year, string season)
+        public async Task<Result<AnimeListRoot>> GetAnimeListBySeasonAndYear(int year, string season)
         {
             //todo: clean the magic strings
             var uriRequest = $"v2/anime/season/{year}/{season}{AnimelistConstants.UrLQuery}";
@@ -26,13 +27,13 @@ namespace ObakiSite.Application.Features.Animelist.Services
 
                 if (data is null)
                 {
-                    return ApplicationResponse<AnimeListRoot>.Fail("Content is empty.");
+                    return Result.Fail<AnimeListRoot>(AnimelistErrors.NullResult);
                 }
 
-                return ApplicationResponse<AnimeListRoot>.Success(data);
+                return data;
             }
 
-            return ApplicationResponse<AnimeListRoot>.Fail(response.StatusCode.ToString());
+            return Result.Fail<AnimeListRoot>(AnimelistErrors.HttpError(response.StatusCode.ToString()));
         }
     }
 }

@@ -35,7 +35,7 @@ namespace ObakiSite.Application.Infra.Middleware
                 Errors = GetErrors(exception)
             };
 
-            var response = Result.Fail<ErrorResponse>("Error occrued");
+            var response = Result.Fail<ErrorResponse>(new Error("ExceptionHandlingMiddlewareError.HandleExceptionAsync","An error occured"));
             httpContext.Response.ContentType = "application/json";
             httpContext.Response.StatusCode = statusCode;
             await httpContext.Response.WriteAsync(JsonSerializer.Serialize(response));

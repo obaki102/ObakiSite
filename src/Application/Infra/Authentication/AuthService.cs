@@ -6,7 +6,6 @@ using ObakiSite.Application.Infra.Data;
 using ObakiSite.Application.Shared;
 using ObakiSite.Application.Shared.Constants;
 using ObakiSite.Application.Shared.DTO;
-using ObakiSite.Application.Shared.DTO.Response;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -45,7 +44,7 @@ namespace ObakiSite.Application.Infra.Authentication
                     var result = await context.SaveChangesAsync().ConfigureAwait(false);
 
                     if (result == 0)
-                        return Result.Fail($"User with email {user.Id} - creation failed.");
+                        return Result.Fail(new Error("AuthServiceError.GenerateToken", $"User with email {user.Id} - creation failed."));
 
                     isExistingUser = newUser;
                 }
@@ -137,14 +136,14 @@ namespace ObakiSite.Application.Infra.Authentication
                 if (securityToken is not JwtSecurityToken jwtSecurityToken || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha512Signature,
                     StringComparison.InvariantCultureIgnoreCase))
                 {
-                    return Result.Fail<ClaimsPrincipal>("Invalid token.");
+                    return Result.Fail<ClaimsPrincipal>(new Error("AuthService.ValidateTokenAndGetClaimsPrincipal", "Invalid token."));
                 }
 
                 return principal;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return Result.Fail<ClaimsPrincipal>("Invalid token.");
+                return Result.Fail<ClaimsPrincipal>(new Error("AuthService.ValidateTokenAndGetClaimsPrincipal", ex.Message));
             }
         }
 

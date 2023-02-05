@@ -2,6 +2,7 @@
 using MediatR;
 using Obaki.LocalStorageCache;
 using ObakiSite.Application.Features.Posts.Constants;
+using ObakiSite.Application.Shared;
 using ObakiSite.Application.Shared.Constants;
 using ObakiSite.Application.Shared.DTO;
 using ObakiSite.Application.Shared.DTO.Response;
@@ -10,9 +11,9 @@ using System.Text.Json;
 
 namespace ObakiSite.Application.Features.Posts.Commands
 {
-    public record UpdatePost(PostDTO Post) : IRequest<ApplicationResponse>;
+    public record UpdatePost(PostDTO Post) : IRequest<Result>;
 
-    public class UpdatePostHandler : IRequestHandler<UpdatePost, ApplicationResponse>
+    public class UpdatePostHandler : IRequestHandler<UpdatePost, Result>
     {
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly ILocalStorageCache _localStorageCache;
@@ -22,7 +23,7 @@ namespace ObakiSite.Application.Features.Posts.Commands
             _httpClientFactory = httpClientFactory;
             _localStorageCache = localStorageCache;
         }
-        public async Task<ApplicationResponse> Handle(UpdatePost request, CancellationToken cancellationToken)
+        public async Task<Result> Handle(UpdatePost request, CancellationToken cancellationToken)
         {
             var httpClient = _httpClientFactory.CreateClient(HttpNameClientConstants.Default);
             var serializedPost = JsonSerializer.Serialize(request.Post).ToJsonStringContent();
@@ -30,7 +31,7 @@ namespace ObakiSite.Application.Features.Posts.Commands
 
             if (response.IsSuccessStatusCode)
             {
-                var result = await response.ReadJson<ApplicationResponse>();
+                var result = await response.ReadJson<Result>();
 
                 if (result is not null)
                 {
@@ -38,10 +39,10 @@ namespace ObakiSite.Application.Features.Posts.Commands
                     return result;
                 }
 
-                return ApplicationResponse.Fail("Unable to update post.");
+                return Result.Fail(new Error("UpdatePostHandlerError", "Unable to update post."));
             }
 
-            return ApplicationResponse.Fail(response.StatusCode.ToString());
+            return Result.Fail(Error.HttpError(response.StatusCode.ToString()));
         }
     }
 }
