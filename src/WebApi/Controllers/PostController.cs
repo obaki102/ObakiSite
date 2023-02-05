@@ -74,4 +74,5 @@ namespace ObakiSite.WebApi.Controllers
 
             return BadRequest(Error.HttpError("400"));
         }
+    }
 }
