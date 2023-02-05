@@ -5,7 +5,6 @@ using ObakiSite.Application.Features.Posts.Constants;
 using ObakiSite.Application.Shared;
 using ObakiSite.Application.Shared.Constants;
 using ObakiSite.Application.Shared.DTO;
-using ObakiSite.Application.Shared.DTO.Response;
 using ObakiSite.Application.Shared.Extensions;
 using System.Text.Json;
 
@@ -33,7 +32,7 @@ namespace ObakiSite.Application.Features.Posts.Commands
             {
                 var result = await response.ReadJson<bool>();
 
-                if (!result)
+                if (result)
                 {
                     await _localStorageCache.ClearCacheAsync(PostConstants.GetPostSummaries.CacheDataKey);
                     return Result.Success();

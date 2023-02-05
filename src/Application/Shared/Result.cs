@@ -4,22 +4,22 @@ namespace ObakiSite.Application.Shared
     public class Result
     {
         public bool IsSuccess { get; }
-        public Error Error { get; }
+        public string Error { get; }
         public bool IsFailure => !IsSuccess;
 
-        protected internal Result(bool isSuccess, Error error)
+        public Result(bool isSuccess, string error)
         {
-            if (isSuccess && error != Error.None)
+            if (isSuccess && error != string.Empty)
                 throw new InvalidOperationException();
 
-            if (!isSuccess && error == Error.None)
+            if (!isSuccess && error == string.Empty)
                 throw new InvalidOperationException();
 
             IsSuccess = isSuccess;
             Error = error;
         }
 
-        public static Result Fail(Error error)
+        public static Result Fail(string error)
         {
             return new Result(false, error);
         }
@@ -31,12 +31,12 @@ namespace ObakiSite.Application.Shared
 
         public static Result Success()
         {
-            return new Result(true, Error.None);
+            return new Result(true, string.Empty);
         }
 
         public static Result<T> Success<T>(T value)
         {
-            return new Result<T>(value, true, Error.None);
+            return new Result<T>(value, true, string.Empty);
         }
       
     }

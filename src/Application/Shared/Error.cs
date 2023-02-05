@@ -1,4 +1,6 @@
 ﻿
+using System.Drawing;
+
 namespace ObakiSite.Application.Shared
 {
     public class Error : IEquatable<Error>
@@ -47,12 +49,12 @@ namespace ObakiSite.Application.Shared
              => !(first == second);
 
         public static implicit operator string(Error error) 
-             => error.Code;
+             => error.Message;
 
 
         public override int GetHashCode()
         {
-            return Code.GetHashCode();
+            return string.IsNullOrEmpty(Code) ? 0 : Code.GetHashCode();
         }
     }
 }

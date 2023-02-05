@@ -32,7 +32,7 @@ namespace ObakiSite.Application.Features.Posts.Commands
             {
                 var result = await response.ReadJson<bool>();
 
-                if (!result)
+                if (result)
                 {
                     await _localStorageCache.ClearCacheAsync(PostConstants.GetPostSummaries.CacheDataKey);
                     return Result.Success();
