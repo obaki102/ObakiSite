@@ -7,6 +7,11 @@ namespace ObakiSite.Application.Shared
         public string Error { get; }
         public bool IsFailure => !IsSuccess;
 
+        public Result()
+        {
+            IsSuccess = true;
+            Error = string.Empty;
+        }
         public Result(bool isSuccess, string error)
         {
             if (isSuccess && error != string.Empty)

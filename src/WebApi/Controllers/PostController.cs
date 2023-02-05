@@ -24,7 +24,7 @@ namespace ObakiSite.WebApi.Controllers
                 return Ok(result);
             }
 
-            return BadRequest(Error.EmptyValue);
+            return BadRequest(Error.HttpError("400"));
         }
 
         [HttpPut("api/post/update")]
@@ -36,7 +36,7 @@ namespace ObakiSite.WebApi.Controllers
                 return Ok(result);
             }
 
-            return BadRequest(Error.EmptyValue);
+            return BadRequest(Error.HttpError("400"));
         }
 
         [HttpDelete("api/post/delete/{id}")]
@@ -48,7 +48,7 @@ namespace ObakiSite.WebApi.Controllers
                 return Ok(result);
             }
 
-            return BadRequest(Error.EmptyValue);
+            return BadRequest(Error.HttpError("400"));
         }
 
         [HttpGet("api/post/get/{id}")]
@@ -60,7 +60,7 @@ namespace ObakiSite.WebApi.Controllers
                 return Ok(result);
             }
 
-            return BadRequest(Error.EmptyValue);
+            return BadRequest(Error.HttpError("400"));
         }
 
         [HttpGet("api/post/get-summaries")]
@@ -72,7 +72,6 @@ namespace ObakiSite.WebApi.Controllers
                 return Ok(result);
             }
 
-            return BadRequest(Error.EmptyValue);
+            return BadRequest(Error.HttpError("400"));
         }
-    }
 }

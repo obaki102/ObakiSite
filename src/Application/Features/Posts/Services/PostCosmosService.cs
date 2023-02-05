@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ObakiSite.Application.Domain.Entities;
 using ObakiSite.Application.Infra.Data;
-using ObakiSite.Application.Shared;
 using ObakiSite.Application.Shared.DTO;
 
 namespace ObakiSite.Application.Features.Posts.Services
@@ -118,8 +117,9 @@ namespace ObakiSite.Application.Features.Posts.Services
                 var postDTO = (PostDTO)(post);
                 return postDTO;
             }
+
             throw new InvalidOperationException($"Post with id {id} - unable to retrieve.");
-           // todo: log return Result.Fail<PostDTO>(new Error("PostCosmosServiceError.GetPostById", $"Post with id {id} - unable to retrieve."));
+            // todo: log return Result.Fail<PostDTO>(new Error("PostCosmosServiceError.GetPostById", $"Post with id {id} - unable to retrieve."));
         }
 
     }
