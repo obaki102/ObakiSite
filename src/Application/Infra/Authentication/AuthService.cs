@@ -3,7 +3,6 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using ObakiSite.Application.Domain.Entities;
 using ObakiSite.Application.Infra.Data;
-using ObakiSite.Application.Shared;
 using ObakiSite.Application.Shared.Constants;
 using ObakiSite.Application.Shared.DTO;
 using System.IdentityModel.Tokens.Jwt;
@@ -24,8 +23,19 @@ namespace ObakiSite.Application.Infra.Authentication
             _factory = factory;
             _authServiceOptions = authServiceOptions.Value;
         }
+        public async Task<bool> IsUserExist(string email)
+        {
+            if (string.IsNullOrEmpty(email))
+                throw new ArgumentNullException("Value of email specified is null.");
 
-        public async Task<string> GenerateToken(ApplicationUserDTO user)
+            using var context = _factory.CreateDbContext();
+            var isExistingUser = await context.ApplicationUsers.AsNoTracking()
+                .SingleOrDefaultAsync(e => e.Email == email).ConfigureAwait(false);
+
+            return isExistingUser is null ? false : true;
+        }
+
+        public async Task<string> GenerateTokenForNewUser(ApplicationUserDTO user)
         {
             await _semaphore.WaitAsync();
             try
@@ -34,22 +44,14 @@ namespace ObakiSite.Application.Infra.Authentication
                     throw new ArgumentNullException(nameof(ApplicationUserDTO));
 
                 using var context = _factory.CreateDbContext();
-                var isExistingUser = await context.ApplicationUsers.AsNoTracking()
-                    .SingleOrDefaultAsync(e => e.Email == user.Email).ConfigureAwait(false);
+                ApplicationUser newUser = user;
+                context.ApplicationUsers.Add(newUser);
+                var result = await context.SaveChangesAsync().ConfigureAwait(false);
 
-                if (isExistingUser is null)
-                {
-                    ApplicationUser newUser = user;
-                    context.ApplicationUsers.Add(newUser);
-                    var result = await context.SaveChangesAsync().ConfigureAwait(false);
+                if (result == 0)
+                    return $"User with email {user.Id} - creation failed.";
 
-                    if (result == 0)
-                        return  $"User with email {user.Id} - creation failed.";
-
-                    isExistingUser = newUser;
-                }
-
-                var claimsIdentity = GenerateClaimsIdentityFromUser(isExistingUser);
+                var claimsIdentity = GenerateClaimsIdentityFromUser(newUser);
                 var token = CreateToken(claimsIdentity);
 
                 return token;
@@ -58,7 +60,26 @@ namespace ObakiSite.Application.Infra.Authentication
             {
                 _semaphore.Release();
             }
+        }
 
+        public async Task<string> GenerateTokenForExistingUser(ApplicationUserDTO user)
+        {
+            await _semaphore.WaitAsync();
+            try
+            {
+                if (user is null)
+                    throw new ArgumentNullException(nameof(ApplicationUserDTO));
+             
+                ApplicationUser existingUser = user;
+                var claimsIdentity = GenerateClaimsIdentityFromUser(existingUser);
+                var token = CreateToken(claimsIdentity);
+
+                return token;
+            }
+            finally
+            {
+                _semaphore.Release();
+            }
         }
 
         //Todo: Check if can be translated to extension, predicate for bool validation and iterate through property reflection  
@@ -147,6 +168,6 @@ namespace ObakiSite.Application.Infra.Authentication
             }
         }
 
-       
+
     }
 }
