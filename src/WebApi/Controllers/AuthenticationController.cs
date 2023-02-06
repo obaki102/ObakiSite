@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ObakiSite.Application.Infra.Authentication;
-using ObakiSite.Application.Shared;
 using ObakiSite.Application.Shared.DTO;
 
 namespace ObakiSite.WebApi.Controllers
@@ -15,16 +14,24 @@ namespace ObakiSite.WebApi.Controllers
         }
 
 
-        [HttpPost("api/get-token")]
-        public async Task<IActionResult> SendEmail(ApplicationUserDTO user)
+        [HttpPost("api/is-user-exist")]
+        public async Task<IActionResult> IsUserExist(string email)
         {
-            var result = await _authService.GenerateToken(user);
-            if (!string.IsNullOrEmpty(result))
-            {
-                return Ok(result);
-            }
+            return Ok(await _authService.IsUserExist(email));
 
-            return BadRequest(Error.EmptyValue);
+        }
+
+        [HttpPost("api/get-token-new")]
+        public async Task<IActionResult> GenerateTokenForNewUser(ApplicationUserDTO user)
+        {
+
+            return Ok(await _authService.GenerateTokenForNewUser(user));
+        }
+
+        [HttpPost("api/get-token-exist")]
+        public async Task<IActionResult> GenerateTokenForExistingUser(ApplicationUserDTO user)
+        {
+            return Ok(await _authService.GenerateTokenForExistingUser(user));
         }
     }
 }
