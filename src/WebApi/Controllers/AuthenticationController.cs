@@ -34,15 +34,5 @@ namespace ObakiSite.WebApi.Controllers
 
             return Ok(await _authService.GenerateTokenForExistingUser(user));
         }
-
-        [HttpGet("api/auth/get-google-config")]
-        public  IActionResult GetGoogleAuthConfig()
-        {
-            var config = _config.GetSection(AuthenticationConstants.GetGoogleAuthConfig.GoogleAuth2Config).Get<GoogleAuth2Config>();
-            if (config == null)
-                return BadRequest(config);
-
-            return Ok(config);
-        }
     }
 }

@@ -12,10 +12,12 @@
             public const string EndPoint = "api/auth/get-token";
         }
 
-        public static class GetGoogleAuthConfig
+        public static class GoogleAuthConfig
         {
-            public const string EndPoint = "api/auth/get-google-config";
-            public const string GoogleAuth2Config = "GoogleAuth2Config";
+            public const string AccessToken = "access_token";
+            public const string ClientId = "560601291397-k9kdraks3of3e4ds0od4budh59o58o6c.apps.googleusercontent.com";
+            public const string Scope = "https://www.googleapis.com/auth/userinfo.emai";
+            public const string DiscoveryDocs = "https://people.googleapis.com/$discovery/rest?version=v1";
         }
 
     }
