@@ -13,6 +13,7 @@ namespace ObakiSite.Application.Shared.DTO
         public Role UserRole { get; set; }
         public string DisplayName { get; set; } = string.Empty;
         public string ProfilePictureUrl { get; set; } = string.Empty;
+        public bool IsNewUser { get; set; } 
 
         public static implicit operator ApplicationUser(ApplicationUserDTO userDTO)
         {

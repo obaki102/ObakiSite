@@ -29,7 +29,7 @@ namespace ObakiSite.Application.Shared
             return new Result(false, error);
         }
 
-        public static Result<T> Fail<T>(Error error)
+        public static Result<T> Fail<T>(string error)
         {
             return new Result<T>(default(T), false, error);
         }

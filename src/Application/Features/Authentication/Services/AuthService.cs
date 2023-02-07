@@ -9,7 +9,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace ObakiSite.Application.Infra.Authentication
+namespace ObakiSite.Application.Features.Authentication.Services
 {
     public class AuthService : IAuthService
     {
@@ -49,7 +49,8 @@ namespace ObakiSite.Application.Infra.Authentication
                 var result = await context.SaveChangesAsync().ConfigureAwait(false);
 
                 if (result == 0)
-                    return $"User with email {user.Id} - creation failed.";
+                    return string.Empty;
+                // todo: log return $"User with email {user.Id} - creation failed.";
 
                 var claimsIdentity = GenerateClaimsIdentityFromUser(newUser);
                 var token = CreateToken(claimsIdentity);
@@ -69,7 +70,7 @@ namespace ObakiSite.Application.Infra.Authentication
             {
                 if (user is null)
                     throw new ArgumentNullException(nameof(ApplicationUserDTO));
-             
+
                 ApplicationUser existingUser = user;
                 var claimsIdentity = GenerateClaimsIdentityFromUser(existingUser);
                 var token = CreateToken(claimsIdentity);

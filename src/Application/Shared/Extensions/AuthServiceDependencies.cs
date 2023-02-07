@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using ObakiSite.Application.Infra.Authentication;
+using ObakiSite.Application.Features.Authentication.Services;
 using ObakiSite.Application.Infra.Data;
 using ObakiSite.Application.Shared.Constants;
 

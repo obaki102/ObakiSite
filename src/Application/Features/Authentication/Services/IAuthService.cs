@@ -1,7 +1,7 @@
 ﻿using ObakiSite.Application.Shared.DTO;
 using System.Security.Claims;
 
-namespace ObakiSite.Application.Infra.Authentication
+namespace ObakiSite.Application.Features.Authentication.Services
 {
     public interface IAuthService
     {
@@ -9,6 +9,6 @@ namespace ObakiSite.Application.Infra.Authentication
         Task<string> GenerateTokenForExistingUser(ApplicationUserDTO user);
         ClaimsPrincipal ValidateTokenAndGetClaimsPrincipal(string token);
         Task<bool> IsUserExist(string email);
-        
+
     }
 }
