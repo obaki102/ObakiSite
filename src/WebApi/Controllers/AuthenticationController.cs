@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ObakiSite.Application.Features.Authentication.Constants;
 using ObakiSite.Application.Features.Authentication.Services;
 using ObakiSite.Application.Shared.DTO;
+using ObakiSite.Application.Shared.Settings;
+
 
 namespace ObakiSite.WebApi.Controllers
 {
@@ -8,9 +11,11 @@ namespace ObakiSite.WebApi.Controllers
     public class AuthenticationController : Controller
     {
         private readonly IAuthService _authService;
-        public AuthenticationController(IAuthService authService)
+        private readonly IConfiguration _config;
+        public AuthenticationController(IAuthService authService, IConfiguration config)
         {
             _authService = authService;
+            _config = config;
         }
 
 
@@ -28,6 +33,16 @@ namespace ObakiSite.WebApi.Controllers
                 return Ok(await _authService.GenerateTokenForNewUser(user));
 
             return Ok(await _authService.GenerateTokenForExistingUser(user));
+        }
+
+        [HttpGet("api/auth/get-google-config")]
+        public  IActionResult GetGoogleAuthConfig()
+        {
+            var config = _config.GetSection(AuthenticationConstants.GetGoogleAuthConfig.GoogleAuth2Config).Get<GoogleAuth2Config>();
+            if (config == null)
+                return BadRequest(config);
+
+            return Ok(config);
         }
     }
 }
