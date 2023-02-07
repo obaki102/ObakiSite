@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ObakiSite.Application.Features.Email.Services;
+using ObakiSite.Application.Shared;
 using ObakiSite.Application.Shared.DTO;
 
 namespace ObakiSite.WebApi.Controllers
@@ -17,13 +18,12 @@ namespace ObakiSite.WebApi.Controllers
         [HttpPost("api/send-email")]
         public async Task<IActionResult> SendEmail(EmailMessageDTO emailMessage)
         {
-            var result = await _emailService.SendEmail(emailMessage);
-            if (result)
+            if (emailMessage is null)
             {
-                return Ok(result);
+                return BadRequest(Error.EmptyValue);
             }
 
-            return BadRequest();
+            return Ok(await _emailService.SendEmail(emailMessage));
         }
     }
 }
