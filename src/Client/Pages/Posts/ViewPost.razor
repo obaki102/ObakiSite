@@ -142,7 +142,7 @@ else
             var result = await Mediatr.Send(new DeletePost(post.Id.ToString()));
             if (result.IsSuccess)
             {
-                NavManager.NavigateTo($"/post/view/summaries");
+                NavManager.NavigateTo("/");
             }
             else
             {
