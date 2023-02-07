@@ -18,61 +18,52 @@ namespace ObakiSite.WebApi.Controllers
         [HttpPost("api/post/create")]
         public async Task<IActionResult> CreatePost(PostDTO post)
         {
-            var result = await _postService.CreatePost(post);
-            if (result)
+            if (post is null)
             {
-                return Ok(result);
+                return BadRequest(Error.EmptyValue);
             }
 
-            return BadRequest(Error.HttpError("400"));
+            return Ok(await _postService.CreatePost(post));
+
         }
 
         [HttpPut("api/post/update")]
         public async Task<IActionResult> UpdatePost(PostDTO post)
         {
-            var result = await _postService.UpdatePost(post);
-            if (result)
+            if (post is null)
             {
-                return Ok(result);
+                return BadRequest(Error.EmptyValue);
             }
 
-            return BadRequest(Error.HttpError("400"));
+            return Ok(await _postService.UpdatePost(post));
         }
 
         [HttpDelete("api/post/delete/{id}")]
         public async Task<IActionResult> DeletePost(Guid id)
         {
-            var result = await _postService.DeletePost(id);
-            if (result)
+            if (id == Guid.Empty)
             {
-                return Ok(result);
+                return BadRequest(Error.EmptyValue);
             }
 
-            return BadRequest(Error.HttpError("400"));
+            return Ok(await _postService.DeletePost(id));
         }
 
         [HttpGet("api/post/get/{id}")]
         public async Task<IActionResult> GetPostById(Guid id)
         {
-            var result = await _postService.GetPostById(id);
-            if (result is not null)
+            if (id == Guid.Empty)
             {
-                return Ok(result);
+                return BadRequest(Error.EmptyValue);
             }
 
-            return BadRequest(Error.HttpError("400"));
+            return Ok(await _postService.GetPostById(id));
         }
 
         [HttpGet("api/post/get-summaries")]
         public async Task<IActionResult> GetPosGetAllPostSummariestById()
         {
-            var result = await _postService.GetAllPostSummaries();
-            if (result is not null)
-            {
-                return Ok(result);
-            }
-
-            return BadRequest(Error.HttpError("400"));
+            return Ok(await _postService.GetAllPostSummaries());
         }
     }
 }

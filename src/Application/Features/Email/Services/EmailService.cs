@@ -6,7 +6,6 @@ using Microsoft.Extensions.Options;
 using ObakiSite.Application.Shared.DTO;
 using ObakiSite.Application.Features.Email.Constants;
 using ObakiSite.Application.Domain.Entities;
-using ObakiSite.Application.Shared;
 
 namespace ObakiSite.Application.Features.Email.Services
 {
