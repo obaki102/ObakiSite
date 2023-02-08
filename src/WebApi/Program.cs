@@ -1,5 +1,3 @@
-using ObakiSite.Application.Features.Email.Constants;
-using ObakiSite.Application.Shared.Constants;
 using ObakiSite.Application.Shared.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);

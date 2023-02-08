@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Obaki.LocalStorageCache;
 using ObakiSite.Application.Features.Authentication.Constants;
 using ObakiSite.Application.Shared;
 using ObakiSite.Application.Shared.Constants;
@@ -8,16 +9,18 @@ using System.Text.Json;
 
 namespace ObakiSite.Application.Features.Authentication.Commands
 {
-    public record GenerateToken(ApplicationUserDTO User) : IRequest<Result<string>>;
+    public record GenerateToken(ApplicationUserDTO User) : IRequest<Result>;
 
-    public class GenerateTokenHandler : IRequestHandler<GenerateToken, Result<string>>
+    public class GenerateTokenHandler : IRequestHandler<GenerateToken, Result>
     {
         private readonly IHttpClientFactory _httpClientFactory;
-        public GenerateTokenHandler(IHttpClientFactory httpClientFactory)
+        private readonly ILocalStorageCache _localStorageCache;
+        public GenerateTokenHandler(IHttpClientFactory httpClientFactory, ILocalStorageCache localStorageCache)
         {
             _httpClientFactory = httpClientFactory;
+            _localStorageCache = localStorageCache;
         }
-        public async Task<Result<string>> Handle(GenerateToken request, CancellationToken cancellationToken)
+        public async Task<Result> Handle(GenerateToken request, CancellationToken cancellationToken)
         {
             var httpClient = _httpClientFactory.CreateClient(HttpNameClientConstants.Default);
             var serializedPost = JsonSerializer.Serialize(request.User).ToJsonStringContent();
@@ -32,7 +35,8 @@ namespace ObakiSite.Application.Features.Authentication.Commands
                     return Result.Fail<string>("Invalid Token");
                 }
 
-                return result;
+                await _localStorageCache.SetCacheAsync(AuthenticationConstants.GetToken.CacheDataKey, result);
+                return Result.Success();
             }
 
             return Result.Fail<string>(Error.HttpError(response.StatusCode.ToString()));

@@ -10,6 +10,7 @@
         public static class GetToken
         {
             public const string EndPoint = "api/auth/get-token";
+            public const string CacheDataKey = "obaki-site-user-token";
         }
 
         public static class GoogleAuthConfig
