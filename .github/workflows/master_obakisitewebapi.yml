@@ -7,11 +7,17 @@ on:
   push:
     branches:
       - master
+    paths:
+    - 'src/WebApi/**'
+    
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: windows-latest
+    defaults:
+     run:
+        working-directory: ./src/WebApi/
 
     steps:
       - uses: actions/checkout@v2
