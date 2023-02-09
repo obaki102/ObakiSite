@@ -7,17 +7,11 @@ on:
   push:
     branches:
       - master
-    paths:
-    - 'src/WebApi/**'
-    
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: windows-latest
-    defaults:
-     run:
-        working-directory: ./src/WebApi/
 
     steps:
       - uses: actions/checkout@v2
@@ -59,5 +53,5 @@ jobs:
         with:
           app-name: 'ObakiSiteWebApi'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_503B00822AEC42CD998879FD77B40D52 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_EBDC2993095745B8AA26D36A1ED2A898 }}
           package: .
