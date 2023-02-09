@@ -7,9 +7,8 @@ using Microsoft.Azure.Functions.Worker.Http;
 using ObakiSite.Application.Features.Email.Services;
 using System.Text.Json;
 using System;
-using ObakiSite.Application.Shared.DTO.Response;
+using ObakiSite.Application.Shared;
 using ObakiSite.Application.Shared.DTO;
-
 
 namespace ObakiSite.Api.Functions
 {
@@ -32,7 +31,7 @@ namespace ObakiSite.Api.Functions
 
             if (request.Length == 0)
             {
-                await response.WriteAsJsonAsync(ApplicationResponse.Fail("No data posted."));
+                await response.WriteAsJsonAsync(Result.Fail("No data posted."));
                 return response;
             }
 
@@ -46,7 +45,7 @@ namespace ObakiSite.Api.Functions
             }
             catch (Exception ex)
             {
-                await response.WriteAsJsonAsync(ApplicationResponse.Fail(ex.Message));
+                await response.WriteAsJsonAsync(Result.Fail(ex.Message));
                 return response;
             }
 

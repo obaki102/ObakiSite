@@ -5,11 +5,10 @@ using MudBlazor.Services;
 using ObakiSite.Client.Services.Components.Badge;
 using MudBlazor;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using ObakiSite.Application.Shared.Constants;
 using ObakiSite.Application.Shared.Extensions;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
-var baseUrl = new Uri(builder.Configuration["WEBAPI_Prefix"] ?? DefaultConstants.WebApiHost );
+var baseUrl = new Uri(builder.Configuration["API_Prefix"] ?? builder.HostEnvironment.BaseAddress);
 
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");

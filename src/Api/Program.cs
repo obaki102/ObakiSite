@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 using ObakiSite.Application.Features.Animelist.Constants;
 using ObakiSite.Application.Features.Email.Constants;
-using ObakiSite.Application.Infra.Data.Firebase;
+using ObakiSite.Application.Shared.Constants;
 using ObakiSite.Application.Shared.Extensions;
 
 namespace ObakiSite.Api
@@ -14,15 +13,14 @@ namespace ObakiSite.Api
         static async Task Main()
         {
             //todo: Explore azure vault.
-            var fireBaseVar = FirebaseSettings.GetFireBaseSettings();
-            var firebaseSettings = JsonSerializer.Serialize(fireBaseVar);
             var host = new HostBuilder()
                 .ConfigureFunctionsWorkerDefaults()
                 .ConfigureServices(services =>
                 {
-                    services.AddApiDependenciesWithFirebase(Environment.GetEnvironmentVariable(AnimelistConstants.AnimelistClientId),
+                    services.AddAzureFunctionsDependenciesWithCosmos(Environment.GetEnvironmentVariable(AnimelistConstants.AnimelistClientId),
                         Environment.GetEnvironmentVariable(EmailConstants.AppPassword),
-                        fireBaseVar.ProjectId,firebaseSettings);
+                         Environment.GetEnvironmentVariable(CosmosDBConstants.EndPoint),
+                         Environment.GetEnvironmentVariable(CosmosDBConstants.AccessKey));
                 })
 
                 .Build();

@@ -5,7 +5,7 @@ using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
 using ObakiSite.Application.Features.Posts.Services;
-using ObakiSite.Application.Shared.DTO.Response;
+using ObakiSite.Application.Shared;
 using System.Text.Json;
 using ObakiSite.Application.Shared.DTO;
 
@@ -33,7 +33,7 @@ namespace ObakiSite.Api.Functions
 
             if (request.Length == 0)
             {
-                await response.WriteAsJsonAsync(ApplicationResponse.Fail("No data posted."));
+                await response.WriteAsJsonAsync(Result.Fail("No data posted."));
                 return response;
             }
 
@@ -47,7 +47,7 @@ namespace ObakiSite.Api.Functions
             }
             catch (Exception ex)
             {
-                await response.WriteAsJsonAsync(ApplicationResponse.Fail(ex.Message));
+                await response.WriteAsJsonAsync(Result.Fail(ex.Message));
                 return response;
             }
         }
@@ -62,7 +62,7 @@ namespace ObakiSite.Api.Functions
 
             if (request.Length == 0)
             {
-                await response.WriteAsJsonAsync(ApplicationResponse.Fail("No data posted."));
+                await response.WriteAsJsonAsync(Result.Fail("No data posted."));
                 return response;
             }
 
@@ -77,7 +77,7 @@ namespace ObakiSite.Api.Functions
             }
             catch (Exception ex)
             {
-                await response.WriteAsJsonAsync(ApplicationResponse.Fail(ex.Message));
+                await response.WriteAsJsonAsync(Result.Fail(ex.Message));
                 return response;
             }
         }
@@ -91,7 +91,7 @@ namespace ObakiSite.Api.Functions
 
             if (string.IsNullOrEmpty(id))
             {
-                await response.WriteAsJsonAsync(ApplicationResponse.Fail("Invalid id."));
+                await response.WriteAsJsonAsync(Result.Fail("Invalid id."));
                 return response;
             }
 
@@ -105,7 +105,7 @@ namespace ObakiSite.Api.Functions
             }
             catch (Exception ex)
             {
-                await response.WriteAsJsonAsync(ApplicationResponse.Fail(ex.Message));
+                await response.WriteAsJsonAsync(Result.Fail(ex.Message));
                 return response;
             }
         }
@@ -121,7 +121,7 @@ namespace ObakiSite.Api.Functions
 
             if (string.IsNullOrEmpty(id))
             {
-                await response.WriteAsJsonAsync(ApplicationResponse.Fail("Invalid id."));
+                await response.WriteAsJsonAsync(Result.Fail("Invalid id."));
                 return response;
             }
             try
@@ -134,7 +134,7 @@ namespace ObakiSite.Api.Functions
             }
             catch (Exception ex)
             {
-                await response.WriteAsJsonAsync(ApplicationResponse.Fail(ex.Message));
+                await response.WriteAsJsonAsync(Result.Fail(ex.Message));
                 return response;
             }
         }
@@ -156,7 +156,7 @@ namespace ObakiSite.Api.Functions
             }
             catch (Exception ex)
             {
-                await response.WriteAsJsonAsync(ApplicationResponse.Fail(ex.Message));
+                await response.WriteAsJsonAsync(Result.Fail(ex.Message));
                 return response;
             }
         }

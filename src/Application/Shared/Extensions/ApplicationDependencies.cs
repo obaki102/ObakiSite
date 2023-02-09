@@ -89,5 +89,24 @@ namespace ObakiSite.Application.Shared.Extensions
             services.AddPostFirebaseService(projectId, serviceAccount);
             return services;
         }
+
+        public static IServiceCollection AddAzureFunctionsDependenciesWithCosmos(this IServiceCollection services, string animeListClientId,
+          string emailAppPassword, string cosmosEndPoint, string cosmosAccessKey)
+        {
+            if (services == null)
+            {
+                throw new ArgumentNullException(nameof(services));
+            }
+
+            services.AddHttpAnimeListService(animeListClientId);
+            services.AddEmailService(options =>
+            {
+                options.AppPassword = emailAppPassword;
+            });
+
+            services.AddPostCosmosService(cosmosEndPoint, cosmosAccessKey);
+           
+            return services;
+        }
     }
 }
