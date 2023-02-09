@@ -39,4 +39,4 @@ jobs:
           app-name: 'ObakiSiteApi'
           slot-name: 'Production'
           package: '${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/output'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_1C5415CD7F27442CB87B6ADE3D37B5FD }}
+          publish-profile: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_VICTORIOUS_SEA_07588B900 }}
