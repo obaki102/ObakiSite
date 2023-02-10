@@ -20,7 +20,8 @@ namespace ObakiSite.Api
                     services.AddAzureFunctionsDependenciesWithCosmos(Environment.GetEnvironmentVariable(AnimelistConstants.AnimelistClientId),
                         Environment.GetEnvironmentVariable(EmailConstants.AppPassword),
                          Environment.GetEnvironmentVariable(CosmosDBConstants.EndPoint),
-                         Environment.GetEnvironmentVariable(CosmosDBConstants.AccessKey));
+                         Environment.GetEnvironmentVariable(CosmosDBConstants.AccessKey),
+                         Environment.GetEnvironmentVariable(DefaultConstants.TokenKey));
                 })
 
                 .Build();

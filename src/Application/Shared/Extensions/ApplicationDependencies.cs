@@ -91,7 +91,7 @@ namespace ObakiSite.Application.Shared.Extensions
         }
 
         public static IServiceCollection AddAzureFunctionsDependenciesWithCosmos(this IServiceCollection services, string animeListClientId,
-          string emailAppPassword, string cosmosEndPoint, string cosmosAccessKey)
+          string emailAppPassword, string cosmosEndPoint, string cosmosAccessKey, string tokenKey)
         {
             if (services == null)
             {
@@ -103,6 +103,10 @@ namespace ObakiSite.Application.Shared.Extensions
             {
                 options.AppPassword = emailAppPassword;
             });
+            services.AddScopedAuthService(options =>
+            {
+                options.TokenKey = tokenKey;
+            }, cosmosEndPoint, cosmosAccessKey);
 
             services.AddPostCosmosService(cosmosEndPoint, cosmosAccessKey);
            

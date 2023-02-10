@@ -7,7 +7,7 @@ using ObakiSite.Application.Features.Chat.Constants;
 
 namespace ObakiSite.Api.Functions
 {
-    public static class SignalRFunctions
+    public static class SignalRFunction
     {
         //todo:mugrate to web api.
         [Function("negotiate")]

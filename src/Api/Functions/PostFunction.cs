@@ -11,14 +11,14 @@ using ObakiSite.Application.Shared.DTO;
 
 namespace ObakiSite.Api.Functions
 {
-    public class PostFunctions
+    public class PostFunction
     {
         private readonly ILogger _logger;
         private readonly IPostService _postService;
 
-        public PostFunctions(ILoggerFactory loggerFactory, IPostService postService)
+        public PostFunction(ILoggerFactory loggerFactory, IPostService postService)
         {
-            _logger = loggerFactory.CreateLogger<PostFunctions>();
+            _logger = loggerFactory.CreateLogger<PostFunction>();
             _postService = postService;
         }
 

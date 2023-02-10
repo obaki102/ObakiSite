@@ -8,11 +8,11 @@ using System.Net;
 
 namespace ObakiSite.Api.Functions
 {
-    public class AnimelistFunctions
+    public class AnimelistFunction
     {
         private readonly IAnimeListService _animeListService;
-        private readonly ILogger<AnimelistFunctions> _logger;
-        public AnimelistFunctions(IAnimeListService animeListService, ILogger<AnimelistFunctions> logger)
+        private readonly ILogger<AnimelistFunction> _logger;
+        public AnimelistFunction(IAnimeListService animeListService, ILogger<AnimelistFunction> logger)
         {
             _animeListService = animeListService;
             _logger = logger;
