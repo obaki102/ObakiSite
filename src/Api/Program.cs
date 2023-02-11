@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Microsoft.Azure.Functions.Worker.Extensions.OpenApi.Extensions;
 using Microsoft.Extensions.Hosting;
 using ObakiSite.Application.Features.Animelist.Constants;
 using ObakiSite.Application.Features.Email.Constants;
@@ -15,6 +16,7 @@ namespace ObakiSite.Api
             //todo: Explore azure vault.
             var host = new HostBuilder()
                 .ConfigureFunctionsWorkerDefaults()
+                .ConfigureOpenApi()
                 .ConfigureServices(services =>
                 {
                     services.AddAzureFunctionsDependenciesWithCosmos(Environment.GetEnvironmentVariable(AnimelistConstants.AnimelistClientId),

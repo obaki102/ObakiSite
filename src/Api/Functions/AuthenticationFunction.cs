@@ -9,6 +9,7 @@ using ObakiSite.Application.Shared.DTO;
 using System;
 using ObakiSite.Application.Shared;
 using System.Text.Json;
+using ObakiSite.Api.Functions;
 
 namespace ObakiSite.AzureFunction.Functions
 {
@@ -23,6 +24,7 @@ namespace ObakiSite.AzureFunction.Functions
             _authService = authService;
         }
 
+        [Function("IsUserExist")]
         public async Task<HttpResponseData> IsUserExist(
             [HttpTrigger(AuthorizationLevel.Function, "post", Route = "auth/is-user-exist/{email?}")] HttpRequestData req,
             string email)
@@ -36,6 +38,7 @@ namespace ObakiSite.AzureFunction.Functions
             return response;
         }
 
+        [Function("GetToken")]
         public async Task<HttpResponseData> GetToken([HttpTrigger(AuthorizationLevel.Function, "post", Route = "auth/get-token")] HttpRequestData req)
         {
             _logger.LogInformation("PostFunction trigger function processed a request.");
