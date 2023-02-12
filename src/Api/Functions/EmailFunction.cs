@@ -9,6 +9,9 @@ using System.Text.Json;
 using System;
 using ObakiSite.Application.Shared;
 using ObakiSite.Application.Shared.DTO;
+using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
+using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Enums;
+
 
 namespace ObakiSite.Api.Functions
 {
@@ -22,6 +25,9 @@ namespace ObakiSite.Api.Functions
             _logger = logger;
         }
         [Function("SendEmail")]
+        [OpenApiOperation(operationId: "SendEmail", tags: new[] { "Email" }, Summary = "Send email notification.", Visibility = OpenApiVisibilityType.Important)]
+        [OpenApiRequestBody(contentType: "application/json; charset=utf-8", bodyType: typeof(EmailMessageDTO), Description = "EmailMessageDTO", Required = true)]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(bool), Summary = "Successful operation")]
         public async Task<HttpResponseData> SendEmail(
             [HttpTrigger(AuthorizationLevel.Function, "post", Route = "send-email")] HttpRequestData req)
         {

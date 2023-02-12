@@ -8,6 +8,11 @@ using ObakiSite.Application.Features.Posts.Services;
 using ObakiSite.Application.Shared;
 using System.Text.Json;
 using ObakiSite.Application.Shared.DTO;
+using Google.Api;
+using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
+using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Enums;
+using Microsoft.OpenApi.Models;
+using System.Collections.Generic;
 
 namespace ObakiSite.Api.Functions
 {
@@ -24,6 +29,9 @@ namespace ObakiSite.Api.Functions
 
         #region Writes
         [Function("CreatePost")]
+        [OpenApiOperation(operationId: "CreatePost", tags: new[] { "Post" }, Summary = "Create new post.", Visibility = OpenApiVisibilityType.Important)]
+        [OpenApiRequestBody(contentType: "application/json; charset=utf-8", bodyType: typeof(PostDTO), Description = "PostDTO", Required = true)]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(bool), Summary = "Successful operation")]
         public async Task<HttpResponseData> CreatePost([HttpTrigger(AuthorizationLevel.Function, "post", Route = "post/create")] HttpRequestData req)
         {
             _logger.LogInformation("PostFunction trigger function processed a request.");
@@ -53,6 +61,9 @@ namespace ObakiSite.Api.Functions
         }
 
         [Function("UpdatePost")]
+        [OpenApiOperation(operationId: "UpdatePost", tags: new[] { "Post" }, Summary = "Update a specified post.", Visibility = OpenApiVisibilityType.Important)]
+        [OpenApiRequestBody(contentType: "application/json; charset=utf-8", bodyType: typeof(PostDTO), Description = "PostDTO", Required = true)]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(bool), Summary = "Successful operation")]
         public async Task<HttpResponseData> UpdatePost([HttpTrigger(AuthorizationLevel.Function, "put", Route = "post/update")] HttpRequestData req)
         {
             _logger.LogInformation("PostFunction trigger function processed a request.");
@@ -83,6 +94,9 @@ namespace ObakiSite.Api.Functions
         }
 
         [Function("DeletePost")]
+        [OpenApiOperation(operationId: "DeletePost", tags: new[] { "Post" }, Summary = "Delete a specified a post.", Visibility = OpenApiVisibilityType.Important)]
+        [OpenApiRequestBody(contentType: "application/json; charset=utf-8", bodyType: typeof(PostDTO), Description = "PostDTO", Required = true)]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(bool), Summary = "Successful operation")]
         public async Task<HttpResponseData> DeletePost([HttpTrigger(AuthorizationLevel.Function, "delete", Route = "post/delete/{id?}")] HttpRequestData req, string id)
         {
             _logger.LogInformation("PostFunction trigger function processed a request.");
@@ -113,6 +127,9 @@ namespace ObakiSite.Api.Functions
 
         #region Reads
         [Function("GetPostById")]
+        [OpenApiOperation(operationId: "GetPostById", tags: new[] { "Post" }, Summary = "Retrieved a post by id.", Visibility = OpenApiVisibilityType.Important)]
+        [OpenApiParameter(name: "id", In = ParameterLocation.Path, Required = true, Type = typeof(string), Description = "Valid  post id.")]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(PostDTO), Summary = "Successful operation")]
         public async Task<HttpResponseData> GetPostById([HttpTrigger(AuthorizationLevel.Function, "get", Route = "post/get/{id?}")] HttpRequestData req, string id)
         {
             _logger.LogInformation("PostFunction trigger function processed a request.");
@@ -140,6 +157,8 @@ namespace ObakiSite.Api.Functions
         }
 
         [Function("GetAllPostSummaries")]
+        [OpenApiOperation(operationId: "GetAllPostSummaries", tags: new[] { "Post" }, Summary = "Retrieved all post summaries", Visibility = OpenApiVisibilityType.Important)]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(IReadOnlyList<PostSummaryDTO>), Summary = "Successful operation")]
         public async Task<HttpResponseData> GetAllPostSummaries([HttpTrigger(AuthorizationLevel.Function, "get", Route = "post/get-summaries")] HttpRequestData req)
         {
             _logger.LogInformation("PostFunction trigger function processed a request.");

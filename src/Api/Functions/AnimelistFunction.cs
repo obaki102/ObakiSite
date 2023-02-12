@@ -8,6 +8,8 @@ using System.Net;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Enums;
 using Microsoft.OpenApi.Models;
+using ObakiSite.Application.Shared.DTO;
+using ObakiSite.Application.Shared;
 
 namespace ObakiSite.Api.Functions
 {
@@ -22,10 +24,11 @@ namespace ObakiSite.Api.Functions
         }
 
         [Function(nameof(AnimelistFunction))]
-        [OpenApiOperation(operationId: "animelists", tags: new[] { "animelists" }, Summary = "Get animelist from myanimelist api", Description = "Retrieve top 100 anime list based on the given season and year", Visibility = OpenApiVisibilityType.Important)]
+        [OpenApiOperation(operationId: "GetAnimeListBySeasonAndYear", tags: new[] { "Animelists" }, Summary = "Get animelist from myanimelist api", Description = "Retrieve top 100 anime list based on the given season and year", Visibility = OpenApiVisibilityType.Important)]
+        //Todo check how multiple parameters work , alternative is to use query option.
         [OpenApiParameter(name: "season", In = ParameterLocation.Path, Required = true, Type = typeof(string), Description = "Season")]
         [OpenApiParameter(name: "year", In = ParameterLocation.Path, Required = true, Type = typeof(int), Description = "Year")]
-        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(string), Summary = "Successful operation", Description = "Lists successfully  retrieved")]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(Result<AnimeListRoot>), Summary = "Successful operation", Description = "Lists successfully  retrieved")]
         public async Task<HttpResponseData> GetAnimeListBySeasonAndYear(
             [HttpTrigger(AuthorizationLevel.Function, "get", Route = "animelists/{season?}/{year:int?}")] HttpRequestData req,
             string season,

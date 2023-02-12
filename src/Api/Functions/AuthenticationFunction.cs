@@ -8,8 +8,10 @@ using Microsoft.AspNetCore.Http;
 using ObakiSite.Application.Shared.DTO;
 using System;
 using ObakiSite.Application.Shared;
+using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
+using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Enums;
+using Microsoft.OpenApi.Models;
 using System.Text.Json;
-using ObakiSite.Api.Functions;
 
 namespace ObakiSite.AzureFunction.Functions
 {
@@ -25,6 +27,9 @@ namespace ObakiSite.AzureFunction.Functions
         }
 
         [Function("IsUserExist")]
+        [OpenApiOperation(operationId: "IsUserExist", tags: new[] { "Authentication" }, Summary = "Check if existing user exist.", Visibility = OpenApiVisibilityType.Important)]
+        [OpenApiParameter(name: "email", In = ParameterLocation.Path, Required = true, Type = typeof(string), Description = "Valid email address to verify.")]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(bool), Summary = "Successful operation")]
         public async Task<HttpResponseData> IsUserExist(
             [HttpTrigger(AuthorizationLevel.Function, "post", Route = "auth/is-user-exist/{email?}")] HttpRequestData req,
             string email)
@@ -39,6 +44,10 @@ namespace ObakiSite.AzureFunction.Functions
         }
 
         [Function("GetToken")]
+        [OpenApiOperation(operationId: "GetToken", tags: new[] { "Authentication" }, Summary = "Retrieve valid token.", Visibility = OpenApiVisibilityType.Important)]
+        [OpenApiRequestBody(contentType: "application/json; charset=utf-8", bodyType: typeof(ApplicationUserDTO), Description = "ApplicationUserDTO", Required = true)]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(string), Summary = "Successful operation")]
+       
         public async Task<HttpResponseData> GetToken([HttpTrigger(AuthorizationLevel.Function, "post", Route = "auth/get-token")] HttpRequestData req)
         {
             _logger.LogInformation("PostFunction trigger function processed a request.");
