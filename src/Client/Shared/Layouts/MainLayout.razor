@@ -14,13 +14,14 @@
                         Create Post
                     </MudButton>
                 </MudHidden>
+                <MudHidden Breakpoint="Breakpoint.MdAndUp" Invert="true">
+                    <MudTooltip Text="Toggle Light/Dark Mode" Color="Color.Primary" Placement="Placement.Left">
+                        <MudToggleIconButton ToggledChanged="()=> SetPreference()" Class="ml-2 flex-none" Icon="@Icons.Material.Filled.LightMode" ToggledIcon="@Icons.Material.Filled.DarkMode"></MudToggleIconButton>
+                    </MudTooltip>
+                </MudHidden>
             </div>
         </MudContainer>
-        <MudHidden Breakpoint="Breakpoint.MdAndUp" Invert="true">
-            <MudTooltip Text="Toggle Light/Dark Mode" Color="Color.Primary" Placement="Placement.Left">
-                <MudToggleIconButton ToggledChanged="()=> SetPreference()" Class="flex-none" Icon="@Icons.Material.Filled.LightMode" ToggledIcon="@Icons.Material.Filled.DarkMode"></MudToggleIconButton>
-            </MudTooltip>
-        </MudHidden>
+
     </MudAppBar>
     <MudMainContent>
         <MudContainer MaxWidth="MaxWidth.Large" Class="my-4">
