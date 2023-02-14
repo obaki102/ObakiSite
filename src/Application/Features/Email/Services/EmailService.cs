@@ -44,10 +44,10 @@ namespace ObakiSite.Application.Features.Email.Services
                     builder.Attachments.Add(emailMessage.AttachmentFileName, fileStream);
                 }
 
-                //toddo: check markupstring or explore a more elegant way to format the html body
+                //todo: check markupstring or explore a more elegant way to format the html body.Save email template to storage.
                 string htmlBody = """"
                                 <p> Hello,<br><br>
-                                Thank you so much for taking interest in my profile, please don’t hesitate to contact me if I you need additional information.<br>
+                                Thank you so much for taking interest in my profile, please refer to the attachment for my latest CV..<br>
                                 Have a pleasent day.<br><br>
                                 Regards,<br>
                                 Josh</p>
