@@ -1,5 +1,6 @@
 ﻿@page "/"
 @using ObakiSite.Application.Features.Posts.Queries;
+@using ObakiSite.Client.Pages.Posts
 @inject ISender Mediatr
 @inject NavigationManager NavManager
 <PageTitle>Home</PageTitle>
@@ -16,7 +17,7 @@
             </MudList>
         </div>
     </MudHidden>
-    <ObakiSite.Client.Pages.Posts.ViewPostSummaries />
+    <ViewPostSummaries />
 
 </div>
 @*<MudDivider Class="my-4 mr-2 ml-4" Vertical="true" FlexItem="true" />
