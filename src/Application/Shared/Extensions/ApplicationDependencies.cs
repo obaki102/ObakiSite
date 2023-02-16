@@ -9,7 +9,6 @@ using ObakiSite.Application.Shared.Constants;
 using ObakiSite.Application.Shared.Settings;
 using Polly;
 using Polly.Contrib.WaitAndRetry;
-using System.Configuration;
 using System.Reflection;
 
 namespace ObakiSite.Application.Shared.Extensions
@@ -24,7 +23,7 @@ namespace ObakiSite.Application.Shared.Extensions
             }
             //3rd Party
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-            services.AddMediatR(Assembly.GetExecutingAssembly());
+            services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
             //Middleware
