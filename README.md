@@ -1,4 +1,4 @@
-# [MyWebSite](https://www.joshuajpiluden.site/)
+# [ObakiSite](https://www.joshuajpiluden.site/)
 I created this personal website mainly as a way to familiarize myself with new concepts and technologies. 
 
 # Rich text box 
