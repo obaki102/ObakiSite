@@ -6,19 +6,18 @@
 <PageTitle>Home</PageTitle>
 
 
-<div class="d-flex flex-row flex-grow-1 gap-1">
-    <MudHidden Breakpoint="Breakpoint.LgAndUp" Invert="true">
-        <div class="align-self-start flex-1">
+<div class="d-flex justify-center flex-row flex-grow-1 gap-1">
+    <div class="align-self-start flex-1">
+        <MudHidden Breakpoint="Breakpoint.LgAndUp" Invert="true">
             <MudList Clickable="true" Color="Color.Primary">
                 <MudListItem Text="Home" Icon="@Icons.Material.Filled.Home" Href="/" />
                 <MudListItem Text="Anime List" Icon="@Icons.Material.Filled.LibraryBooks" Href="/anime" />
-                <MudListItem Text="Chat Demo" Icon="@Icons.Material.Filled.Chat" Href="/livechat"/>
-                <MudListItem Text="GitHub repo" Icon="@Icons.Custom.Brands.GitHub" Href="https://github.com/obaki102/ObakiSite"  />
+                <MudListItem Text="Chat Demo" Icon="@Icons.Material.Filled.Chat" Href="/livechat" />
+                <MudListItem Text="GitHub repo" Icon="@Icons.Custom.Brands.GitHub" Href="https://github.com/obaki102/ObakiSite" />
             </MudList>
-        </div>
-    </MudHidden>
+        </MudHidden>
+    </div>
     <ViewPostSummaries />
-
 </div>
 @*<MudDivider Class="my-4 mr-2 ml-4" Vertical="true" FlexItem="true" />
 <MudTooltip Text="About me" Color="Color.Primary" Placement="Placement.Bottom">
