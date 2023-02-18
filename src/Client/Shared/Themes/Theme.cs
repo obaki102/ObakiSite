@@ -12,6 +12,36 @@ namespace ObakiSite.Client.Shared.Themes
             //Dark 
             defaultDarkPallete.Dark = "#22252B";
             defaultDarkPallete.Primary = "#EEEEEE";
+            defaultDarkPallete.AppbarBackground = "#22252B";
+            defaultDarkPallete.DarkContrastText = "#ecf2f8";
+            defaultDarkPallete.Background = "#22252B";
+            defaultDarkPallete.DrawerBackground = "#303841";
+            defaultDarkPallete.Surface = "#303841";
+            defaultDarkPallete.TextPrimary = "#ecf2f8";
+            defaultDarkPallete.PrimaryContrastText = "161b22";
+            defaultDarkPallete.AppbarText = "#EEEEEE";
+            defaultDarkPallete.Tertiary = "#22252B";
+            defaultDarkPallete.HoverOpacity = .2;
+
+            //Light
+            defaultLightPallete.Primary = "#161b22";
+            defaultLightPallete.PrimaryContrastText = "#EEEEEE";
+            defaultLightPallete.AppbarText = "#EEEEEE";
+            defaultLightPallete.TextPrimary = "#161b22";
+            defaultLightPallete.AppbarBackground = "#FFFFFF";
+            defaultLightPallete.Tertiary = "#EEEEEE";
+
+            return defaultTheme;  
+        }
+
+        public static MudTheme ObakiSiteTheme()
+        {
+            var defaultTheme = new MudTheme();
+            var defaultDarkPallete = defaultTheme.PaletteDark;
+            var defaultLightPallete = defaultTheme.Palette;
+            //Dark 
+            defaultDarkPallete.Dark = "#22252B";
+            defaultDarkPallete.Primary = "#EEEEEE";
             defaultDarkPallete.AppbarBackground = "#303841";
             defaultDarkPallete.DarkContrastText = "#ecf2f8";
             defaultDarkPallete.Background = "#22252B";
@@ -31,9 +61,9 @@ namespace ObakiSite.Client.Shared.Themes
             defaultLightPallete.AppbarBackground = "#58A6FF";
             defaultLightPallete.Tertiary = "#EEEEEE";
 
-            return defaultTheme;  
+            return defaultTheme;
         }
-       
+
         public static MudTheme CvTheme()
         {
             var defaultTheme = new MudTheme();

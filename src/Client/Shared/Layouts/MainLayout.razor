@@ -4,21 +4,11 @@
 <MudDialogProvider />
 <MudSnackbarProvider />
 <MudLayout>
-    <MudAppBar Elevation="1">
+    <MudAppBar Elevation="0">
         <MudContainer MaxWidth="MaxWidth.Large">
             <div class="d-flex align-center" Elevation="1">
-                <a class="mt-2 ml-8" href="/"> <MudImage Src="/img/logo.png" Width="70" Height="45" ObjectFit="ObjectFit.Cover" Elevation="2" Class="rounded-lg" /></a>
+                <MudText Typo="Typo.h6">joshuajpiluden</MudText>
                 <MudSpacer />
-                <MudHidden Breakpoint="Breakpoint.MdAndUp" Invert="true">
-                    <MudButton Variant="Variant.Outlined" Class="flex-none" Color="Color.Primary" Size="Size.Large" Href="/obaki">
-                        ObakiSite
-                    </MudButton>
-                </MudHidden>
-                <MudHidden Breakpoint="Breakpoint.MdAndUp" Invert="true">
-                    <MudTooltip Text="Toggle Light/Dark Mode" Color="Color.Primary" Placement="Placement.Left">
-                        <MudToggleIconButton ToggledChanged="()=> SetPreference()" Class="ml-2 flex-none" Icon="@Icons.Material.Filled.LightMode" ToggledIcon="@Icons.Material.Filled.DarkMode"></MudToggleIconButton>
-                    </MudTooltip>
-                </MudHidden>
             </div>
         </MudContainer>
 
@@ -40,30 +30,8 @@
 @code {
     [CascadingParameter] public CascadingAppState? AppState { get; set; }
     private MudTheme _theme = Theme.Default();
-    private bool _isDarkMode;
+    private bool _isDarkMode = true;
     bool _drawerOpen = false;
 
-    protected override async Task OnInitializedAsync()
-    {
-        if (AppState is not null)
-        {
-            _isDarkMode = await AppState.IsDarkMode();
-        }
-    }
-
-    private async Task SetPreference()
-    {
-        _isDarkMode = !_isDarkMode;
-        var command = new SetPreference(new Preferences
-            {
-                IsDarkTheme = _isDarkMode
-            });
-
-        await Mediator.Send(command);
-
-        if (AppState is not null)
-            AppState.Settings.IsDarkTheme = _isDarkMode;
-
-        StateHasChanged();
-    }
+    
 }
