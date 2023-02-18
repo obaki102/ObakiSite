@@ -1,6 +1,135 @@
 ﻿@page "/"
-<h3>LandingPage</h3>
+<div class="d-flex justify-center flex-row flex-wrap gap-4">
 
+    <MudPaper Class="d-flex align-center flex-grow-1 gap-4 mx-2 my-8" Elevation="1" Height="300px">
+        <MudStack Class="ml-16">
+            <MudText Typo="Typo.h5">Joshua J L. Piluden</MudText>
+            <MudText Typo="Typo.h6">.NET Application Developer</MudText>
+            <MudText Typo="Typo.subtitle1" Align="Align.Justify" Class="mr-16">Hey there, I'm a developer who loves learning new things and building cool tools and applications. With @yearsOfExp years of experience, I'm comfortable working with a variety of technologies, but I'm always up for a challenge that pushes me outside of my comfort zone.</MudText>
+            <div>
+
+                <MudTooltip Class="mud-theme-dark">
+                    <ChildContent>
+                        <MudChip Color="Color.Primary">C#</MudChip>
+                    </ChildContent>
+                    <TooltipContent>
+                        <MudCard Elevation="0" Class="mud-theme-dark" Style="width:250px">
+                            <MudCardHeader>
+                                <CardHeaderAvatar>
+                                    <MudChip Color="Color.Primary">C#</MudChip>
+                                </CardHeaderAvatar>
+                                <CardHeaderContent>
+                                    <MudText Typo="Typo.body1">Skill level</MudText>
+                                    <MudRating SelectedValue="3" />
+                                </CardHeaderContent>
+                            </MudCardHeader>
+                            <MudCardContent>
+                                <MudText Align="Align.Justify" Typo="Typo.body2">C# is my main language since college. Although I have grown comfortable using it , I have so much to learn.</MudText>
+                            </MudCardContent>
+                        </MudCard>
+                    </TooltipContent>
+                </MudTooltip>
+                <MudTooltip Class="mud-theme-dark">
+                    <ChildContent>
+                        <MudChip Color="Color.Primary">Blazor</MudChip>
+                    </ChildContent>
+                    <TooltipContent>
+                        <MudCard Elevation="0" Class="mud-theme-dark" Style="width:250px">
+                            <MudCardHeader>
+                                <CardHeaderAvatar>
+                                    <MudChip Color="Color.Primary">Blazor</MudChip>
+                                </CardHeaderAvatar>
+                                <CardHeaderContent>
+                                    <MudText Typo="Typo.body1">Skill level</MudText>
+                                    <MudRating SelectedValue="3" />
+                                </CardHeaderContent>
+                            </MudCardHeader>
+                            <MudCardContent>
+                                <MudText Align="Align.Justify" Typo="Typo.body2">I picked up Blazor last year and I'm having a blast learning every nook and cranny. Compared to other SPA framework you can solely build application using primarily C#. </MudText>
+                            </MudCardContent>
+                        </MudCard>
+                    </TooltipContent>
+                </MudTooltip>
+                <MudTooltip Class="mud-theme-dark">
+                    <ChildContent>
+                        <MudChip Color="Color.Primary">Azure</MudChip>
+                    </ChildContent>
+                    <TooltipContent>
+                        <MudCard Elevation="0" Class="mud-theme-dark" Style="width:250px">
+                            <MudCardHeader>
+                                <CardHeaderAvatar>
+                                    <MudChip Color="Color.Primary">Azure</MudChip>
+                                </CardHeaderAvatar>
+                                <CardHeaderContent>
+                                    <MudText Typo="Typo.body1">Skill level</MudText>
+                                    <MudRating SelectedValue="3" />
+                                </CardHeaderContent>
+                            </MudCardHeader>
+                            <MudCardContent>
+                                <MudText Align="Align.Justify" Typo="Typo.body2">Ever since I passed AZ-900, I was introduced into the world of cloud computing. A testament of this is I was able to establish this site with zero cost.This site takes full advantage of Azure serverless services. </MudText>
+                            </MudCardContent>
+                        </MudCard>
+                    </TooltipContent>
+                </MudTooltip>
+                <MudTooltip Class="mud-theme-dark">
+                    <ChildContent>
+                        <MudChip Color="Color.Primary">Power Platform</MudChip>
+                    </ChildContent>
+                    <TooltipContent>
+                        <MudCard Elevation="0" Class="mud-theme-dark" Style="width:320px">
+                            <MudCardHeader>
+                                <CardHeaderAvatar>
+                                    <MudChip Size="Size.Small" Color="Color.Primary">Power Platform</MudChip>
+                                </CardHeaderAvatar>
+                                <CardHeaderContent>
+                                    <MudText Typo="Typo.body1">Skill level</MudText>
+                                    <MudRating SelectedValue="3" />
+                                </CardHeaderContent>
+                            </MudCardHeader>
+                            <MudCardContent>
+                                <MudText Align="Align.Justify" Typo="Typo.body2">This is currently the tech stack I use with my current company. I was able to create various automations using Power BI - for our reports and dashboards, Power Apps - for our UI based tools and finally Power Automate for integrating to external services such as MS Teams, Sharepoint  and Service Now. </MudText>
+                            </MudCardContent>
+                            <MudCardActions>
+                                <MudChip Size="Size.Small" Color="Color.Primary">Power BI</MudChip>
+                                <MudChip Size="Size.Small" Color="Color.Primary">Power Automate</MudChip>
+                                <MudChip Size="Size.Small" Color="Color.Primary">Power Apps</MudChip>
+                            </MudCardActions>
+                        </MudCard>
+                    </TooltipContent>
+                </MudTooltip>
+                <MudTooltip Class="mud-theme-dark">
+                    <ChildContent>
+                        <MudChip Color="Color.Primary">Others</MudChip>
+                    </ChildContent>
+                    <TooltipContent>
+                        <MudCard Elevation="0" Class="mud-theme-dark" Style="width:300px">
+                            <MudCardHeader>
+                                <CardHeaderAvatar>
+                                    <MudText Typo="Typo.subtitle2" Align="Align.Left">Skills I picked up throughout my career.</MudText>
+                                </CardHeaderAvatar>
+                                <CardHeaderContent>
+                                </CardHeaderContent>
+                            </MudCardHeader>
+                            <MudCardContent>
+                                <MudChip Size="Size.Small" Color="Color.Primary">Business Intelligence (SQL, SSIS, SSRS)</MudChip>
+                                <MudChip Size="Size.Small" Color="Color.Primary">Azure Functions</MudChip>
+                                <MudChip Size="Size.Small" Color="Color.Primary">SharePoint</MudChip>
+                                <MudChip Size="Size.Small" Color="Color.Primary">Windows Forms</MudChip>
+                                <MudChip Size="Size.Small" Color="Color.Primary">ASP Classic</MudChip>
+                                <MudChip Size="Size.Small" Color="Color.Primary">docker</MudChip>
+                                <MudChip Size="Size.Small" Color="Color.Primary">Cold Fusion</MudChip>
+                                <MudChip Size="Size.Small" Color="Color.Primary">PERL</MudChip>
+                                <MudChip Size="Size.Small" Color="Color.Primary">Oracle SOA</MudChip>
+                                <MudChip Size="Size.Small" Color="Color.Primary">Salesforce</MudChip>
+                            </MudCardContent>
+                        </MudCard>
+                    </TooltipContent>
+                </MudTooltip>
+            </div>
+        </MudStack>
+
+    </MudPaper>
+</div>
 @code {
-
+    private int yearsOfExp = DateTime.Now.Year - 2012;
 }

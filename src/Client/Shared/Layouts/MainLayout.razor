@@ -1,20 +1,20 @@
 ﻿@inherits LayoutComponentBase
-@inject ISender Mediator
 <MudThemeProvider @bind-IsDarkMode="_isDarkMode" Theme="_theme" />
 <MudDialogProvider />
 <MudSnackbarProvider />
 <MudLayout>
     <MudAppBar Elevation="0">
-        <MudContainer MaxWidth="MaxWidth.Large">
+        <MudContainer MaxWidth="MaxWidth.Medium">
             <div class="d-flex align-center" Elevation="1">
-                <MudText Typo="Typo.h6">joshuajpiluden</MudText>
+                <a href="/">  <MudText Typo="Typo.h6">joshuajpiluden</MudText></a>
                 <MudSpacer />
+                <a href="/">  <MudText Typo="Typo.button" Class="ml-3">Projects</MudText></a>
             </div>
         </MudContainer>
 
     </MudAppBar>
     <MudMainContent>
-        <MudContainer MaxWidth="MaxWidth.Large" Class="my-4">
+        <MudContainer MaxWidth="MaxWidth.Medium" Class="my-4">
             <ErrorBoundary>
                 <ChildContent>  @Body </ChildContent>
                 <ErrorContent Context="Exception">
@@ -28,10 +28,9 @@
 </MudLayout>
 
 @code {
-    [CascadingParameter] public CascadingAppState? AppState { get; set; }
     private MudTheme _theme = Theme.Default();
     private bool _isDarkMode = true;
     bool _drawerOpen = false;
 
-    
+
 }
