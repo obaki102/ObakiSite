@@ -1,4 +1,4 @@
-﻿@page "/post/create"
+﻿@page "/obaki/post/create"
 @layout PostLayout
 @using WYSIWYGTextEditor;
 @using ObakiSite.Application.Features.Posts.Commands;
@@ -131,7 +131,7 @@
         if (result.IsSuccess)
         {
             await Mediatr.Send(new ClearDraftPost());
-            NavManager.NavigateTo($"/post/view/{post.Id}");
+            NavManager.NavigateTo($"/obaki/post/view/{post.Id}");
         }
     }
 

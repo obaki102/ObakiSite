@@ -1,6 +1,8 @@
-﻿@page "/anime"
-@using ObakiSite.Application.Features.Animelist.Queries
+﻿@page "/obaki/anime"
+@layout ObakiSiteMainLayout
 @inject ISender Mediatr
+@using ObakiSite.Application.Features.Animelist.Queries
+
 <PageTitle>Animelist</PageTitle>
 
 @if (animeLists == null)
