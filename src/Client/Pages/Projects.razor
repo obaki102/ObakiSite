@@ -1,0 +1,71 @@
+﻿@page "/projects"
+@using ObakiSite.Application.Features.Github.Queries;
+@inject ISender Mediatr
+
+<PageTitle>Projects</PageTitle>
+
+@if (githubProjects is null)
+{
+    <div class="d-flex justify-center flex-row flex-wrap gap-4">
+        @for (int i = 0; i < 3; i++)
+        {
+            <MudCard Style="width:300px;height:500px;">
+                <MudCardHeader Style="height:100px;" Class="mt-2">
+                    <CardHeaderContent>
+                        <MudSkeleton Width="90%" Animation="Animation.Wave" />
+                    </CardHeaderContent>
+                    <CardHeaderActions>
+                        <MudSkeleton Width="10%" Animation="Animation.Wave" />
+                    </CardHeaderActions>
+                </MudCardHeader>
+                <MudSkeleton SkeletonType="SkeletonType.Rectangle" Class="pa-1 rounded-lg" Height="250px" Animation="Animation.Wave" />
+                <MudCardContent>
+                    <MudSkeleton Width="100%" Animation="Animation.Wave" />
+                    <MudSkeleton Width="100%" Animation="Animation.Wave" />
+                    <MudDivider />
+                    <MudSkeleton Width="20%" Animation="Animation.Wave" />
+                    <MudSkeleton Width="20%" Animation="Animation.Wave" />
+                </MudCardContent>
+            </MudCard>
+        }
+
+    </div>
+}
+else
+{
+    <div class="d-flex justify-center flex-row flex-wrap gap-4">
+
+        @foreach (var repo in githubProjects)
+        {
+
+            <MudCard Class="mx-2" Style="width:300px;" Elevation="2">
+                <MudCardHeader Style="height:100px;" Class="mt-2">
+                    <CardHeaderContent>
+                        <MudText Align="Align.Left" Typo="Typo.subtitle1">@repo.Name </MudText>
+                    </CardHeaderContent>
+                </MudCardHeader>
+                <MudCardContent>
+                    <MudText Typo="Typo.body2">@repo.Description</MudText>
+                </MudCardContent>
+            </MudCard>
+
+        }
+
+    </div>
+}
+
+@code {
+    private List<GithubRepoInfo> githubProjects = new();
+    private List<string> currentRepos = new List<string> { "ObakiSite", "Obaki.LocalStorageCache" };
+    protected override async Task OnInitializedAsync()
+    {
+        foreach (string repo in currentRepos)
+        {
+            var result = await Mediatr.Send(new GetRepoInfo("obaki102", repo));
+            if (result.IsSuccess && result.Value is not null)
+            {
+                githubProjects.Add(result.Value);
+            }
+        }
+    }
+}
