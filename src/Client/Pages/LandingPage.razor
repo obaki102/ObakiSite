@@ -133,21 +133,22 @@
                 </div>
             </MudHidden>
         </MudStack>
-
     </MudPaper>
-    <MudPaper Class="d-flex align-center mt-8" Elevation="1" Height="300px" Width="100px" Outlined="true">
-        <MudStack>
-            <MudTooltip Text="GitHub" Color="Color.Primary" Placement="Placement.Bottom">
-                <MudIconButton Href="https://github.com/obaki102" Icon="@Icons.Custom.Brands.GitHub" Color="Color.Primary" />
-            </MudTooltip>
-            <MudTooltip Text="Email Address" Color="Color.Primary" Placement="Placement.Bottom">
-                <MudIconButton Href="mailto:joshuajpiluden@gmail.com" Icon="@Icons.Custom.Brands.Google" Color="Color.Primary" />
-            </MudTooltip>
-            <MudTooltip Text="Linkedin" Color="Color.Primary" Placement="Placement.Bottom">
-                <MudIconButton Href="https://www.linkedin.com/in/joshua-j-piluden-b06798110" Icon="@Icons.Custom.Brands.LinkedIn" Color="Color.Primary" />
-            </MudTooltip>
-        </MudStack>
-    </MudPaper>
+    <MudHidden Breakpoint="Breakpoint.MdAndUp" Invert="true">
+        <MudPaper Class="d-flex align-center mt-8" Elevation="1" Height="300px" Width="100px" Outlined="true">
+            <MudStack>
+                <MudTooltip Text="GitHub" Color="Color.Primary" Placement="Placement.Bottom">
+                    <MudIconButton Href="https://github.com/obaki102" Icon="@Icons.Custom.Brands.GitHub" Color="Color.Primary" />
+                </MudTooltip>
+                <MudTooltip Text="Email Address" Color="Color.Primary" Placement="Placement.Bottom">
+                    <MudIconButton Href="mailto:joshuajpiluden@gmail.com" Icon="@Icons.Custom.Brands.Google" Color="Color.Primary" />
+                </MudTooltip>
+                <MudTooltip Text="Linkedin" Color="Color.Primary" Placement="Placement.Bottom">
+                    <MudIconButton Href="https://www.linkedin.com/in/joshua-j-piluden-b06798110" Icon="@Icons.Custom.Brands.LinkedIn" Color="Color.Primary" />
+                </MudTooltip>
+            </MudStack>
+        </MudPaper>
+    </MudHidden>
 </div>
 @code {
     private int yearsOfExp = DateTime.Now.Year - 2012;
