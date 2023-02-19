@@ -1,7 +1,7 @@
 ﻿@page "/projects"
 @using ObakiSite.Application.Features.Github.Queries;
 @inject ISender Mediatr
-
+@inject ISnackbar Snackbar
 <PageTitle>Projects</PageTitle>
 
 @if (githubProjects is null)
@@ -14,17 +14,10 @@
                     <CardHeaderContent>
                         <MudSkeleton Width="90%" Animation="Animation.Wave" />
                     </CardHeaderContent>
-                    <CardHeaderActions>
-                        <MudSkeleton Width="10%" Animation="Animation.Wave" />
-                    </CardHeaderActions>
                 </MudCardHeader>
-                <MudSkeleton SkeletonType="SkeletonType.Rectangle" Class="pa-1 rounded-lg" Height="250px" Animation="Animation.Wave" />
                 <MudCardContent>
                     <MudSkeleton Width="100%" Animation="Animation.Wave" />
-                    <MudSkeleton Width="100%" Animation="Animation.Wave" />
-                    <MudDivider />
-                    <MudSkeleton Width="20%" Animation="Animation.Wave" />
-                    <MudSkeleton Width="20%" Animation="Animation.Wave" />
+                    
                 </MudCardContent>
             </MudCard>
         }
@@ -55,16 +48,23 @@ else
 }
 
 @code {
-    private List<GithubRepoInfo> githubProjects = new();
+    private List<GithubRepoInfo>? githubProjects;
+    //Todo: Check github api document if this can be queried instead.
     private List<string> currentRepos = new List<string> { "ObakiSite", "Obaki.LocalStorageCache" };
     protected override async Task OnInitializedAsync()
     {
+        //Todo: Save data  in local storage to minimize API calls?
+        githubProjects = new();
         foreach (string repo in currentRepos)
         {
             var result = await Mediatr.Send(new GetRepoInfo("obaki102", repo));
             if (result.IsSuccess && result.Value is not null)
             {
                 githubProjects.Add(result.Value);
+            }
+            else
+            {
+                Snackbar.Add("Sorry, unable to connect to Github API.", Severity.Error);
             }
         }
     }

@@ -1,4 +1,8 @@
 ﻿@inherits LayoutComponentBase
+@using ObakiSite.Application.Features.Github.Queries;
+@inject ISender Mediatr
+@inject ISnackbar Snackbar
+
 <MudThemeProvider @bind-IsDarkMode="_isDarkMode" Theme="_theme" />
 <MudDialogProvider />
 <MudSnackbarProvider />
@@ -23,6 +27,28 @@
                     <p class="errorUI">Nothing to see here right now. Sorry!</p>
                 </ErrorContent>
             </ErrorBoundary>
+            <MudAppBar Elevation="0" Bottom="true">
+                <MudContainer MaxWidth="MaxWidth.Medium">
+                    <MudDivider Class="mb-4" />
+                    @if (githubRepo is null || githubLastCommit is null)
+                    {
+                        <MudSkeleton Width="80%" Animation="Animation.Wave" />
+                    }
+                    else
+                    {
+                        <MudStack Row="true">
+                            <MudText Typo="Typo.subtitle2">© joshuajpiluden @DateTime.Now.Year</MudText>
+                            <MudSpacer />
+
+                            <MudText Typo="Typo.subtitle2"> @lastDayUpdated</MudText> |
+                            <MudLink Href="@lastCommitUrl" Typo="Typo.subtitle2">Github last commit</MudLink> |
+                            <MudTooltip Text="Deployment status" Color="Color.Primary" Placement="Placement.Bottom">
+                                <MudImage Src="https://github.com/obaki102/ObakiSite/workflows/Azure%20Static%20Web%20Apps%20CI/CD/badge.svg" Alt="Mony the dog" Elevation="25" Class="rounded-lg" />
+                            </MudTooltip>
+                        </MudStack>
+                    }
+                </MudContainer>
+            </MudAppBar>
         </MudContainer>
     </MudMainContent>
 </MudLayout>
@@ -31,6 +57,44 @@
     private MudTheme _theme = Theme.Default();
     private bool _isDarkMode = true;
     bool _drawerOpen = false;
+
+    private GithubRepoInfo? githubRepo;
+    private GithubLastCommit? githubLastCommit;
+    private string lastDayUpdated = string.Empty;
+    private string lastCommitUrl = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        //Todo: Save data  in local storage to minimize API calls?
+        var repoInfoResult = await Mediatr.Send(new GetRepoInfo("obaki102", "ObakiSite"));
+        if (repoInfoResult.IsSuccess && repoInfoResult.Value is not null)
+        {
+            githubRepo = repoInfoResult.Value;
+            var daysPassed = DateTime.Now.Day - githubRepo.PushedAt.Day;
+            lastDayUpdated = daysPassed switch
+            {
+                0 => "This site was recently updated today.",
+                1 => "This site was last updated yesterday",
+                _ => $"This site was last updated {daysPassed} days ago"
+            };
+        }
+        else
+        {
+            Snackbar.Add("Sorry, unable to connect to Github API.", Severity.Error);
+        }
+        var lastCommitResult = await Mediatr.Send(new GetLastCommit());
+        if (lastCommitResult.IsSuccess && lastCommitResult.Value is not null)
+        {
+            githubLastCommit = lastCommitResult.Value;
+            lastCommitUrl = $"https://github.com/obaki102/obakiSite/commit/{githubLastCommit.Object.Sha}";
+        }
+        else
+        {
+            Snackbar.Add("Sorry, unable to connect to Github API.", Severity.Error);
+        }
+
+    }
+
 
 
 }
