@@ -7,7 +7,7 @@
     <MudPaper Class="d-flex align-center flex-grow-1 gap-4  my-8" Elevation="1" Height="300px" Outlined="true">
         <MudStack Class="ml-16">
             <MudText Typo="Typo.h6">Joshua J L. Piluden</MudText>
-            <MudText Typo="Typo.body1">.NET Application Developer</MudText>
+            <MudText Typo="Typo.button">.NET Application Developer</MudText>
             <MudText Typo="Typo.subtitle1" Align="Align.Justify" Class="mr-16">Hey there, I'm a developer who has a passion for acquiring fresh knowledge and crafting innovative tools and applications. Having worked for @yearsOfExp years, I possess expertise in various technologies, but I'm constantly seeking challenging opportunities that enable me to step beyond my comfort zone.</MudText>
 
             <MudHidden Breakpoint="Breakpoint.MdAndUp" Invert="true">
@@ -140,9 +140,6 @@
             <MudTooltip Text="GitHub" Color="Color.Primary" Placement="Placement.Bottom">
                 <MudIconButton Href="https://github.com/obaki102" Icon="@Icons.Custom.Brands.GitHub" Color="Color.Primary" />
             </MudTooltip>
-            <MudTooltip Text="Phonenumber" Color="Color.Primary" Placement="Placement.Bottom">
-                <MudIconButton OnClick="@CopyPhoneNumber" Icon="@Icons.Material.Filled.PhoneIphone" Color="Color.Primary" />
-            </MudTooltip>
             <MudTooltip Text="Email Address" Color="Color.Primary" Placement="Placement.Bottom">
                 <MudIconButton Href="mailto:joshuajpiluden@gmail.com" Icon="@Icons.Custom.Brands.Google" Color="Color.Primary" />
             </MudTooltip>
@@ -158,7 +155,7 @@
 
     private async Task CopyPhoneNumber()
     {
-        await CopyToClipboard("+639266094852");
+        await CopyToClipboard("");
         Snackbar.Add("Phone number copied.", Severity.Success);
     }
 }

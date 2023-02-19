@@ -9,16 +9,18 @@
     <div class="d-flex justify-center flex-row flex-wrap gap-4">
         @for (int i = 0; i < 3; i++)
         {
-            <MudCard Style="width:300px;height:500px;">
-                <MudCardHeader Style="height:100px;" Class="mt-2">
-                    <CardHeaderContent>
+            <MudCard Outlined="true" Style="height:300px;">
+                <MudCardHeader>
+                    <CardHeaderAvatar>
                         <MudSkeleton Width="90%" Animation="Animation.Wave" />
-                    </CardHeaderContent>
+                    </CardHeaderAvatar>
                 </MudCardHeader>
-                <MudCardContent>
-                    <MudSkeleton Width="100%" Animation="Animation.Wave" />
-                    
-                </MudCardContent>
+                <MudSkeleton Width="90%" Animation="Animation.Wave" />
+                <MudDivider Class="my-2" />
+                <MudCardActions>
+                    <MudSkeleton Width="20%" Animation="Animation.Wave" />
+                    <MudSkeleton Width="20%" Animation="Animation.Wave" />
+                </MudCardActions>
             </MudCard>
         }
 
@@ -27,23 +29,29 @@
 else
 {
     <div class="d-flex justify-center flex-row flex-wrap gap-4">
-
         @foreach (var repo in githubProjects)
         {
-
-            <MudCard Class="mx-2" Style="width:300px;" Elevation="2">
-                <MudCardHeader Style="height:100px;" Class="mt-2">
-                    <CardHeaderContent>
-                        <MudText Align="Align.Left" Typo="Typo.subtitle1">@repo.Name </MudText>
-                    </CardHeaderContent>
+            <MudCard Outlined="true" >
+                <MudCardHeader>
+                    <CardHeaderAvatar>
+                        <MudStack Row="true">
+                            <MudText Typo="Typo.body1">@repo.Name </MudText>
+                        </MudStack>
+                    </CardHeaderAvatar>
                 </MudCardHeader>
-                <MudCardContent>
-                    <MudText Typo="Typo.body2">@repo.Description</MudText>
-                </MudCardContent>
+                <MudText Typo="Typo.body2" Class="ma-4"> @repo.Description</MudText>
+                <MudChip Color="Color.Dark" Class="ml-4">  <MudIcon Icon="@Icons.Material.Filled.Stars" Color="Color.Default" Class="mr-1" /> Star: @repo.StargazersCount</MudChip>
+                <MudDivider Class="my-2"/>
+                <MudCardActions>
+                    <MudIconButton Icon="@Icons.Custom.Brands.GitHub" Color="Color.Default" Href="@repo.HtmlUrl" />
+                    @if (@repo.Name.Contains("ObakiSite"))
+                    {
+                        <MudIconButton Icon="@Icons.Material.Filled.Link" Color="Color.Default" Href="https://www.joshuajpiluden.site/" />
+                    }
+
+                </MudCardActions>
             </MudCard>
-
         }
-
     </div>
 }
 
