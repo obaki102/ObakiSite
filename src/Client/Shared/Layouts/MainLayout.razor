@@ -72,7 +72,7 @@
         if (repoInfoResult.IsSuccess && repoInfoResult.Value is not null)
         {
             githubRepo = repoInfoResult.Value;
-            var daysPassed = DateTime.UtcNow.Day - githubRepo.PushedAt.Day;
+            var daysPassed = DateTime.UtcNow.Day - githubRepo.PushedAt.ToUniversalTime().Day;
             lastDayUpdated = daysPassed switch
             {
                 0 => "This site was recently updated today",
