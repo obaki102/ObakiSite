@@ -31,7 +31,7 @@
                 <MudAppBar Elevation="0" Bottom="true">
                     <MudContainer MaxWidth="MaxWidth.Medium">
                         <MudDivider Class="mb-4" />
-                        @if (githubRepo is null || githubLastCommit is null)
+                        @if (githubRepo is null && githubLastCommit is null)
                         {
                             <MudSkeleton Width="80%" Animation="Animation.Wave" />
                         }
