@@ -64,9 +64,9 @@ else
                         <MudText Typo="Typo.caption">Posted on @post.Created</MudText>
                     </CardHeaderContent>
                     <CardHeaderActions>
-                        <MudMenu AnchorOrigin="Origin.TopRight" TransformOrigin="Origin.BottomLeft">
+                        <MudMenu AnchorOrigin="Origin.BottomRight" TransformOrigin="Origin.BottomRight">
                             <ActivatorContent>
-                                <MudTooltip Text="Options" Color="Color.Primary" Placement="Placement.Bottom">
+                                <MudTooltip Text="Options" Color="Color.Primary" Placement="Placement.Right">
                                     <MudIconButton Icon="@Icons.Material.Filled.Dehaze" Color="Color.Default" />
                                 </MudTooltip>
                             </ActivatorContent>
@@ -74,6 +74,7 @@ else
                                 <MudList Clickable="true">
                                     <MudListItem Text="Delete Post" Icon="@Icons.Material.Filled.Delete" Color="Color.Primary" Dense="true" OnClick="OnButtonClicked" />
                                 </MudList>
+                                <MudDivider></MudDivider>
                                 <MudList Clickable="true">
                                     <MudListItem Text="Edit Post" Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" Dense="true" OnClick="@(() => NavManager.NavigateTo($"/obaki/post/edit/{Id}"))" />
                                 </MudList>
