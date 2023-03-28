@@ -15,12 +15,12 @@ namespace ObakiSite.Application.Features.ChatGPT.Services
             _openAIService = openAIService;
         }
 
-        public async Task<string> AskChatGpt(string message)
+        public async Task<string> AskChatGpt(string question)
         {
             var response = new StringBuilder();
             var completionResult = _openAIService.Completions.CreateCompletionAsStream(new CompletionCreateRequest()
             {
-                Prompt = message,
+                Prompt = question,
                 MaxTokens = 100
             }, Models.TextDavinciV3);
 

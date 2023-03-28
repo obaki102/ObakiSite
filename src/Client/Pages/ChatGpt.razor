@@ -1,0 +1,105 @@
+﻿@page "/obaki/chatgpt"
+@layout ObakiSiteEmptyLayout
+@inject NavigationManager NavigationManager
+@inject IConfiguration ConfigurationManager
+@inject ISender Mediatr
+@inject ISnackbar Snackbar
+
+<PageTitle>ChatGpt</PageTitle>
+<MudContainer MaxWidth="MaxWidth.Medium" Class="my-4">
+    <div id="scrollableDiv" style="overflow-y: scroll;">
+        <div Class="d-flex flex-column flex-grow-1 gap-1" Elevation="0">
+            @foreach (var message in _messages)
+            {
+                @if (IsMyMessage(message.User))
+                {
+                    <MudPaper Class="pa-2 mt-4 mb-4 overflow-auto rounded-lg" Style="word-break: break-all;" Outlined="true">
+                        <MudText Typo="Typo.body2" Class="mx-1">@message.Message</MudText>
+                    </MudPaper>
+                }
+                else
+                {
+                    <MudPaper Class="pa-2 mt-4 mb-4 overflow-auto mud-theme-primary rounded-lg" Style="word-break: break-all;" Outlined="true">
+                        <MudText Typo="Typo.body2" Class="mx-1">@message.Message</MudText>
+                    </MudPaper>
+                }
+            }
+        </div>
+    </div>
+</MudContainer>
+
+<div Class="d-flex align-content-end flex-row ma-4" style="position:fixed;bottom: 0;">
+    <div class="d-flex align-center flex-row">
+        <div class="d-flex ml-1 pa-1">
+            <MudTextField T="string" Label="Chatbox" Variant="Variant.Outlined" Lines="5" @bind-Value="_enteredMessage" @onkeydown="OnEnterKeyPress" TextUpdateSuppression="false" DisableUnderLine="true" Immediate="true" />
+        </div>
+        <div>
+            <MudIconButton Variant="Variant.Text" Icon="@Icons.Material.Filled.Send" Color="Color.Primary" OnClick="SendMessage" />
+        </div>
+    </div>
+</div>
+
+
+
+@code {
+    private List<ChatMessage> _messages = new();
+    private ChatMessage chatMessage = new();
+    private string _enteredMessage { get; set; } = string.Empty;
+    private bool isMyMessage = true;
+    private const string currentUser = "CurrentUser";
+
+
+    private void ClearText()
+    {
+        _enteredMessage = string.Empty;
+    }
+
+
+
+    private async Task OnEnterKeyPress(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter")
+        {
+            await SendMessage();
+        }
+    }
+
+    private async Task SendMessage()
+    {
+        _messages.Add(new ChatMessage
+            {
+                User = currentUser,
+                Message = _enteredMessage
+            });
+
+        var response = await Mediatr.Send(new AskChatGpt(_enteredMessage));
+        if (response.IsSuccess)
+        {
+            _messages.Add(new ChatMessage
+                {
+                    User = "chatGPT",
+                    Message = response.Value.Result
+                });
+        }
+        else
+        {
+            Snackbar.Add(response.Error, Severity.Error);
+        }
+
+        StateHasChanged();
+    }
+
+    public bool IsMyMessage(string name)
+    {
+        if (name.Equals(currentUser))
+            return true;
+
+        return false;
+    }
+
+    //protected override async Task OnAfterRenderAsync(bool firstRender)
+    //{
+    //    await JsRuntime.InvokeAsync<string>("ScrollToBottom", "scrollableDiv");
+    //}
+
+}

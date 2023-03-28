@@ -9,6 +9,6 @@ namespace ObakiSite.Application.Features.ChatGPT.Constants
     public static class ChatGptConstants
     {
         public const string ApiKey = "ChatGptApiKey";
-        public const string Endpoint = "/api/chatgpt";
+        public const string Endpoint = "/api/ask-chatgpt";
     }
 }

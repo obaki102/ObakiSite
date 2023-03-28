@@ -29,7 +29,7 @@ namespace ObakiSite.AzureFunction.Functions
         [OpenApiOperation(operationId: "Chat", tags: new[] { "ChatGpt" }, Summary = "Ask chatGpt.", Visibility = OpenApiVisibilityType.Important)]
         [OpenApiRequestBody(contentType: "application/text", bodyType: typeof(string), Description = "Message", Required = true)]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(string), Summary = "Successful operation")]
-        public async Task<HttpResponseData> Run([HttpTrigger(AuthorizationLevel.Function, "post")] HttpRequestData req)
+        public async Task<HttpResponseData> AskChatGpt([HttpTrigger(AuthorizationLevel.Function, "post", Route = "ask-chatgpt")] HttpRequestData req)
         {
             _logger.LogInformation("C# HTTP trigger function processed a request.");
 
