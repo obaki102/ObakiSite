@@ -1,0 +1,67 @@
+﻿@inherits LayoutComponentBase
+@inject ISender Mediator
+<MudThemeProvider @bind-IsDarkMode="_isDarkMode" Theme="_theme" />
+<MudDialogProvider />
+<MudSnackbarProvider />
+<MudLayout>
+    <MudAppBar Elevation="1">
+        <MudContainer MaxWidth="MaxWidth.Large">
+            <div class="d-flex align-center" Elevation="1">
+                <a class="mt-2" href="/obaki"> <MudImage Src="/img/logo.png" Width="70" Height="45" ObjectFit="ObjectFit.Cover" Elevation="2" Class="rounded-lg" /></a>
+                <MudSpacer />
+                <MudHidden Breakpoint="Breakpoint.MdAndUp" Invert="true">
+                    <MudTooltip Text="Toggle Light/Dark Mode" Color="Color.Primary" Placement="Placement.Right">
+                        <MudToggleIconButton ToggledChanged="()=> SetPreference()" Class="ml-2 flex-none" Icon="@Icons.Material.Filled.LightMode" ToggledIcon="@Icons.Material.Filled.DarkMode"></MudToggleIconButton>
+                    </MudTooltip>
+                </MudHidden>
+            </div>
+        </MudContainer>
+    </MudAppBar>
+    <MudMainContent>
+        <MudContainer MaxWidth="MaxWidth.Medium" Class="my-4">
+            <ErrorBoundary>
+                <ChildContent>  @Body </ChildContent>
+                <ErrorContent Context="Exception">
+                    <MudChip Color="Color.Secondary">@Exception.GetType()</MudChip>
+                    <MudChip Color="Color.Secondary">@Exception.Message</MudChip>
+                    <p class="errorUI">Nothing to see here right now. Sorry!</p>
+                </ErrorContent>
+            </ErrorBoundary>
+        </MudContainer>
+    </MudMainContent>
+</MudLayout>
+
+@code {
+    [CascadingParameter] public CascadingAppState? AppState { get; set; }
+    private MudTheme _theme = Theme.ObakiSiteTheme();
+    private bool _isDarkMode;
+    bool _drawerOpen = false;
+
+    public void OpenDrawer()
+    {
+        _drawerOpen = !_drawerOpen;
+    }
+    protected override async Task OnInitializedAsync()
+    {
+        if (AppState is not null)
+        {
+            _isDarkMode = await AppState.IsDarkMode();
+        }
+    }
+
+    private async Task SetPreference()
+    {
+        _isDarkMode = !_isDarkMode;
+        var command = new SetPreference(new Preferences
+            {
+                IsDarkTheme = _isDarkMode
+            });
+
+        await Mediator.Send(command);
+
+        if (AppState is not null)
+            AppState.Settings.IsDarkTheme = _isDarkMode;
+
+        StateHasChanged();
+    }
+}

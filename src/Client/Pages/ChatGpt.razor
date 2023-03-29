@@ -1,46 +1,38 @@
 ﻿@page "/obaki/chatgpt"
-@layout ObakiSiteEmptyLayout
+@layout ChatGptLayout
 @inject NavigationManager NavigationManager
 @inject IConfiguration ConfigurationManager
 @inject ISender Mediatr
 @inject ISnackbar Snackbar
-
-<PageTitle>ChatGpt</PageTitle>
-<MudContainer MaxWidth="MaxWidth.Medium" Class="my-4">
-    <div id="scrollableDiv" style="overflow-y: scroll;">
-        <div Class="d-flex flex-column flex-grow-1 gap-1" Elevation="0">
-            @foreach (var message in _messages)
+<PageTitle>Ask ChatGpt</PageTitle>
+<div id="scrollableDiv" style="overflow-y: scroll;">
+    <div Class="d-flex flex-column flex-grow-1 gap-1" Elevation="0">
+        @foreach (var message in _messages)
+        {
+            @if (IsMyMessage(message.User))
             {
-                @if (IsMyMessage(message.User))
-                {
-                    <MudPaper Class="pa-2 mt-4 mb-4 overflow-auto rounded-lg" Style="word-break: break-all;" Outlined="true">
-                        <MudText Typo="Typo.body2" Class="mx-1">@message.Message</MudText>
-                    </MudPaper>
-                }
-                else
-                {
-                    <MudPaper Class="pa-2 mt-4 mb-4 overflow-auto mud-theme-primary rounded-lg" Style="word-break: break-all;" Outlined="true">
-                        <MudText Typo="Typo.body2" Class="mx-1">@message.Message</MudText>
-                    </MudPaper>
-                }
+                <MudPaper Class="pa-2 mt-4 mb-4 overflow-auto rounded-lg" Style="word-break: break-all;" Outlined="true">
+                    <MudText Typo="Typo.body2" Class="mx-1">@message.Message</MudText>
+                </MudPaper>
             }
-        </div>
-    </div>
-</MudContainer>
-
-<div Class="d-flex align-content-end flex-row ma-4" style="position:fixed;bottom: 0;">
-    <div class="d-flex align-center flex-row">
-        <div class="d-flex ml-1 pa-1">
-            <MudTextField T="string" Label="Chatbox" Variant="Variant.Outlined" Lines="5" @bind-Value="_enteredMessage" @onkeydown="OnEnterKeyPress" TextUpdateSuppression="false" DisableUnderLine="true" Immediate="true" />
-        </div>
-        <div>
-            <MudIconButton Variant="Variant.Text" Icon="@Icons.Material.Filled.Send" Color="Color.Primary" OnClick="SendMessage" />
-        </div>
+            else
+            {
+                <MudPaper Class="pa-2 mt-4 mb-4 overflow-auto mud-theme-primary rounded-lg" Style="word-break: break-all;" Outlined="true">
+                    <MudText Typo="Typo.body2" Class="mx-1">@message.Message</MudText>
+                </MudPaper>
+            }
+        }
     </div>
 </div>
 
-
-
+<MudAppBar Bottom="true" Fixed="true"  Color="Color.Tertiary" Elevation="0" Class="mb-4">
+    <MudContainer MaxWidth="MaxWidth.Medium" Class="align-center">
+        <div class="d-flex align-center " Elevation="1">
+            <MudTextField T="string" Label="Chatbox" Class="mr-4" Variant="Variant.Outlined" FullWidth="true" Lines="2" @bind-Value="_enteredMessage" @onkeydown="OnEnterKeyPress" TextUpdateSuppression="false" DisableUnderLine="true" Immediate="true" />
+            <MudIconButton Variant="Variant.Text"  Icon="@Icons.Material.Filled.Send" Color="Color.Primary" OnClick="SendMessage" Size="Size.Medium" />
+        </div>
+    </MudContainer>
+</MudAppBar>
 @code {
     private List<ChatMessage> _messages = new();
     private ChatMessage chatMessage = new();
@@ -86,6 +78,7 @@
             Snackbar.Add(response.Error, Severity.Error);
         }
 
+        _enteredMessage = string.Empty;
         StateHasChanged();
     }
 
