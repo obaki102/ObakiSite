@@ -1,5 +1,4 @@
 ﻿using OpenAI.GPT3.Interfaces;
-using OpenAI.GPT3.Managers;
 using OpenAI.GPT3.ObjectModels.RequestModels;
 using OpenAI.GPT3.ObjectModels;
 using System.Text;
@@ -17,31 +16,24 @@ namespace ObakiSite.Application.Features.ChatGPT.Services
 
         public async Task<string> AskChatGpt(string question)
         {
-            var response = new StringBuilder();
-            var completionResult = _openAIService.Completions.CreateCompletionAsStream(new CompletionCreateRequest()
+
+            var completionResult = await _openAIService.ChatCompletion.CreateCompletion(new ChatCompletionCreateRequest
             {
-                Prompt = question,
+                Messages = new List<ChatMessage>
+                 {
+                    ChatMessage.FromUser(question)
+                 },
+                Model = Models.ChatGpt3_5Turbo,
                 MaxTokens = 100
-            }, Models.TextDavinciV3);
+            });
 
-            await foreach (var completion in completionResult)
+
+            if (completionResult.Successful)
             {
-                if (completion.Successful)
-                {
-                    response.Append(completion.Choices.FirstOrDefault()?.Text ?? "No response");
-                }
-                else
-                {
-                    if (completion.Error == null)
-                    {
-                        throw new Exception("Unknown Error");
-                    }
-
-                    response.Append($"{completion.Error.Code}: {completion.Error.Message}");
-                }
+                return completionResult.Choices.First().Message.Content;
             }
 
-            return response.ToString();
+            return $"Error: {completionResult.Error.Message}";
         }
     }
 }
