@@ -1,7 +1,6 @@
 ﻿using OpenAI.GPT3.Interfaces;
 using OpenAI.GPT3.ObjectModels.RequestModels;
 using OpenAI.GPT3.ObjectModels;
-using System.Text;
 
 namespace ObakiSite.Application.Features.ChatGPT.Services
 {

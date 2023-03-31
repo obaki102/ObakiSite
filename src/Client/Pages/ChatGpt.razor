@@ -28,8 +28,15 @@
 <MudAppBar Bottom="true" Fixed="true"  Color="Color.Tertiary" Elevation="0" Class="mb-4">
     <MudContainer MaxWidth="MaxWidth.Medium" Class="align-center">
         <div class="d-flex align-center " Elevation="1">
-            <MudTextField T="string" Label="Chatbox" Class="mr-4" Variant="Variant.Outlined" FullWidth="true" Lines="2" @bind-Value="_enteredMessage" @onkeydown="OnEnterKeyPress" TextUpdateSuppression="false" DisableUnderLine="true" Immediate="true" />
-            <MudIconButton Variant="Variant.Text"  Icon="@Icons.Material.Filled.Send" Color="Color.Primary" OnClick="SendMessage" Size="Size.Medium" />
+            <MudTextField T="string" Label="Send a message" Class="mr-4" Variant="Variant.Filled" FullWidth="true" Lines="2" @bind-Value="_enteredMessage" @onkeydown="OnEnterKeyPress" TextUpdateSuppression="false" DisableUnderLine="true" Immediate="true" />
+            @if (!isSending)
+            {
+                <MudIconButton Variant="Variant.Text" Icon="@Icons.Material.Filled.Send" Color="Color.Primary" OnClick="SendMessage" Size="Size.Medium" Disabled="IsMessageEmpty()" />
+            }
+            else
+            {
+                <MudProgressCircular Color="Color.Primary" Size="Size.Small" Indeterminate="true" />
+            }
         </div>
     </MudContainer>
 </MudAppBar>
@@ -39,32 +46,28 @@
     private string _enteredMessage { get; set; } = string.Empty;
     private bool isMyMessage = true;
     private const string currentUser = "CurrentUser";
-
-
-    private void ClearText()
-    {
-        _enteredMessage = string.Empty;
-    }
-
-
+    private bool isSending = false;
 
     private async Task OnEnterKeyPress(KeyboardEventArgs e)
     {
         if (e.Key == "Enter")
         {
-            await SendMessage();
+            if (!IsMessageEmpty())
+                await SendMessage();
         }
     }
 
     private async Task SendMessage()
     {
+        isSending = true;
         _messages.Add(new ChatMessage
             {
                 User = currentUser,
                 Message = _enteredMessage
             });
-
         var response = await Mediatr.Send(new AskChatGpt(_enteredMessage));
+        _enteredMessage = string.Empty;
+
         if (response.IsSuccess)
         {
             _messages.Add(new ChatMessage
@@ -78,7 +81,7 @@
             Snackbar.Add(response.Error, Severity.Error);
         }
 
-        _enteredMessage = string.Empty;
+        isSending = false;
         StateHasChanged();
     }
 
@@ -90,6 +93,13 @@
         return false;
     }
 
+    public bool IsMessageEmpty()
+    {
+        if (_enteredMessage.Length == 0)
+            return true;
+
+        return false;
+    }
     //protected override async Task OnAfterRenderAsync(bool firstRender)
     //{
     //    await JsRuntime.InvokeAsync<string>("ScrollToBottom", "scrollableDiv");
