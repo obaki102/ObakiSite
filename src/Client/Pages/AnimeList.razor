@@ -2,109 +2,110 @@
 @layout ObakiSiteEmptyLayout
 @inject ISender Mediatr
 @using ObakiSite.Application.Features.Animelist.Queries
-
 <PageTitle>Animelist</PageTitle>
-
-@if (animeLists == null)
-{
-    <div class="d-flex justify-center flex-row flex-wrap gap-4">
-        @for (int i = 0; i < 100; i++)
-        {
-            <MudCard Style="width:300px;height:500px;">
-                <MudCardHeader Style="height:100px;" Class="mt-2">
-                    <CardHeaderContent>
-                        <MudSkeleton Width="90%" Animation="Animation.Wave" />
-                    </CardHeaderContent>
-                    <CardHeaderActions>
-                        <MudSkeleton Width="10%" Animation="Animation.Wave" />
-                    </CardHeaderActions>
-                </MudCardHeader>
-                <MudSkeleton SkeletonType="SkeletonType.Rectangle" Class="pa-1 rounded-lg" Height="250px" Animation="Animation.Wave" />
-                <MudCardContent>
-                    <MudSkeleton Width="100%" Animation="Animation.Wave" />
-                    <MudSkeleton Width="100%" Animation="Animation.Wave" />
-                    <MudDivider />
-                    <MudSkeleton Width="20%" Animation="Animation.Wave" />
-                    <MudSkeleton Width="20%" Animation="Animation.Wave" />
-                </MudCardContent>
-            </MudCard>
-        }
-
-    </div>
-}
-else
-{
-    <div class="d-flex justify-center flex-row flex-wrap gap-4">
-
-        @foreach (var anime in animeLists.OrderBy(o => o.Node.Popularity))
-        {
-            if (anime.Node != null && anime.Node.MainPicture != null)
+<MudText Class="my-auto" Typo="Typo.caption" GutterBottom="true" Style="font-size: 30px;">Animelist</MudText>
+<div class="mt-4">
+    @if (animeLists == null)
+    {
+        <div class="d-flex justify-center flex-row flex-wrap gap-4">
+            @for (int i = 0; i < 100; i++)
             {
-                <MudCard Class="mx-2" Style="width:300px;" Elevation="2">
+                <MudCard Style="width:300px;height:500px;">
                     <MudCardHeader Style="height:100px;" Class="mt-2">
                         <CardHeaderContent>
-                            <MudText Align="Align.Center" Typo="Typo.subtitle1">@FormatTitle(anime.Node.Title) </MudText>
+                            <MudSkeleton Width="90%" Animation="Animation.Wave" />
                         </CardHeaderContent>
                         <CardHeaderActions>
-                            <MudButton Variant="Variant.Text" OnClick="@(() => OpenDrawer(Anchor.Bottom, anime.Node))">
-                                <MudTooltip Text="Synopsis">
-                                    <MudIcon Icon="@Icons.Material.Filled.Newspaper" Color="Color.Default" />
-                                </MudTooltip>
-                            </MudButton>
+                            <MudSkeleton Width="10%" Animation="Animation.Wave" />
                         </CardHeaderActions>
                     </MudCardHeader>
-                    <MudCardMedia ObjectFit="ObjectFit.Fill" Image="@anime.Node.MainPicture.Large" Class="rounded-lg" Height="250" />
+                    <MudSkeleton SkeletonType="SkeletonType.Rectangle" Class="pa-1 rounded-lg" Height="250px" Animation="Animation.Wave" />
                     <MudCardContent>
-                        @if (@anime.Node.NumEpisodes == 0 && anime.Node.NumEpisodes != 0)
-                        {
-                            <MudText Typo="Typo.body2">
-                                @FormatDate(anime.Node.StartDate)
-
-                            </MudText>
-                        }
-                        else
-                        {
-                            <MudText Typo="Typo.body2">
-                                @FormatDate(anime.Node.StartDate) | @anime.Node.NumEpisodes eps
-
-                            </MudText>
-                        }
-                        <MudDivider Class="my-2" />
-                        @if (anime.Node.Genres != null)
-                        {
-                            @foreach (var genre in anime.Node.Genres)
-                            {
-                                <MudChip Color="Color.Default" Size="Size.Small"> @genre.Name</MudChip>
-                            }
-                        }
+                        <MudSkeleton Width="100%" Animation="Animation.Wave" />
+                        <MudSkeleton Width="100%" Animation="Animation.Wave" />
+                        <MudDivider />
+                        <MudSkeleton Width="20%" Animation="Animation.Wave" />
+                        <MudSkeleton Width="20%" Animation="Animation.Wave" />
                     </MudCardContent>
                 </MudCard>
             }
-        }
 
-    </div>
-    <MudDrawer @bind-Open="@open" Anchor="@anchor" Elevation="1" Variant="@DrawerVariant.Temporary">
-        <MudContainer MaxWidth="MaxWidth.Large" Class="my-4">
-            @if (node != null)
+        </div>
+    }
+    else
+    {
+        <div class="d-flex justify-center flex-row flex-wrap gap-4">
+
+            @foreach (var anime in animeLists.OrderBy(o => o.Node.Popularity))
             {
-                <MudDrawerHeader>
-                    <MudStack>
-                        <MudText Typo="Typo.body2">@node.Synopsis</MudText>
-                        <MudDivider />
-                        <MudText Typo="Typo.caption"> Status:<MudChip Color="Color.Primary" Size="Size.Small"> @node.Status.Replace("_"," ")</MudChip></MudText>
-                        @if (node.Studios != null)
-                        {
-                            @foreach (var studio in node.Studios)
+                if (anime.Node != null && anime.Node.MainPicture != null)
+                {
+                    <MudCard Class="mx-2" Style="width:300px;" Elevation="2">
+                        <MudCardHeader Style="height:100px;" Class="mt-2">
+                            <CardHeaderContent>
+                                <MudText Align="Align.Center" Typo="Typo.subtitle1">@FormatTitle(anime.Node.Title) </MudText>
+                            </CardHeaderContent>
+                            <CardHeaderActions>
+                                <MudButton Variant="Variant.Text" OnClick="@(() => OpenDrawer(Anchor.Bottom, anime.Node))">
+                                    <MudTooltip Text="Synopsis">
+                                        <MudIcon Icon="@Icons.Material.Filled.Newspaper" Color="Color.Default" />
+                                    </MudTooltip>
+                                </MudButton>
+                            </CardHeaderActions>
+                        </MudCardHeader>
+                        <MudCardMedia ObjectFit="ObjectFit.Fill" Image="@anime.Node.MainPicture.Large" Class="rounded-lg" Height="250" />
+                        <MudCardContent>
+                            @if (@anime.Node.NumEpisodes == 0 && anime.Node.NumEpisodes != 0)
                             {
-                                <MudText Typo="Typo.caption">@studio.Name</MudText>
+                                <MudText Typo="Typo.body2">
+                                    @FormatDate(anime.Node.StartDate)
+
+                                </MudText>
                             }
-                        }
-                    </MudStack>
-                </MudDrawerHeader>
+                            else
+                            {
+                                <MudText Typo="Typo.body2">
+                                    @FormatDate(anime.Node.StartDate) | @anime.Node.NumEpisodes eps
+
+                                </MudText>
+                            }
+                            <MudDivider Class="my-2" />
+                            @if (anime.Node.Genres != null)
+                            {
+                                @foreach (var genre in anime.Node.Genres)
+                                {
+                                    <MudChip Color="Color.Default" Size="Size.Small"> @genre.Name</MudChip>
+                                }
+                            }
+                        </MudCardContent>
+                    </MudCard>
+                }
             }
-        </MudContainer>
-    </MudDrawer>
-}
+
+        </div>
+        <MudDrawer @bind-Open="@open" Anchor="@anchor" Elevation="1" Variant="@DrawerVariant.Temporary">
+            <MudContainer MaxWidth="MaxWidth.Large" Class="my-4">
+                @if (node != null)
+                {
+                    <MudDrawerHeader>
+                        <MudStack>
+                            <MudText Typo="Typo.body2">@node.Synopsis</MudText>
+                            <MudDivider />
+                            <MudText Typo="Typo.caption"> Status:<MudChip Color="Color.Primary" Size="Size.Small"> @node.Status.Replace("_"," ")</MudChip></MudText>
+                            @if (node.Studios != null)
+                            {
+                                @foreach (var studio in node.Studios)
+                                {
+                                    <MudText Typo="Typo.caption">@studio.Name</MudText>
+                                }
+                            }
+                        </MudStack>
+                    </MudDrawerHeader>
+                }
+            </MudContainer>
+        </MudDrawer>
+    }
+</div>
 
 @code {
     bool open;

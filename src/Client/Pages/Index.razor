@@ -6,7 +6,6 @@
 @using ObakiSite.Client.Pages.Posts
 <PageTitle>Home</PageTitle>
 
-
 <div class="d-flex justify-center flex-row flex-grow-1 gap-1">
     <div class="align-self-start flex-1">
         <MudHidden Breakpoint="Breakpoint.LgAndUp" Invert="true">
@@ -15,23 +14,13 @@
                 <MudListItem Text="Anime List" Icon="@Icons.Material.Filled.LibraryBooks" Href="/obaki/anime" Dense="true"/>
                 <MudListItem Text="Chat Demo" Icon="@Icons.Material.Filled.Chat" Href="/obaki/livechat" Dense="true" />
                 <MudListItem Text="Ask Chat Gpt" Icon="@Icons.Material.Filled.Adb" Href="/obaki/chatgpt/chat" Dense="true" />
-                <MudListItem Text="TLDR" Icon="@Icons.Material.Filled.Summarize" Href="/obaki/chatgpt/tldr" Dense="true" />
+                <MudListItem Text="Tl;dr" Icon="@Icons.Material.Filled.Summarize" Href="/obaki/chatgpt/tldr" Dense="true" />
                 <MudListItem Text="GitHub repo" Icon="@Icons.Custom.Brands.GitHub" Href="https://github.com/obaki102/ObakiSite" Dense="true" />
             </MudList>
         </MudHidden>
     </div>
     <ViewPostSummaries />
 </div>
-@*<MudDivider Class="my-4 mr-2 ml-4" Vertical="true" FlexItem="true" />
-<MudTooltip Text="About me" Color="Color.Primary" Placement="Placement.Bottom">
-    <MudIconButton Href="mycv" Icon="@Icons.Material.Filled.Person" Color="Color.Primary" />
-</MudTooltip>
-<MudTooltip Text="GitHub repo" Color="Color.Primary" Placement="Placement.Bottom">
-    <MudIconButton Href="https://github.com/obaki102/ObakiSite" Icon="@Icons.Custom.Brands.GitHub" Color="Color.Primary" />
-</MudTooltip>
-<MudTooltip Text="Anime List" Color="Color.Primary" Placement="Placement.Bottom">
-    <MudIconButton Href="anime" Icon="@Icons.Material.Filled.LibraryBooks" Color="Color.Primary" />
-</MudTooltip>*@
 @code {
 
 }

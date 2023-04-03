@@ -5,7 +5,8 @@
 @inject ISender Mediatr
 @inject ISnackbar Snackbar
 <PageTitle>Ask ChatGpt</PageTitle>
-<div id="scrollableDiv" style="overflow-y: scroll;">
+<MudText Class="my-auto" Typo="Typo.caption" GutterBottom="true" Style="font-size: 30px;">Ask ChatGpt</MudText>
+<div id="scrollableDiv" style="overflow-y: scroll;" class="mt-4">
     <div Class="d-flex flex-column flex-grow-1 gap-1" Elevation="0">
         @foreach (var message in _messages)
         {
