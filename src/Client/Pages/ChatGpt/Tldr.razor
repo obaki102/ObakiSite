@@ -28,8 +28,6 @@
 @code {
     private string _enteredMessage = string.Empty;
     private string _summary = string.Empty;
-    private bool isMyMessage = true;
-    private const string currentUser = "CurrentUser";
     private bool isSending = false;
 
     private async Task OnEnterKeyPress(KeyboardEventArgs e)
@@ -67,9 +65,5 @@
 
         return false;
     }
-    //protected override async Task OnAfterRenderAsync(bool firstRender)
-    //{
-    //    await JsRuntime.InvokeAsync<string>("ScrollToBottom", "scrollableDiv");
-    //}
 
 }

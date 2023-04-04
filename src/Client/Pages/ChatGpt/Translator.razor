@@ -1,0 +1,92 @@
+﻿@page "/obaki/chatgpt/translate"
+@layout ChatGptLayout
+@inject NavigationManager NavigationManager
+@inject IConfiguration ConfigurationManager
+@inject ISender Mediatr
+@inject ISnackbar Snackbar
+<PageTitle>TranslationStation</PageTitle>
+<MudText Class="my-auto ml-6" Typo="Typo.caption" GutterBottom="true" Style="font-size: 30px;">TranslationStation</MudText>
+<MudContainer MaxWidth="MaxWidth.Medium" Class="align-center mt-4">
+    <div class="d-flex align-center " Elevation="1">
+        <MudTextField T="string" Label="Input" Class="mr-4" Variant="Variant.Outlined" FullWidth="true" Lines="10" @bind-Value="_enteredMessage" @onkeydown="OnEnterKeyPress" TextUpdateSuppression="false" DisableUnderLine="true" Immediate="true" />
+        @if (!isSending)
+        {
+            <MudIconButton Variant="Variant.Text" Icon="@Icons.Material.Filled.Send" Color="Color.Primary" OnClick="SendMessage" Size="Size.Medium" Disabled="IsMessageEmpty()" />
+        }
+        else
+        {
+            <MudProgressCircular Color="Color.Primary" Class="mr-6" Size="Size.Small" Indeterminate="true" />
+        }
+
+    </div>
+    <div class="mt-8 mr-16" Elevation="1">
+        <MudSelect Margin="Margin.Dense" T="string" Label="Language" Variant="Variant.Outlined" @bind-Value="_langauge">
+            <MudSelectItem Value="@("English")"> English</MudSelectItem>
+            <MudSelectItem Value="@("Spanish")">Spanish</MudSelectItem>
+            <MudSelectItem Value="@("French")">French</MudSelectItem>
+            <MudSelectItem Value="@("German")">German</MudSelectItem>
+            <MudSelectItem Value="@("Chinese")">Chinese</MudSelectItem>
+            <MudSelectItem Value="@("Japanese")">Japanese</MudSelectItem>
+            <MudSelectItem Value="@("Korean")">Korean</MudSelectItem>
+            <MudSelectItem Value="@("Arabic")">Arabic</MudSelectItem>
+            <MudSelectItem Value="@("Russian")">Russian</MudSelectItem>
+            <MudSelectItem Value="@("Portuguese")">Portuguese</MudSelectItem>
+            <MudSelectItem Value="@("Italian")">Italian</MudSelectItem>
+            <MudSelectItem Value="@("Dutch")">Dutch</MudSelectItem>
+            <MudSelectItem Value="@("Filipino")">Filipino</MudSelectItem>
+        </MudSelect>
+    </div>
+    <div class="mt-8 mr-16">
+        <MudTextField T="string" Label="Translation" Variant="Variant.Outlined" FullWidth="true" Lines="10" @bind-Value="_result" @onkeydown="OnEnterKeyPress" />
+    </div>
+
+</MudContainer>
+@code {
+    private string _langauge = string.Empty;
+    private string _enteredMessage = string.Empty;
+    private string _result = string.Empty;
+    private bool isSending = false;
+
+    private async Task OnEnterKeyPress(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter")
+        {
+            if (!IsMessageEmpty())
+                await SendMessage();
+        }
+    }
+
+    private async Task SendMessage()
+    {
+        if (string.IsNullOrEmpty(_langauge))
+        {
+            Snackbar.Add("Oops! You forgot to select a language to translate your text. Please select a language from the dropdown list.", Severity.Error);
+            return;
+        }
+
+        isSending = true;
+        var response = await Mediatr.Send(new AskChatGpt($"Translate '{_enteredMessage}' to {_langauge} "));
+
+        if (response.IsSuccess)
+        {
+            _result = response.Value.Result;
+        }
+        else
+        {
+            Snackbar.Add(response.Error, Severity.Error);
+        }
+
+        isSending = false;
+        StateHasChanged();
+    }
+
+
+    public bool IsMessageEmpty()
+    {
+        if (_enteredMessage.Length == 0)
+            return true;
+
+        return false;
+    }
+
+}
