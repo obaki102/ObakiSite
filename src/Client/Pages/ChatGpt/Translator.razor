@@ -69,7 +69,7 @@
 
         if (response.IsSuccess)
         {
-            _result = response.Value.Result;
+            _result = response.Value.Result.Replace("\"","");
         }
         else
         {
