@@ -2,6 +2,7 @@
 @layout ObakiSiteMainLayout
 @inject ISender Mediatr
 @inject NavigationManager NavManager
+@inject ISnackbar Snackbar
 @using ObakiSite.Application.Features.Posts.Queries;
 <PageTitle>Home</PageTitle>
 
@@ -60,10 +61,13 @@ else
     private IReadOnlyList<PostSummaryDTO>? posts { get; set; }
     protected override async Task OnInitializedAsync()
     {
+        Snackbar.Add("My bad for the slow loading. As I am using Azure Function, the delay is a result of the cold start, which is a common occurrence in other serverless solutions as well.", Severity.Info);
         var result = await Mediatr.Send(new GetPostSummaries());
         if (result.Value is not null && result.IsSuccess)
         {
             posts = result.Value;
         }
+
+       
     }
 }
