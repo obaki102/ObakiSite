@@ -10,6 +10,7 @@
 {
     <div class="d-flex flex-row flex-grow-1 gap-2 ml-2 mt-2">
         <div class="d-flex flex-column flex-grow-1 gap-2">
+            <MudChip Icon="@Icons.Material.Filled.Info" Label="true" Color="Color.Primary" Style="width:700px" OnClick="ShowSlowLoadingReason">Slow loading ? </MudChip>
             @for (int i = 0; i < 6; i++)
             {
                 <MudPaper Outlined="true" Elevation="2" Width="700px" Height="200px">
@@ -19,7 +20,7 @@
                                 <MudAvatar Color="Color.Dark">A</MudAvatar>
                             </CardHeaderAvatar>
                             <CardHeaderContent>
-                                <MudSkeleton SkeletonType="SkeletonType.Rectangle" Animation="Animation.Wave" Height="20px"  Width="90%" />
+                                <MudSkeleton SkeletonType="SkeletonType.Rectangle" Animation="Animation.Wave" Height="20px" Width="90%" />
                             </CardHeaderContent>
                         </MudCardHeader>
                         <MudSkeleton Class="ml-16 mr-8 mb-4" Width="70%" Animation="Animation.Wave" />
@@ -37,7 +38,6 @@ else
 {
     <div class="d-flex flex-row flex-grow-1 gap-2 ml-2 mt-2">
         <div class="d-flex flex-column flex-grow-1 gap-2">
-            <MudChip Icon="@Icons.Material.Filled.Info" Label="true" Color="Color.Primary" Style="width:700px" OnClick="ShowSlowLoadingReason">Slow loading ? </MudChip>
             @foreach (var post in posts)
             {
                 <MudPaper Outlined="true" Elevation="2" Width="700px">
@@ -67,7 +67,7 @@ else
         {
             posts = result.Value;
         }
-       
+
     }
 
     private void ShowSlowLoadingReason()
