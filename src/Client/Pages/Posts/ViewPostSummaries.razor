@@ -37,6 +37,7 @@ else
 {
     <div class="d-flex flex-row flex-grow-1 gap-2 ml-2 mt-2">
         <div class="d-flex flex-column flex-grow-1 gap-2">
+            <MudChip Icon="@Icons.Material.Filled.Info" Label="true" Color="Color.Primary" Style="width:700px" OnClick="ShowSlowLoadingReason">Slow loading ? </MudChip>
             @foreach (var post in posts)
             {
                 <MudPaper Outlined="true" Elevation="2" Width="700px">
@@ -61,13 +62,16 @@ else
     private IReadOnlyList<PostSummaryDTO>? posts { get; set; }
     protected override async Task OnInitializedAsync()
     {
-        Snackbar.Add("My bad for the slow loading. As I am using Azure Function, the delay is a result of the cold start, which is a common occurrence in other serverless solutions as well.", Severity.Info);
         var result = await Mediatr.Send(new GetPostSummaries());
         if (result.Value is not null && result.IsSuccess)
         {
             posts = result.Value;
         }
-
        
+    }
+
+    private void ShowSlowLoadingReason()
+    {
+        Snackbar.Add("My bad for the slow loading. As I am using Azure Function, the delay is a result of the cold start, which is a common occurrence in other serverless solutions as well.", Severity.Info);
     }
 }

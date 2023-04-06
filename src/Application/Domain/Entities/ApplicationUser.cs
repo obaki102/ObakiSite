@@ -1,5 +1,4 @@
-﻿
-using ObakiSite.Application.Domain.Enums;
+﻿using ObakiSite.Application.Domain.Enums;
 using ObakiSite.Application.Domain.Primitives;
 
 namespace ObakiSite.Application.Domain.Entities
