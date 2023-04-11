@@ -10,7 +10,7 @@
 <MudText Class="my-auto ml-6" Typo="Typo.caption" GutterBottom="true" Style="font-size: 30px;">DataParser</MudText>
 <MudContainer MaxWidth="MaxWidth.Medium" Class="align-center mt-4">
     <div class="d-flex align-center " Elevation="1">
-        <MudTextField T="string" Label="Input" Class="mr-4" Variant="Variant.Outlined" FullWidth="true" Lines="15" @bind-Value="_input" @onkeydown="OnEnterKeyPress" TextUpdateSuppression="false" DisableUnderLine="true" Immediate="true" />
+        <MudTextField T="string" Label="Input" Class="mr-4" Variant="Variant.Outlined" FullWidth="true" Lines="15" @bind-Value="_input" TextUpdateSuppression="false" DisableUnderLine="true" Immediate="true" />
         @if (!isSending)
         {
             <MudIconButton Variant="Variant.Text" Icon="@Icons.Material.Filled.Transform" Color="Color.Primary" OnClick="SendMessage" Size="Size.Medium" Disabled="IsMessageEmpty()" />
