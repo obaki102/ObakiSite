@@ -23,7 +23,7 @@ namespace ObakiSite.Application.Features.ChatGPT.Services
                     ChatMessage.FromUser(question)
                  },
                 Model = Models.ChatGpt3_5Turbo,
-                MaxTokens = 100
+                MaxTokens = 1000
             });
 
 
