@@ -32,7 +32,7 @@ namespace ObakiSite.Application.Features.ChatGPT.Services
                 return completionResult.Choices.First().Message.Content;
             }
 
-            return $"Error: {completionResult.Error.Message}";
+            return completionResult.Error is null ?  "An unexpected error occured.": $"Error: {completionResult.Error.Message}";
         }
     }
 }
