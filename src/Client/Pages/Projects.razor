@@ -39,16 +39,16 @@ else
                 <div class="ma-4" style="height:90px">
                     <MudText Typo="Typo.body2" Align="Align.Justify">  @repo.Description</MudText>
                 </div>
-                <div class="ml-4 mb-2 align-self-end">
-                    <MudChip Color="Color.Dark">  <MudIcon Icon="@Icons.Material.Filled.Stars" Color="Color.Default" Class="mr-1" /> Star: @repo.StargazersCount</MudChip>
-                    @if (@repo.Name.Contains("ObakiSite"))
-                    {
-                        <MudTooltip Text="Link to site" Color="Color.Primary" Placement="Placement.Right">
-                            <MudIconButton Icon="@Icons.Material.Filled.Link" Color="Color.Default" Href="https://www.joshuajpiluden.site/obaki" />
-                        </MudTooltip>
-                    
-                    }
-                </div>
+
+                <MudStack Row="true" Class="ml-4 my-2">
+                    <MudLink Href="@repo.HtmlUrl" Typo="Typo.subtitle2">
+                        <MudImage Src="@($"https://img.shields.io/github/last-commit/obaki102/{repo.Name}?style=flat-square")" Class="rounded-lg" />
+                    </MudLink>
+                    <MudLink Href="@repo.HtmlUrl" Typo="Typo.subtitle2">
+                        <MudImage Src="@($"https://img.shields.io/github/stars/obaki102/{repo.Name}?style=flat-square&logo=github" )" Class="rounded-lg" />
+                    </MudLink>
+                </MudStack>
+
             </MudPaper>
         }
     </div>
