@@ -21,7 +21,7 @@ namespace ObakiSite.Application.Extensions
              {
                  // todo: log exception and retries.
              })); 
-            services.TryAddSingleton<IEmailService, EmailService>();
+            services.TryAddScoped<IEmailService, EmailService>();
             services.Configure(options);
             return services;
         }

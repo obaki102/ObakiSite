@@ -25,16 +25,16 @@ namespace ObakiSite.Application.Shared.Extensions
                 .AddTransientHttpErrorPolicy(policyBuilder =>
                     policyBuilder.WaitAndRetryAsync(Backoff.DecorrelatedJitterBackoffV2(TimeSpan.FromSeconds(1), 3)));
 
-            services.TryAddSingleton<IAnimeListService, AnimeListService>();
+            services.TryAddScoped<IAnimeListService, AnimeListService>();
             return services;
         }
-        public static IServiceCollection AddSingletonAnimeListService(this IServiceCollection services)
+        public static IServiceCollection AddScopedAnimeListService(this IServiceCollection services)
         {
             if (services == null)
             {
                 throw new ArgumentNullException(nameof(services));
             }
-            services.TryAddSingleton<IAnimeListService, AnimeListService>();
+            services.TryAddScoped<IAnimeListService, AnimeListService>();
             return services;
         }
     }

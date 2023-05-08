@@ -13,7 +13,7 @@ namespace ObakiSite.Application.Shared.Extensions
                 throw new ArgumentNullException(nameof(services));
             }
             //In blazor wasm scoped lifetime behaves the same way as singleton.  
-            services.TryAddSingleton<IChatHubClient, ChatHubClient>();
+            services.TryAddScoped<IChatHubClient, ChatHubClient>();
             services.Configure(options);
             return services;
         }
