@@ -1,6 +1,4 @@
 ﻿
-using System.Drawing;
-
 namespace ObakiSite.Application.Shared
 {
     public class Error : IEquatable<Error>
