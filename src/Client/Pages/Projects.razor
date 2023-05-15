@@ -4,26 +4,26 @@
 @inject ISnackbar Snackbar
 <PageTitle>Projects</PageTitle>
 
-@if (githubProjects is null)
+@if (githubProjects.Count == 0)
 {
     <div class="d-flex justify-center flex-row flex-wrap gap-4">
-        @for (int i = 0; i < 3; i++)
+        @for (int i = 0; i < 5; i++)
         {
-            <MudCard Outlined="true" Style="height:300px;width:400px">
-                <MudCardHeader>
-                    <CardHeaderAvatar>
-                        <MudSkeleton Width="90%" Animation="Animation.Wave" />
-                    </CardHeaderAvatar>
-                </MudCardHeader>
-                <MudSkeleton Width="90%" Animation="Animation.Wave" />
+            <MudPaper Outlined="true" Style="width:400px">
+                <div class="mt-4">
+                    <MudSkeleton Width="90%" Animation="Animation.Wave" />
+                </div>
                 <MudDivider Class="my-2" />
-                <MudCardActions>
-                    <MudSkeleton Width="20%" Animation="Animation.Wave" />
-                    <MudSkeleton Width="20%" Animation="Animation.Wave" />
-                </MudCardActions>
-            </MudCard>
-        }
+                <div class="ma-4" style="height:90px">
+                    <MudSkeleton Width="90%" Animation="Animation.Wave" />
+                </div>
 
+                <MudStack Row="true" Class="ml-4 my-2">
+                    <MudSkeleton Width="90%" Animation="Animation.Wave" />
+                    <MudSkeleton Width="90%" Animation="Animation.Wave" />
+                </MudStack>
+            </MudPaper>
+        }
     </div>
 }
 else
@@ -57,7 +57,7 @@ else
 @code {
     private List<GithubRepoInfo>? githubProjects;
     //Todo: Check github api document if this can be queried instead.
-    private List<string> currentRepos = new List<string> { "ObakiSite", "Obaki.LocalStorageCache", "Obaki.DataChecker" };
+    private List<string> currentRepos = new List<string> { "ObakiSite", "Obaki.LocalStorageCache", "Obaki.DataChecker", "Obaki.XmlSpecialCharacterEscaper", "MyProfile" };
     protected override async Task OnInitializedAsync()
     {
         //Todo: Save data  in local storage to minimize API calls?
