@@ -42,11 +42,11 @@ namespace ObakiSite.Client.Shared.Themes
             //Dark 
             defaultDarkPallete.Dark = "#202020";
             defaultDarkPallete.Primary = "#F5F5F5";
-            defaultDarkPallete.AppbarBackground = "#2A2A2A";
+            defaultDarkPallete.AppbarBackground = "#1E1E1E";
             defaultDarkPallete.DarkContrastText = "#F5F5F5";
             defaultDarkPallete.Background = "#121212";
             defaultDarkPallete.DrawerBackground = "#2A2A2A";
-            defaultDarkPallete.Surface = "#2A2A2A";
+            defaultDarkPallete.Surface = "#1E1E1E";
             defaultDarkPallete.TextPrimary = "#ecf2f8";
             defaultDarkPallete.PrimaryContrastText = "161b22";
             defaultDarkPallete.AppbarText = "#F5F5F5";
