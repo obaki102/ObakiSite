@@ -1,4 +1,4 @@
-﻿@page "/obaki/post/view/summaries"
+﻿@page "/post/view/summaries"
 @layout ObakiSiteMainLayout
 @inject ISender Mediatr
 @inject NavigationManager NavManager
@@ -41,7 +41,7 @@ else
             @foreach (var post in posts)
             {
                 <MudPaper Outlined="true" Elevation="2" Width="700px">
-                    <MudCard Elevation="0" @onclick="@(e => NavManager.NavigateTo($"/obaki/post/view/{post.Id}"))">
+                    <MudCard Elevation="0" @onclick="@(e => NavManager.NavigateTo($"/post/view/{post.Id}"))">
                         <MudCardHeader>
                             <CardHeaderAvatar>
                                 <MudAvatar Color="Color.Dark">A</MudAvatar>

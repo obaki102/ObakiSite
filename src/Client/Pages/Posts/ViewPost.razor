@@ -1,4 +1,4 @@
-﻿@page "/obaki/post/view/{id}"
+﻿@page "/post/view/{id}"
 @layout ObakiSiteMainLayout
 @inject ISender Mediatr
 @inject ISnackbar Snackbar
@@ -76,7 +76,7 @@ else
                                 </MudList>
                             <MudDivider></MudDivider>*@
                                 <MudList Clickable="true" Class="mx-1">
-                                    <MudListItem Text="Edit Post" Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" Dense="true" OnClick="@(() => NavManager.NavigateTo($"/obaki/post/edit/{Id}"))" />
+                                    <MudListItem Text="Edit Post" Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" Dense="true" OnClick="@(() => NavManager.NavigateTo($"/post/edit/{Id}"))" />
                                 </MudList>
                             </ChildContent>
                         </MudMenu>
